@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.PostFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/post_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="14dp"
+        app:title="Post"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/materialGray"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/user_id_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/post_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="USER ID"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/materialGray"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/post_id_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/post_post_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="POST ID"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/materialGray"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/post_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            tools:text="TITLE"/>
+        <TextView
+            android:id="@+id/post_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="BODY"/>
+    </LinearLayout>
+
+
+</LinearLayout>

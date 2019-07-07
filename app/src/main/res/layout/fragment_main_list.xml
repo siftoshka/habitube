@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MainListFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="14dp"
+        app:title="@string/app_name"
+        app:titleTextColor="@android:color/white"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
+        android:background="@android:color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:elevation="14dp"
+        android:background="@color/materialGray"
+        android:orientation="horizontal">
+
+       <com.google.android.material.textfield.TextInputLayout
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="300"
+           android:layout_margin="10dp"
+           android:textColorHint="@color/colorAccent"
+           app:boxStrokeColor="@color/colorAccent"
+           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+           <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/input_id_text"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:inputType="number"
+               android:hint="@string/input_id_text"/>
+       </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_button_text"
+            android:textColor="@android:color/white"
+            android:background="@drawable/round_button"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

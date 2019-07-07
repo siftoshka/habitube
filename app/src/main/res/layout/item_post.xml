@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:ellipsize="marquee"
+    android:gravity="start|center"
+    android:lines="2"
+    android:paddingStart="20dp"
+    android:textSize="22sp"
+    tools:text="Title"
+    tools:ignore="RtlSymmetry" />

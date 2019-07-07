@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Poster</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="input_id_text">Enter the id</string>
+    <string name="add_button_text">ADD</string>
+    <string name="user_id_text">User ID</string>
+    <string name="post_text">Post</string>
+    <string name="post_id_text">Post ID</string>
+</resources>
