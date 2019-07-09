@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.squareup.picasso.Picasso;
+
 import az.amorphist.poster.R;
-import az.amorphist.poster.di.PostId;
-import az.amorphist.poster.di.modules.PostModule;
+import az.amorphist.poster.di.modules.MovieModule;
+import az.amorphist.poster.di.modules.ShowModule;
 import az.amorphist.poster.presentation.presenters.PostPresenter;
 import az.amorphist.poster.presentation.views.PostView;
 import moxy.MvpAppCompatFragment;
@@ -21,30 +24,28 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
-import toothpick.config.Module;
 
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
-    Toolbar toolbar;
-    TextView userId, postId, postTitle, postBody;
+    private Toolbar toolbar;
+    private ImageView posterBackground, posterMain;
+    private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
+
 
     @InjectPresenter PostPresenter postPresenter;
 
     @ProvidePresenter
     PostPresenter postPresenter() {
-        final Bundle bundle = getArguments();
-        final String postId = bundle.getString("postID");
+        final Bundle movieBundle = getArguments();
+        final Integer postId = movieBundle.getInt("postPosition");
+        final Integer showId = movieBundle.getInt("showPosition");
 
-        final Scope temporaryPostScope = Toothpick.openScopes( "APP_SCOPE", "INT_SCOPE");
-        temporaryPostScope.installModules(new PostModule(postId));
+        final Scope temporaryPostScope = Toothpick.openScopes( "APP_SCOPE", "POST_SCOPE");
+        temporaryPostScope.installModules(new MovieModule(postId));
+        temporaryPostScope.installModules(new ShowModule(showId));
         final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
-        Toothpick.closeScope("INT_SCOPE");
+        Toothpick.closeScope("POST_SCOPE");
         return postPresenter;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -52,10 +53,13 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         toolbar = view.findViewById(R.id.post_toolbar);
-        userId = view.findViewById(R.id.post_user_id);
-        postId = view.findViewById(R.id.post_post_id);
-        postTitle = view.findViewById(R.id.post_title);
-        postBody = view.findViewById(R.id.post_body);
+        posterBackground = view.findViewById(R.id.poster_background);
+        posterMain = view.findViewById(R.id.poster_main_post);
+        posterTitle = view.findViewById(R.id.poster_title);
+        posterDate = view.findViewById(R.id.poster_date);
+        posterRate = view.findViewById(R.id.poster_rate);
+        posterViews = view.findViewById(R.id.poster_views);
+        posterDesc = view.findViewById(R.id.poster_desc);
         return view;
     }
 
@@ -70,15 +74,13 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     }
 
     @Override
-    public void getPost(String currentUserId, String currentPostId, String currentPostTitle, String currentPostBody) {
-        userId.setText(currentUserId);
-        postId.setText(currentPostId);
-        postTitle.setText(currentPostTitle);
-        postBody.setText(currentPostBody);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void getMovie(String image, String background, String title, String date, float rate, float views, String description) {
+        Picasso.get().load("https://image.tmdb.org/t/p/original" + image).into(posterMain);
+        Picasso.get().load("https://image.tmdb.org/t/p/original" + background).into(posterBackground);
+        posterTitle.setText(title);
+        posterDate.setText(date);
+        posterRate.setText(String.valueOf(rate));
+        posterViews.setText(String.valueOf(views));
+        posterDesc.setText(description);
     }
 }

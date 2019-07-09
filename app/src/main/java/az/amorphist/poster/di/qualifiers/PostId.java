@@ -1,4 +1,4 @@
-package az.amorphist.poster.di;
+package az.amorphist.poster.di.qualifiers;
 
 import javax.inject.Qualifier;
 

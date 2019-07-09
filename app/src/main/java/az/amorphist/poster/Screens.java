@@ -17,18 +17,35 @@ public final class Screens {
         }
     }
 
-    public static final class PostScreen extends SupportAppScreen {
-        private final String id;
+    public static final class PostMovieScreen extends SupportAppScreen {
+        private Integer movieID;
 
-        public PostScreen(String id) {
-            this.id = id;
+        public PostMovieScreen(Integer movieID) {
+            this.movieID = movieID;
         }
 
         @Override
         public Fragment getFragment() {
             final PostFragment fragment = new PostFragment();
             final Bundle bundle = new Bundle();
-            bundle.putString("postID", id);
+            bundle.putInt("postPosition", movieID);
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class PostShowScreen extends SupportAppScreen {
+        private Integer tvShowID;
+
+        public PostShowScreen(Integer tvShowID) {
+            this.tvShowID = tvShowID;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final PostFragment fragment = new PostFragment();
+            final Bundle bundle = new Bundle();
+            bundle.putInt("showPosition", tvShowID);
             fragment.setArguments(bundle);
             return fragment;
         }

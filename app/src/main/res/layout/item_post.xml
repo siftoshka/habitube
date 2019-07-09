@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:ellipsize="marquee"
-    android:gravity="start|center"
-    android:lines="2"
-    android:paddingStart="20dp"
-    android:textSize="22sp"
-    tools:text="Title"
-    tools:ignore="RtlSymmetry" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+    <ImageView
+        android:id="@+id/poster_image"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:src="@drawable/splash"
+        android:layout_gravity="center_horizontal"
+        tools:contentDescription="Poster of the movie"
+        tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/poster_main_text"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            tools:text="Movie Name" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

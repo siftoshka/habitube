@@ -9,7 +9,8 @@ import toothpick.Toothpick;
 
 public class App extends Application {
 
-    public static final String apiUrl = "https://jsonplaceholder.typicode.com";
+    public static final String apiUrl = "https://api.themoviedb.org/3/";
+    public static final String apiKey = "2de4fcda741c028964fe7c0faca007bc";
 
     @Override
     public void onCreate() {

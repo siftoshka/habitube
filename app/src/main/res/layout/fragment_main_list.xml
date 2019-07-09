@@ -10,56 +10,50 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="14dp"
         app:title="@string/app_name"
         app:titleTextColor="@android:color/white"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="50dp"
-        android:background="@android:color/white"/>
-
     <LinearLayout
+        android:id="@+id/trending_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:elevation="14dp"
-        android:background="@color/materialGray"
-        android:orientation="horizontal">
-
-       <com.google.android.material.textfield.TextInputLayout
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_weight="300"
-           android:layout_margin="10dp"
-           android:textColorHint="@color/colorAccent"
-           app:boxStrokeColor="@color/colorAccent"
-           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-           <com.google.android.material.textfield.TextInputEditText
-               android:id="@+id/input_id_text"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:inputType="number"
-               android:hint="@string/input_id_text"/>
-       </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/add_button"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="16dp">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_button_text"
-            android:textColor="@android:color/white"
-            android:background="@drawable/round_button"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="10dp" />
-
+            android:text="@string/trending_movies"
+            android:textSize="26sp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/trendind_tv_shows"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:layout_below="@+id/trending_movies">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trending_tv_shows"
+            android:textSize="26sp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_tv_shows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"/>
+    </LinearLayout>
 
 </RelativeLayout>
