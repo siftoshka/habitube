@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/mainBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.MainListFragment">
 
@@ -11,49 +12,79 @@
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="14dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="20dp"
         app:title="@string/app_name"
-        app:titleTextColor="@android:color/white"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        app:titleTextColor="@color/mainBackground"/>
 
-    <LinearLayout
-        android:id="@+id/trending_movies"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:padding="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/trending_movies"
-            android:textSize="26sp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_movies"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"/>
-    </LinearLayout>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/upcoming_movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upcoming_movies"
+                    android:textSize="26sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_upcoming_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/trending_movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trending_movies"
+                    android:textSize="26sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/trendind_tv_shows"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        android:layout_below="@+id/trending_movies">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/trending_tv_shows"
-            android:textSize="26sp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_tv_shows"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/trendind_tv_shows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trending_tv_shows"
+                    android:textSize="26sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_tv_shows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

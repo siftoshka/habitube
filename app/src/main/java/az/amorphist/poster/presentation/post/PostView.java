@@ -1,4 +1,4 @@
-package az.amorphist.poster.presentation.views;
+package az.amorphist.poster.presentation.post;
 
 import moxy.MvpView;
 

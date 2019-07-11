@@ -1,6 +1,5 @@
 package az.amorphist.poster.ui;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.di.modules.MovieModule;
-import az.amorphist.poster.di.modules.ShowModule;
-import az.amorphist.poster.presentation.presenters.PostPresenter;
-import az.amorphist.poster.presentation.views.PostView;
+import az.amorphist.poster.presentation.post.PostPresenter;
+import az.amorphist.poster.presentation.post.PostView;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -39,10 +37,10 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         final Bundle movieBundle = getArguments();
         final Integer postId = movieBundle.getInt("postPosition");
         final Integer showId = movieBundle.getInt("showPosition");
+        final Integer upcomingId = movieBundle.getInt("upcomingPosition");
 
         final Scope temporaryPostScope = Toothpick.openScopes( "APP_SCOPE", "POST_SCOPE");
-        temporaryPostScope.installModules(new MovieModule(postId));
-        temporaryPostScope.installModules(new ShowModule(showId));
+        temporaryPostScope.installModules(new MovieModule(postId, showId, upcomingId));
         final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
         Toothpick.closeScope("POST_SCOPE");
         return postPresenter;
@@ -75,8 +73,12 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getMovie(String image, String background, String title, String date, float rate, float views, String description) {
-        Picasso.get().load("https://image.tmdb.org/t/p/original" + image).into(posterMain);
-        Picasso.get().load("https://image.tmdb.org/t/p/original" + background).into(posterBackground);
+        Picasso.get().load("https://image.tmdb.org/t/p/original" + image)
+                .placeholder(R.drawable.progress_animation)
+                .into(posterMain);
+        Picasso.get().load("https://image.tmdb.org/t/p/original" + background)
+                .placeholder(R.drawable.progress_animation)
+                .into(posterBackground);
         posterTitle.setText(title);
         posterDate.setText(date);
         posterRate.setText(String.valueOf(rate));

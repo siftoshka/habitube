@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@color/mainBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.PostFragment">
 
@@ -15,22 +15,29 @@
         android:background="@color/colorPrimary"
         android:elevation="14dp"
         app:title="Post"
-        app:titleTextColor="@android:color/white"
+        app:titleTextColor="@color/mainBackground"
         app:navigationIcon="@drawable/ic_arrow_back" />
 
     <ImageView
         android:id="@+id/poster_background"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/splash"/>
+        android:layout_height="256dp"
+        tools:src="@mipmap/ic_launcher"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="16dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
         <ImageView
             android:id="@+id/poster_main_post"
             android:layout_width="100dp"
             android:layout_height="150dp"
-            android:src="@drawable/splash"/>
+            tools:src="@drawable/splash"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -113,14 +120,20 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:id="@+id/poster_desc"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        tools:text="Lorem"/>
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/poster_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            tools:text="Lorem"/>
+    </androidx.core.widget.NestedScrollView>
 
 
 

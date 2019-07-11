@@ -18,35 +18,35 @@ import az.amorphist.poster.R;
 import az.amorphist.poster.entities.Movie;
 import az.amorphist.poster.entities.MovieLite;
 
-public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.UpcomingHolder> {
 
-    public interface ShowItemClickListener {
+    public interface UpcomingItemClickListener {
         void onPostClicked(int position);
     }
 
     private List<MovieLite> movies;
-    private ShowItemClickListener clickListener;
+    private UpcomingItemClickListener clickListener;
 
-    public ShowAdapter(@NonNull ShowItemClickListener clickListener) {
+    public UpcomingAdapter(@NonNull UpcomingItemClickListener clickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
-    public ShowHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public UpcomingHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post, viewGroup, false);
-        return new ShowHolder(view);
+        return new UpcomingHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShowHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull UpcomingHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
         Picasso.get().load("https://image.tmdb.org/t/p/original" + movie.getMovieImage())
                 .resize(200,300)
                 .placeholder(R.drawable.progress_animation)
                 .into(holder.posterImage);
-        holder.posterTitle.setText(movie.getShowTitle());
+        holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
     }
 
     @Override
-    public void onViewRecycled(@NonNull ShowHolder holder) {
+    public void onViewRecycled(@NonNull UpcomingHolder holder) {
         holder.posterTitle.setText(null);
         holder.posterImage.setOnClickListener(null);
     }
@@ -73,12 +73,12 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
         notifyDataSetChanged();
     }
 
-    static class ShowHolder extends RecyclerView.ViewHolder {
+    static class UpcomingHolder extends RecyclerView.ViewHolder {
 
         ImageView posterImage;
         TextView posterTitle;
 
-        ShowHolder(@NonNull View itemView) {
+        UpcomingHolder(@NonNull View itemView) {
             super(itemView);
             this.posterImage = itemView.findViewById(R.id.poster_image);
             this.posterTitle = itemView.findViewById(R.id.poster_main_text);

@@ -50,4 +50,21 @@ public final class Screens {
             return fragment;
         }
     }
+
+    public static final class PostUpcomingScreen extends SupportAppScreen {
+        private Integer upcomingID;
+
+        public PostUpcomingScreen(Integer tvShowID) {
+            this.upcomingID = tvShowID;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final PostFragment fragment = new PostFragment();
+            final Bundle bundle = new Bundle();
+            bundle.putInt("upcomingPosition", upcomingID);
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
 }

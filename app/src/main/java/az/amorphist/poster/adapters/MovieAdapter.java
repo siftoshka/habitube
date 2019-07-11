@@ -16,6 +16,7 @@ import java.util.List;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.Movie;
+import az.amorphist.poster.entities.MovieLite;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
@@ -23,7 +24,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         void onPostClicked(int position);
     }
 
-    private List<Movie> movies;
+    private List<MovieLite> movies;
     private MovieItemClickListener clickListener;
 
     public MovieAdapter(@NonNull MovieItemClickListener clickListener) {
@@ -40,8 +41,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
-        final Movie movie = this.movies.get(position);
-        Picasso.get().load("https://image.tmdb.org/t/p/original" + movie.getMovieImage()).resize(200,300).into(holder.posterImage);
+        final MovieLite movie = this.movies.get(position);
+        Picasso.get().load("https://image.tmdb.org/t/p/original" + movie.getMovieImage())
+                .resize(200,300)
+                .placeholder(R.drawable.progress_animation)
+                .into(holder.posterImage);
         holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         return movies.size();
     }
 
-    public void addAllMovies(List<Movie> movies) {
+    public void addAllMovies(List<MovieLite> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         notifyDataSetChanged();

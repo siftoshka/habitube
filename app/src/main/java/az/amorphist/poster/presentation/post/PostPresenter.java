@@ -1,15 +1,13 @@
-package az.amorphist.poster.presentation.presenters;
-
-import android.util.Log;
+package az.amorphist.poster.presentation.post;
 
 import javax.inject.Inject;
 
 import az.amorphist.poster.di.providers.ApiProvider;
 import az.amorphist.poster.di.qualifiers.PostId;
 import az.amorphist.poster.di.qualifiers.ShowId;
+import az.amorphist.poster.di.qualifiers.UpcomingId;
 import az.amorphist.poster.entities.Movie;
 import az.amorphist.poster.entities.MoviePager;
-import az.amorphist.poster.presentation.views.PostView;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import retrofit2.Call;
@@ -17,20 +15,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.terrakok.cicerone.Router;
 
-import static az.amorphist.poster.App.apiKey;
+import static az.amorphist.poster.App.API_KEY;
 
 @InjectViewState
 public class PostPresenter extends MvpPresenter<PostView> {
 
     private final Router router;
     private ApiProvider provider;
-    private final Integer postId;
-    private final Integer showId;
+    private final Integer upcomingId, postId, showId;
 
     @Inject
-    public PostPresenter(Router router, ApiProvider provider, @PostId Integer postId, @ShowId Integer showId) {
+    public PostPresenter(Router router, ApiProvider provider, @UpcomingId Integer upcomingId, @PostId Integer postId, @ShowId Integer showId) {
         this.router = router;
         this.provider = provider;
+        this.upcomingId = upcomingId;
         this.postId = postId;
         this.showId = showId;
     }
@@ -38,19 +36,45 @@ public class PostPresenter extends MvpPresenter<PostView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        if(showId != 0) {
-            getTVShow();
-        } else {
+        if(upcomingId != 0) {
+            getUpcomingMovie();
+        } else if(postId != 0){
             getMovie();
+        } else {
+            getTVShow();
         }
     }
 
-    private void getMovie() {
-        provider.get().getTrendingMovies(apiKey).enqueue(new Callback<MoviePager>() {
+    private void getUpcomingMovie() {
+        provider.get().getUpcomingMovies(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override
             public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
                 MoviePager pager = response.body();
-                Movie movie = pager.getResults().get(postId);
+                Movie movie = pager.getResults().get(upcomingId - 1);
+                getViewState().getMovie(
+                        movie.getMovieImage(),
+                        movie.getMovieBackgroundImage(),
+                        movie.getMovieTitle(),
+                        movie.getMovieDate(),
+                        movie.getMovieRate(),
+                        movie.getMovieViews(),
+                        movie.getMovieBody()
+                );
+            }
+
+            @Override
+            public void onFailure(Call<MoviePager> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getMovie() {
+        provider.get().getTrendingMovies(API_KEY).enqueue(new Callback<MoviePager>() {
+            @Override
+            public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
+                MoviePager pager = response.body();
+                Movie movie = pager.getResults().get(postId - 1);
                 getViewState().getMovie(
                         movie.getMovieImage(),
                         movie.getMovieBackgroundImage(),
@@ -68,11 +92,11 @@ public class PostPresenter extends MvpPresenter<PostView> {
         });
     }
     private void getTVShow() {
-        provider.get().getTrendingTVShows(apiKey).enqueue(new Callback<MoviePager>() {
+        provider.get().getTrendingTVShows(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override
             public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
                 MoviePager pager = response.body();
-                Movie movie = pager.getResults().get(showId);
+                Movie movie = pager.getResults().get(showId - 1);
                 getViewState().getMovie(
                         movie.getMovieImage(),
                         movie.getMovieBackgroundImage(),
