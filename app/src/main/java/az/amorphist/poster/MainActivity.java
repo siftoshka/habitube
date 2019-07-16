@@ -23,7 +23,7 @@ public class MainActivity extends MvpAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toothpick.inject(this, Toothpick.openScope("APP_SCOPE"));
-        router.newRootScreen(new Screens.MainListScreen());
+        router.newRootScreen(new Screens.ExploreScreen());
     }
 
     @Override

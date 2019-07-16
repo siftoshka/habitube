@@ -28,10 +28,9 @@ import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
 import az.amorphist.poster.adapters.ShowAdapter;
 import az.amorphist.poster.adapters.UpcomingAdapter;
-import az.amorphist.poster.entities.Movie;
 import az.amorphist.poster.entities.MovieLite;
-import az.amorphist.poster.presentation.main.MainListPresenter;
-import az.amorphist.poster.presentation.main.MainListView;
+import az.amorphist.poster.presentation.explore.ExplorePresenter;
+import az.amorphist.poster.presentation.explore.ExploreView;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -39,10 +38,10 @@ import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.DEV_CONTACT;
 
-public class MainListFragment extends MvpAppCompatFragment implements MainListView, Toolbar.OnMenuItemClickListener {
+public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
 
     @Inject Context context;
-    @InjectPresenter MainListPresenter mainListPresenter;
+    @InjectPresenter ExplorePresenter mainListPresenter;
 
     private Toolbar toolbar;
     private Dialog aboutDialog;
@@ -52,8 +51,8 @@ public class MainListFragment extends MvpAppCompatFragment implements MainListVi
     private UpcomingAdapter upcomingAdapter;
 
     @ProvidePresenter
-    MainListPresenter mainListPresenter() {
-        return Toothpick.openScope("APP_SCOPE").getInstance(MainListPresenter.class);
+    ExplorePresenter mainListPresenter() {
+        return Toothpick.openScope("APP_SCOPE").getInstance(ExplorePresenter.class);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class MainListFragment extends MvpAppCompatFragment implements MainListVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
         toolbar = view.findViewById(R.id.main_toolbar);
         recyclerViewUpcoming = view.findViewById(R.id.recycler_view_upcoming_movies);
         recyclerViewMovies = view.findViewById(R.id.recycler_view_movies);

@@ -6,23 +6,23 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MoviePager {
-    @SerializedName("page") @Expose private Integer page;
+    @SerializedName("page") @Expose private int page;
     @SerializedName("results") @Expose private List<Movie> results = null;
-    @SerializedName("total_pages") @Expose private Integer totalPages;
-    @SerializedName("total_results") @Expose private Integer totalResults;
+    @SerializedName("total_pages") @Expose private int totalPages;
+    @SerializedName("total_results") @Expose private int totalResults;
 
-    public MoviePager(Integer page, List<Movie> results, Integer totalPages, Integer totalResults) {
+    public MoviePager(int page, List<Movie> results, int totalPages, int totalResults) {
         this.page = page;
         this.results = results;
         this.totalPages = totalPages;
         this.totalResults = totalResults;
     }
 
-    public Integer getPage() {
+    public int getPage() {
         return page;
     }
 
-    public void setPage(Integer page) {
+    public void setPage(int page) {
         this.page = page;
     }
 
@@ -34,19 +34,19 @@ public class MoviePager {
         this.results = results;
     }
 
-    public Integer getTotalPages() {
+    public int getTotalPages() {
         return totalPages;
     }
 
-    public void setTotalPages(Integer totalPages) {
+    public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
     }
 
-    public Integer getTotalResults() {
+    public int getTotalResults() {
         return totalResults;
     }
 
-    public void setTotalResults(Integer totalResults) {
+    public void setTotalResults(int totalResults) {
         this.totalResults = totalResults;
     }
 }

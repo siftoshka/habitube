@@ -1,5 +1,6 @@
 package az.amorphist.poster.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+
+import javax.inject.Inject;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.di.modules.MovieModule;
@@ -23,14 +28,18 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static az.amorphist.poster.App.IMAGE_URL;
+
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
+    @Inject Context context;
     private Toolbar toolbar;
     private ImageView posterBackground, posterMain;
     private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
 
 
-    @InjectPresenter PostPresenter postPresenter;
+    @InjectPresenter
+    PostPresenter postPresenter;
 
     @ProvidePresenter
     PostPresenter postPresenter() {
@@ -39,11 +48,17 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         final Integer showId = movieBundle.getInt("showPosition");
         final Integer upcomingId = movieBundle.getInt("upcomingPosition");
 
-        final Scope temporaryPostScope = Toothpick.openScopes( "APP_SCOPE", "POST_SCOPE");
+        final Scope temporaryPostScope = Toothpick.openScopes("APP_SCOPE", "POST_SCOPE");
         temporaryPostScope.installModules(new MovieModule(postId, showId, upcomingId));
         final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
         Toothpick.closeScope("POST_SCOPE");
         return postPresenter;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Toothpick.inject(this, Toothpick.openScope("APP_SCOPE"));
     }
 
     @Override
@@ -73,10 +88,16 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getMovie(String image, String background, String title, String date, float rate, float views, String description) {
-        Picasso.get().load("https://image.tmdb.org/t/p/original" + image)
+        Glide.with(context)
+                .load(IMAGE_URL + image)
+                .transition(new DrawableTransitionOptions().crossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
                 .into(posterMain);
-        Picasso.get().load("https://image.tmdb.org/t/p/original" + background)
+        Glide.with(context)
+                .load(IMAGE_URL + background)
+                .transition(new DrawableTransitionOptions().crossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
                 .into(posterBackground);
         posterTitle.setText(title);

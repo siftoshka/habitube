@@ -13,5 +13,7 @@
     <string name="about_menu">About</string>
     <string name="close_dialog_text">CLOSE</string>
     <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="search_movies_menu">Search Movies</string>
+    <string name="settings_menu">Settings</string>
 
 </resources>

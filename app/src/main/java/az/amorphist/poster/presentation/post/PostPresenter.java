@@ -36,9 +36,9 @@ public class PostPresenter extends MvpPresenter<PostView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        if(upcomingId != 0) {
+        if (upcomingId != 0) {
             getUpcomingMovie();
-        } else if(postId != 0){
+        } else if (postId != 0) {
             getMovie();
         } else {
             getTVShow();
@@ -91,6 +91,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
             }
         });
     }
+
     private void getTVShow() {
         provider.get().getTrendingTVShows(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override

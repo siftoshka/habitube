@@ -4,16 +4,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import az.amorphist.poster.ui.MainListFragment;
+import az.amorphist.poster.ui.ExploreFragment;
 import az.amorphist.poster.ui.PostFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
 
-    public static final class MainListScreen extends SupportAppScreen {
+    public static final class ExploreScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {
-            return new MainListFragment();
+            return new ExploreFragment();
         }
     }
 
