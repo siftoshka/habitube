@@ -37,4 +37,13 @@ public interface MovieDBApi {
     Call<MoviePagerLite> getTrendingTVShowsLite(
             @Query("api_key") String apiKey
     );
+
+    @GET("search/multi")
+    Call<MoviePagerLite> getSearchResults (
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("query") String searchQuery,
+            @Query("page") int page,
+            @Query("include_adult") boolean isAdult
+    );
 }

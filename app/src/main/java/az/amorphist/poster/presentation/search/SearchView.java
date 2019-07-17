@@ -1,4 +1,4 @@
-package az.amorphist.poster.presentation.explore;
+package az.amorphist.poster.presentation.search;
 
 import java.util.List;
 
@@ -9,10 +9,8 @@ import moxy.viewstate.strategy.OneExecutionStateStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
-public interface ExploreView extends MvpView {
-    void getUpcomingMovieList(List<MovieLite> upcomingList);
-    void getMovieList(List<MovieLite> movies);
-    void getTVShowList(List<MovieLite> tvShows);
+public interface SearchView extends MvpView {
+    void getSearchedMediaList(List<MovieLite> searchResult);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void unsuccessfulQueryError();

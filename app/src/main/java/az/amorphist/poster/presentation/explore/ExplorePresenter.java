@@ -107,4 +107,8 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
     public void goToDetailedUpcomingScreen(Integer id) {
         router.navigateTo(new Screens.PostUpcomingScreen(id));
     }
+
+    public void goToSearchScreen() {
+        router.navigateTo(new Screens.SearchScreen());
+    }
 }

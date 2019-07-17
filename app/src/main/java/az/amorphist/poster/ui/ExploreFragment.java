@@ -41,7 +41,7 @@ import static az.amorphist.poster.App.DEV_CONTACT;
 public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
 
     @Inject Context context;
-    @InjectPresenter ExplorePresenter mainListPresenter;
+    @InjectPresenter ExplorePresenter explorePresenter;
 
     private Toolbar toolbar;
     private Dialog aboutDialog;
@@ -51,7 +51,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     private UpcomingAdapter upcomingAdapter;
 
     @ProvidePresenter
-    ExplorePresenter mainListPresenter() {
+    ExplorePresenter explorePresenter() {
         return Toothpick.openScope("APP_SCOPE").getInstance(ExplorePresenter.class);
     }
 
@@ -62,25 +62,25 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         upcomingAdapter = new UpcomingAdapter(new UpcomingAdapter.UpcomingItemClickListener() {
             @Override
             public void onPostClicked(int position) {
-                mainListPresenter.goToDetailedUpcomingScreen(position + 1);
+                explorePresenter.goToDetailedUpcomingScreen(position + 1);
             }
         });
         movieAdapter = new MovieAdapter(new MovieAdapter.MovieItemClickListener() {
             @Override
             public void onPostClicked(int position) {
-                mainListPresenter.goToDetailedMovieScreen(position + 1);
+                explorePresenter.goToDetailedMovieScreen(position + 1);
             }
         });
         showAdapter = new ShowAdapter(new ShowAdapter.ShowItemClickListener() {
             @Override
             public void onPostClicked(int position) {
-                mainListPresenter.goToDetailedShowScreen(position + 1);
+                explorePresenter.goToDetailedShowScreen(position + 1);
             }
         });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
         toolbar = view.findViewById(R.id.main_toolbar);
@@ -139,13 +139,16 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
                 break;
             case R.id.about_us_menu:
                 showAboutDialog();
+                break;
+            case R.id.search_movies:
+                explorePresenter.goToSearchScreen();
         }
         return false;
     }
 
     private void showAboutDialog() {
         ViewGroup viewGroup = getView().findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.about_dialog, viewGroup, false);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.about_dialog, viewGroup, false);
         aboutDialog = new Dialog(getContext());
         aboutDialog.setContentView(dialogView);
         aboutDialog.show();

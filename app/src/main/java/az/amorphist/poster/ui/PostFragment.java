@@ -62,7 +62,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         toolbar = view.findViewById(R.id.post_toolbar);

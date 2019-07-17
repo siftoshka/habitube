@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import az.amorphist.poster.ui.ExploreFragment;
 import az.amorphist.poster.ui.PostFragment;
+import az.amorphist.poster.ui.SearchFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
@@ -65,6 +66,13 @@ public final class Screens {
             bundle.putInt("upcomingPosition", upcomingID);
             fragment.setArguments(bundle);
             return fragment;
+        }
+    }
+
+    public static final class SearchScreen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return new SearchFragment();
         }
     }
 }

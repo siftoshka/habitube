@@ -4,9 +4,8 @@ import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 
-
+@StateStrategyType(AddToEndSingleStrategy.class)
 public interface PostView extends MvpView {
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void getMovie(
             String image,
             String background,

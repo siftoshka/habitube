@@ -6,26 +6,30 @@ import com.google.gson.annotations.SerializedName;
 public class Movie {
     @SerializedName("id") @Expose private int movieId;
     @SerializedName("original_title") @Expose private String movieTitle;
-    @SerializedName("original_name") @Expose private String showTitle;
+    @SerializedName("name") @Expose private String showTitle;
     @SerializedName("overview") @Expose private String movieBody;
     @SerializedName("poster_path") @Expose private String movieImage;
+    @SerializedName("profile_path") @Expose private String starImage;
     @SerializedName("backdrop_path") @Expose private String movieBackgroundImage;
     @SerializedName("release_date") @Expose private String movieDate;
     @SerializedName("first_air_date") @Expose private String showDate;
     @SerializedName("vote_average") @Expose private float movieRate;
     @SerializedName("popularity") @Expose private float movieViews;
+    @SerializedName("media_type") @Expose private String mediaType;
 
-    public Movie(int movieId, String movieTitle, String showTitle, String movieBody, String movieImage, String movieBackgroundImage, String movieDate, String showDate, float movieRate, float movieViews) {
+    public Movie(int movieId, String movieTitle, String showTitle, String movieBody, String movieImage, String starImage, String movieBackgroundImage, String movieDate, String showDate, float movieRate, float movieViews, String mediaType) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.showTitle = showTitle;
         this.movieBody = movieBody;
         this.movieImage = movieImage;
+        this.starImage = starImage;
         this.movieBackgroundImage = movieBackgroundImage;
         this.movieDate = movieDate;
         this.showDate = showDate;
         this.movieRate = movieRate;
         this.movieViews = movieViews;
+        this.mediaType = mediaType;
     }
 
     public int getMovieId() {
@@ -68,6 +72,14 @@ public class Movie {
         this.movieImage = movieImage;
     }
 
+    public String getStarImage() {
+        return starImage;
+    }
+
+    public void setStarImage(String starImage) {
+        this.starImage = starImage;
+    }
+
     public String getMovieBackgroundImage() {
         return movieBackgroundImage;
     }
@@ -108,6 +120,14 @@ public class Movie {
         this.movieViews = movieViews;
     }
 
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,21 +141,5 @@ public class Movie {
     @Override
     public int hashCode() {
         return movieId;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "movieId=" + movieId +
-                ", movieTitle='" + movieTitle + '\'' +
-                ", showTitle='" + showTitle + '\'' +
-                ", movieBody='" + movieBody + '\'' +
-                ", movieImage='" + movieImage + '\'' +
-                ", movieBackgroundImage='" + movieBackgroundImage + '\'' +
-                ", movieDate='" + movieDate + '\'' +
-                ", showDate='" + showDate + '\'' +
-                ", movieRate=" + movieRate +
-                ", movieViews=" + movieViews +
-                '}';
     }
 }
