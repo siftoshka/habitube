@@ -1,5 +1,7 @@
 package az.amorphist.poster.presentation.post;
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import az.amorphist.poster.di.providers.ApiProvider;
@@ -48,7 +50,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
     private void getUpcomingMovie() {
         provider.get().getUpcomingMovies(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override
-            public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
+            public void onResponse(@NonNull Call<MoviePager> call, @NonNull Response<MoviePager> response) {
                 MoviePager pager = response.body();
                 Movie movie = pager.getResults().get(upcomingId - 1);
                 getViewState().getMovie(
@@ -63,7 +65,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePager> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePager> call, @NonNull Throwable t) {
 
             }
         });
@@ -72,7 +74,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
     private void getMovie() {
         provider.get().getTrendingMovies(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override
-            public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
+            public void onResponse(@NonNull Call<MoviePager> call, @NonNull Response<MoviePager> response) {
                 MoviePager pager = response.body();
                 Movie movie = pager.getResults().get(postId - 1);
                 getViewState().getMovie(
@@ -87,7 +89,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePager> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePager> call, @NonNull Throwable t) {
             }
         });
     }
@@ -95,7 +97,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
     private void getTVShow() {
         provider.get().getTrendingTVShows(API_KEY).enqueue(new Callback<MoviePager>() {
             @Override
-            public void onResponse(Call<MoviePager> call, Response<MoviePager> response) {
+            public void onResponse(@NonNull Call<MoviePager> call, @NonNull Response<MoviePager> response) {
                 MoviePager pager = response.body();
                 Movie movie = pager.getResults().get(showId - 1);
                 getViewState().getMovie(
@@ -110,7 +112,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePager> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePager> call, @NonNull Throwable t) {
             }
         });
     }

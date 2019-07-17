@@ -47,7 +47,7 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePagerLite> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
 
             }
         });

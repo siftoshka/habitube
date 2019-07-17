@@ -1,5 +1,7 @@
 package az.amorphist.poster.presentation.explore;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,8 +42,8 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
     private void addUpcomingMovies() {
         provider.get().getUpcomingMoviesLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
             @Override
-            public void onResponse(Call<MoviePagerLite> call, Response<MoviePagerLite> response) {
-                if(response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     MoviePagerLite pager = response.body();
                     List<MovieLite> upcomingMovies = pager.getResults();
                     getViewState().getUpcomingMovieList(upcomingMovies);
@@ -51,17 +53,18 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePagerLite> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
                 getViewState().unsuccessfulQueryError();
             }
         });
 
     }
+
     private void addMovies() {
         provider.get().getTrendingMoviesLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
             @Override
-            public void onResponse(Call<MoviePagerLite> call, Response<MoviePagerLite> response) {
-                if(response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     MoviePagerLite pager = response.body();
                     List<MovieLite> movies = pager.getResults();
                     getViewState().getMovieList(movies);
@@ -71,16 +74,17 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePagerLite> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
                 getViewState().unsuccessfulQueryError();
             }
         });
     }
+
     private void addShows() {
         provider.get().getTrendingTVShowsLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
             @Override
-            public void onResponse(Call<MoviePagerLite> call, Response<MoviePagerLite> response) {
-                if(response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     MoviePagerLite pager = response.body();
                     List<MovieLite> tvShows = pager.getResults();
                     getViewState().getTVShowList(tvShows);
@@ -90,7 +94,7 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
             }
 
             @Override
-            public void onFailure(Call<MoviePagerLite> call, Throwable t) {
+            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
                 getViewState().unsuccessfulQueryError();
             }
         });
