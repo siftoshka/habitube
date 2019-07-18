@@ -1,45 +1,46 @@
 package az.amorphist.poster.server;
 
-import az.amorphist.poster.entities.MoviePager;
-import az.amorphist.poster.entities.MoviePagerLite;
-import retrofit2.Call;
+import az.amorphist.poster.entities.movie.MoviePager;
+import az.amorphist.poster.entities.movielite.MoviePagerLite;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MovieDBApi {
 
     @GET("movie/upcoming")
-    Call<MoviePager> getUpcomingMovies(
+    Single<MoviePager> getUpcomingMovies(
             @Query("api_key") String apiKey
     );
 
     @GET("movie/upcoming")
-    Call<MoviePagerLite> getUpcomingMoviesLite(
+    Single<MoviePagerLite> getUpcomingMoviesLite(
             @Query("api_key") String apiKey
     );
 
     @GET("trending/movie/week")
-    Call<MoviePager> getTrendingMovies(
+    Single<MoviePager> getTrendingMovies(
             @Query("api_key") String apiKey
     );
 
     @GET("trending/movie/week")
-    Call<MoviePagerLite> getTrendingMoviesLite(
+    Single<MoviePagerLite> getTrendingMoviesLite(
             @Query("api_key") String apiKey
     );
 
     @GET("trending/tv/week")
-    Call<MoviePager> getTrendingTVShows(
+    Single<MoviePager> getTrendingTVShows(
             @Query("api_key") String apiKey
     );
 
     @GET("trending/tv/week")
-    Call<MoviePagerLite> getTrendingTVShowsLite(
+    Single<MoviePagerLite> getTrendingTVShowsLite(
             @Query("api_key") String apiKey
     );
 
     @GET("search/multi")
-    Call<MoviePagerLite> getSearchResults (
+    Observable<MoviePagerLite> getSearchResults (
             @Query("api_key") String apiKey,
             @Query("language") String language,
             @Query("query") String searchQuery,

@@ -2,7 +2,7 @@ package az.amorphist.poster.presentation.explore;
 
 import java.util.List;
 
-import az.amorphist.poster.entities.MovieLite;
+import az.amorphist.poster.entities.movielite.MovieLite;
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;
 import moxy.viewstate.strategy.OneExecutionStateStrategy;

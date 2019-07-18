@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,11 +31,15 @@ import toothpick.Scope;
 import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.IMAGE_URL;
+import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.di.DI.POST_SCOPE;
 
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Inject Context context;
     private Toolbar toolbar;
+    private RelativeLayout mainScreen;
+    private LinearLayout loadingScreen, errorScreen;
     private ImageView posterBackground, posterMain;
     private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
 
@@ -48,17 +54,17 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         final Integer showId = movieBundle.getInt("showPosition");
         final Integer upcomingId = movieBundle.getInt("upcomingPosition");
 
-        final Scope temporaryPostScope = Toothpick.openScopes("APP_SCOPE", "POST_SCOPE");
+        final Scope temporaryPostScope = Toothpick.openScopes(APP_SCOPE, POST_SCOPE);
         temporaryPostScope.installModules(new MovieModule(postId, showId, upcomingId));
         final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
-        Toothpick.closeScope("POST_SCOPE");
+        Toothpick.closeScope(POST_SCOPE);
         return postPresenter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope("APP_SCOPE"));
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @Override
@@ -73,6 +79,9 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         posterRate = view.findViewById(R.id.poster_rate);
         posterViews = view.findViewById(R.id.poster_views);
         posterDesc = view.findViewById(R.id.poster_desc);
+        loadingScreen = view.findViewById(R.id.loading_screen);
+        mainScreen = view.findViewById(R.id.main_screen);
+        errorScreen = view.findViewById(R.id.error_screen);
         return view;
     }
 
@@ -105,5 +114,23 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         posterRate.setText(String.valueOf(rate));
         posterViews.setText(String.valueOf(views));
         posterDesc.setText(description);
+    }
+
+    @Override
+    public void showProgress(boolean loadingState) {
+        if(loadingState){
+            loadingScreen.setVisibility(View.VISIBLE);
+            mainScreen.setVisibility(View.GONE);
+        } else {
+            loadingScreen.setVisibility(View.GONE);
+            mainScreen.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showErrorScreen() {
+        loadingScreen.setVisibility(View.GONE);
+        mainScreen.setVisibility(View.GONE);
+        errorScreen.setVisibility(View.VISIBLE);
     }
 }

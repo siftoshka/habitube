@@ -18,149 +18,195 @@
         app:title="Post"
         app:titleTextColor="@color/mainBackground" />
 
-    <ImageView
-        android:id="@+id/poster_background"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:background="@color/colorPrimary"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/post_toolbar"
-        tools:src="@mipmap/ic_launcher" />
-
     <LinearLayout
-        android:id="@+id/post_card_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_button"
-        android:backgroundTint="@color/mainBackground"
-        android:layout_below="@id/poster_background"
-        android:elevation="16dp"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/poster_main_post"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
-            android:background="@color/colorPrimary"
-            tools:src="@drawable/splash" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_poster_name" />
-
-                <TextView
-                    android:id="@+id/poster_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:singleLine="true"
-                    android:textSize="24sp"
-                    tools:text="AVENGERS" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_poster_date" />
-
-                <TextView
-                    android:id="@+id/poster_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:textSize="18sp"
-                    tools:text="DATE" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_poster_rate" />
-
-                <TextView
-                    android:id="@+id/poster_rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:textSize="18sp"
-                    tools:text="RATE" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_poster_views" />
-
-                <TextView
-                    android:id="@+id/poster_views"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:textSize="18sp"
-                    tools:text="VIEWS" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_description"
+        android:id="@+id/loading_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/post_card_layout">
+        android:gravity="center_horizontal"
+        android:visibility="visible">
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/progress_animation" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/error_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_loading" />
         <TextView
-            android:id="@+id/poster_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_text_title"
+            android:textSize="36sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_text_body"
+            android:textSize="24sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBackground"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/poster_background"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/post_card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/poster_background"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="-30dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="20sp"
-            tools:text="Lorem" />
-    </androidx.core.widget.NestedScrollView>
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/mainBackground"
+            android:elevation="16dp"
+            android:padding="10dp">
 
+            <ImageView
+                android:id="@+id/poster_main_post"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/splash" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_name" />
+
+                    <TextView
+                        android:id="@+id/poster_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:singleLine="true"
+                        android:textSize="24sp"
+                        tools:text="AVENGERS" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_poster_date" />
+
+                    <TextView
+                        android:id="@+id/poster_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        tools:text="DATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_rate" />
+
+                    <TextView
+                        android:id="@+id/poster_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        tools:text="RATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_views" />
+
+                    <TextView
+                        android:id="@+id/poster_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        tools:text="VIEWS" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/post_card_layout">
+
+            <TextView
+                android:id="@+id/poster_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                tools:text="Lorem" />
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 </RelativeLayout>

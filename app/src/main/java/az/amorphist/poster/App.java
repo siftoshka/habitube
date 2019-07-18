@@ -7,6 +7,8 @@ import az.amorphist.poster.di.modules.ServerModule;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static az.amorphist.poster.di.DI.APP_SCOPE;
+
 public class App extends Application {
 
     public static final String DEV_CONTACT = "https://t.me/amorphist";
@@ -23,7 +25,7 @@ public class App extends Application {
     }
 
     private void initToothPick() {
-        final Scope scope = Toothpick.openScope("APP_SCOPE");
+        final Scope scope = Toothpick.openScope(APP_SCOPE);
         scope.installModules(new AppModule(this));
         scope.installModules(new ServerModule());
     }

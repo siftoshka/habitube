@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import az.amorphist.poster.R;
-import az.amorphist.poster.entities.MovieLite;
+import az.amorphist.poster.entities.movielite.MovieLite;
 
 import static az.amorphist.poster.App.IMAGE_URL;
 
@@ -63,7 +63,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
     @Override
     public void onViewRecycled(@NonNull UpcomingHolder holder) {
         holder.posterTitle.setText(null);
-        holder.posterImage.setOnClickListener(null);
+        holder.posterLayout.setOnClickListener(null);
     }
 
     @Override

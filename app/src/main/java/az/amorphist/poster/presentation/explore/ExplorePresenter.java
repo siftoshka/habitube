@@ -1,20 +1,19 @@
 package az.amorphist.poster.presentation.explore;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
 import az.amorphist.poster.di.providers.ApiProvider;
-import az.amorphist.poster.entities.MovieLite;
-import az.amorphist.poster.entities.MoviePagerLite;
+import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.movielite.MoviePagerLite;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ru.terrakok.cicerone.Router;
 
 import static az.amorphist.poster.App.API_KEY;
@@ -40,64 +39,73 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
     }
 
     private void addUpcomingMovies() {
-        provider.get().getUpcomingMoviesLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    MoviePagerLite pager = response.body();
-                    List<MovieLite> upcomingMovies = pager.getResults();
-                    getViewState().getUpcomingMovieList(upcomingMovies);
-                } else {
-                    getViewState().unsuccessfulQueryError();
-                }
-            }
+        provider.get().getUpcomingMoviesLite(API_KEY)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MoviePagerLite>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
-                getViewState().unsuccessfulQueryError();
-            }
-        });
+                    }
 
+                    @Override
+                    public void onSuccess(MoviePagerLite moviePagerLite) {
+                        List<MovieLite> upcomingMovies = moviePagerLite.getResults();
+                        getViewState().getUpcomingMovieList(upcomingMovies);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getViewState().unsuccessfulQueryError();
+                    }
+                });
     }
 
     private void addMovies() {
-        provider.get().getTrendingMoviesLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    MoviePagerLite pager = response.body();
-                    List<MovieLite> movies = pager.getResults();
-                    getViewState().getMovieList(movies);
-                } else {
-                    getViewState().unsuccessfulQueryError();
-                }
-            }
+        provider.get().getTrendingMoviesLite(API_KEY)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MoviePagerLite>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
-                getViewState().unsuccessfulQueryError();
-            }
-        });
+                    }
+
+                    @Override
+                    public void onSuccess(MoviePagerLite moviePagerLite) {
+                        List<MovieLite> movies = moviePagerLite.getResults();
+                        getViewState().getMovieList(movies);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getViewState().unsuccessfulQueryError();
+                    }
+                });
     }
 
-    private void addShows() {
-        provider.get().getTrendingTVShowsLite(API_KEY).enqueue(new Callback<MoviePagerLite>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    MoviePagerLite pager = response.body();
-                    List<MovieLite> tvShows = pager.getResults();
-                    getViewState().getTVShowList(tvShows);
-                } else {
-                    getViewState().unsuccessfulQueryError();
-                }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
-                getViewState().unsuccessfulQueryError();
-            }
-        });
+    private void addShows() {
+        provider.get().getTrendingTVShowsLite(API_KEY)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<MoviePagerLite>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(MoviePagerLite moviePagerLite) {
+                        List<MovieLite> tvShows = moviePagerLite.getResults();
+                        getViewState().getTVShowList(tvShows);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getViewState().unsuccessfulQueryError();
+                    }
+                });
     }
 
     public void goToDetailedMovieScreen(Integer id) {

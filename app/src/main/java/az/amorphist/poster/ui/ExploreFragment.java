@@ -28,19 +28,22 @@ import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
 import az.amorphist.poster.adapters.ShowAdapter;
 import az.amorphist.poster.adapters.UpcomingAdapter;
-import az.amorphist.poster.entities.MovieLite;
+import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.presentation.explore.ExplorePresenter;
 import az.amorphist.poster.presentation.explore.ExploreView;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
+import ru.terrakok.cicerone.NavigatorHolder;
 import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.DEV_CONTACT;
+import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
 
     @Inject Context context;
+    @Inject NavigatorHolder navigatorHolder;
     @InjectPresenter ExplorePresenter explorePresenter;
 
     private Toolbar toolbar;
@@ -52,13 +55,14 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
-        return Toothpick.openScope("APP_SCOPE").getInstance(ExplorePresenter.class);
+        return Toothpick.openScope(APP_SCOPE).getInstance(ExplorePresenter.class);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope("APP_SCOPE"));
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
+
         upcomingAdapter = new UpcomingAdapter(new UpcomingAdapter.UpcomingItemClickListener() {
             @Override
             public void onPostClicked(int position) {
@@ -113,6 +117,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewTVShows.setHasFixedSize(true);
         recyclerViewTVShows.setAdapter(showAdapter);
     }
+
 
     @Override
     public void getUpcomingMovieList(List<MovieLite> upcomingList) {

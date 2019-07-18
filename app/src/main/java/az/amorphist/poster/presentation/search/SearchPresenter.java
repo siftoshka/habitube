@@ -1,20 +1,18 @@
 package az.amorphist.poster.presentation.search;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import az.amorphist.poster.Screens;
 import az.amorphist.poster.di.providers.ApiProvider;
-import az.amorphist.poster.entities.MovieLite;
-import az.amorphist.poster.entities.MoviePagerLite;
+import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.movielite.MoviePagerLite;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ru.terrakok.cicerone.Router;
 
 import static az.amorphist.poster.App.API_KEY;
@@ -33,24 +31,31 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
     }
 
     public void searchMedia(String queryName) {
-        provider.get().getSearchResults(API_KEY, APP_LANG, queryName, 1, false).enqueue(new Callback<MoviePagerLite>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePagerLite> call, @NonNull Response<MoviePagerLite> response) {
-                if (response.isSuccessful()) {
-                    MoviePagerLite pager = response.body();
-                    List<MovieLite> results = pager.getResults();
-                    getViewState().getSearchedMediaList(results);
-                } else {
-                    getViewState().unsuccessfulQueryError();
-                }
+        provider.get().getSearchResults(API_KEY, APP_LANG, queryName, 1, false)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MoviePagerLite>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onFailure(@NonNull Call<MoviePagerLite> call, @NonNull Throwable t) {
+                    @Override
+                    public void onNext(MoviePagerLite moviePagerLite) {
+                        List<MovieLite> results = moviePagerLite.getResults();
+                        getViewState().getSearchedMediaList(results);
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void goBack() {

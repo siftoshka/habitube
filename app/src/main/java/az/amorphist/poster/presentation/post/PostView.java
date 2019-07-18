@@ -15,4 +15,6 @@ public interface PostView extends MvpView {
             float views,
             String description
     );
+    void showProgress(boolean loadingState);
+    void showErrorScreen();
 }

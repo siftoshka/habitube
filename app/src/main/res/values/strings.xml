@@ -15,5 +15,7 @@
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="search_movies_menu">Search Movies</string>
     <string name="settings_menu">Settings</string>
+    <string name="error_text_title">Sorry!</string>
+    <string name="error_text_body">Something went wrong :(</string>
 
 </resources>

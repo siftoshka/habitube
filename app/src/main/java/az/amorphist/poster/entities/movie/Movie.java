@@ -1,4 +1,4 @@
-package az.amorphist.poster.entities;
+package az.amorphist.poster.entities.movie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

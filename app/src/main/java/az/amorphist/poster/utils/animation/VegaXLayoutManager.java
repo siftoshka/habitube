@@ -82,20 +82,6 @@ public class VegaXLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-
-    public int findFirstVisibleItemPosition() {
-        int count = locationRects.size();
-        Rect displayRect = new Rect(0, scroll, getWidth(), getHeight() + scroll);
-        for (int i = 0; i < count; i++) {
-            if (Rect.intersects(displayRect, locationRects.get(i)) &&
-                    attachedItems.get(i)) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-
     private void computeMaxScroll() {
         maxScroll = locationRects.get(locationRects.size() - 1).bottom - getHeight();
         if (maxScroll < 0) {
@@ -116,7 +102,6 @@ public class VegaXLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-
     private void layoutItemsOnCreate(RecyclerView.Recycler recycler) {
         int itemCount = getItemCount();
         Rect displayRect = new Rect(0, scroll, getWidth(), getHeight() + scroll);
@@ -136,7 +121,6 @@ public class VegaXLayoutManager extends RecyclerView.LayoutManager {
             }
         }
     }
-
 
     private void layoutItemsOnScroll() {
         int childCount = getChildCount();
@@ -202,7 +186,6 @@ public class VegaXLayoutManager extends RecyclerView.LayoutManager {
         layoutItem(scrap, locationRects.get(position));
         attachedItems.put(position, true);
     }
-
 
     private void layoutItem(View child, Rect rect) {
         int topDistance = scroll - rect.top;

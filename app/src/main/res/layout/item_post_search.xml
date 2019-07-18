@@ -21,7 +21,9 @@
             android:layout_height="match_parent"
             android:background="@drawable/ripple_effect"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:id="@+id/poster_image_search"
