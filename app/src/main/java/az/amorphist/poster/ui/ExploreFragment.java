@@ -1,7 +1,6 @@
 package az.amorphist.poster.ui;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,19 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
 import az.amorphist.poster.adapters.ShowAdapter;
-import az.amorphist.poster.adapters.UpcomingAdapter;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.presentation.explore.ExplorePresenter;
 import az.amorphist.poster.presentation.explore.ExploreView;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
-import ru.terrakok.cicerone.NavigatorHolder;
 import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.DEV_CONTACT;
@@ -42,16 +37,13 @@ import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
 
-    @Inject Context context;
-    @Inject NavigatorHolder navigatorHolder;
     @InjectPresenter ExplorePresenter explorePresenter;
 
     private Toolbar toolbar;
     private Dialog aboutDialog;
     private RecyclerView recyclerViewUpcoming, recyclerViewMovies, recyclerViewTVShows;
-    private MovieAdapter movieAdapter;
+    private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter;
-    private UpcomingAdapter upcomingAdapter;
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
@@ -61,24 +53,23 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
 
-        upcomingAdapter = new UpcomingAdapter(new UpcomingAdapter.UpcomingItemClickListener() {
+        upcomingAdapter = new MovieAdapter(new MovieAdapter.MovieItemClickListener() {
             @Override
-            public void onPostClicked(int position) {
-                explorePresenter.goToDetailedUpcomingScreen(position + 1);
+            public void onPostClicked(int postId) {
+                explorePresenter.goToDetailedUpcomingScreen( postId);
             }
         });
         movieAdapter = new MovieAdapter(new MovieAdapter.MovieItemClickListener() {
             @Override
-            public void onPostClicked(int position) {
-                explorePresenter.goToDetailedMovieScreen(position + 1);
+            public void onPostClicked(int postId) {
+                explorePresenter.goToDetailedMovieScreen( postId);
             }
         });
         showAdapter = new ShowAdapter(new ShowAdapter.ShowItemClickListener() {
             @Override
-            public void onPostClicked(int position) {
-                explorePresenter.goToDetailedShowScreen(position + 1);
+            public void onPostClicked(int showId) {
+                explorePresenter.goToDetailedShowScreen( showId);
             }
         });
     }
@@ -99,19 +90,19 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setOnMenuItemClickListener(this);
 
-        LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUpcoming.setHasFixedSize(true);
         recyclerViewUpcoming.setAdapter(upcomingAdapter);
 
-        LinearLayoutManager layoutManagerMovies = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewMovies.setLayoutManager(layoutManagerMovies);
         recyclerViewMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMovies.setHasFixedSize(true);
         recyclerViewMovies.setAdapter(movieAdapter);
 
-        LinearLayoutManager layoutManagerTVShows = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTVShows.setLayoutManager(layoutManagerTVShows);
         recyclerViewTVShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTVShows.setHasFixedSize(true);
@@ -120,17 +111,17 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
 
     @Override
-    public void getUpcomingMovieList(List<MovieLite> upcomingList) {
+    public void showUpcomingMovieList(List<MovieLite> upcomingList) {
         upcomingAdapter.addAllMovies(upcomingList);
     }
 
     @Override
-    public void getMovieList(List<MovieLite> movies) {
+    public void showMovieList(List<MovieLite> movies) {
         movieAdapter.addAllMovies(movies);
     }
 
     @Override
-    public void getTVShowList(List<MovieLite> tvShows) {
+    public void showTVShowList(List<MovieLite> tvShows) {
         showAdapter.addAllMovies(tvShows);
     }
 
@@ -153,7 +144,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     private void showAboutDialog() {
         ViewGroup viewGroup = getView().findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.about_dialog, viewGroup, false);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.about_dialog, viewGroup, false);
         aboutDialog = new Dialog(getContext());
         aboutDialog.setContentView(dialogView);
         aboutDialog.show();
@@ -175,7 +166,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public void unsuccessfulQueryError() {
-        Toast.makeText(context,"Unsuccessful request", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"Unsuccessful request", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -24,7 +24,7 @@ import static az.amorphist.poster.App.IMAGE_URL;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
     public interface MovieItemClickListener {
-        void onPostClicked(int position);
+        void onPostClicked(int postId);
     }
 
     private List<MovieLite> movies;
@@ -54,7 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.posterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onPostClicked(position);
+                clickListener.onPostClicked(movie.getMovieId());
             }
         });
 

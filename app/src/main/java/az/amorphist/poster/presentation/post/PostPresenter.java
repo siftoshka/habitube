@@ -3,16 +3,17 @@ package az.amorphist.poster.presentation.post;
 import javax.inject.Inject;
 
 import az.amorphist.poster.di.providers.ApiProvider;
+import az.amorphist.poster.di.qualifiers.MediaType;
+import az.amorphist.poster.di.qualifiers.MoviePosition;
 import az.amorphist.poster.di.qualifiers.PostId;
-import az.amorphist.poster.di.qualifiers.ShowId;
-import az.amorphist.poster.di.qualifiers.UpcomingId;
+import az.amorphist.poster.di.qualifiers.ShowPosition;
+import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
 import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.entities.movie.MoviePager;
+import az.amorphist.poster.entities.person.Person;
+import az.amorphist.poster.entities.show.Show;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
@@ -25,51 +26,59 @@ public class PostPresenter extends MvpPresenter<PostView> {
 
     private final Router router;
     private ApiProvider provider;
-    private final Integer upcomingId, postId, showId;
+    private final Integer upcomingPosition, postPosition, showPosition, postId, mediaType;
 
     @Inject
-    public PostPresenter(Router router, ApiProvider provider, @UpcomingId Integer upcomingId, @PostId Integer postId, @ShowId Integer showId) {
+    public PostPresenter(Router router, ApiProvider provider,
+                         @UpcomingMoviePosition Integer upcomingPosition,
+                         @MoviePosition Integer postPosition,
+                         @ShowPosition Integer showPosition,
+                         @PostId Integer postId,
+                         @MediaType Integer mediaType) {
         this.router = router;
         this.provider = provider;
-        this.upcomingId = upcomingId;
+        this.upcomingPosition = upcomingPosition;
+        this.postPosition = postPosition;
+        this.showPosition = showPosition;
         this.postId = postId;
-        this.showId = showId;
+        this.mediaType = mediaType;
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        if (upcomingId != 0) {
-            getUpcomingMovie();
-        } else if (postId != 0) {
-            getMovie();
-        } else {
-            getTVShow();
+        if (upcomingPosition != 0) { getMovie(upcomingPosition); }
+        else if (postPosition != 0) { getMovie(postPosition); }
+        else if (showPosition != 0) { getTVShow(showPosition); }
+
+        switch (mediaType) {
+            case 1: getMovie(postId); break;
+            case 2: getTVShow(postId); break;
+            case 3: getMovieStar(); break;
         }
     }
 
-    private void getUpcomingMovie() {
-        provider.get().getUpcomingMovies(API_KEY)
-                .subscribeOn(Schedulers.computation())
+    private void getMovie(int id) {
+        provider.get().getMovie(id, API_KEY)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
+                .subscribe(new SingleObserver<Movie>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         getViewState().showProgress(true);
                     }
 
                     @Override
-                    public void onSuccess(MoviePager moviePager) {
+                    public void onSuccess(Movie movie) {
                         getViewState().showProgress(false);
-                        Movie upcomingMovie = moviePager.getResults().get(upcomingId - 1);
                         getViewState().getMovie(
-                                upcomingMovie.getMovieImage(),
-                                upcomingMovie.getMovieBackgroundImage(),
-                                upcomingMovie.getMovieTitle(),
-                                upcomingMovie.getMovieDate(),
-                                upcomingMovie.getMovieRate(),
-                                upcomingMovie.getMovieViews(),
-                                upcomingMovie.getMovieBody()
+                                movie.getPosterPath(),
+                                movie.getBackdropPath(),
+                                movie.getTitle(),
+                                movie.getReleaseDate(),
+                                movie.getVoteAverage(),
+                                movie.getVoteCount(),
+                                movie.getOverview()
                         );
                     }
 
@@ -80,28 +89,27 @@ public class PostPresenter extends MvpPresenter<PostView> {
                 });
     }
 
-    private void getMovie() {
-        provider.get().getTrendingMovies(API_KEY)
-                .subscribeOn(Schedulers.computation())
+    private void getTVShow(int id) {
+        provider.get().getTVShow(id, API_KEY)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
+                .subscribe(new SingleObserver<Show>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         getViewState().showProgress(true);
                     }
 
                     @Override
-                    public void onSuccess(MoviePager moviePager) {
+                    public void onSuccess(Show show) {
                         getViewState().showProgress(false);
-                        Movie movie = moviePager.getResults().get(postId - 1);
                         getViewState().getMovie(
-                                movie.getMovieImage(),
-                                movie.getMovieBackgroundImage(),
-                                movie.getMovieTitle(),
-                                movie.getMovieDate(),
-                                movie.getMovieRate(),
-                                movie.getMovieViews(),
-                                movie.getMovieBody()
+                                show.getPosterPath(),
+                                show.getBackdropPath(),
+                                show.getName(),
+                                show.getFirstAirDate(),
+                                show.getVoteAverage(),
+                                show.getVoteCount(),
+                                show.getOverview()
                         );
                     }
 
@@ -112,28 +120,27 @@ public class PostPresenter extends MvpPresenter<PostView> {
                 });
     }
 
-    private void getTVShow() {
-        provider.get().getTrendingTVShows(API_KEY)
-                .subscribeOn(Schedulers.computation())
+    private void getMovieStar() {
+        provider.get().getMovieStar(postId, API_KEY)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
+                .subscribe(new SingleObserver<Person>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         getViewState().showProgress(true);
                     }
 
                     @Override
-                    public void onSuccess(MoviePager moviePager) {
+                    public void onSuccess(Person person) {
                         getViewState().showProgress(false);
-                        Movie show = moviePager.getResults().get(showId - 1);
-                        getViewState().getMovie(
-                                show.getMovieImage(),
-                                show.getMovieBackgroundImage(),
-                                show.getShowTitle(),
-                                show.getShowDate(),
-                                show.getMovieRate(),
-                                show.getMovieViews(),
-                                show.getMovieBody()
+                        getViewState().getPerson(
+                                person.getProfilePath(),
+                                person.getProfilePath(),
+                                person.getName(),
+                                person.getBirthday(),
+                                person.getPlaceOfBirth(),
+                                person.getPopularity(),
+                                person.getBiography()
                         );
                     }
 
@@ -147,5 +154,4 @@ public class PostPresenter extends MvpPresenter<PostView> {
     public void goBack() {
         router.exit();
     }
-
 }

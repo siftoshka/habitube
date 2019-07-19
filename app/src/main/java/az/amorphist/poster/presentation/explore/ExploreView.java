@@ -10,9 +10,9 @@ import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface ExploreView extends MvpView {
-    void getUpcomingMovieList(List<MovieLite> upcomingList);
-    void getMovieList(List<MovieLite> movies);
-    void getTVShowList(List<MovieLite> tvShows);
+    void showUpcomingMovieList(List<MovieLite> upcomingList);
+    void showMovieList(List<MovieLite> movies);
+    void showTVShowList(List<MovieLite> tvShows);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void unsuccessfulQueryError();

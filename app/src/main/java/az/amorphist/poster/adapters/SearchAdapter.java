@@ -24,11 +24,12 @@ import static az.amorphist.poster.App.IMAGE_URL;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
 
     public interface SearchItemClickListener {
-        void onPostClicked(int position);
+        void onPostClicked(int id, int mediaType);
     }
 
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
+    private int mediaState;
 
     public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
         this.searchMedia = new ArrayList<>();
@@ -69,7 +70,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         holder.posterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onPostClicked(position);
+                switch (post.getMediaType()) {
+                    case "movie": mediaState = 1; break;
+                    case "tv": mediaState = 2; break;
+                    case "person": mediaState = 3; break;
+                }
+                clickListener.onPostClicked(post.getMovieId(), mediaState);
             }
         });
 

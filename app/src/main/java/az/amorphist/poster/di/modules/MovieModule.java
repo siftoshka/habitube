@@ -1,15 +1,15 @@
 package az.amorphist.poster.di.modules;
 
-import az.amorphist.poster.di.qualifiers.PostId;
-import az.amorphist.poster.di.qualifiers.ShowId;
-import az.amorphist.poster.di.qualifiers.UpcomingId;
+import az.amorphist.poster.di.qualifiers.MoviePosition;
+import az.amorphist.poster.di.qualifiers.ShowPosition;
+import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
 import toothpick.config.Module;
 
 public class MovieModule extends Module {
 
-    public MovieModule(Integer postId, Integer showId, Integer upcomingId) {
-        bind(Integer.class).withName(PostId.class).toInstance(postId);
-        bind(Integer.class).withName(ShowId.class).toInstance(showId);
-        bind(Integer.class).withName(UpcomingId.class).toInstance(upcomingId);
+    public MovieModule(Integer moviePosition, Integer showPosition, Integer upcomingPosition) {
+        bind(Integer.class).withName(MoviePosition.class).toInstance(moviePosition);
+        bind(Integer.class).withName(ShowPosition.class).toInstance(showPosition);
+        bind(Integer.class).withName(UpcomingMoviePosition.class).toInstance(upcomingPosition);
     }
 }

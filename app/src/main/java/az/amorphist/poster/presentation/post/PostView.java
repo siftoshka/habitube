@@ -15,6 +15,13 @@ public interface PostView extends MvpView {
             float views,
             String description
     );
+    void getPerson( String image,
+                    String background,
+                    String name,
+                    String birthdate,
+                    String placeOfBirth,
+                    double popularity,
+                    String bio);
     void showProgress(boolean loadingState);
     void showErrorScreen();
 }

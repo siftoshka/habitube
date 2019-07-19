@@ -1,19 +1,19 @@
-package az.amorphist.poster.entities.movie;
+package az.amorphist.poster.entities.movielite;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import az.amorphist.poster.entities.movie.Movie;
+import az.amorphist.poster.entities.movielite.MovieLite;
 
 public class MoviePager {
     @SerializedName("page") @Expose private int page;
-    @SerializedName("results") @Expose private List<Movie> results = null;
+    @SerializedName("results") @Expose private List<MovieLite> results = null;
     @SerializedName("total_pages") @Expose private int totalPages;
     @SerializedName("total_results") @Expose private int totalResults;
 
-    public MoviePager(int page, List<Movie> results, int totalPages, int totalResults) {
+    public MoviePager(int page, List<MovieLite> results, int totalPages, int totalResults) {
         this.page = page;
         this.results = results;
         this.totalPages = totalPages;
@@ -28,11 +28,11 @@ public class MoviePager {
         this.page = page;
     }
 
-    public List<Movie> getResults() {
+    public List<MovieLite> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<MovieLite> results) {
         this.results = results;
     }
 

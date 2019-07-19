@@ -1,6 +1,5 @@
 package az.amorphist.poster.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
-import javax.inject.Inject;
-
 import az.amorphist.poster.R;
 import az.amorphist.poster.di.modules.MovieModule;
+import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.presentation.post.PostPresenter;
 import az.amorphist.poster.presentation.post.PostView;
 import moxy.MvpAppCompatFragment;
@@ -36,35 +34,31 @@ import static az.amorphist.poster.di.DI.POST_SCOPE;
 
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
-    @Inject Context context;
+    @InjectPresenter PostPresenter postPresenter;
+
     private Toolbar toolbar;
     private RelativeLayout mainScreen;
     private LinearLayout loadingScreen, errorScreen;
     private ImageView posterBackground, posterMain;
     private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
 
-
-    @InjectPresenter
-    PostPresenter postPresenter;
-
     @ProvidePresenter
     PostPresenter postPresenter() {
         final Bundle movieBundle = getArguments();
-        final Integer postId = movieBundle.getInt("postPosition");
-        final Integer showId = movieBundle.getInt("showPosition");
-        final Integer upcomingId = movieBundle.getInt("upcomingPosition");
+        final Integer postPosition = movieBundle.getInt("postPosition");
+        final Integer showPosition = movieBundle.getInt("showPosition");
+        final Integer upcomingPosition = movieBundle.getInt("upcomingPosition");
 
-        final Scope temporaryPostScope = Toothpick.openScopes(APP_SCOPE, POST_SCOPE);
-        temporaryPostScope.installModules(new MovieModule(postId, showId, upcomingId));
-        final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
-        Toothpick.closeScope(POST_SCOPE);
-        return postPresenter;
-    }
+        final Bundle searchBundle = getArguments();
+        final Integer postId = searchBundle.getInt("postId");
+        final Integer mediaType = searchBundle.getInt("mediaType");
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
+            final Scope temporaryPostScope = Toothpick.openScopes(APP_SCOPE, POST_SCOPE);
+            temporaryPostScope.installModules(new MovieModule(postPosition, showPosition, upcomingPosition));
+            temporaryPostScope.installModules(new SearchModule(postId, mediaType));
+            final PostPresenter postPresenter = temporaryPostScope.getInstance(PostPresenter.class);
+            Toothpick.closeScope(POST_SCOPE);
+            return postPresenter;
     }
 
     @Override
@@ -97,13 +91,13 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getMovie(String image, String background, String title, String date, float rate, float views, String description) {
-        Glide.with(context)
+        Glide.with(getContext())
                 .load(IMAGE_URL + image)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
                 .into(posterMain);
-        Glide.with(context)
+        Glide.with(getContext())
                 .load(IMAGE_URL + background)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -114,6 +108,27 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         posterRate.setText(String.valueOf(rate));
         posterViews.setText(String.valueOf(views));
         posterDesc.setText(description);
+    }
+
+    @Override
+    public void getPerson(String image, String background, String name, String birthdate, String placeOfBirth, double popularity, String bio) {
+        Glide.with(getContext())
+                .load(IMAGE_URL + image)
+                .transition(new DrawableTransitionOptions().crossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .placeholder(R.drawable.progress_animation)
+                .into(posterMain);
+        Glide.with(getContext())
+                .load(IMAGE_URL + background)
+                .transition(new DrawableTransitionOptions().crossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .placeholder(R.drawable.progress_animation)
+                .into(posterBackground);
+        posterTitle.setText(name);
+        posterDate.setText(birthdate);
+        posterRate.setText(placeOfBirth);
+        posterViews.setText(String.valueOf(popularity));
+        posterDesc.setText(bio);
     }
 
     @Override

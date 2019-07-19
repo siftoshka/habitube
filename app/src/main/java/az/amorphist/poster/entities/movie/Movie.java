@@ -3,129 +3,171 @@ package az.amorphist.poster.entities.movie;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Movie {
-    @SerializedName("id") @Expose private int movieId;
-    @SerializedName("original_title") @Expose private String movieTitle;
-    @SerializedName("name") @Expose private String showTitle;
-    @SerializedName("overview") @Expose private String movieBody;
-    @SerializedName("poster_path") @Expose private String movieImage;
-    @SerializedName("profile_path") @Expose private String starImage;
-    @SerializedName("backdrop_path") @Expose private String movieBackgroundImage;
-    @SerializedName("release_date") @Expose private String movieDate;
-    @SerializedName("first_air_date") @Expose private String showDate;
-    @SerializedName("vote_average") @Expose private float movieRate;
-    @SerializedName("popularity") @Expose private float movieViews;
-    @SerializedName("media_type") @Expose private String mediaType;
 
-    public Movie(int movieId, String movieTitle, String showTitle, String movieBody, String movieImage, String starImage, String movieBackgroundImage, String movieDate, String showDate, float movieRate, float movieViews, String mediaType) {
-        this.movieId = movieId;
-        this.movieTitle = movieTitle;
-        this.showTitle = showTitle;
-        this.movieBody = movieBody;
-        this.movieImage = movieImage;
-        this.starImage = starImage;
-        this.movieBackgroundImage = movieBackgroundImage;
-        this.movieDate = movieDate;
-        this.showDate = showDate;
-        this.movieRate = movieRate;
-        this.movieViews = movieViews;
-        this.mediaType = mediaType;
+    @SerializedName("adult") @Expose private boolean adult;
+    @SerializedName("backdrop_path") @Expose private String backdropPath;
+    @SerializedName("belongs_to_collection") @Expose private Object belongsToCollection;
+    @SerializedName("budget") @Expose private int budget;
+    @SerializedName("genres") @Expose private List<Genre> genres = null;
+    @SerializedName("homepage") @Expose private String homepage;
+    @SerializedName("id") @Expose private int id;
+    @SerializedName("original_title") @Expose private String originalTitle;
+    @SerializedName("overview") @Expose private String overview;
+    @SerializedName("popularity") @Expose private double popularity;
+    @SerializedName("poster_path") @Expose private String posterPath;
+    @SerializedName("release_date") @Expose private String releaseDate;
+    @SerializedName("runtime") @Expose private int runtime;
+    @SerializedName("status") @Expose private String status;
+    @SerializedName("tagline") @Expose private String tagline;
+    @SerializedName("title") @Expose private String title;
+    @SerializedName("vote_average") @Expose private float voteAverage;
+    @SerializedName("vote_count") @Expose private int voteCount;
+
+    public boolean isAdult() {
+        return adult;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public void setAdult(boolean adult) {
+        this.adult = adult;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public String getMovieTitle() {
-        return movieTitle;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
+    public Object getBelongsToCollection() {
+        return belongsToCollection;
     }
 
-    public String getShowTitle() {
-        return showTitle;
+    public void setBelongsToCollection(Object belongsToCollection) {
+        this.belongsToCollection = belongsToCollection;
     }
 
-    public void setShowTitle(String showTitle) {
-        this.showTitle = showTitle;
+    public int getBudget() {
+        return budget;
     }
 
-    public String getMovieBody() {
-        return movieBody;
+    public void setBudget(int budget) {
+        this.budget = budget;
     }
 
-    public void setMovieBody(String movieBody) {
-        this.movieBody = movieBody;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public String getMovieImage() {
-        return movieImage;
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
-    public void setMovieImage(String movieImage) {
-        this.movieImage = movieImage;
+    public String getHomepage() {
+        return homepage;
     }
 
-    public String getStarImage() {
-        return starImage;
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
     }
 
-    public void setStarImage(String starImage) {
-        this.starImage = starImage;
+    public int getId() {
+        return id;
     }
 
-    public String getMovieBackgroundImage() {
-        return movieBackgroundImage;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setMovieBackgroundImage(String movieBackgroundImage) {
-        this.movieBackgroundImage = movieBackgroundImage;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
-    public String getMovieDate() {
-        return movieDate;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
-    public void setMovieDate(String movieDate) {
-        this.movieDate = movieDate;
+    public String getOverview() {
+        return overview;
     }
 
-    public String getShowDate() {
-        return showDate;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public void setShowDate(String showDate) {
-        this.showDate = showDate;
+    public double getPopularity() {
+        return popularity;
     }
 
-    public float getMovieRate() {
-        return movieRate;
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
     }
 
-    public void setMovieRate(float movieRate) {
-        this.movieRate = movieRate;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public float getMovieViews() {
-        return movieViews;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public void setMovieViews(float movieViews) {
-        this.movieViews = movieViews;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public String getMediaType() {
-        return mediaType;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public float getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(float voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 
     @Override
@@ -135,11 +177,11 @@ public class Movie {
 
         Movie movie = (Movie) o;
 
-        return movieId == movie.movieId;
+        return id == movie.id;
     }
 
     @Override
     public int hashCode() {
-        return movieId;
+        return id;
     }
 }

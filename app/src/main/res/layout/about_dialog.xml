@@ -9,7 +9,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher_foreground"
+        android:src="@drawable/ic_launcher_foreground"
         android:tint="@color/colorPrimary"
         android:contentDescription="App Icon"
         tools:ignore="ContentDescription,HardcodedText" />

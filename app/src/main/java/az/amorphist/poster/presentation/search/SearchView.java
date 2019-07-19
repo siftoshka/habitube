@@ -10,7 +10,7 @@ import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface SearchView extends MvpView {
-    void getSearchedMediaList(List<MovieLite> searchResult);
+    void showSearchedMediaList(List<MovieLite> searchResult);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void unsuccessfulQueryError();

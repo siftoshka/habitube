@@ -3,5 +3,5 @@ package az.amorphist.poster.di.qualifiers;
 import javax.inject.Qualifier;
 
 @Qualifier
-public @interface UpcomingId {
+public @interface ShowPosition {
 }

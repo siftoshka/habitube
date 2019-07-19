@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import az.amorphist.poster.Screens;
 import az.amorphist.poster.di.providers.ApiProvider;
 import az.amorphist.poster.entities.movielite.MovieLite;
-import az.amorphist.poster.entities.movielite.MoviePagerLite;
+import az.amorphist.poster.entities.movielite.MoviePager;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -40,18 +40,18 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     private void addUpcomingMovies() {
         provider.get().getUpcomingMoviesLite(API_KEY)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePagerLite>() {
+                .subscribe(new SingleObserver<MoviePager>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(MoviePagerLite moviePagerLite) {
-                        List<MovieLite> upcomingMovies = moviePagerLite.getResults();
-                        getViewState().getUpcomingMovieList(upcomingMovies);
+                    public void onSuccess(MoviePager moviePager) {
+                        List<MovieLite> upcomingMovies = moviePager.getResults();
+                        getViewState().showUpcomingMovieList(upcomingMovies);
                     }
 
                     @Override
@@ -63,18 +63,18 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     private void addMovies() {
         provider.get().getTrendingMoviesLite(API_KEY)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePagerLite>() {
+                .subscribe(new SingleObserver<MoviePager>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(MoviePagerLite moviePagerLite) {
-                        List<MovieLite> movies = moviePagerLite.getResults();
-                        getViewState().getMovieList(movies);
+                    public void onSuccess(MoviePager moviePager) {
+                        List<MovieLite> movies = moviePager.getResults();
+                        getViewState().showMovieList(movies);
                     }
 
                     @Override
@@ -87,18 +87,18 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     private void addShows() {
         provider.get().getTrendingTVShowsLite(API_KEY)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePagerLite>() {
+                .subscribe(new SingleObserver<MoviePager>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(MoviePagerLite moviePagerLite) {
-                        List<MovieLite> tvShows = moviePagerLite.getResults();
-                        getViewState().getTVShowList(tvShows);
+                    public void onSuccess(MoviePager moviePager) {
+                        List<MovieLite> tvShows = moviePager.getResults();
+                        getViewState().showTVShowList(tvShows);
                     }
 
                     @Override

@@ -1,7 +1,5 @@
 package az.amorphist.poster.ui;
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +13,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.SearchAdapter;
@@ -33,10 +29,7 @@ import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
-    @Inject
-    Context context;
-    @InjectPresenter
-    SearchPresenter searchPresenter;
+    @InjectPresenter SearchPresenter searchPresenter;
 
     private SearchAdapter searchAdapter;
     private Toolbar toolbar;
@@ -51,12 +44,11 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
 
         searchAdapter = new SearchAdapter(new SearchAdapter.SearchItemClickListener() {
             @Override
-            public void onPostClicked(int position) {
-
+            public void onPostClicked(int id, int mediaType) {
+                searchPresenter.goToDetailedScreen(id, mediaType);
             }
         });
     }
@@ -89,6 +81,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
                 searchPresenter.goBack();
             }
         });
+
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -107,12 +100,12 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
 
     @Override
-    public void getSearchedMediaList(List<MovieLite> searchResult) {
+    public void showSearchedMediaList(List<MovieLite> searchResult) {
         searchAdapter.addAllMedia(searchResult);
     }
 
     @Override
     public void unsuccessfulQueryError() {
-        Toast.makeText(context, "Unsuccessful request", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Unsuccessful request", Toast.LENGTH_SHORT).show();
     }
 }
