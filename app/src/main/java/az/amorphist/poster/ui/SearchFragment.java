@@ -1,6 +1,7 @@
 package az.amorphist.poster.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +46,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchAdapter = new SearchAdapter(new SearchAdapter.SearchItemClickListener() {
-            @Override
-            public void onPostClicked(int id, int mediaType) {
-                searchPresenter.goToDetailedScreen(id, mediaType);
-            }
-        });
+        searchAdapter = new SearchAdapter((id, mediaType) -> searchPresenter.goToDetailedScreen(id, mediaType));
     }
 
     @Override
@@ -75,12 +71,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         recyclerViewSearch.setAdapter(searchAdapter);
 
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchPresenter.goBack();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -90,7 +81,9 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                searchPresenter.searchMedia(newText);
+                if(!TextUtils.isEmpty(newText)) {
+                    searchPresenter.searchMedia(newText);
+                }
                 return true;
             }
         });

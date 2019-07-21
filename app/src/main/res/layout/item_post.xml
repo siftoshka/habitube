@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    card_view:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/mainBackground">
+
     <LinearLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@drawable/ripple_effect"
+        android:orientation="vertical"
         android:padding="5dp">
-    <ImageView
-        android:id="@+id/poster_image"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:src="@drawable/splash"
-        android:layout_gravity="center_horizontal"
-        tools:contentDescription="Poster of the movie"
-        tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/poster_image"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/splash"
+            tools:contentDescription="Poster of the movie"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/poster_main_text"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="16sp"
-            android:singleLine="true"
             android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             tools:text="Movie Name" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

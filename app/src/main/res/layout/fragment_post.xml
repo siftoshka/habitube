@@ -18,6 +18,7 @@
         app:title="Post"
         app:titleTextColor="@color/mainBackground" />
 
+    <!--Loading Screen-->
     <LinearLayout
         android:id="@+id/loading_screen"
         android:layout_width="match_parent"
@@ -30,6 +31,8 @@
             android:layout_height="match_parent"
             android:src="@drawable/progress_animation" />
     </LinearLayout>
+
+    <!--Error Screen-->
     <LinearLayout
         android:id="@+id/error_screen"
         android:layout_width="match_parent"
@@ -42,19 +45,24 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_loading" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_text_title"
+            android:textColor="@color/textColor"
             android:textSize="36sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_text_body"
-            android:textSize="24sp"/>
+            android:textColor="@color/textColor"
+            android:textSize="24sp" />
     </LinearLayout>
 
+    <!--Movie Screen-->
     <RelativeLayout
         android:id="@+id/main_screen"
         android:layout_width="match_parent"
@@ -75,7 +83,7 @@
             tools:src="@mipmap/ic_launcher" />
 
         <LinearLayout
-            android:id="@+id/post_card_layout"
+            android:id="@+id/post_movie_card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/poster_background"
@@ -88,7 +96,7 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/poster_main_post"
+                android:id="@+id/poster_movie_post"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
@@ -121,6 +129,7 @@
                         android:layout_marginStart="5dp"
                         android:singleLine="true"
                         android:textSize="24sp"
+                        android:textColor="@color/textColor"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -142,6 +151,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:textSize="18sp"
+                        android:textColor="@color/textColor"
                         tools:text="DATE" />
                 </LinearLayout>
 
@@ -164,6 +174,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:textSize="18sp"
+                        android:textColor="@color/textColor"
                         tools:text="RATE" />
                 </LinearLayout>
 
@@ -186,27 +197,518 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:textSize="18sp"
+                        android:textColor="@color/textColor"
                         tools:text="VIEWS" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_description"
+            android:id="@+id/scroll_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/post_card_layout">
+            android:layout_below="@id/post_movie_card_layout">
 
-            <TextView
-                android:id="@+id/poster_desc"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp"
-                tools:text="Lorem" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/desc_movie_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/description_card"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/scroll_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/poster_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/textColor"
+                            tools:text="Lorem" />
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/similar_movies_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/similar_movies"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_similar_movies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"/>
+                </LinearLayout>
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
+
+    <!--Show Screen-->
+    <RelativeLayout
+        android:id="@+id/show_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBackground"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/show_poster_background"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/post_show_card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/show_poster_background"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/mainBackground"
+            android:elevation="16dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/poster_show_post"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/splash" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_name" />
+
+                    <TextView
+                        android:id="@+id/poster_show_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:singleLine="true"
+                        android:textSize="24sp"
+                        android:textColor="@color/textColor"
+                        tools:text="AVENGERS" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_poster_date" />
+
+                    <TextView
+                        android:id="@+id/poster_show_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="DATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_rate" />
+
+                    <TextView
+                        android:id="@+id/poster_show_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="RATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_views" />
+
+                    <TextView
+                        android:id="@+id/poster_show_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="VIEWS" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/post_show_card_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/desc_show_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/description_card"
+                        android:textSize="20sp"
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/scroll_show_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/poster_show_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/textColor"
+                            tools:text="Lorem" />
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/similar_shows_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/similar_tv_shows"
+                        android:textSize="20sp"
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_similar_shows"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+    <!--Person Screen-->
+    <RelativeLayout
+        android:id="@+id/person_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBackground"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/post_person_card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/mainBackground"
+            android:elevation="16dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/poster_person_post"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/splash" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_person" />
+
+                    <TextView
+                        android:id="@+id/poster_person_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:singleLine="true"
+                        android:textSize="24sp"
+                        android:textColor="@color/textColor"
+                        tools:text="AVENGERS" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_date" />
+
+                    <TextView
+                        android:id="@+id/poster_person_birthdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="BIRTHDATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_location" />
+
+                    <TextView
+                        android:id="@+id/poster_person_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="RATE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_poster_rate" />
+
+                    <TextView
+                        android:id="@+id/poster_person_popularity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/textColor"
+                        tools:text="VIEWS" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_person"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/post_person_card_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/bio_person_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/biography_card"
+                        android:textSize="20sp"
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/scroll_person_biographic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/poster_person_bio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/textColor"
+                            tools:text="Lorem" />
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
 </RelativeLayout>

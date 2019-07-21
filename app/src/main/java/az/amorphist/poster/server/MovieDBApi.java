@@ -4,6 +4,7 @@ import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movielite.MoviePager;
 import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.entities.show.Show;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -12,41 +13,41 @@ import retrofit2.http.Query;
 public interface MovieDBApi {
 
     @GET("movie/upcoming")
-    Single<MoviePager> getUpcomingMoviesLite (
-            @Query("api_key") String apiKey
-    );
+    Single<MoviePager> getUpcomingMovies();
 
     @GET("trending/movie/day")
-    Single<MoviePager> getTrendingMoviesLite (
-            @Query("api_key") String apiKey
-    );
+    Single<MoviePager> getTrendingMovies();
 
     @GET("trending/tv/day")
-    Single<MoviePager> getTrendingTVShowsLite (
-            @Query("api_key") String apiKey
-    );
+    Single<MoviePager> getTrendingTVShows();
 
     @GET("movie/{movie_id}")
-    Single<Movie> getMovie (
-            @Path("movie_id") int movieId,
-            @Query("api_key") String apiKey
+    Single<Movie> getMovie(
+            @Path("movie_id") int movieId
+    );
+
+    @GET("movie/{movie_id}/similar")
+    Single<MoviePager> getSimilarMovies(
+            @Path("movie_id") int movieId
     );
 
     @GET("tv/{tv_id}")
-    Single<Show> getTVShow (
-            @Path("tv_id") int showId,
-            @Query("api_key") String apiKey
+    Single<Show> getTVShow(
+            @Path("tv_id") int showId
+    );
+
+    @GET("tv/{tv_id}/similar")
+    Single<MoviePager> getSimilarTVShow(
+            @Path("tv_id") int showId
     );
 
     @GET("person/{person_id}")
-    Single<Person> getMovieStar (
-            @Path("person_id") int starId,
-            @Query("api_key") String apiKey
+    Single<Person> getMovieStar(
+            @Path("person_id") int starId
     );
 
     @GET("search/multi")
-    Single<MoviePager> getSearchResults (
-            @Query("api_key") String apiKey,
+    Observable<MoviePager> getSearchResults(
             @Query("language") String language,
             @Query("query") String searchQuery,
             @Query("page") int page,

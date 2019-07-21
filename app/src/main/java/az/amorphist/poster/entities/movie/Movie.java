@@ -9,11 +9,10 @@ public class Movie {
 
     @SerializedName("adult") @Expose private boolean adult;
     @SerializedName("backdrop_path") @Expose private String backdropPath;
-    @SerializedName("belongs_to_collection") @Expose private Object belongsToCollection;
     @SerializedName("budget") @Expose private int budget;
     @SerializedName("genres") @Expose private List<Genre> genres = null;
-    @SerializedName("homepage") @Expose private String homepage;
     @SerializedName("id") @Expose private int id;
+    @SerializedName("imdb_id") @Expose private String imdbId;
     @SerializedName("original_title") @Expose private String originalTitle;
     @SerializedName("overview") @Expose private String overview;
     @SerializedName("popularity") @Expose private double popularity;
@@ -23,7 +22,7 @@ public class Movie {
     @SerializedName("status") @Expose private String status;
     @SerializedName("tagline") @Expose private String tagline;
     @SerializedName("title") @Expose private String title;
-    @SerializedName("vote_average") @Expose private float voteAverage;
+    @SerializedName("vote_average") @Expose private double voteAverage;
     @SerializedName("vote_count") @Expose private int voteCount;
 
     public boolean isAdult() {
@@ -42,14 +41,6 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
-    public Object getBelongsToCollection() {
-        return belongsToCollection;
-    }
-
-    public void setBelongsToCollection(Object belongsToCollection) {
-        this.belongsToCollection = belongsToCollection;
-    }
-
     public int getBudget() {
         return budget;
     }
@@ -66,20 +57,20 @@ public class Movie {
         this.genres = genres;
     }
 
-    public String getHomepage() {
-        return homepage;
-    }
-
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImdbId() {
+        return imdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     public String getOriginalTitle() {
@@ -154,11 +145,11 @@ public class Movie {
         this.title = title;
     }
 
-    public float getVoteAverage() {
+    public double getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(float voteAverage) {
+    public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
     }
 

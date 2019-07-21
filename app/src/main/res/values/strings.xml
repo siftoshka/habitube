@@ -13,9 +13,13 @@
     <string name="about_menu">About</string>
     <string name="close_dialog_text">CLOSE</string>
     <string name="upcoming_movies">Upcoming Movies</string>
-    <string name="search_movies_menu">Search Movies</string>
+    <string name="search_movies_menu">Search…</string>
     <string name="settings_menu">Settings</string>
     <string name="error_text_title">Sorry!</string>
     <string name="error_text_body">Something went wrong :(</string>
+    <string name="description_card">Description</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="similar_tv_shows">Similar TV Shows</string>
+    <string name="biography_card">Biography</string>
 
 </resources>

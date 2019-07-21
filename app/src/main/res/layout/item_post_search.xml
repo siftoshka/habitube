@@ -13,14 +13,17 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp">
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/mainBackground">
 
         <LinearLayout
             android:id="@+id/item_layout_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ripple_effect"
+            android:backgroundTint="@color/mainBackground"
             android:orientation="horizontal"
+            android:paddingTop="5dp"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:paddingBottom="5dp">
@@ -42,7 +45,8 @@
                 android:layout_marginStart="5dp"
                 android:singleLine="true"
                 android:textSize="26sp"
-                tools:text="Movie Name" />
+                tools:text="Movie Name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

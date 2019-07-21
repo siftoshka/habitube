@@ -51,13 +51,7 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
                 .placeholder(R.drawable.progress_animation)
                 .into(holder.posterImage);
         holder.posterTitle.setText(movie.getShowTitle());
-        holder.posterLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onPostClicked(movie.getMovieId());
-            }
-        });
-
+        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }
 
     @Override

@@ -67,18 +67,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         } else {
             holder.posterTitle.setText(post.getMovieTitle());
         }
-        holder.posterLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (post.getMediaType()) {
-                    case "movie": mediaState = 1; break;
-                    case "tv": mediaState = 2; break;
-                    case "person": mediaState = 3; break;
-                }
-                clickListener.onPostClicked(post.getMovieId(), mediaState);
+        holder.posterLayout.setOnClickListener(v -> {
+            switch (post.getMediaType()) {
+                case "movie": mediaState = 1; break;
+                case "tv": mediaState = 2; break;
+                case "person": mediaState = 3; break;
             }
+            clickListener.onPostClicked(post.getMovieId(), mediaState);
         });
-
     }
 
     @Override

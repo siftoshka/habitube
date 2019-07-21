@@ -1,111 +1,60 @@
 package az.amorphist.poster.presentation.explore;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
-import az.amorphist.poster.di.providers.ApiProvider;
-import az.amorphist.poster.entities.movielite.MovieLite;
-import az.amorphist.poster.entities.movielite.MoviePager;
-import io.reactivex.SingleObserver;
+import az.amorphist.poster.server.MovieDBApi;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-import static az.amorphist.poster.App.API_KEY;
-
 @InjectViewState
 public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     private final Router router;
-    private ApiProvider provider;
+    private final MovieDBApi movieDBApi;
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     @Inject
-    public ExplorePresenter(Router router, ApiProvider provider) {
+    public ExplorePresenter(Router router, MovieDBApi movieDBApi) {
         this.router = router;
-        this.provider = provider;
+        this.movieDBApi = movieDBApi;
     }
 
     @Override
     protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
         addUpcomingMovies();
         addMovies();
         addShows();
     }
 
     private void addUpcomingMovies() {
-        provider.get().getUpcomingMoviesLite(API_KEY)
+        compositeDisposable.add(movieDBApi.getUpcomingMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(MoviePager moviePager) {
-                        List<MovieLite> upcomingMovies = moviePager.getResults();
-                        getViewState().showUpcomingMovieList(upcomingMovies);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().unsuccessfulQueryError();
-                    }
-                });
+                .subscribe(moviePager -> getViewState().showUpcomingMovieList(moviePager.getResults()),
+                            throwable -> getViewState().unsuccessfulQueryError()));
     }
 
     private void addMovies() {
-        provider.get().getTrendingMoviesLite(API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(MoviePager moviePager) {
-                        List<MovieLite> movies = moviePager.getResults();
-                        getViewState().showMovieList(movies);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().unsuccessfulQueryError();
-                    }
-                });
+        compositeDisposable.add(movieDBApi.getTrendingMovies()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(moviePager -> getViewState().showMovieList(moviePager.getResults()),
+                    throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-
     private void addShows() {
-        provider.get().getTrendingTVShowsLite(API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<MoviePager>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(MoviePager moviePager) {
-                        List<MovieLite> tvShows = moviePager.getResults();
-                        getViewState().showTVShowList(tvShows);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().unsuccessfulQueryError();
-                    }
-                });
+        compositeDisposable.add(movieDBApi.getTrendingTVShows()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(moviePager -> getViewState().showTVShowList(moviePager.getResults()),
+                    throwable -> getViewState().unsuccessfulQueryError()));
     }
 
     public void goToDetailedMovieScreen(Integer id) {
@@ -122,5 +71,11 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     public void goToSearchScreen() {
         router.navigateTo(new Screens.SearchScreen());
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 }

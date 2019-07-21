@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import az.amorphist.poster.ui.ExploreFragment;
 import az.amorphist.poster.ui.PostFragment;
+import az.amorphist.poster.ui.SearchFragment;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -26,9 +27,16 @@ public class MainActivity extends MvpAppCompatActivity {
     private Navigator navigator = new SupportAppNavigator(this, R.id.fragment_container) {
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
-            if(command instanceof Forward && currentFragment instanceof ExploreFragment && nextFragment instanceof PostFragment) {
-                fragmentTransaction
-                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+            if (command instanceof Forward) {
+                if (currentFragment instanceof ExploreFragment && nextFragment instanceof PostFragment) {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                }
+                if (currentFragment instanceof PostFragment && nextFragment instanceof PostFragment) {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                }
+                if (currentFragment instanceof SearchFragment && nextFragment instanceof PostFragment) {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                }
             }
         }
     };

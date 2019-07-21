@@ -54,24 +54,9 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        upcomingAdapter = new MovieAdapter(new MovieAdapter.MovieItemClickListener() {
-            @Override
-            public void onPostClicked(int postId) {
-                explorePresenter.goToDetailedUpcomingScreen( postId);
-            }
-        });
-        movieAdapter = new MovieAdapter(new MovieAdapter.MovieItemClickListener() {
-            @Override
-            public void onPostClicked(int postId) {
-                explorePresenter.goToDetailedMovieScreen( postId);
-            }
-        });
-        showAdapter = new ShowAdapter(new ShowAdapter.ShowItemClickListener() {
-            @Override
-            public void onPostClicked(int showId) {
-                explorePresenter.goToDetailedShowScreen( showId);
-            }
-        });
+        upcomingAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedUpcomingScreen( postId));
+        movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen( postId));
+        showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen( showId));
     }
 
     @Override
@@ -149,19 +134,10 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         aboutDialog.setContentView(dialogView);
         aboutDialog.show();
 
-        aboutDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-            }
-        });
+        aboutDialog.setOnDismissListener(dialog -> { });
 
         Button closeButton = aboutDialog.findViewById(R.id.close_button);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                aboutDialog.dismiss();
-            }
-        });
+        closeButton.setOnClickListener(v -> aboutDialog.dismiss());
     }
 
     @Override

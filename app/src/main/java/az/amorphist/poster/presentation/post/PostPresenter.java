@@ -2,41 +2,38 @@ package az.amorphist.poster.presentation.post;
 
 import javax.inject.Inject;
 
-import az.amorphist.poster.di.providers.ApiProvider;
+import az.amorphist.poster.Screens;
 import az.amorphist.poster.di.qualifiers.MediaType;
 import az.amorphist.poster.di.qualifiers.MoviePosition;
 import az.amorphist.poster.di.qualifiers.PostId;
 import az.amorphist.poster.di.qualifiers.ShowPosition;
 import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
-import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.entities.person.Person;
-import az.amorphist.poster.entities.show.Show;
-import io.reactivex.SingleObserver;
+import az.amorphist.poster.server.MovieDBApi;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-import static az.amorphist.poster.App.API_KEY;
-
 @InjectViewState
 public class PostPresenter extends MvpPresenter<PostView> {
 
     private final Router router;
-    private ApiProvider provider;
+    private final MovieDBApi movieDBApi;
     private final Integer upcomingPosition, postPosition, showPosition, postId, mediaType;
 
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Inject
-    public PostPresenter(Router router, ApiProvider provider,
+    public PostPresenter(Router router, MovieDBApi movieDBApi,
                          @UpcomingMoviePosition Integer upcomingPosition,
                          @MoviePosition Integer postPosition,
                          @ShowPosition Integer showPosition,
                          @PostId Integer postId,
                          @MediaType Integer mediaType) {
         this.router = router;
-        this.provider = provider;
+        this.movieDBApi = movieDBApi;
         this.upcomingPosition = upcomingPosition;
         this.postPosition = postPosition;
         this.showPosition = showPosition;
@@ -46,112 +43,101 @@ public class PostPresenter extends MvpPresenter<PostView> {
 
     @Override
     protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-        if (upcomingPosition != 0) { getMovie(upcomingPosition); }
-        else if (postPosition != 0) { getMovie(postPosition); }
-        else if (showPosition != 0) { getTVShow(showPosition); }
+        if (upcomingPosition != 0) { getMovie(upcomingPosition); getSimilarMovies(upcomingPosition); }
+        else if (postPosition != 0) { getMovie(postPosition); getSimilarMovies(postPosition);}
+        else if (showPosition != 0) { getTVShow(showPosition); getSimilarTVShows(showPosition);}
 
         switch (mediaType) {
-            case 1: getMovie(postId); break;
-            case 2: getTVShow(postId); break;
+            case 1: getMovie(postId); getSimilarMovies(postId); break;
+            case 2: getTVShow(postId); getSimilarTVShows(postId); break;
             case 3: getMovieStar(); break;
         }
     }
 
     private void getMovie(int id) {
-        provider.get().getMovie(id, API_KEY)
+        compositeDisposable.add(movieDBApi.getMovie(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Movie>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        getViewState().showProgress(true);
-                    }
-
-                    @Override
-                    public void onSuccess(Movie movie) {
-                        getViewState().showProgress(false);
-                        getViewState().getMovie(
-                                movie.getPosterPath(),
-                                movie.getBackdropPath(),
-                                movie.getTitle(),
-                                movie.getReleaseDate(),
-                                movie.getVoteAverage(),
-                                movie.getVoteCount(),
-                                movie.getOverview()
-                        );
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().showErrorScreen();
-                    }
-                });
+                .doOnSubscribe(disposable -> getViewState().showProgress(true))
+                .doAfterTerminate(() -> getViewState().showProgress(false))
+                .doAfterSuccess(person -> getViewState().showMovieScreen())
+                .subscribe(movie -> getViewState().getMovie(
+                        movie.getPosterPath(),
+                        movie.getBackdropPath(),
+                        movie.getTitle(),
+                        movie.getReleaseDate(),
+                        movie.getVoteAverage(),
+                        movie.getVoteCount(),
+                        movie.getOverview()),
+                        throwable -> getViewState().showErrorScreen()));
     }
 
     private void getTVShow(int id) {
-        provider.get().getTVShow(id, API_KEY)
+        compositeDisposable.add(movieDBApi.getTVShow(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Show>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        getViewState().showProgress(true);
-                    }
-
-                    @Override
-                    public void onSuccess(Show show) {
-                        getViewState().showProgress(false);
-                        getViewState().getMovie(
-                                show.getPosterPath(),
-                                show.getBackdropPath(),
-                                show.getName(),
-                                show.getFirstAirDate(),
-                                show.getVoteAverage(),
-                                show.getVoteCount(),
-                                show.getOverview()
-                        );
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().showErrorScreen();
-                    }
-                });
+                .doOnSubscribe(disposable -> getViewState().showProgress(true))
+                .doAfterTerminate(() -> getViewState().showProgress(false))
+                .doAfterSuccess(person -> getViewState().showTVShowScreen())
+                .subscribe(show -> getViewState().getShow(
+                        show.getPosterPath(),
+                        show.getBackdropPath(),
+                        show.getName(),
+                        show.getFirstAirDate(),
+                        show.getVoteAverage(),
+                        show.getVoteCount(),
+                        show.getOverview()),
+                        throwable -> getViewState().showErrorScreen()));
     }
 
     private void getMovieStar() {
-        provider.get().getMovieStar(postId, API_KEY)
+        compositeDisposable.add(movieDBApi.getMovieStar(postId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Person>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        getViewState().showProgress(true);
-                    }
+                .doOnSubscribe(disposable -> getViewState().showProgress(true))
+                .doAfterTerminate(() -> getViewState().showProgress(false))
+                .doAfterSuccess(person -> getViewState().showPersonScreen())
+                .subscribe(person -> getViewState().getPerson(
+                        person.getProfilePath(),
+                        person.getName(),
+                        person.getBirthday(),
+                        person.getPlaceOfBirth(),
+                        person.getPopularity(),
+                        person.getBiography()),
+                        throwable -> getViewState().showErrorScreen()));
+    }
 
-                    @Override
-                    public void onSuccess(Person person) {
-                        getViewState().showProgress(false);
-                        getViewState().getPerson(
-                                person.getProfilePath(),
-                                person.getProfilePath(),
-                                person.getName(),
-                                person.getBirthday(),
-                                person.getPlaceOfBirth(),
-                                person.getPopularity(),
-                                person.getBiography()
-                        );
-                    }
+    private void getSimilarMovies(int id) {
+        compositeDisposable.add(movieDBApi.getSimilarMovies(id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(moviePager -> getViewState().showSimilarMovieList(moviePager.getResults()),
+                Throwable::printStackTrace));
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        getViewState().showErrorScreen();
-                    }
-                });
+    private void getSimilarTVShows(int id) {
+        compositeDisposable.add(movieDBApi.getSimilarTVShow(id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(moviePager -> getViewState().showSimilarTVShowList(moviePager.getResults()),
+                Throwable::printStackTrace));
+    }
+
+    public void goToDetailedMovieScreen(Integer id) {
+        router.navigateTo(new Screens.PostMovieScreen(id));
+    }
+
+    public void goToDetailedShowScreen(Integer id) {
+        router.navigateTo(new Screens.PostShowScreen(id));
     }
 
     public void goBack() {
         router.exit();
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 }

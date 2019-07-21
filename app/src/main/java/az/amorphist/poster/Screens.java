@@ -88,6 +88,23 @@ public final class Screens {
         }
     }
 
+    public static final class SimilarItemScreen extends SupportAppScreen {
+        private Integer postId;
+
+        public SimilarItemScreen(Integer postId) {
+            this.postId = postId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final PostFragment fragment = new PostFragment();
+            final Bundle bundle = new Bundle();
+            bundle.putInt("postId", postId);
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
     public static final class SearchScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {
