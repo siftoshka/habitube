@@ -2,6 +2,7 @@ package az.amorphist.poster.di.modules;
 
 import android.content.Context;
 
+import az.amorphist.poster.utils.GlideLoader;
 import az.amorphist.poster.utils.navigation.LocalRouter;
 import ru.terrakok.cicerone.Cicerone;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -18,5 +19,7 @@ public class AppModule extends Module {
         bind(NavigatorHolder.class).toInstance(cicerone.getNavigatorHolder());
 
         bind(LocalRouter.class).toInstance(new LocalRouter());
+
+        bind(GlideLoader.class).toInstance(new GlideLoader());
     }
 }

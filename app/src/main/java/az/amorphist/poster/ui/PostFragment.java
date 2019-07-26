@@ -27,6 +27,8 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
 import az.amorphist.poster.adapters.SeasonAdapter;
@@ -40,6 +42,7 @@ import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.post.PostPresenter;
 import az.amorphist.poster.presentation.post.PostView;
+import az.amorphist.poster.utils.GlideLoader;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -54,6 +57,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @InjectPresenter PostPresenter postPresenter;
 
+    @Inject GlideLoader glideLoader;
     private Toolbar toolbar;
     private RecyclerView recyclerViewSimilarMovies, recyclerViewSimilarShows, recyclerViewSeasons;
     private RelativeLayout mainScreen, showScreen, personScreen;
@@ -89,6 +93,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
 
         similarMoviesAdapter = new MovieAdapter(postId -> postPresenter.goToDetailedMovieScreen(postId));
         similarShowsAdapter = new ShowAdapter(showId -> postPresenter.goToDetailedShowScreen(showId));
@@ -134,19 +140,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getMovie(String image, String background, String title, String date, double rate, int views, List<MovieGenre> movieGenres, String description) {
-        Glide.with(getContext()).load(IMAGE_URL + image)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_poster_name)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(posterMain);
-        Glide.with(getContext()).load(IMAGE_URL + background)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.color.colorPrimary)
-                .error(R.drawable.ic_poster_name)
-                .into(posterBackground);
+        glideLoader.load(getContext(), image, posterMain);
+        glideLoader.load(getContext(), background, posterBackground);
         posterTitle.setText(title);
         posterDate.setText(date);
         posterRate.setText(String.valueOf(rate));
@@ -165,19 +160,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     public void getShow(String image, String background, String title, String date,
                         float rate, float views, List<ShowGenre> showGenres,
                         String description, List<Season> seasons) {
-        Glide.with(getContext()).load(IMAGE_URL + image)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_poster_name)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(posterShow);
-        Glide.with(getContext()).load(IMAGE_URL + background)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.color.colorPrimary)
-                .error(R.drawable.ic_poster_name)
-                .into(posterShowBackground);
+        glideLoader.load(getContext(), image, posterShow);
+        glideLoader.load(getContext(), background, posterShowBackground);
         posterShowTitle.setText(title);
         posterShowDate.setText(date);
         posterShowRate.setText(String.valueOf(rate));
@@ -195,14 +179,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getPerson(String image, String name, String birthdate, String placeOfBirth, double popularity, String bio) {
-        Glide.with(getContext())
-                .load(IMAGE_URL + image)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_poster_name)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(posterPerson);
+        glideLoader.load(getContext(), image, posterPerson);
         posterPersonName.setText(name);
         posterPersonBirthDate.setText(birthdate);
         posterPersonLocation.setText(placeOfBirth);

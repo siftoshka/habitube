@@ -7,13 +7,13 @@ import java.util.List;
 
 import az.amorphist.poster.entities.movielite.MovieLite;
 
-public class MoviePager {
+public class MovieResponse {
     @SerializedName("page") @Expose private int page;
     @SerializedName("results") @Expose private List<MovieLite> results = null;
     @SerializedName("total_pages") @Expose private int totalPages;
     @SerializedName("total_results") @Expose private int totalResults;
 
-    public MoviePager(int page, List<MovieLite> results, int totalPages, int totalResults) {
+    public MovieResponse(int page, List<MovieLite> results, int totalPages, int totalResults) {
         this.page = page;
         this.results = results;
         this.totalPages = totalPages;

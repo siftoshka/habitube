@@ -18,10 +18,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.utils.GlideLoader;
+import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.IMAGE_URL;
+import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
@@ -29,12 +34,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         void onPostClicked(int postId);
     }
 
+    @Inject GlideLoader glideLoader;
     private List<MovieLite> movies;
     private MovieItemClickListener clickListener;
 
     public MovieAdapter(@NonNull MovieItemClickListener clickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -47,12 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
-        Glide.with(holder.itemView)
-                .load(IMAGE_URL + movie.getMovieImage())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.progress_animation)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(holder.posterImage);
+        glideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }

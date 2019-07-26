@@ -18,10 +18,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.utils.GlideLoader;
+import toothpick.Toothpick;
 
 import static az.amorphist.poster.App.IMAGE_URL;
+import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
 
@@ -29,6 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         void onPostClicked(int id, int mediaType);
     }
 
+    @Inject GlideLoader glideLoader;
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
     private int mediaState;
@@ -36,6 +42,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
         this.searchMedia = new ArrayList<>();
         this.clickListener = clickListener;
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -49,21 +56,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public void onBindViewHolder(@NonNull SearchHolder holder, final int position) {
         final MovieLite post = this.searchMedia.get(position);
         if (post.getMovieImage() == null) {
-            Glide.with(holder.itemView)
-                    .load(IMAGE_URL + post.getStarImage())
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .placeholder(R.drawable.progress_animation)
-                    .error(R.drawable.ic_poster_name)
-                    .transform(new CenterCrop(), new RoundedCorners(16))
-                    .into(holder.posterImage);
+            glideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
-            Glide.with(holder.itemView)
-                    .load(IMAGE_URL + post.getMovieImage())
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .placeholder(R.drawable.progress_animation)
-                    .error(R.drawable.ic_poster_name)
-                    .transform(new CenterCrop(), new RoundedCorners(16))
-                    .into(holder.posterImage);
+            glideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
 
         if (post.getMovieTitle() == null) {

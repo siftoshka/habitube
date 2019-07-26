@@ -38,6 +38,9 @@ dependencies {
     //Google Material Design
     implementation 'com.google.android.material:material:1.0.0'
 
+    //Paging Library
+    implementation "android.arch.paging:runtime:1.0.1"
+
     //Cicerone
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
 

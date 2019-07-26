@@ -1,7 +1,7 @@
 package az.amorphist.poster.server;
 
 import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.entities.movielite.MoviePager;
+import az.amorphist.poster.entities.movielite.MovieResponse;
 import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.entities.show.Show;
 import io.reactivex.Observable;
@@ -13,13 +13,13 @@ import retrofit2.http.Query;
 public interface MovieDBApi {
 
     @GET("movie/upcoming")
-    Single<MoviePager> getUpcomingMovies();
+    Single<MovieResponse> getUpcomingMovies();
 
     @GET("trending/movie/day")
-    Single<MoviePager> getTrendingMovies();
+    Single<MovieResponse> getTrendingMovies();
 
     @GET("trending/tv/day")
-    Single<MoviePager> getTrendingTVShows();
+    Single<MovieResponse> getTrendingTVShows();
 
     @GET("movie/{movie_id}")
     Single<Movie> getMovie(
@@ -27,7 +27,7 @@ public interface MovieDBApi {
     );
 
     @GET("movie/{movie_id}/similar")
-    Single<MoviePager> getSimilarMovies(
+    Single<MovieResponse> getSimilarMovies(
             @Path("movie_id") int movieId
     );
 
@@ -37,7 +37,7 @@ public interface MovieDBApi {
     );
 
     @GET("tv/{tv_id}/similar")
-    Single<MoviePager> getSimilarTVShow(
+    Single<MovieResponse> getSimilarTVShow(
             @Path("tv_id") int showId
     );
 
@@ -47,7 +47,7 @@ public interface MovieDBApi {
     );
 
     @GET("search/multi")
-    Observable<MoviePager> getSearchResults(
+    Observable<MovieResponse> getSearchResults(
             @Query("language") String language,
             @Query("query") String searchQuery,
             @Query("page") int page,
