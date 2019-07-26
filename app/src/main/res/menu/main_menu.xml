@@ -6,16 +6,4 @@
         android:title="@string/search_movies_menu"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/settings_menu"
-        android:title="@string/settings_menu"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/contact_us_menu"
-        android:title="@string/contact_us_menu"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/about_us_menu"
-        android:title="@string/about_menu"
-        app:showAsAction="never"/>
 </menu>

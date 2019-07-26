@@ -3,7 +3,7 @@ package az.amorphist.poster.entities.movie;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class MovieGenre {
 
     @SerializedName("id") @Expose private int id;
     @SerializedName("name") @Expose private String name;

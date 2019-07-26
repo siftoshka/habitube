@@ -4,9 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import az.amorphist.poster.entities.show.Season;
+import az.amorphist.poster.ui.AccountFragment;
 import az.amorphist.poster.ui.ExploreFragment;
+import az.amorphist.poster.ui.LibraryFragment;
+import az.amorphist.poster.ui.NavbarFragment;
 import az.amorphist.poster.ui.PostFragment;
 import az.amorphist.poster.ui.SearchFragment;
+import az.amorphist.poster.ui.SeasonBottomDialog;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
@@ -88,27 +93,35 @@ public final class Screens {
         }
     }
 
-    public static final class SimilarItemScreen extends SupportAppScreen {
-        private Integer postId;
-
-        public SimilarItemScreen(Integer postId) {
-            this.postId = postId;
-        }
-
-        @Override
-        public Fragment getFragment() {
-            final PostFragment fragment = new PostFragment();
-            final Bundle bundle = new Bundle();
-            bundle.putInt("postId", postId);
-            fragment.setArguments(bundle);
-            return fragment;
-        }
-    }
-
     public static final class SearchScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {
             return new SearchFragment();
         }
     }
+
+    public static final class AccountScreen extends SupportAppScreen {
+
+        @Override
+        public Fragment getFragment() {
+            return new AccountFragment();
+        }
+    }
+
+    public static final class LibraryScreen extends SupportAppScreen {
+
+        @Override
+        public Fragment getFragment() {
+            return new LibraryFragment();
+        }
+    }
+
+    public static final class NavbarScreen extends SupportAppScreen {
+
+        @Override
+        public Fragment getFragment() {
+            return new NavbarFragment();
+        }
+    }
+
 }

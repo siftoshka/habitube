@@ -9,8 +9,7 @@ public class Movie {
 
     @SerializedName("adult") @Expose private boolean adult;
     @SerializedName("backdrop_path") @Expose private String backdropPath;
-    @SerializedName("budget") @Expose private int budget;
-    @SerializedName("genres") @Expose private List<Genre> genres = null;
+    @SerializedName("genres") @Expose private List<MovieGenre> movieGenres = null;
     @SerializedName("id") @Expose private int id;
     @SerializedName("imdb_id") @Expose private String imdbId;
     @SerializedName("original_title") @Expose private String originalTitle;
@@ -41,20 +40,12 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
-    public int getBudget() {
-        return budget;
+    public List<MovieGenre> getMovieGenres() {
+        return movieGenres;
     }
 
-    public void setBudget(int budget) {
-        this.budget = budget;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setMovieGenres(List<MovieGenre> movieGenres) {
+        this.movieGenres = movieGenres;
     }
 
     public int getId() {

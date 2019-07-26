@@ -9,8 +9,7 @@ public class Show {
     @SerializedName("backdrop_path") @Expose private String backdropPath;
     @SerializedName("episode_run_time") @Expose private List<Integer> episodeRunTime = null;
     @SerializedName("first_air_date") @Expose private String firstAirDate;
-    @SerializedName("genres") @Expose private List<Genre> genres = null;
-    @SerializedName("homepage") @Expose private String homepage;
+    @SerializedName("genres") @Expose private List<ShowGenre> showGenres = null;
     @SerializedName("id") @Expose private int id;
     @SerializedName("in_production") @Expose private boolean inProduction;
     @SerializedName("last_air_date") @Expose private String lastAirDate;
@@ -49,20 +48,12 @@ public class Show {
         this.firstAirDate = firstAirDate;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
+    public List<ShowGenre> getShowGenres() {
+        return showGenres;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public String getHomepage() {
-        return homepage;
-    }
-
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
+    public void setShowGenres(List<ShowGenre> showGenres) {
+        this.showGenres = showGenres;
     }
 
     public int getId() {

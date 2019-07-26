@@ -6,20 +6,26 @@
     <string name="post_text">Post</string>
     <string name="post_id_text">Post ID</string>
 
+    <string name="upcoming_movies">Upcoming Movies</string>
     <string name="trending_movies">Trending Movies</string>
     <string name="trending_tv_shows">Trending TV Shows</string>
+
+    <string name="similar_movies">Similar Movies</string>
+    <string name="similar_tv_shows">Similar TV Shows</string>
 
     <string name="contact_us_menu">Contact Us</string>
     <string name="about_menu">About</string>
     <string name="close_dialog_text">CLOSE</string>
-    <string name="upcoming_movies">Upcoming Movies</string>
     <string name="search_movies_menu">Search…</string>
     <string name="settings_menu">Settings</string>
     <string name="error_text_title">Sorry!</string>
     <string name="error_text_body">Something went wrong :(</string>
     <string name="description_card">Description</string>
-    <string name="similar_movies">Similar Movies</string>
-    <string name="similar_tv_shows">Similar TV Shows</string>
     <string name="biography_card">Biography</string>
+
+    <string name="navbar_library">Library</string>
+    <string name="navbar_explore">Explore</string>
+    <string name="navbar_account">Account</string>
+    <string name="seasons">Seasons</string>
 
 </resources>

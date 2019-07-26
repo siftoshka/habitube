@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .placeholder(R.drawable.progress_animation)
                     .error(R.drawable.ic_poster_name)
+                    .transform(new CenterCrop(), new RoundedCorners(16))
                     .into(holder.posterImage);
         } else {
             Glide.with(holder.itemView)
@@ -59,6 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .placeholder(R.drawable.progress_animation)
                     .error(R.drawable.ic_poster_name)
+                    .transform(new CenterCrop(), new RoundedCorners(16))
                     .into(holder.posterImage);
         }
 

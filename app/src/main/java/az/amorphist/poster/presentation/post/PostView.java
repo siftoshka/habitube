@@ -2,7 +2,10 @@ package az.amorphist.poster.presentation.post;
 
 import java.util.List;
 
+import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.show.Season;
+import az.amorphist.poster.entities.show.ShowGenre;
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
@@ -16,8 +19,10 @@ public interface PostView extends MvpView {
             String date,
             double  rate,
             int views,
+            List<MovieGenre> genres,
             String description
     );
+
     void getShow(
             String image,
             String background,
@@ -25,17 +30,27 @@ public interface PostView extends MvpView {
             String date,
             float  rate,
             float views,
-            String description
+            List<ShowGenre> showGenres,
+            String description,
+            List<Season> seasons
+            );
+
+    void getPerson(
+            String image,
+            String name,
+            String birthdate,
+            String placeOfBirth,
+            double popularity,
+            String bio
     );
-    void getPerson( String image,
-                    String name,
-                    String birthdate,
-                    String placeOfBirth,
-                    double popularity,
-                    String bio);
+
     void showSimilarMovieList(List<MovieLite> similarMovies);
     void showSimilarTVShowList(List<MovieLite> similarShows);
+
     void showProgress(boolean loadingState);
+
+    void showBottomSeasonDialog(int position);
+
     void showMovieScreen();
     void showErrorScreen();
     void showTVShowScreen();

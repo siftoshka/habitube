@@ -89,9 +89,6 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         });
     }
 
-
-
-
     @Override
     public void showSearchedMediaList(List<MovieLite> searchResult) {
         searchAdapter.addAllMedia(searchResult);

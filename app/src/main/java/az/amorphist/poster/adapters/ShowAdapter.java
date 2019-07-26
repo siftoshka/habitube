@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
                 .load(IMAGE_URL + movie.getMovieImage())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
+                .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(holder.posterImage);
         holder.posterTitle.setText(movie.getShowTitle());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));

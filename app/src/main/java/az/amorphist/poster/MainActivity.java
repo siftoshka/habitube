@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import javax.inject.Inject;
 
 import az.amorphist.poster.ui.ExploreFragment;
+import az.amorphist.poster.ui.NavbarFragment;
 import az.amorphist.poster.ui.PostFragment;
 import az.amorphist.poster.ui.SearchFragment;
 import moxy.MvpAppCompatActivity;
@@ -19,6 +20,8 @@ import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
 
+import static az.amorphist.poster.di.DI.APP_SCOPE;
+
 public class MainActivity extends MvpAppCompatActivity {
 
     @Inject NavigatorHolder navigatorHolder;
@@ -28,7 +31,7 @@ public class MainActivity extends MvpAppCompatActivity {
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
             if (command instanceof Forward) {
-                if (currentFragment instanceof ExploreFragment && nextFragment instanceof PostFragment) {
+                if (currentFragment instanceof NavbarFragment && nextFragment instanceof PostFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
                 if (currentFragment instanceof PostFragment && nextFragment instanceof PostFragment) {
@@ -45,8 +48,8 @@ public class MainActivity extends MvpAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toothpick.inject(this, Toothpick.openScope("APP_SCOPE"));
-        router.newRootScreen(new Screens.ExploreScreen());
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
+        router.newRootScreen(new Screens.NavbarScreen());
     }
 
     @Override
@@ -60,6 +63,5 @@ public class MainActivity extends MvpAppCompatActivity {
         super.onPause();
         navigatorHolder.removeNavigator();
     }
-
 
 }

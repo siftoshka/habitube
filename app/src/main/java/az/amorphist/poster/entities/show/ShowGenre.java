@@ -4,7 +4,7 @@ package az.amorphist.poster.entities.show;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class ShowGenre {
 
     @SerializedName("id") @Expose private int id;
     @SerializedName("name") @Expose private String name;

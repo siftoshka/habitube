@@ -20,67 +20,74 @@ import java.util.List;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.show.Season;
 
 import static az.amorphist.poster.App.IMAGE_URL;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
+public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHolder> {
 
-    public interface MovieItemClickListener {
-        void onPostClicked(int postId);
+    public interface ShowItemClickListener {
+        void onPostClicked(int position);
     }
 
-    private List<MovieLite> movies;
-    private MovieItemClickListener clickListener;
+    private List<Season> seasons;
+    private ShowItemClickListener clickListener;
 
-    public MovieAdapter(@NonNull MovieItemClickListener clickListener) {
-        this.movies = new ArrayList<>();
+    public SeasonAdapter(@NonNull ShowItemClickListener clickListener) {
+        this.seasons = new ArrayList<>();
         this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
-    public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public SeasonHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post, viewGroup, false);
-        return new MovieHolder(view);
+        return new SeasonHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
-        final MovieLite movie = this.movies.get(position);
+    public void onBindViewHolder(@NonNull SeasonHolder holder, final int position) {
+        final Season season = this.seasons.get(position);
         Glide.with(holder.itemView)
-                .load(IMAGE_URL + movie.getMovieImage())
+                .load(IMAGE_URL + season.getPosterPath())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(holder.posterImage);
-        holder.posterTitle.setText(movie.getMovieTitle());
-        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
+        holder.posterTitle.setText(season.getName());
+
+        holder.posterLayout.setOnClickListener(v ->
+                clickListener.onPostClicked(position));
     }
 
     @Override
-    public void onViewRecycled(@NonNull MovieHolder holder) {
+    public void onViewRecycled(@NonNull SeasonHolder holder) {
         holder.posterTitle.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return seasons.size();
     }
 
-    public void addAllMovies(List<MovieLite> movies) {
-        this.movies.clear();
-        this.movies.addAll(movies);
+    public void addAllMovies(List<Season> seasons) {
+        this.seasons.clear();
+        this.seasons.addAll(seasons);
         notifyDataSetChanged();
     }
 
-    static class MovieHolder extends RecyclerView.ViewHolder {
+    public Season getSeason(int position) {
+        return this.seasons.get(position);
+    }
+
+    static class SeasonHolder extends RecyclerView.ViewHolder {
 
         LinearLayout posterLayout;
         ImageView posterImage;
         TextView posterTitle;
 
-        MovieHolder(@NonNull View itemView) {
+        SeasonHolder(@NonNull View itemView) {
             super(itemView);
             this.posterLayout = itemView.findViewById(R.id.item_layout);
             this.posterImage = itemView.findViewById(R.id.poster_image);

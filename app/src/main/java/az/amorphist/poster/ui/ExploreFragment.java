@@ -40,7 +40,6 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @InjectPresenter ExplorePresenter explorePresenter;
 
     private Toolbar toolbar;
-    private Dialog aboutDialog;
     private RecyclerView recyclerViewUpcoming, recyclerViewMovies, recyclerViewTVShows;
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter;
@@ -112,44 +111,14 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.contact_us_menu:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(DEV_CONTACT));
-                startActivity(intent);
-                break;
-            case R.id.about_us_menu:
-                showAboutDialog();
-                break;
-            case R.id.search_movies:
-                explorePresenter.goToSearchScreen();
+        if (item.getItemId() == R.id.search_movies) {
+            explorePresenter.goToSearchScreen();
         }
         return false;
-    }
-
-    private void showAboutDialog() {
-        ViewGroup viewGroup = getView().findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.about_dialog, viewGroup, false);
-        aboutDialog = new Dialog(getContext());
-        aboutDialog.setContentView(dialogView);
-        aboutDialog.show();
-
-        aboutDialog.setOnDismissListener(dialog -> { });
-
-        Button closeButton = aboutDialog.findViewById(R.id.close_button);
-        closeButton.setOnClickListener(v -> aboutDialog.dismiss());
     }
 
     @Override
     public void unsuccessfulQueryError() {
         Toast.makeText(getContext(),"Unsuccessful request", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(aboutDialog != null) {
-            aboutDialog.dismiss();
-        }
     }
 }

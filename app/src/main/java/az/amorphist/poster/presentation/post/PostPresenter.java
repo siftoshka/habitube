@@ -68,6 +68,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
                         movie.getReleaseDate(),
                         movie.getVoteAverage(),
                         movie.getVoteCount(),
+                        movie.getMovieGenres(),
                         movie.getOverview()),
                         throwable -> getViewState().showErrorScreen()));
     }
@@ -86,7 +87,9 @@ public class PostPresenter extends MvpPresenter<PostView> {
                         show.getFirstAirDate(),
                         show.getVoteAverage(),
                         show.getVoteCount(),
-                        show.getOverview()),
+                        show.getShowGenres(),
+                        show.getOverview(),
+                        show.getSeasons()),
                         throwable -> getViewState().showErrorScreen()));
     }
 

@@ -78,7 +78,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="?attr/actionBarSize"
             android:adjustViewBounds="true"
-            android:background="@color/colorPrimary"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher" />
 
@@ -100,8 +99,6 @@
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
-                android:background="@color/colorPrimary"
-                android:scaleType="centerCrop"
                 tools:src="@drawable/splash" />
 
             <LinearLayout
@@ -127,9 +124,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:singleLine="true"
-                        android:textSize="24sp"
                         android:textColor="@color/textColor"
+                        android:textSize="24sp"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -142,6 +138,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_poster_date" />
 
                     <TextView
@@ -150,8 +147,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="DATE" />
                 </LinearLayout>
 
@@ -173,8 +170,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="RATE" />
                 </LinearLayout>
 
@@ -196,10 +193,31 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="VIEWS" />
                 </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/movie_genres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            app:singleLine="true" />
+                    </LinearLayout>
+                </HorizontalScrollView>
             </LinearLayout>
         </LinearLayout>
 
@@ -252,8 +270,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="10dp"
-                            android:textSize="16sp"
                             android:textColor="@color/textColor"
+                            android:textSize="16sp"
                             tools:text="Lorem" />
                     </androidx.core.widget.NestedScrollView>
                 </LinearLayout>
@@ -287,7 +305,7 @@
                         android:id="@+id/recycler_view_similar_movies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="false"/>
+                        android:clipToPadding="false" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -309,7 +327,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="?attr/actionBarSize"
             android:adjustViewBounds="true"
-            android:background="@color/colorPrimary"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher" />
 
@@ -331,8 +348,6 @@
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
-                android:background="@color/colorPrimary"
-                android:scaleType="centerCrop"
                 tools:src="@drawable/splash" />
 
             <LinearLayout
@@ -358,9 +373,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:singleLine="true"
-                        android:textSize="24sp"
                         android:textColor="@color/textColor"
+                        android:textSize="24sp"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -381,8 +395,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="DATE" />
                 </LinearLayout>
 
@@ -404,8 +418,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="RATE" />
                 </LinearLayout>
 
@@ -427,10 +441,31 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="VIEWS" />
                 </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/show_genres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            app:singleLine="true" />
+                    </LinearLayout>
+                </HorizontalScrollView>
             </LinearLayout>
         </LinearLayout>
 
@@ -466,8 +501,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/description_card"
-                        android:textSize="20sp"
                         android:textColor="@color/textColor"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.core.widget.NestedScrollView
@@ -483,10 +518,42 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="10dp"
-                            android:textSize="16sp"
                             android:textColor="@color/textColor"
+                            android:textSize="16sp"
                             tools:text="Lorem" />
                     </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/seasons_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/mainBackground"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/seasons"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_seasons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -510,15 +577,15 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/similar_tv_shows"
-                        android:textSize="20sp"
                         android:textColor="@color/textColor"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_similar_shows"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="false"/>
+                        android:clipToPadding="false" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -550,8 +617,6 @@
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
-                android:background="@color/colorPrimary"
-                android:scaleType="centerCrop"
                 tools:src="@drawable/splash" />
 
             <LinearLayout
@@ -577,9 +642,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:singleLine="true"
-                        android:textSize="24sp"
                         android:textColor="@color/textColor"
+                        android:textSize="24sp"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -600,8 +664,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="BIRTHDATE" />
                 </LinearLayout>
 
@@ -623,8 +687,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="RATE" />
                 </LinearLayout>
 
@@ -646,8 +710,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
+                        android:textSize="18sp"
                         tools:text="VIEWS" />
                 </LinearLayout>
             </LinearLayout>
@@ -685,8 +749,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/biography_card"
-                        android:textSize="20sp"
                         android:textColor="@color/textColor"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.core.widget.NestedScrollView
@@ -702,8 +766,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="10dp"
-                            android:textSize="16sp"
                             android:textColor="@color/textColor"
+                            android:textSize="16sp"
                             tools:text="Lorem" />
                     </androidx.core.widget.NestedScrollView>
                 </LinearLayout>
