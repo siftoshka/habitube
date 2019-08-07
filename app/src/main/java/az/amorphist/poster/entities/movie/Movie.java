@@ -1,16 +1,21 @@
 package az.amorphist.poster.entities.movie;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "movies")
 public class Movie {
 
     @SerializedName("adult") @Expose private boolean adult;
     @SerializedName("backdrop_path") @Expose private String backdropPath;
-    @SerializedName("genres") @Expose private List<MovieGenre> movieGenres = null;
-    @SerializedName("id") @Expose private int id;
+    @Ignore @SerializedName("genres") @Expose private List<MovieGenre> movieGenres = null;
+    @PrimaryKey @SerializedName("id") @Expose private int id;
     @SerializedName("imdb_id") @Expose private String imdbId;
     @SerializedName("original_title") @Expose private String originalTitle;
     @SerializedName("overview") @Expose private String overview;
@@ -23,6 +28,24 @@ public class Movie {
     @SerializedName("title") @Expose private String title;
     @SerializedName("vote_average") @Expose private double voteAverage;
     @SerializedName("vote_count") @Expose private int voteCount;
+
+    public Movie(boolean adult, String backdropPath, int id, String imdbId, String originalTitle, String overview, double popularity, String posterPath, String releaseDate, int runtime, String status, String tagline, String title, double voteAverage, int voteCount) {
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+        this.id = id;
+        this.imdbId = imdbId;
+        this.originalTitle = originalTitle;
+        this.overview = overview;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
+        this.runtime = runtime;
+        this.status = status;
+        this.tagline = tagline;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+    }
 
     public boolean isAdult() {
         return adult;

@@ -1,5 +1,6 @@
 package az.amorphist.poster.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -9,8 +10,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
+import javax.inject.Inject;
 
 import az.amorphist.poster.R;
+import az.amorphist.poster.adapters.LibraryPagerAdapter;
 import az.amorphist.poster.presentation.library.LibraryPresenter;
 import az.amorphist.poster.presentation.library.LibraryView;
 import moxy.MvpAppCompatFragment;
@@ -24,7 +32,10 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
 
     @InjectPresenter LibraryPresenter libraryPresenter;
 
+    @Inject Context context;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @ProvidePresenter
     LibraryPresenter libraryPresenter() {
@@ -32,10 +43,21 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
         toolbar = view.findViewById(R.id.library_toolbar);
+        tabLayout = view.findViewById(R.id.library_tab);
+        viewPager = view.findViewById(R.id.library_pager);
+        FragmentPagerAdapter pagerAdapter = new LibraryPagerAdapter(context, getChildFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
         return view;
     }
 

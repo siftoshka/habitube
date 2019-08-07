@@ -34,14 +34,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         void onPostClicked(int postId);
     }
 
-    @Inject GlideLoader glideLoader;
     private List<MovieLite> movies;
     private MovieItemClickListener clickListener;
 
     public MovieAdapter(@NonNull MovieItemClickListener clickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -54,7 +52,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
-        glideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
+        GlideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }

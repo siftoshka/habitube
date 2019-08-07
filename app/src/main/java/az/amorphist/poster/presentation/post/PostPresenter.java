@@ -3,11 +3,13 @@ package az.amorphist.poster.presentation.post;
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
+import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
 import az.amorphist.poster.di.qualifiers.MediaType;
 import az.amorphist.poster.di.qualifiers.MoviePosition;
 import az.amorphist.poster.di.qualifiers.PostId;
 import az.amorphist.poster.di.qualifiers.ShowPosition;
 import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
+import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.server.MovieDBApi;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,12 +23,14 @@ public class PostPresenter extends MvpPresenter<PostView> {
 
     private final Router router;
     private final MovieDBApi movieDBApi;
+    private final WatchedMoviesInteractor watchedMoviesInteractor;
     private final Integer upcomingPosition, postPosition, showPosition, postId, mediaType;
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public PostPresenter(Router router, MovieDBApi movieDBApi,
+                         WatchedMoviesInteractor watchedMoviesInteractor,
                          @UpcomingMoviePosition Integer upcomingPosition,
                          @MoviePosition Integer postPosition,
                          @ShowPosition Integer showPosition,
@@ -34,6 +38,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
                          @MediaType Integer mediaType) {
         this.router = router;
         this.movieDBApi = movieDBApi;
+        this.watchedMoviesInteractor = watchedMoviesInteractor;
         this.upcomingPosition = upcomingPosition;
         this.postPosition = postPosition;
         this.showPosition = showPosition;
@@ -69,6 +74,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
                         movie.getVoteAverage(),
                         movie.getVoteCount(),
                         movie.getMovieGenres(),
+                        movie.getImdbId(),
                         movie.getOverview()),
                         throwable -> getViewState().showErrorScreen()));
     }
@@ -124,6 +130,10 @@ public class PostPresenter extends MvpPresenter<PostView> {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(moviePager -> getViewState().showSimilarTVShowList(moviePager.getResults()),
                 Throwable::printStackTrace));
+    }
+
+    public void addMovieAsWatched(Movie movie) {
+        watchedMoviesInteractor.addMovie(movie);
     }
 
     public void goToDetailedMovieScreen(Integer id) {

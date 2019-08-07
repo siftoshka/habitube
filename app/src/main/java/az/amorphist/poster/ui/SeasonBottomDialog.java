@@ -67,7 +67,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
         return view;
     }
 
-    public void setDialog() {
+    private void setDialog() {
         Glide.with(getContext())
                 .load(IMAGE_URL + season.getPosterPath())
                 .transition(new DrawableTransitionOptions().crossFade())

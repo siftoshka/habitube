@@ -28,4 +28,10 @@
     <string name="navbar_account">Account</string>
     <string name="seasons">Seasons</string>
 
+    <string name="watched_tab">Watched</string>
+    <string name="planning_tab">Planning</string>
+    <string name="search_in_imdb">Search in IMDb</string>
+    <string name="add_to_watched">Add to Watched</string>
+    <string name="watch_later">Watch Later</string>
+
 </resources>

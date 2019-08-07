@@ -34,7 +34,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         void onPostClicked(int id, int mediaType);
     }
 
-    @Inject GlideLoader glideLoader;
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
     private int mediaState;
@@ -42,7 +41,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
         this.searchMedia = new ArrayList<>();
         this.clickListener = clickListener;
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -56,9 +54,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public void onBindViewHolder(@NonNull SearchHolder holder, final int position) {
         final MovieLite post = this.searchMedia.get(position);
         if (post.getMovieImage() == null) {
-            glideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
+            GlideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
-            glideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
+            GlideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
 
         if (post.getMovieTitle() == null) {

@@ -21,6 +21,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import az.amorphist.poster.R;
+import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.utils.GlideLoader;
 import toothpick.Toothpick;
@@ -28,37 +29,37 @@ import toothpick.Toothpick;
 import static az.amorphist.poster.App.IMAGE_URL;
 import static az.amorphist.poster.di.DI.APP_SCOPE;
 
-public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
+public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {
 
-    public interface ShowItemClickListener {
-        void onPostClicked(int showId);
+    public interface MovieItemClickListener {
+        void onPostClicked(int postId);
     }
 
-    private List<MovieLite> movies;
-    private ShowItemClickListener clickListener;
+    private List<Movie> movies;
+    private MovieItemClickListener clickListener;
 
-    public ShowAdapter(@NonNull ShowItemClickListener clickListener) {
+    public LibraryAdapter(@NonNull MovieItemClickListener clickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
-    public ShowHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post, viewGroup, false);
-        return new ShowHolder(view);
+    public LibraryHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post_search, viewGroup, false);
+        return new LibraryHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShowHolder holder, final int position) {
-        final MovieLite movie = this.movies.get(position);
-        GlideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
-        holder.posterTitle.setText(movie.getShowTitle());
-        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
+    public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
+        final Movie movie = this.movies.get(position);
+        GlideLoader.load(holder.itemView, movie.getPosterPath(), holder.posterImage);
+        holder.posterTitle.setText(movie.getTitle());
+        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getId()));
     }
 
     @Override
-    public void onViewRecycled(@NonNull ShowHolder holder) {
+    public void onViewRecycled(@NonNull LibraryHolder holder) {
         holder.posterTitle.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
@@ -68,19 +69,19 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
         return movies.size();
     }
 
-    public void addAllMovies(List<MovieLite> movies) {
+    public void addAllMovies(List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         notifyDataSetChanged();
     }
 
-    static class ShowHolder extends RecyclerView.ViewHolder {
+    static class LibraryHolder extends RecyclerView.ViewHolder {
 
         LinearLayout posterLayout;
         ImageView posterImage;
         TextView posterTitle;
 
-        ShowHolder(@NonNull View itemView) {
+        LibraryHolder(@NonNull View itemView) {
             super(itemView);
             this.posterLayout = itemView.findViewById(R.id.item_layout);
             this.posterImage = itemView.findViewById(R.id.poster_image);

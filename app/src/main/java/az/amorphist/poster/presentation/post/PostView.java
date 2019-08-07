@@ -20,6 +20,7 @@ public interface PostView extends MvpView {
             double  rate,
             int views,
             List<MovieGenre> genres,
+            String imdbId,
             String description
     );
 
