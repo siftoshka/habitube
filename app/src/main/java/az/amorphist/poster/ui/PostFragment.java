@@ -24,13 +24,10 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
 import az.amorphist.poster.adapters.SeasonAdapter;
 import az.amorphist.poster.adapters.ShowAdapter;
-import az.amorphist.poster.model.repository.WatchedRoomRepository;
 import az.amorphist.poster.di.modules.MovieModule;
 import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.entities.movie.Movie;
@@ -47,9 +44,9 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.App.IMDB_WEBSITE;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
-import static az.amorphist.poster.di.DI.POST_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.POST_SCOPE;
+import static az.amorphist.poster.Constants.SYSTEM.IMDB_WEBSITE;
 
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
@@ -102,7 +99,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post, container, false);
+        final View view = inflater.inflate(R.layout.fragment_post, container, false);
         toolbar = view.findViewById(R.id.post_toolbar);
 
         initFunctionalButtons(view);

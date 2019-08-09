@@ -1,15 +1,14 @@
 package az.amorphist.poster.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,8 +25,8 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.App.IMAGE_URL;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.SYSTEM.IMAGE_URL;
 
 public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements SeasonView {
 
@@ -55,7 +54,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_season_bottom, container, false);
+        final View view = inflater.inflate(R.layout.dialog_season_bottom, container, false);
         seasonImage = view.findViewById(R.id.poster_season_post);
         seasonName = view.findViewById(R.id.poster_season_name);
         seasonDate = view.findViewById(R.id.poster_season_air_date);

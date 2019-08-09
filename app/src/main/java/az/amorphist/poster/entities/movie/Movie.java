@@ -9,7 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity(tableName = "movies")
+import static az.amorphist.poster.Constants.DB.MOVIE_TABLE;
+
+@Entity(tableName = MOVIE_TABLE)
 public class Movie {
 
     @SerializedName("adult") @Expose private boolean adult;

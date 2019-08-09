@@ -11,7 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import az.amorphist.poster.R;
 
-import static az.amorphist.poster.App.IMAGE_URL;
+import static az.amorphist.poster.Constants.SYSTEM.IMAGE_URL;
 
 public class GlideLoader {
 

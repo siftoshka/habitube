@@ -26,7 +26,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
 
 public class LibraryFragment extends MvpAppCompatFragment implements LibraryView, Toolbar.OnMenuItemClickListener {
 
@@ -51,7 +51,7 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_library, container, false);
+        final View view = inflater.inflate(R.layout.fragment_library, container, false);
         toolbar = view.findViewById(R.id.library_toolbar);
         tabLayout = view.findViewById(R.id.library_tab);
         viewPager = view.findViewById(R.id.library_pager);

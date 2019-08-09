@@ -1,7 +1,6 @@
 package az.amorphist.poster.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
 
 public class LibraryPlanningFragment extends MvpAppCompatFragment implements LibraryPlanningView {
 
@@ -30,7 +29,8 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_library_planned, container, false);
+        final View view = inflater.inflate(R.layout.fragment_library_planned, container, false);
+        return view;
     }
 
 }

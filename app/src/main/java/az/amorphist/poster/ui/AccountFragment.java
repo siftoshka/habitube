@@ -15,7 +15,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
 
 public class AccountFragment extends MvpAppCompatFragment implements AccountView{
 
@@ -29,7 +29,7 @@ public class AccountFragment extends MvpAppCompatFragment implements AccountView
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        final View view = inflater.inflate(R.layout.fragment_account, container, false);
         return view;
     }
 }

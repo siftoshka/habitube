@@ -11,14 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.LibraryAdapter;
-import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.model.repository.WatchedRoomRepository;
 import az.amorphist.poster.presentation.library.LibraryWatchedPresenter;
 import az.amorphist.poster.presentation.library.LibraryWatchedView;
 import az.amorphist.poster.utils.animation.VegaXLayoutManager;
@@ -27,7 +21,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
 
 public class LibraryWatchedFragment extends MvpAppCompatFragment implements LibraryWatchedView {
 
@@ -51,7 +45,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_library_watched, container, false);
+        final View view = inflater.inflate(R.layout.fragment_library_watched, container, false);
         recyclerViewWatched = view.findViewById(R.id.recycler_view_watched);
         return view;
     }

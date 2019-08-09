@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import javax.inject.Inject;
 
-import az.amorphist.poster.ui.ExploreFragment;
 import az.amorphist.poster.ui.NavbarFragment;
 import az.amorphist.poster.ui.PostFragment;
 import az.amorphist.poster.ui.SearchFragment;
@@ -20,7 +19,7 @@ import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.di.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
 
 public class MainActivity extends MvpAppCompatActivity {
 

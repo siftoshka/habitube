@@ -13,7 +13,7 @@ import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-import static az.amorphist.poster.App.APP_LANG;
+import static az.amorphist.poster.Constants.SYSTEM.APP_LANG;
 
 @InjectViewState
 public class SearchPresenter extends MvpPresenter<SearchView> {

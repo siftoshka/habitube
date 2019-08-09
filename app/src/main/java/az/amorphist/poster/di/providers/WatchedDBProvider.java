@@ -2,13 +2,16 @@ package az.amorphist.poster.di.providers;
 
 import android.content.Context;
 
+import androidx.room.Room;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import az.amorphist.poster.model.data.MovieDAO;
-import az.amorphist.poster.model.repository.WatchedRoomRepository;
+import az.amorphist.poster.model.data.WatchedRoomRepository;
 
-public class WatchedDBProvider implements Provider<MovieDAO> {
+import static az.amorphist.poster.Constants.DB.MOVIE_TABLE;
+
+public class WatchedDBProvider implements Provider<WatchedRoomRepository> {
 
     private final Context context;
 
@@ -18,7 +21,7 @@ public class WatchedDBProvider implements Provider<MovieDAO> {
     }
 
     @Override
-    public MovieDAO get() {
-        return WatchedRoomRepository.getInstance(context).movieDAO();
+    public WatchedRoomRepository get() {
+        return Room.databaseBuilder(context, WatchedRoomRepository.class, MOVIE_TABLE).build();
     }
 }

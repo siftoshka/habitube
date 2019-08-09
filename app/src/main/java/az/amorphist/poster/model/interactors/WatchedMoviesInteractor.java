@@ -3,7 +3,7 @@ package az.amorphist.poster.model.interactors;
 import javax.inject.Inject;
 
 import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.model.WatchedRepository;
+import az.amorphist.poster.model.repository.WatchedRepository;
 
 public class WatchedMoviesInteractor {
 
