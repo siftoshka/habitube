@@ -8,8 +8,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import static androidx.room.ForeignKey.CASCADE;
+import static az.amorphist.poster.Constants.DB.MOVIE_GENRE_TABLE;
 
-@Entity(tableName = "movie_genre", foreignKeys = @ForeignKey(entity = Movie.class, parentColumns = "movieId", childColumns = "id", onDelete = CASCADE))
+@Entity(tableName = MOVIE_GENRE_TABLE, foreignKeys = @ForeignKey(entity = Movie.class, parentColumns = "id", childColumns = "movieId", onDelete = CASCADE))
 public class MovieGenre {
 
     private int movieId;

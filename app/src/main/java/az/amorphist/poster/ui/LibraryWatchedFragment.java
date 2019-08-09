@@ -11,8 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.LibraryAdapter;
+import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.presentation.library.LibraryWatchedPresenter;
 import az.amorphist.poster.presentation.library.LibraryWatchedView;
 import az.amorphist.poster.utils.animation.VegaXLayoutManager;
@@ -39,7 +42,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> Log.d("e", String.valueOf(postId)));
+        libraryAdapter = new LibraryAdapter(postId -> Log.d("LIBRARY ID", String.valueOf(postId)));
     }
 
     @Override
@@ -56,10 +59,11 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         recyclerViewWatched.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWatched.setHasFixedSize(true);
         recyclerViewWatched.setAdapter(libraryAdapter);
+        watchedPresenter.getMovies();
     }
 
     @Override
-    public void showWatchedMovies() {
-        watchedPresenter.getMovies();
+    public void showWatchedMovies(List<Movie> movies) {
+        libraryAdapter.addAllMovies(movies);
     }
 }

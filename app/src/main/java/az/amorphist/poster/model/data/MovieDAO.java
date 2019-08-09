@@ -14,7 +14,7 @@ import io.reactivex.Single;
 @Dao
 public interface MovieDAO {
 
-    @Insert Completable addMovie(Movie movie);
+    @Insert Completable addMovie(Movie... movie);
     @Query("SELECT * FROM movies") Single<List<Movie>> getMovies();
     @Query("SELECT * FROM movies WHERE id = :id") Single<Movie> getMovieById(int id);
     @Delete Completable deleteMovie(Movie movie);

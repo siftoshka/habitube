@@ -3,6 +3,7 @@ package az.amorphist.poster.presentation.library;
 import javax.inject.Inject;
 
 import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
+import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 
@@ -10,6 +11,7 @@ import moxy.MvpPresenter;
 public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
 
     private final WatchedMoviesInteractor watchedMoviesInteractor;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public LibraryWatchedPresenter(WatchedMoviesInteractor watchedMoviesInteractor) {
@@ -22,6 +24,13 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
     }
 
     public void getMovies() {
-        watchedMoviesInteractor.getMovies();
+        compositeDisposable.add(watchedMoviesInteractor.getMovies()
+        .subscribe((movies, throwable) -> getViewState().showWatchedMovies(movies)));
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 }

@@ -1,5 +1,7 @@
 package az.amorphist.poster.model.repository;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,6 +29,7 @@ public class WatchedRepository {
     }
 
     public Single<List<Movie>> getAllMovies() {
+        Log.e("F","FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
         return watchedRepository.movieDAO().getMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

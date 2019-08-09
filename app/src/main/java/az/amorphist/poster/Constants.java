@@ -4,6 +4,7 @@ public final class Constants {
 
     public static final class DB {
         public static final String MOVIE_TABLE = "movies";
+        public static final String MOVIE_GENRE_TABLE = "movie_genres";
     }
 
     public static final class SYSTEM {
