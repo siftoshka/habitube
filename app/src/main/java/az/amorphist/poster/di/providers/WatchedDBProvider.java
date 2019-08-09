@@ -22,6 +22,6 @@ public class WatchedDBProvider implements Provider<WatchedRoomRepository> {
 
     @Override
     public WatchedRoomRepository get() {
-        return Room.databaseBuilder(context, WatchedRoomRepository.class, MOVIE_TABLE).build();
+        return Room.databaseBuilder(context, WatchedRoomRepository.class, MOVIE_TABLE).allowMainThreadQueries().build();
     }
 }

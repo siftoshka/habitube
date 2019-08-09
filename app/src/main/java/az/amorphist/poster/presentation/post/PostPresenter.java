@@ -3,17 +3,15 @@ package az.amorphist.poster.presentation.post;
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
-import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
 import az.amorphist.poster.di.qualifiers.MediaType;
 import az.amorphist.poster.di.qualifiers.MoviePosition;
 import az.amorphist.poster.di.qualifiers.PostId;
 import az.amorphist.poster.di.qualifiers.ShowPosition;
 import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
 import az.amorphist.poster.entities.movie.Movie;
-import az.amorphist.poster.server.MovieDBApi;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import az.amorphist.poster.model.interactors.RemotePostInteractor;
+import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
@@ -22,14 +20,13 @@ import ru.terrakok.cicerone.Router;
 public class PostPresenter extends MvpPresenter<PostView> {
 
     private final Router router;
-    private final MovieDBApi movieDBApi;
     private final WatchedMoviesInteractor watchedMoviesInteractor;
     private final Integer upcomingPosition, postPosition, showPosition, postId, mediaType;
-
+    private final RemotePostInteractor remotePostInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public PostPresenter(Router router, MovieDBApi movieDBApi,
+    public PostPresenter(Router router, RemotePostInteractor remotePostInteractor,
                          WatchedMoviesInteractor watchedMoviesInteractor,
                          @UpcomingMoviePosition Integer upcomingPosition,
                          @MoviePosition Integer postPosition,
@@ -37,7 +34,7 @@ public class PostPresenter extends MvpPresenter<PostView> {
                          @PostId Integer postId,
                          @MediaType Integer mediaType) {
         this.router = router;
-        this.movieDBApi = movieDBApi;
+        this.remotePostInteractor = remotePostInteractor;
         this.watchedMoviesInteractor = watchedMoviesInteractor;
         this.upcomingPosition = upcomingPosition;
         this.postPosition = postPosition;
@@ -60,76 +57,69 @@ public class PostPresenter extends MvpPresenter<PostView> {
     }
 
     private void getMovie(int id) {
-        compositeDisposable.add(movieDBApi.getMovie(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> getViewState().showProgress(true))
-                .doAfterTerminate(() -> getViewState().showProgress(false))
-                .doAfterSuccess(person -> getViewState().showMovieScreen())
-                .subscribe(movie -> getViewState().getMovie(
-                        movie.getPosterPath(),
-                        movie.getBackdropPath(),
-                        movie.getTitle(),
-                        movie.getReleaseDate(),
-                        movie.getVoteAverage(),
-                        movie.getVoteCount(),
-                        movie.getMovieGenres(),
-                        movie.getImdbId(),
-                        movie.getOverview()),
-                        throwable -> getViewState().showErrorScreen()));
+        compositeDisposable.add(remotePostInteractor.getMovie(id)
+        .doOnSubscribe(disposable -> getViewState().showProgress(true))
+        .doAfterTerminate(() -> getViewState().showProgress(false))
+        .doAfterSuccess(movie -> getViewState().showMovieScreen())
+        .subscribe(movie -> getViewState().getMovie(
+                movie.isAdult(),
+                movie.getPosterPath(),
+                movie.getBackdropPath(),
+                movie.getId(),
+                movie.getTitle(),
+                movie.getReleaseDate(),
+                movie.getRuntime(),
+                movie.getVoteAverage(),
+                movie.getVoteCount(),
+                movie.getMovieGenres(),
+                movie.getImdbId(),
+                movie.getOverview()),
+                throwable -> getViewState().showErrorScreen()));
     }
 
     private void getTVShow(int id) {
-        compositeDisposable.add(movieDBApi.getTVShow(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> getViewState().showProgress(true))
-                .doAfterTerminate(() -> getViewState().showProgress(false))
-                .doAfterSuccess(person -> getViewState().showTVShowScreen())
-                .subscribe(show -> getViewState().getShow(
-                        show.getPosterPath(),
-                        show.getBackdropPath(),
-                        show.getName(),
-                        show.getFirstAirDate(),
-                        show.getVoteAverage(),
-                        show.getVoteCount(),
-                        show.getShowGenres(),
-                        show.getOverview(),
-                        show.getSeasons()),
-                        throwable -> getViewState().showErrorScreen()));
+        compositeDisposable.add(remotePostInteractor.getTVShow(id)
+        .doOnSubscribe(disposable -> getViewState().showProgress(true))
+        .doAfterTerminate(() -> getViewState().showProgress(false))
+        .doAfterSuccess(show -> getViewState().showTVShowScreen())
+        .subscribe(show -> getViewState().getShow(
+                show.getPosterPath(),
+                show.getBackdropPath(),
+                show.getName(),
+                show.getFirstAirDate(),
+                show.getVoteAverage(),
+                show.getVoteCount(),
+                show.getShowGenres(),
+                show.getOverview(),
+                show.getSeasons()),
+                throwable -> getViewState().showErrorScreen()));
     }
 
     private void getMovieStar() {
-        compositeDisposable.add(movieDBApi.getMovieStar(postId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> getViewState().showProgress(true))
-                .doAfterTerminate(() -> getViewState().showProgress(false))
-                .doAfterSuccess(person -> getViewState().showPersonScreen())
-                .subscribe(person -> getViewState().getPerson(
-                        person.getProfilePath(),
-                        person.getName(),
-                        person.getBirthday(),
-                        person.getPlaceOfBirth(),
-                        person.getPopularity(),
-                        person.getBiography()),
-                        throwable -> getViewState().showErrorScreen()));
+        compositeDisposable.add(remotePostInteractor.getStar(postId)
+        .doOnSubscribe(disposable -> getViewState().showProgress(true))
+        .doAfterTerminate(() -> getViewState().showProgress(false))
+        .doAfterSuccess(person -> getViewState().showPersonScreen())
+        .subscribe(person -> getViewState().getPerson(
+                person.getProfilePath(),
+                person.getName(),
+                person.getBirthday(),
+                person.getPlaceOfBirth(),
+                person.getPopularity(),
+                person.getBiography()),
+                throwable -> getViewState().showErrorScreen()));
     }
 
     private void getSimilarMovies(int id) {
-        compositeDisposable.add(movieDBApi.getSimilarMovies(id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(moviePager -> getViewState().showSimilarMovieList(moviePager.getResults()),
-                Throwable::printStackTrace));
+        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id)
+                .subscribe(movieResponses -> getViewState().showSimilarMovieList(movieResponses.getResults()),
+                        Throwable::printStackTrace));
     }
 
     private void getSimilarTVShows(int id) {
-        compositeDisposable.add(movieDBApi.getSimilarTVShow(id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(moviePager -> getViewState().showSimilarTVShowList(moviePager.getResults()),
-                Throwable::printStackTrace));
+        compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id)
+                .subscribe(movieResponses -> getViewState().showSimilarMovieList(movieResponses.getResults()),
+                        Throwable::printStackTrace));
     }
 
     public void addMovieAsWatched(Movie movie) {

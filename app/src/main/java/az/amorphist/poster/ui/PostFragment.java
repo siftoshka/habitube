@@ -139,10 +139,10 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     }
 
     @Override
-    public void getMovie(String image, String background, String title, String date,
-                         double rate, int views, List<MovieGenre> movieGenres,
+    public void getMovie(boolean isAdult, String image, String background, int id, String title,
+                         String date, int runtime, double rate, int views, List<MovieGenre> movieGenres,
                          String imdbId, String description) {
-        Movie movie = new Movie(false, background, 1, imdbId, title, description, rate, image, date, 1, description, background, title, rate, views);
+        Movie movie = new Movie(isAdult, background, id, imdbId, title, description, rate, image, date, runtime, description, background, title, rate, views);
         GlideLoader.load(getContext(), image, posterMain);
         GlideLoader.loadBackground(getContext(), background, posterBackground);
         posterTitle.setText(title);

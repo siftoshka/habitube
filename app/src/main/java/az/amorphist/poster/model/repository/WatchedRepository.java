@@ -23,6 +23,7 @@ public class WatchedRepository {
     }
 
     public Completable addMovie(Movie movie) {
+        Log.e("MOVIE OBJECT", movie.toString());
         return watchedRepository.movieDAO().addMovie(movie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

@@ -191,4 +191,26 @@ public class Movie {
     public int hashCode() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "adult=" + adult +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", movieGenres=" + movieGenres +
+                ", id=" + id +
+                ", imdbId='" + imdbId + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", overview='" + overview + '\'' +
+                ", popularity=" + popularity +
+                ", posterPath='" + posterPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", runtime=" + runtime +
+                ", status='" + status + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", title='" + title + '\'' +
+                ", voteAverage=" + voteAverage +
+                ", voteCount=" + voteCount +
+                '}';
+    }
 }
