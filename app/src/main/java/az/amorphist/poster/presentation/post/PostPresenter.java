@@ -1,5 +1,7 @@
 package az.amorphist.poster.presentation.post;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
@@ -9,6 +11,7 @@ import az.amorphist.poster.di.qualifiers.PostId;
 import az.amorphist.poster.di.qualifiers.ShowPosition;
 import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
 import az.amorphist.poster.entities.movie.Movie;
+import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.model.interactors.RemotePostInteractor;
 import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
 import io.reactivex.disposables.CompositeDisposable;
@@ -122,8 +125,8 @@ public class PostPresenter extends MvpPresenter<PostView> {
                         Throwable::printStackTrace));
     }
 
-    public void addMovieAsWatched(Movie movie) {
-        watchedMoviesInteractor.addMovie(movie);
+    public void addMovieAsWatched(Movie movie, List<MovieGenre> movieGenres) {
+        watchedMoviesInteractor.addMovie(movie, movieGenres);
     }
 
     public void goToDetailedMovieScreen(Integer id) {

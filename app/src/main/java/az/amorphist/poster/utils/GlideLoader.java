@@ -20,6 +20,7 @@ public class GlideLoader {
                 .load(IMAGE_URL + url)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_poster_name)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(into);
     }
@@ -29,6 +30,7 @@ public class GlideLoader {
                 .load(IMAGE_URL + url)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_poster_name)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(into);
     }
@@ -37,6 +39,7 @@ public class GlideLoader {
         Glide.with(context)
                 .load(IMAGE_URL + url)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .error(R.drawable.ic_poster_name)
                 .placeholder(R.drawable.progress_animation)
                 .into(into);
     }

@@ -22,6 +22,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import az.amorphist.poster.R;
@@ -161,11 +162,11 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
         posterDesc.setText(description);
         showImdbWeb(imdbId);
-        addMovieToWatched(movie);
+        addMovieToWatched(movie, movieGenres);
     }
 
-    private void addMovieToWatched(Movie movie) {
-        watchedButton.setOnClickListener(v -> postPresenter.addMovieAsWatched(movie));
+    private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
+        watchedButton.setOnClickListener(v -> postPresenter.addMovieAsWatched(movie, movieGenres));
     }
 
     @Override

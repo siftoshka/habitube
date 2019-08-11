@@ -53,6 +53,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         } else {
             holder.posterTitle.setText(post.getMovieTitle());
         }
+
+        if(post.getReleaseDate() == null) {
+            holder.posterDate.setText(post.getFirstAirDate());
+        } else {
+            holder.posterDate.setText(post.getReleaseDate());
+        }
+
         holder.posterLayout.setOnClickListener(v -> {
             switch (post.getMediaType()) {
                 case "movie": mediaState = 1; break;
@@ -66,6 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     @Override
     public void onViewRecycled(@NonNull SearchHolder holder) {
         holder.posterTitle.setText(null);
+        holder.posterDate.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
 
@@ -84,13 +92,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
         LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle;
+        TextView posterTitle, posterDate;
 
         SearchHolder(@NonNull View itemView) {
             super(itemView);
             this.posterLayout = itemView.findViewById(R.id.item_layout_search);
             this.posterImage = itemView.findViewById(R.id.poster_image_search);
             this.posterTitle = itemView.findViewById(R.id.poster_main_text_search);
+            this.posterDate = itemView.findViewById(R.id.poster_main_date_search);
         }
     }
 }

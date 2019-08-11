@@ -1,14 +1,13 @@
 package az.amorphist.poster.model.repository;
 
-import android.util.Log;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import az.amorphist.poster.entities.movie.Movie;
+import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.model.data.WatchedRoomRepository;
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -22,17 +21,29 @@ public class WatchedRepository {
         this.watchedRepository = watchedRepository;
     }
 
-    public Completable addMovie(Movie movie) {
-        Log.e("MOVIE OBJECT", movie.toString());
-        return watchedRepository.movieDAO().addMovie(movie)
+    public void addMovie(Movie movie, List<MovieGenre> movieGenres) {
+        watchedRepository.movieDAO().addMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe();
+
+        List<MovieGenre> genreList = new ArrayList<>();
+        for(MovieGenre genre: movieGenres) {
+            genreList.add(new MovieGenre(movie.getId(), genre.getId(), genre.getName()));
+        }
+        addMovieGenres(genreList);
+
+    }
+
+    public Single<List<Movie>> getAllMovies() {
+        return watchedRepository.movieDAO().getMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<List<Movie>> getAllMovies() {
-        Log.e("F","FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-        return watchedRepository.movieDAO().getMovies()
+    private void addMovieGenres(List<MovieGenre> movieGenres) {
+
+        watchedRepository.movieDAO().addMovieGenres(movieGenres)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread()).subscribe();
     }
 }

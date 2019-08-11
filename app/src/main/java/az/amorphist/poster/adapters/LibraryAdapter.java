@@ -43,12 +43,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
         final Movie movie = this.movies.get(position);
         GlideLoader.load(holder.itemView, movie.getPosterPath(), holder.posterImage);
         holder.posterTitle.setText(movie.getTitle());
+        holder.posterDate.setText(movie.getReleaseDate());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getId()));
     }
 
     @Override
     public void onViewRecycled(@NonNull LibraryHolder holder) {
         holder.posterTitle.setText(null);
+        holder.posterDate.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
 
@@ -67,13 +69,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
 
         LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle;
+        TextView posterTitle, posterDate;
 
         LibraryHolder(@NonNull View itemView) {
             super(itemView);
-            this.posterLayout = itemView.findViewById(R.id.item_layout);
-            this.posterImage = itemView.findViewById(R.id.poster_image);
-            this.posterTitle = itemView.findViewById(R.id.poster_main_text);
+            this.posterLayout = itemView.findViewById(R.id.item_layout_search);
+            this.posterImage = itemView.findViewById(R.id.poster_image_search);
+            this.posterTitle = itemView.findViewById(R.id.poster_main_text_search);
+            this.posterDate = itemView.findViewById(R.id.poster_main_date_search);
         }
     }
 }
