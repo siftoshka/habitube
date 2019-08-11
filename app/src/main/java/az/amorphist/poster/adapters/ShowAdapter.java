@@ -10,23 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.utils.GlideLoader;
-import toothpick.Toothpick;
-
-import static az.amorphist.poster.App.IMAGE_URL;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
 
@@ -34,14 +23,12 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
         void onPostClicked(int showId);
     }
 
-    @Inject GlideLoader glideLoader;
     private List<MovieLite> movies;
     private ShowItemClickListener clickListener;
 
     public ShowAdapter(@NonNull ShowItemClickListener clickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -54,7 +41,7 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
     @Override
     public void onBindViewHolder(@NonNull ShowHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
-        glideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
+        GlideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getShowTitle());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }

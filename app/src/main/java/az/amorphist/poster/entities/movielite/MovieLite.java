@@ -9,14 +9,18 @@ public class MovieLite {
     @SerializedName("name") @Expose private String showTitle;
     @SerializedName("poster_path") @Expose private String movieImage;
     @SerializedName("profile_path") @Expose private String starImage;
+    @SerializedName("release_date") @Expose private String releaseDate;
+    @SerializedName("first_air_date") @Expose private String firstAirDate;
     @SerializedName("media_type") @Expose private String mediaType;
 
-    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String starImage, String mediaType) {
+    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String starImage, String releaseDate, String firstAirDate, String mediaType) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.showTitle = showTitle;
         this.movieImage = movieImage;
         this.starImage = starImage;
+        this.releaseDate = releaseDate;
+        this.firstAirDate = firstAirDate;
         this.mediaType = mediaType;
     }
 
@@ -58,6 +62,22 @@ public class MovieLite {
 
     public void setStarImage(String starImage) {
         this.starImage = starImage;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getFirstAirDate() {
+        return firstAirDate;
+    }
+
+    public void setFirstAirDate(String firstAirDate) {
+        this.firstAirDate = firstAirDate;
     }
 
     public String getMediaType() {

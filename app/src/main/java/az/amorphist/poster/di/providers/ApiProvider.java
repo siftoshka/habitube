@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static az.amorphist.poster.App.API_URL;
+import static az.amorphist.poster.Constants.SYSTEM.API_URL;
 
 public class ApiProvider implements Provider<MovieDBApi> {
     @Inject

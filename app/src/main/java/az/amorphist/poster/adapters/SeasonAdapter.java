@@ -10,24 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import az.amorphist.poster.R;
-import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.entities.show.Season;
 import az.amorphist.poster.utils.GlideLoader;
-import toothpick.Toothpick;
-
-import static az.amorphist.poster.App.IMAGE_URL;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHolder> {
 
@@ -35,14 +23,12 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHold
         void onPostClicked(int position);
     }
 
-    @Inject GlideLoader glideLoader;
     private List<Season> seasons;
     private ShowItemClickListener clickListener;
 
     public SeasonAdapter(@NonNull ShowItemClickListener clickListener) {
         this.seasons = new ArrayList<>();
         this.clickListener = clickListener;
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -55,7 +41,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHold
     @Override
     public void onBindViewHolder(@NonNull SeasonHolder holder, final int position) {
         final Season season = this.seasons.get(position);
-        glideLoader.load(holder.itemView, season.getPosterPath(), holder.posterImage);
+        GlideLoader.load(holder.itemView, season.getPosterPath(), holder.posterImage);
         holder.posterTitle.setText(season.getName());
 
         holder.posterLayout.setOnClickListener(v ->

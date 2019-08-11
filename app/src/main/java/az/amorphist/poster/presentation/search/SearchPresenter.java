@@ -5,38 +5,31 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
-import az.amorphist.poster.server.MovieDBApi;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import az.amorphist.poster.model.interactors.RemoteExploreInteractor;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
-
-import static az.amorphist.poster.App.APP_LANG;
 
 @InjectViewState
 public class SearchPresenter extends MvpPresenter<SearchView> {
 
     private final Router router;
-    private final MovieDBApi movieDBApi;
-
+    private final RemoteExploreInteractor remoteExploreInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public SearchPresenter(Router router, MovieDBApi movieDBApi) {
+    public SearchPresenter(Router router, RemoteExploreInteractor remoteExploreInteractor) {
         this.router = router;
-        this.movieDBApi = movieDBApi;
+        this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
     public void searchMedia(String queryName) {
-        compositeDisposable.add(movieDBApi.getSearchResults(APP_LANG, queryName, 1, false)
-                .subscribeOn(Schedulers.io())
+        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(moviePager -> getViewState().showSearchedMediaList(moviePager.getResults()),
-                            throwable -> getViewState().unsuccessfulQueryError()));
+                .subscribe(movieResponse -> getViewState().showSearchedMediaList(movieResponse.getResults()),
+                throwable -> getViewState().unsuccessfulQueryError()));
     }
 
     public void goToDetailedScreen(Integer id, int mediaType) {

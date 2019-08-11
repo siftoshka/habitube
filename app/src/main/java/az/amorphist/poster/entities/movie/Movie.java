@@ -1,28 +1,60 @@
 package az.amorphist.poster.entities.movie;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import static az.amorphist.poster.Constants.DB.MOVIE_TABLE;
+
+@Entity(tableName = MOVIE_TABLE)
 public class Movie {
 
-    @SerializedName("adult") @Expose private boolean adult;
-    @SerializedName("backdrop_path") @Expose private String backdropPath;
-    @SerializedName("genres") @Expose private List<MovieGenre> movieGenres = null;
-    @SerializedName("id") @Expose private int id;
-    @SerializedName("imdb_id") @Expose private String imdbId;
-    @SerializedName("original_title") @Expose private String originalTitle;
-    @SerializedName("overview") @Expose private String overview;
-    @SerializedName("popularity") @Expose private double popularity;
-    @SerializedName("poster_path") @Expose private String posterPath;
-    @SerializedName("release_date") @Expose private String releaseDate;
-    @SerializedName("runtime") @Expose private int runtime;
-    @SerializedName("status") @Expose private String status;
-    @SerializedName("tagline") @Expose private String tagline;
-    @SerializedName("title") @Expose private String title;
-    @SerializedName("vote_average") @Expose private double voteAverage;
-    @SerializedName("vote_count") @Expose private int voteCount;
+    @ColumnInfo(name = "adult") @SerializedName("adult") @Expose private boolean adult;
+    @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") @Expose private String backdropPath;
+    @Ignore @SerializedName("genres") @Expose private List<MovieGenre> movieGenres;
+    @PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") @Expose private int id;
+    @ColumnInfo(name = "imdb_id") @SerializedName("imdb_id") @Expose private String imdbId;
+    @ColumnInfo(name = "original_title") @SerializedName("original_title") @Expose private String originalTitle;
+    @ColumnInfo(name = "overview") @SerializedName("overview") @Expose private String overview;
+    @ColumnInfo(name = "popularity") @SerializedName("popularity") @Expose private double popularity;
+    @ColumnInfo(name = "poster_path") @SerializedName("poster_path") @Expose private String posterPath;
+    @ColumnInfo(name = "release_date") @SerializedName("release_date") @Expose private String releaseDate;
+    @ColumnInfo(name = "runtime") @SerializedName("runtime") @Expose private int runtime;
+    @ColumnInfo(name = "status") @SerializedName("status") @Expose private String status;
+    @ColumnInfo(name = "tagline") @SerializedName("tagline") @Expose private String tagline;
+    @ColumnInfo(name = "title") @SerializedName("title") @Expose private String title;
+    @ColumnInfo(name = "vote_average") @SerializedName("vote_average") @Expose private double voteAverage;
+    @ColumnInfo(name = "vote_count") @SerializedName("vote_count") @Expose private int voteCount;
+
+    public Movie(boolean adult, String backdropPath, int id,
+                 String imdbId, String originalTitle, String overview, double popularity,
+                 String posterPath, String releaseDate, int runtime, String status, String tagline,
+                 String title, double voteAverage, int voteCount) {
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+        this.id = id;
+        this.imdbId = imdbId;
+        this.originalTitle = originalTitle;
+        this.overview = overview;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
+        this.runtime = runtime;
+        this.status = status;
+        this.tagline = tagline;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+    }
 
     public boolean isAdult() {
         return adult;
@@ -165,5 +197,27 @@ public class Movie {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "adult=" + adult +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", movieGenres=" + movieGenres +
+                ", id=" + id +
+                ", imdbId='" + imdbId + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", overview='" + overview + '\'' +
+                ", popularity=" + popularity +
+                ", posterPath='" + posterPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", runtime=" + runtime +
+                ", status='" + status + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", title='" + title + '\'' +
+                ", voteAverage=" + voteAverage +
+                ", voteCount=" + voteCount +
+                '}';
     }
 }

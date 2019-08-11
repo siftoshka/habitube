@@ -10,7 +10,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static az.amorphist.poster.App.API_KEY;
+import static az.amorphist.poster.Constants.SYSTEM.API_KEY;
 
 public class HttpInterceptor implements Interceptor {
     @Override

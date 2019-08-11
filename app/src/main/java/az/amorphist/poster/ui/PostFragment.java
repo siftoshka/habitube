@@ -1,5 +1,7 @@
 package az.amorphist.poster.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +18,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.MovieAdapter;
@@ -35,10 +31,10 @@ import az.amorphist.poster.adapters.SeasonAdapter;
 import az.amorphist.poster.adapters.ShowAdapter;
 import az.amorphist.poster.di.modules.MovieModule;
 import az.amorphist.poster.di.modules.SearchModule;
+import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.entities.show.Season;
-import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.post.PostPresenter;
 import az.amorphist.poster.presentation.post.PostView;
@@ -49,19 +45,19 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
-import static az.amorphist.poster.App.IMAGE_URL;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
-import static az.amorphist.poster.di.DI.POST_SCOPE;
+import static az.amorphist.poster.Constants.DI.APP_SCOPE;
+import static az.amorphist.poster.Constants.DI.POST_SCOPE;
+import static az.amorphist.poster.Constants.SYSTEM.IMDB_WEBSITE;
 
 public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @InjectPresenter PostPresenter postPresenter;
 
-    @Inject GlideLoader glideLoader;
     private Toolbar toolbar;
     private RecyclerView recyclerViewSimilarMovies, recyclerViewSimilarShows, recyclerViewSeasons;
     private RelativeLayout mainScreen, showScreen, personScreen;
     private LinearLayout loadingScreen, errorScreen;
+    private LinearLayout imdbButton, watchedButton, planningButton;
     private ImageView posterBackground, posterMain, posterShow, posterShowBackground, posterPerson;
     private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
     private TextView posterShowTitle, posterShowDate, posterShowRate, posterShowViews, posterShowDesc;
@@ -70,6 +66,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     private MovieAdapter similarMoviesAdapter;
     private ShowAdapter similarShowsAdapter;
     private SeasonAdapter seasonAdapter;
+    private LinearLayoutManager layoutManagerSimilarMovies, layoutManagerSimilarShows, layoutManagerSeasons;
 
     @ProvidePresenter
     PostPresenter postPresenter() {
@@ -95,7 +92,6 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         super.onCreate(savedInstanceState);
 
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-
         similarMoviesAdapter = new MovieAdapter(postId -> postPresenter.goToDetailedMovieScreen(postId));
         similarShowsAdapter = new ShowAdapter(showId -> postPresenter.goToDetailedShowScreen(showId));
         seasonAdapter = new SeasonAdapter(position -> showBottomSeasonDialog(position));
@@ -104,9 +100,10 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post, container, false);
+        final View view = inflater.inflate(R.layout.fragment_post, container, false);
         toolbar = view.findViewById(R.id.post_toolbar);
 
+        initFunctionalButtons(view);
         initPersonItems(view);
         initMovieItems(view);
         initShowItems(view);
@@ -119,67 +116,87 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> postPresenter.goBack());
 
-        LinearLayoutManager layoutManagerSimilarMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
 
-        LinearLayoutManager layoutManagerSimilarShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerSimilarShows = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarShows.setLayoutManager(layoutManagerSimilarShows);
         recyclerViewSimilarShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarShows.setHasFixedSize(true);
         recyclerViewSimilarShows.setAdapter(similarShowsAdapter);
 
-        LinearLayoutManager layoutManagerSeasons = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerSeasons = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSeasons.setLayoutManager(layoutManagerSeasons);
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeasons.setHasFixedSize(true);
         recyclerViewSeasons.setAdapter(seasonAdapter);
+
     }
 
     @Override
-    public void getMovie(String image, String background, String title, String date, double rate, int views, List<MovieGenre> movieGenres, String description) {
-        glideLoader.load(getContext(), image, posterMain);
-        glideLoader.load(getContext(), background, posterBackground);
+    public void getMovie(boolean isAdult, String image, String background, int id, String title,
+                         String date, int runtime, double rate, int views, List<MovieGenre> movieGenres,
+                         String imdbId, String description) {
+        Movie movie = new Movie(isAdult, background, id, imdbId, title, description, rate, image, date, runtime, description, background, title, rate, views);
+        GlideLoader.load(getContext(), image, posterMain);
+        GlideLoader.loadBackground(getContext(), background, posterBackground);
         posterTitle.setText(title);
         posterDate.setText(date);
         posterRate.setText(String.valueOf(rate));
         posterViews.setText(String.valueOf(views));
+
         for(MovieGenre mGenres: movieGenres) {
             Chip chip = new Chip(getContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Action);
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+                    null, 0, R.style.Widget_MaterialComponents_Chip_Action);
             chip.setChipDrawable(chipDrawable);
             chip.setText(mGenres.getName());
             movieGenresChip.addView(chip);
         }
+
         posterDesc.setText(description);
+        showImdbWeb(imdbId);
+        addMovieToWatched(movie, movieGenres);
+    }
+
+    private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
+        watchedButton.setOnClickListener(v -> postPresenter.addMovieAsWatched(movie, movieGenres));
     }
 
     @Override
     public void getShow(String image, String background, String title, String date,
                         float rate, float views, List<ShowGenre> showGenres,
                         String description, List<Season> seasons) {
-        glideLoader.load(getContext(), image, posterShow);
-        glideLoader.load(getContext(), background, posterShowBackground);
+        GlideLoader.load(getContext(), image, posterShow);
+        GlideLoader.loadBackground(getContext(), background, posterShowBackground);
         posterShowTitle.setText(title);
         posterShowDate.setText(date);
         posterShowRate.setText(String.valueOf(rate));
         posterShowViews.setText(String.valueOf(views));
+
         for(ShowGenre sGenres: showGenres) {
             Chip chip = new Chip(getContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Action);
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+                    null, 0, R.style.Widget_MaterialComponents_Chip_Action);
             chip.setChipDrawable(chipDrawable);
             chip.setText(sGenres.getName());
             showGenresChip.addView(chip);
         }
+
         posterShowDesc.setText(description);
         seasonAdapter.addAllMovies(seasons);
     }
 
     @Override
-    public void getPerson(String image, String name, String birthdate, String placeOfBirth, double popularity, String bio) {
-        glideLoader.load(getContext(), image, posterPerson);
+    public void getPerson(String image, String name, String birthdate, String placeOfBirth,
+                          double popularity, String bio) {
+        GlideLoader.load(getContext(), image, posterPerson);
         posterPersonName.setText(name);
         posterPersonBirthDate.setText(birthdate);
         posterPersonLocation.setText(placeOfBirth);
@@ -195,6 +212,12 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
         similarShowsAdapter.addAllMovies(similarShows);
+    }
+
+    private void showImdbWeb(String imdbId) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(IMDB_WEBSITE + imdbId));
+        imdbButton.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
@@ -245,6 +268,12 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         bundle.putParcelable("SEASON", seasonAdapter.getSeason(position));
         seasonBottomDialog.setArguments(bundle);
         seasonBottomDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void initFunctionalButtons(View view) {
+        imdbButton = view.findViewById(R.id.imdb_button);
+        watchedButton = view.findViewById(R.id.watched_button);
+        planningButton = view.findViewById(R.id.planning_button);
     }
 
     private void initPersonItems(View view) {

@@ -10,23 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.utils.GlideLoader;
-import toothpick.Toothpick;
-
-import static az.amorphist.poster.App.IMAGE_URL;
-import static az.amorphist.poster.di.DI.APP_SCOPE;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
 
@@ -34,7 +23,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         void onPostClicked(int id, int mediaType);
     }
 
-    @Inject GlideLoader glideLoader;
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
     private int mediaState;
@@ -42,7 +30,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
         this.searchMedia = new ArrayList<>();
         this.clickListener = clickListener;
-        Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @NonNull
@@ -56,9 +43,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public void onBindViewHolder(@NonNull SearchHolder holder, final int position) {
         final MovieLite post = this.searchMedia.get(position);
         if (post.getMovieImage() == null) {
-            glideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
+            GlideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
-            glideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
+            GlideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
 
         if (post.getMovieTitle() == null) {
@@ -66,6 +53,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         } else {
             holder.posterTitle.setText(post.getMovieTitle());
         }
+
+        if(post.getReleaseDate() == null) {
+            holder.posterDate.setText(post.getFirstAirDate());
+        } else {
+            holder.posterDate.setText(post.getReleaseDate());
+        }
+
         holder.posterLayout.setOnClickListener(v -> {
             switch (post.getMediaType()) {
                 case "movie": mediaState = 1; break;
@@ -79,6 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     @Override
     public void onViewRecycled(@NonNull SearchHolder holder) {
         holder.posterTitle.setText(null);
+        holder.posterDate.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
 
@@ -97,13 +92,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
         LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle;
+        TextView posterTitle, posterDate;
 
         SearchHolder(@NonNull View itemView) {
             super(itemView);
             this.posterLayout = itemView.findViewById(R.id.item_layout_search);
             this.posterImage = itemView.findViewById(R.id.poster_image_search);
             this.posterTitle = itemView.findViewById(R.id.poster_main_text_search);
+            this.posterDate = itemView.findViewById(R.id.poster_main_date_search);
         }
     }
 }

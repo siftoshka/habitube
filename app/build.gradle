@@ -38,9 +38,6 @@ dependencies {
     //Google Material Design
     implementation 'com.google.android.material:material:1.0.0'
 
-    //Paging Library
-    implementation "android.arch.paging:runtime:1.0.1"
-
     //Cicerone
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
 
@@ -74,4 +71,9 @@ dependencies {
     //RX Java
     implementation "io.reactivex.rxjava2:rxjava:2.2.6"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    //Room
+    implementation 'androidx.room:room-runtime:2.2.0-alpha01'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha01'
+    implementation 'androidx.room:room-rxjava2:2.2.0-alpha01'
 }

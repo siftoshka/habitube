@@ -11,25 +11,36 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import az.amorphist.poster.R;
 
-import static az.amorphist.poster.App.IMAGE_URL;
+import static az.amorphist.poster.Constants.SYSTEM.IMAGE_URL;
 
 public class GlideLoader {
 
-    public void load(View view, String url, ImageView into) {
+    public static void load(View view, String url, ImageView into) {
         Glide.with(view)
                 .load(IMAGE_URL + url)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_poster_name)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(into);
     }
 
-    public void load(Context context, String url, ImageView into) {
+    public static void load(Context context, String url, ImageView into) {
         Glide.with(context)
                 .load(IMAGE_URL + url)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_poster_name)
                 .transform(new CenterCrop(), new RoundedCorners(16))
+                .into(into);
+    }
+
+    public static void loadBackground(Context context, String url, ImageView into) {
+        Glide.with(context)
+                .load(IMAGE_URL + url)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .error(R.drawable.ic_poster_name)
+                .placeholder(R.drawable.progress_animation)
                 .into(into);
     }
 }

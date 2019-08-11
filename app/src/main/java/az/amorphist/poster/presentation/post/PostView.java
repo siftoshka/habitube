@@ -13,13 +13,17 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface PostView extends MvpView {
     void getMovie(
+            boolean isAdult,
             String image,
             String background,
+            int id,
             String title,
             String date,
+            int runtime,
             double  rate,
             int views,
             List<MovieGenre> genres,
+            String imdbId,
             String description
     );
 
