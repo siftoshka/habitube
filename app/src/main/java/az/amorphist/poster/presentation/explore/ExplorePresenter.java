@@ -3,7 +3,7 @@ package az.amorphist.poster.presentation.explore;
 import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
-import az.amorphist.poster.model.interactors.RemoteExploreInteractor;
+import az.amorphist.poster.model.interactor.RemoteExploreInteractor;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;

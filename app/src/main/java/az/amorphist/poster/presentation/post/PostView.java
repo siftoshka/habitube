@@ -2,9 +2,12 @@ package az.amorphist.poster.presentation.post;
 
 import java.util.List;
 
+import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.entities.show.Season;
+import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;
@@ -13,39 +16,15 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface PostView extends MvpView {
     void getMovie(
-            boolean isAdult,
-            String image,
-            String background,
-            int id,
-            String title,
-            String date,
-            int runtime,
-            double  rate,
-            int views,
-            List<MovieGenre> genres,
-            String imdbId,
-            String description
+            Movie movie
     );
 
     void getShow(
-            String image,
-            String background,
-            String title,
-            String date,
-            float  rate,
-            float views,
-            List<ShowGenre> showGenres,
-            String description,
-            List<Season> seasons
+            Show show
             );
 
     void getPerson(
-            String image,
-            String name,
-            String birthdate,
-            String placeOfBirth,
-            double popularity,
-            String bio
+            Person person
     );
 
     void showSimilarMovieList(List<MovieLite> similarMovies);
@@ -59,4 +38,6 @@ public interface PostView extends MvpView {
     void showErrorScreen();
     void showTVShowScreen();
     void showPersonScreen();
+
+    void setSaveButtonEnabled(boolean enabled);
 }

@@ -3,7 +3,6 @@ package az.amorphist.poster.di.modules;
 import az.amorphist.poster.di.providers.WatchedDBProvider;
 import az.amorphist.poster.model.data.WatchedRoomRepository;
 import az.amorphist.poster.model.repository.WatchedRepository;
-import az.amorphist.poster.model.data.MovieDAO;
 import toothpick.config.Module;
 
 public class RepositoryModule extends Module {

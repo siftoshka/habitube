@@ -15,7 +15,6 @@
 
     <string name="contact_us_menu">Contact Us</string>
     <string name="about_menu">About</string>
-    <string name="close_dialog_text">CLOSE</string>
     <string name="search_movies_menu">Search…</string>
     <string name="settings_menu">Settings</string>
     <string name="error_text_title">Sorry!</string>
@@ -33,5 +32,6 @@
     <string name="search_in_imdb">Search in IMDb</string>
     <string name="add_to_watched">Add to Watched</string>
     <string name="watch_later">Watch Later</string>
+    <string name="already_added">Already added</string>
 
 </resources>

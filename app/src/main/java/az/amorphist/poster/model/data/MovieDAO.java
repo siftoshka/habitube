@@ -11,14 +11,14 @@ import java.util.List;
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 @Dao
 public interface MovieDAO {
-
     @Insert Completable addMovie(Movie movie);
     @Insert Completable addMovieGenres(List<MovieGenre> movieGenres);
     @Transaction @Query("SELECT * FROM movies") Single<List<Movie>> getMovies();
-    @Transaction @Query("SELECT * FROM movies WHERE id = :id") Single<Movie> getMovieById(int id);
+    @Transaction @Query("SELECT count(*) FROM movies WHERE id = :movieId") int getMovieById(int movieId);
     @Delete Completable deleteMovie(Movie movie);
 }

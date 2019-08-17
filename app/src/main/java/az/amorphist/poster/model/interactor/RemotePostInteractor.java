@@ -1,4 +1,4 @@
-package az.amorphist.poster.model.interactors;
+package az.amorphist.poster.model.interactor;
 
 import javax.inject.Inject;
 
@@ -27,26 +27,18 @@ public class RemotePostInteractor {
     }
 
     public Single<Show> getTVShow(int showId) {
-        return repository.getShow(showId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return repository.getShow(showId);
     }
 
     public Single<Person> getStar(int personId) {
-        return repository.getStar(personId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return repository.getStar(personId);
     }
 
     public Single<MovieResponse> getSimilarMovies(int id) {
-        return repository.getSimilarMovies(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return repository.getSimilarMovies(id);
     }
 
     public Single<MovieResponse> getSimilarTVShows(int id) {
-        return repository.getSimilarTVShows(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return repository.getSimilarTVShows(id);
     }
 }

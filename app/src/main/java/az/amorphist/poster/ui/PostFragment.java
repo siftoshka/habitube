@@ -3,6 +3,7 @@ package az.amorphist.poster.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import az.amorphist.poster.R;
@@ -34,7 +34,9 @@ import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.entities.show.Season;
+import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.post.PostPresenter;
 import az.amorphist.poster.presentation.post.PostView;
@@ -57,7 +59,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     private RecyclerView recyclerViewSimilarMovies, recyclerViewSimilarShows, recyclerViewSeasons;
     private RelativeLayout mainScreen, showScreen, personScreen;
     private LinearLayout loadingScreen, errorScreen;
-    private LinearLayout imdbButton, watchedButton, planningButton;
+    private LinearLayout imdbButton, watchedButton, watchedButtonAlt, planningButton;
     private ImageView posterBackground, posterMain, posterShow, posterShowBackground, posterPerson;
     private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
     private TextView posterShowTitle, posterShowDate, posterShowRate, posterShowViews, posterShowDesc;
@@ -66,6 +68,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     private MovieAdapter similarMoviesAdapter;
     private ShowAdapter similarShowsAdapter;
     private SeasonAdapter seasonAdapter;
+    private LinearLayout similarMoviesCard, similarShowsCard;
     private LinearLayoutManager layoutManagerSimilarMovies, layoutManagerSimilarShows, layoutManagerSeasons;
 
     @ProvidePresenter
@@ -115,7 +118,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> postPresenter.goBack());
-
+        watchedButton.setVisibility(View.VISIBLE);
+        watchedButtonAlt.setVisibility(View.GONE);
         layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
@@ -140,19 +144,16 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     }
 
     @Override
-    public void getMovie(boolean isAdult, String image, String background, int id, String title,
-                         String date, int runtime, double rate, int views, List<MovieGenre> movieGenres,
-                         String imdbId, String description) {
-        Movie movie = new Movie(isAdult, background, id, imdbId, title, description, rate, image, date, runtime, description, background, title, rate, views);
-        GlideLoader.load(getContext(), image, posterMain);
-        GlideLoader.loadBackground(getContext(), background, posterBackground);
-        posterTitle.setText(title);
-        posterDate.setText(date);
-        posterRate.setText(String.valueOf(rate));
-        posterViews.setText(String.valueOf(views));
+    public void getMovie(Movie movie) {
+        GlideLoader.load(getContext(), movie.getPosterPath(), posterMain);
+        GlideLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
+        posterTitle.setText(movie.getTitle());
+        posterDate.setText(movie.getReleaseDate());
+        posterRate.setText(String.valueOf(movie.getVoteAverage()));
+        posterViews.setText(String.valueOf(movie.getVoteCount()));
 
-        for(MovieGenre mGenres: movieGenres) {
-            Chip chip = new Chip(getContext());
+        for(MovieGenre mGenres: movie.getMovieGenres()) {
+            Chip chip = new Chip(requireContext());
             ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
                     null, 0, R.style.Widget_MaterialComponents_Chip_Action);
             chip.setChipDrawable(chipDrawable);
@@ -160,9 +161,9 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
             movieGenresChip.addView(chip);
         }
 
-        posterDesc.setText(description);
-        showImdbWeb(imdbId);
-        addMovieToWatched(movie, movieGenres);
+        posterDesc.setText(movie.getOverview());
+        showImdbWeb(movie.getImdbId());
+        addMovieToWatched(movie, movie.getMovieGenres());
     }
 
     private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
@@ -170,17 +171,15 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     }
 
     @Override
-    public void getShow(String image, String background, String title, String date,
-                        float rate, float views, List<ShowGenre> showGenres,
-                        String description, List<Season> seasons) {
-        GlideLoader.load(getContext(), image, posterShow);
-        GlideLoader.loadBackground(getContext(), background, posterShowBackground);
-        posterShowTitle.setText(title);
-        posterShowDate.setText(date);
-        posterShowRate.setText(String.valueOf(rate));
-        posterShowViews.setText(String.valueOf(views));
+    public void getShow(Show show) {
+        GlideLoader.load(getContext(), show.getPosterPath(), posterShow);
+        GlideLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
+        posterShowTitle.setText(show.getName());
+        posterShowDate.setText(show.getFirstAirDate());
+        posterShowRate.setText(String.valueOf(show.getVoteAverage()));
+        posterShowViews.setText(String.valueOf(show.getVoteCount()));
 
-        for(ShowGenre sGenres: showGenres) {
+        for(ShowGenre sGenres: show.getShowGenres()) {
             Chip chip = new Chip(getContext());
             ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
                     null, 0, R.style.Widget_MaterialComponents_Chip_Action);
@@ -189,28 +188,33 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
             showGenresChip.addView(chip);
         }
 
-        posterShowDesc.setText(description);
-        seasonAdapter.addAllMovies(seasons);
+        posterShowDesc.setText(show.getOverview());
+        seasonAdapter.addAllMovies(show.getSeasons());
     }
 
     @Override
-    public void getPerson(String image, String name, String birthdate, String placeOfBirth,
-                          double popularity, String bio) {
-        GlideLoader.load(getContext(), image, posterPerson);
-        posterPersonName.setText(name);
-        posterPersonBirthDate.setText(birthdate);
-        posterPersonLocation.setText(placeOfBirth);
-        posterPersonPopularity.setText(String.valueOf(popularity));
-        posterPersonBio.setText(bio);
+    public void getPerson(Person person) {
+        GlideLoader.load(getContext(), person.getProfilePath(), posterPerson);
+        posterPersonName.setText(person.getName());
+        posterPersonBirthDate.setText(person.getBirthday());
+        posterPersonLocation.setText(person.getPlaceOfBirth());
+        posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
+        posterPersonBio.setText(person.getBiography());
     }
 
     @Override
     public void showSimilarMovieList(List<MovieLite> similarMovies) {
+        if(similarMovies.isEmpty()) {
+            similarMoviesCard.setVisibility(View.GONE);
+        }
         similarMoviesAdapter.addAllMovies(similarMovies);
     }
 
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
+        if(similarShows.isEmpty()) {
+            similarShowsCard.setVisibility(View.GONE);
+        }
         similarShowsAdapter.addAllMovies(similarShows);
     }
 
@@ -226,6 +230,17 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
             loadingScreen.setVisibility(View.VISIBLE);
         } else {
             loadingScreen.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setSaveButtonEnabled(boolean enabled) {
+        if (enabled) {
+            watchedButton.setVisibility(View.GONE);
+            watchedButtonAlt.setVisibility(View.VISIBLE);
+        } else {
+            watchedButton.setVisibility(View.VISIBLE);
+            watchedButtonAlt.setVisibility(View.GONE);
         }
     }
 
@@ -273,6 +288,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     private void initFunctionalButtons(View view) {
         imdbButton = view.findViewById(R.id.imdb_button);
         watchedButton = view.findViewById(R.id.watched_button);
+        watchedButtonAlt = view.findViewById(R.id.watched_button_alt);
         planningButton = view.findViewById(R.id.planning_button);
     }
 
@@ -316,5 +332,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         errorScreen = view.findViewById(R.id.error_screen);
         showScreen = view.findViewById(R.id.show_screen);
         personScreen = view.findViewById(R.id.person_screen);
+
+        similarMoviesCard = view.findViewById(R.id.similar_movies_card_layout);
+        similarShowsCard = view.findViewById(R.id.similar_shows_card_layout);
     }
 }

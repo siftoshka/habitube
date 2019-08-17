@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Poster</string>
+    <string name="app_version">Версия приложения</string>
+    <string name="app_desc">Популярные фильмы &amp; сериалы в одном приложении</string>
+    <string name="user_id_text">User ID</string>
+    <string name="post_text">Пост</string>
+    <string name="post_id_text">Post ID</string>
+
+    <string name="upcoming_movies">Грядущие фильмы</string>
+    <string name="trending_movies">Популярные Фильмы</string>
+    <string name="trending_tv_shows">Популярные Сериалы</string>
+
+    <string name="similar_movies">Похожие Фильмы</string>
+    <string name="similar_tv_shows">Похожие Сериалы</string>
+
+    <string name="contact_us_menu">Контакты</string>
+    <string name="about_menu">О Приложении</string>
+    <string name="search_movies_menu">Поиск…</string>
+    <string name="settings_menu">Настройки</string>
+    <string name="error_text_title">Простите!</string>
+    <string name="error_text_body">Что-то произошло не так :(</string>
+    <string name="description_card">Описание</string>
+    <string name="biography_card">Биография</string>
+
+    <string name="navbar_library">Библеотека</string>
+    <string name="navbar_explore">Исследуйте</string>
+    <string name="navbar_account">Аккаунт</string>
+    <string name="seasons">Сезоны</string>
+
+    <string name="watched_tab">Просмотренные</string>
+    <string name="planning_tab">На будущее</string>
+    <string name="search_in_imdb">Поиск в IMDb</string>
+    <string name="add_to_watched">Отметить как просмотренное</string>
+    <string name="watch_later">Посмотреть позже</string>
+    <string name="already_added">Уже добавлен</string>
+
+</resources>

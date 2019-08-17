@@ -10,23 +10,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.show.Season;
 import az.amorphist.poster.presentation.season.SeasonPresenter;
 import az.amorphist.poster.presentation.season.SeasonView;
+import az.amorphist.poster.utils.GlideLoader;
 import az.amorphist.poster.utils.moxy.MvpBottomSheetDialogFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
 import static az.amorphist.poster.Constants.DI.APP_SCOPE;
-import static az.amorphist.poster.Constants.SYSTEM.IMAGE_URL;
 
 public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements SeasonView {
 
@@ -45,6 +39,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             season = bundle.getParcelable("SEASON");
@@ -67,14 +62,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     }
 
     private void setDialog() {
-        Glide.with(getContext())
-                .load(IMAGE_URL + season.getPosterPath())
-                .transition(new DrawableTransitionOptions().crossFade())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_poster_name)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(seasonImage);
+        GlideLoader.load(getContext(), season.getPosterPath(), seasonImage);
         seasonName.setText(season.getName());
         seasonDate.setText(season.getAirDate());
         seasonEpisodes.setText(String.valueOf(season.getEpisodeCount()));

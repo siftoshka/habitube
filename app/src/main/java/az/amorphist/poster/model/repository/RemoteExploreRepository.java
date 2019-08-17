@@ -3,7 +3,7 @@ package az.amorphist.poster.model.repository;
 import javax.inject.Inject;
 
 import az.amorphist.poster.entities.movielite.MovieResponse;
-import az.amorphist.poster.server.MovieDBApi;
+import az.amorphist.poster.model.server.MovieDBApi;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;

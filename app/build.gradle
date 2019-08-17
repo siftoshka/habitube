@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0-TEST"
+        versionName "0.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
@@ -69,11 +69,11 @@ dependencies {
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0'
 
     //RX Java
-    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.9"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     //Room
-    implementation 'androidx.room:room-runtime:2.2.0-alpha01'
-    annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha01'
-    implementation 'androidx.room:room-rxjava2:2.2.0-alpha01'
+    implementation 'androidx.room:room-runtime:2.2.0-alpha02'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha02'
+    implementation 'androidx.room:room-rxjava2:2.2.0-alpha02'
 }

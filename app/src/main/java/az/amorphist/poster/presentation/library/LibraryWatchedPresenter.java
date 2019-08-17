@@ -2,7 +2,7 @@ package az.amorphist.poster.presentation.library;
 
 import javax.inject.Inject;
 
-import az.amorphist.poster.model.interactors.WatchedMoviesInteractor;
+import az.amorphist.poster.model.interactor.WatchedMoviesInteractor;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
@@ -24,7 +24,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
     }
 
     public void getMovies() {
-        compositeDisposable.add(watchedMoviesInteractor.getMovies()
+        compositeDisposable.add(watchedMoviesInteractor.getAllMovies()
         .subscribe((movies, throwable) -> getViewState().showWatchedMovies(movies)));
     }
 

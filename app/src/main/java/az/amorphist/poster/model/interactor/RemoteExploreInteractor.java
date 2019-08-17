@@ -1,4 +1,4 @@
-package az.amorphist.poster.model.interactors;
+package az.amorphist.poster.model.interactor;
 
 import javax.inject.Inject;
 
@@ -7,7 +7,6 @@ import az.amorphist.poster.model.repository.RemoteExploreRepository;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RemoteExploreInteractor {

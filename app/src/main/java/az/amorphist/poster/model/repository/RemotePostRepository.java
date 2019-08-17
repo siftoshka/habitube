@@ -6,7 +6,7 @@ import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movielite.MovieResponse;
 import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.entities.show.Show;
-import az.amorphist.poster.server.MovieDBApi;
+import az.amorphist.poster.model.server.MovieDBApi;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

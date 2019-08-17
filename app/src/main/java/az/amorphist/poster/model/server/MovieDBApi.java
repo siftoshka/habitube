@@ -1,4 +1,4 @@
-package az.amorphist.poster.server;
+package az.amorphist.poster.model.server;
 
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movielite.MovieResponse;

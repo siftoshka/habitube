@@ -1,4 +1,4 @@
-package az.amorphist.poster.server;
+package az.amorphist.poster.model.server;
 
 import android.text.TextUtils;
 

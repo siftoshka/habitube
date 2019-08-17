@@ -3,8 +3,8 @@ package az.amorphist.poster.di.providers;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import az.amorphist.poster.server.HttpInterceptor;
-import az.amorphist.poster.server.MovieDBApi;
+import az.amorphist.poster.model.server.HttpInterceptor;
+import az.amorphist.poster.model.server.MovieDBApi;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static az.amorphist.poster.Constants.SYSTEM.API_URL;
 
 public class ApiProvider implements Provider<MovieDBApi> {
+
     @Inject
     public ApiProvider() {
     }

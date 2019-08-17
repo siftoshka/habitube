@@ -4,9 +4,6 @@
     android:id="@+id/bottom_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:background="@drawable/bottom_dialog"
-    android:backgroundTint="@color/mainBackground"
     android:padding="10dp"
     tools:context=".ui.SeasonBottomDialog">
 

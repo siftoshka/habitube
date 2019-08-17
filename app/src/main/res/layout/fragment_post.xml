@@ -266,6 +266,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/search_in_imdb"
+                            android:gravity="center"
                             android:textColor="@color/textColor" />
                     </LinearLayout>
 
@@ -276,7 +277,8 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:background="@drawable/ripple_effect"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
                         <ImageView
                             android:layout_width="30dp"
@@ -287,7 +289,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:gravity="center"
                             android:text="@string/add_to_watched"
+                            android:textColor="@color/textColor" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/watched_button_alt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:background="@drawable/ripple_effect"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_favorites_filled" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="@string/already_added"
                             android:textColor="@color/textColor" />
                     </LinearLayout>
 
@@ -310,6 +336,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/watch_later"
+                            android:gravity="center"
                             android:textColor="@color/textColor" />
                     </LinearLayout>
                 </LinearLayout>
