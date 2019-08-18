@@ -15,7 +15,7 @@ import static az.amorphist.poster.Constants.DB.MOVIE_GENRE_TABLE;
 public class MovieGenre {
 
     @ColumnInfo(name = "movie_id", index = true) private int movieId;
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "uid") private int uid;
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "uid") private long uid;
     @ColumnInfo(name = "genre_id") @SerializedName("id") @Expose private int id;
     @ColumnInfo(name = "name") @SerializedName("name") @Expose private String name;
 
@@ -33,10 +33,11 @@ public class MovieGenre {
         this.movieId = movieId;
     }
 
-    public int getUid() {        return uid;
+    public long getUid() {
+        return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(long uid) {
         this.uid = uid;
     }
 

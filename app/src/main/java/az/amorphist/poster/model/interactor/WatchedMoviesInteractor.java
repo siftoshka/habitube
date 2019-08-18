@@ -29,4 +29,8 @@ public class WatchedMoviesInteractor {
     public Single<Boolean> isMovieExists(int movieId) {
         return watchedRepository.isMovieExists(movieId);
     }
+
+    public void deleteMovie(Movie movie) {
+        watchedRepository.deleteMovie(movie);
+    }
 }

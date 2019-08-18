@@ -23,7 +23,7 @@
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="20dp"
-        app:title="Library"
+        app:title="Poster"
         app:titleTextColor="@color/mainBackground" />
 
     <com.google.android.material.tabs.TabLayout

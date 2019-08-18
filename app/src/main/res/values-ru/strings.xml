@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Poster</string>
     <string name="app_version">Версия приложения</string>
-    <string name="app_desc">Популярные фильмы &amp; сериалы в одном приложении</string>
+    <string name="app_desc">Популярные фильмы и сериалы в одном приложении</string>
     <string name="user_id_text">User ID</string>
     <string name="post_text">Пост</string>
     <string name="post_id_text">Post ID</string>
@@ -33,5 +33,9 @@
     <string name="add_to_watched">Отметить как просмотренное</string>
     <string name="watch_later">Посмотреть позже</string>
     <string name="already_added">Уже добавлен</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="are_you_sure">Вы уверены, что хотите удалить фильм из библеотеки?</string>
+    <string name="delete_movie">Удалить Фильм</string>
 
 </resources>

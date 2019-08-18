@@ -19,7 +19,7 @@
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="20dp"
-        app:title="Account"
+        app:title="Poster"
         app:titleTextColor="@color/mainBackground" />
 
 </LinearLayout>

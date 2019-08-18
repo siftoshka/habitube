@@ -132,6 +132,11 @@ public class PostPresenter extends MvpPresenter<PostView> {
         getViewState().setSaveButtonEnabled(true);
     }
 
+    public void deleteMovieFromWatched(Movie movie) {
+        watchedMoviesInteractor.deleteMovie(movie);
+        getViewState().setSaveButtonEnabled(false);
+    }
+
     public void goToDetailedMovieScreen(Integer id) {
         router.navigateTo(new Screens.PostMovieScreen(id));
     }

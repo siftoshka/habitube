@@ -16,4 +16,9 @@
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/round_button</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+    </style>
+
 </resources>

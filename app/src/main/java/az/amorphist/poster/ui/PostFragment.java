@@ -3,7 +3,6 @@ package az.amorphist.poster.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +35,6 @@ import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.entities.person.Person;
-import az.amorphist.poster.entities.show.Season;
 import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.post.PostPresenter;
@@ -68,7 +67,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     private MovieAdapter similarMoviesAdapter;
     private ShowAdapter similarShowsAdapter;
     private SeasonAdapter seasonAdapter;
-    private LinearLayout similarMoviesCard, similarShowsCard;
+    private LinearLayout similarMoviesCard, similarShowsCard, descMovieCard, descShowCard;
     private LinearLayoutManager layoutManagerSimilarMovies, layoutManagerSimilarShows, layoutManagerSeasons;
 
     @ProvidePresenter
@@ -154,20 +153,39 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
         for(MovieGenre mGenres: movie.getMovieGenres()) {
             Chip chip = new Chip(requireContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(requireContext(),
                     null, 0, R.style.Widget_MaterialComponents_Chip_Action);
             chip.setChipDrawable(chipDrawable);
             chip.setText(mGenres.getName());
             movieGenresChip.addView(chip);
         }
 
+        if(movie.getOverview().equals("")) {
+            descMovieCard.setVisibility(View.GONE);
+        }
+
         posterDesc.setText(movie.getOverview());
         showImdbWeb(movie.getImdbId());
         addMovieToWatched(movie, movie.getMovieGenres());
+        deleteMovieFromWatched(movie);
     }
 
     private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
         watchedButton.setOnClickListener(v -> postPresenter.addMovieAsWatched(movie, movieGenres));
+    }
+
+    private void deleteMovieFromWatched(Movie movie) {
+        watchedButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> postPresenter.deleteMovieFromWatched(movie));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
     }
 
     @Override
@@ -180,12 +198,16 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         posterShowViews.setText(String.valueOf(show.getVoteCount()));
 
         for(ShowGenre sGenres: show.getShowGenres()) {
-            Chip chip = new Chip(getContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+            Chip chip = new Chip(requireContext());
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(requireContext(),
                     null, 0, R.style.Widget_MaterialComponents_Chip_Action);
             chip.setChipDrawable(chipDrawable);
             chip.setText(sGenres.getName());
             showGenresChip.addView(chip);
+        }
+
+        if(show.getOverview().equals("")) {
+            descShowCard.setVisibility(View.GONE);
         }
 
         posterShowDesc.setText(show.getOverview());
@@ -335,5 +357,8 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
         similarMoviesCard = view.findViewById(R.id.similar_movies_card_layout);
         similarShowsCard = view.findViewById(R.id.similar_shows_card_layout);
+
+        descMovieCard = view.findViewById(R.id.desc_movie_card_layout);
+        descShowCard = view.findViewById(R.id.desc_show_card_layout);
     }
 }

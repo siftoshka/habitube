@@ -33,5 +33,9 @@
     <string name="add_to_watched">Add to Watched</string>
     <string name="watch_later">Watch Later</string>
     <string name="already_added">Already added</string>
+    <string name="are_you_sure">Are you sure to delete this movie from your library?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_movie">Delete Movie</string>
 
 </resources>

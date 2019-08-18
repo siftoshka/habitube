@@ -36,6 +36,14 @@ public class WatchedRepository {
         addMovieGenres(genreList);
     }
 
+    public void deleteMovie(Movie movie) {
+        watchedRepository.movieDAO().deleteMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+        deleteMovieGenres(movie.getId());
+    }
+
     public Single<List<Movie>> getAllMovies() {
         return watchedRepository.movieDAO().getMovies()
                 .subscribeOn(Schedulers.io())
@@ -52,6 +60,13 @@ public class WatchedRepository {
 
     private void addMovieGenres(List<MovieGenre> movieGenres) {
         watchedRepository.movieDAO().addMovieGenres(movieGenres)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    private void deleteMovieGenres(int id) {
+        watchedRepository.movieDAO().deleteMovieGenres(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
