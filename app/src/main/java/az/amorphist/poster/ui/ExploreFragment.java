@@ -22,6 +22,9 @@ import az.amorphist.poster.adapters.ShowAdapter;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.presentation.explore.ExplorePresenter;
 import az.amorphist.poster.presentation.explore.ExploreView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -33,10 +36,14 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @InjectPresenter ExplorePresenter explorePresenter;
 
-    private Toolbar toolbar;
-    private RecyclerView recyclerViewUpcoming, recyclerViewMovies, recyclerViewTVShows;
+    @BindView(R.id.main_toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler_view_upcoming_movies) RecyclerView recyclerViewUpcoming;
+    @BindView(R.id.recycler_view_movies) RecyclerView recyclerViewMovies;
+    @BindView(R.id.recycler_view_tv_shows) RecyclerView recyclerViewTVShows;
+
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter;
+    private Unbinder unbinder;
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
@@ -56,10 +63,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_explore, container, false);
-        toolbar = view.findViewById(R.id.main_toolbar);
-        recyclerViewUpcoming = view.findViewById(R.id.recycler_view_upcoming_movies);
-        recyclerViewMovies = view.findViewById(R.id.recycler_view_movies);
-        recyclerViewTVShows = view.findViewById(R.id.recycler_view_tv_shows);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -114,5 +118,11 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @Override
     public void unsuccessfulQueryError() {
         Toast.makeText(getContext(),"Unsuccessful request", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

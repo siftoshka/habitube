@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "0.2.5"
+        versionName "0.2.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
@@ -76,4 +76,8 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.0-alpha02'
     annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha02'
     implementation 'androidx.room:room-rxjava2:2.2.0-alpha02'
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 }

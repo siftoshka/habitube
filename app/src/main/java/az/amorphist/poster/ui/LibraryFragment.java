@@ -21,6 +21,9 @@ import az.amorphist.poster.R;
 import az.amorphist.poster.adapters.LibraryPagerAdapter;
 import az.amorphist.poster.presentation.library.LibraryPresenter;
 import az.amorphist.poster.presentation.library.LibraryView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -33,9 +36,11 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     @InjectPresenter LibraryPresenter libraryPresenter;
 
     @Inject Context context;
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    @BindView(R.id.library_toolbar) Toolbar toolbar;
+    @BindView(R.id.library_tab) TabLayout tabLayout;
+    @BindView(R.id.library_pager) ViewPager viewPager;
+
+    private Unbinder unbinder;
 
     @ProvidePresenter
     LibraryPresenter libraryPresenter() {
@@ -52,9 +57,7 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_library, container, false);
-        toolbar = view.findViewById(R.id.library_toolbar);
-        tabLayout = view.findViewById(R.id.library_tab);
-        viewPager = view.findViewById(R.id.library_pager);
+        unbinder = ButterKnife.bind(this, view);
         FragmentPagerAdapter pagerAdapter = new LibraryPagerAdapter(context, getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -73,5 +76,11 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
             libraryPresenter.goToSearchScreen();
         }
         return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

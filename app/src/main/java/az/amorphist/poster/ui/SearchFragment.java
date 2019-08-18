@@ -21,6 +21,8 @@ import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.presentation.search.SearchPresenter;
 import az.amorphist.poster.presentation.search.SearchView;
 import az.amorphist.poster.utils.animation.VegaXLayoutManager;
+import butterknife.BindView;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -32,10 +34,12 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @InjectPresenter SearchPresenter searchPresenter;
 
+    @BindView(R.id.search_toolbar) Toolbar toolbar;
+    @BindView(R.id.search_bar) RecyclerView recyclerViewSearch;
+    @BindView(R.id.recycler_view_search) androidx.appcompat.widget.SearchView searchView;
+
     private SearchAdapter searchAdapter;
-    private Toolbar toolbar;
-    private RecyclerView recyclerViewSearch;
-    private androidx.appcompat.widget.SearchView searchView;
+    private Unbinder unbinder;
 
     @ProvidePresenter
     SearchPresenter searchPresenter() {
@@ -53,9 +57,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        toolbar = view.findViewById(R.id.search_toolbar);
-        searchView = view.findViewById(R.id.search_bar);
-        recyclerViewSearch = view.findViewById(R.id.recycler_view_search);
+        unbinder.unbind();
         return view;
     }
 
@@ -97,5 +99,11 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void unsuccessfulQueryError() {
         Toast.makeText(getContext(), "Unsuccessful request", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

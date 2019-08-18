@@ -12,6 +12,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import az.amorphist.poster.R;
 import az.amorphist.poster.presentation.navbar.NavbarPresenter;
 import az.amorphist.poster.presentation.navbar.NavbarView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -25,8 +28,10 @@ public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
 
     @InjectPresenter NavbarPresenter navbarPresenter;
 
+    @BindView(R.id.navigation_bar) BottomNavigationView bottomNavigationView;
+
     private Navigator navigator;
-    private BottomNavigationView bottomNavigationView;
+    private Unbinder unbinder;
 
     @ProvidePresenter
     NavbarPresenter navbarPresenter() {
@@ -42,7 +47,7 @@ public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_navbar, container, false);
-        bottomNavigationView = view.findViewById(R.id.navigation_bar);
+        unbinder = ButterKnife.bind(this, view);
         initNavBar();
         return view;
     }
@@ -81,5 +86,11 @@ public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
     public void onPause() {
         super.onPause();
         navbarPresenter.getNavigatorHolder().removeNavigator();
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

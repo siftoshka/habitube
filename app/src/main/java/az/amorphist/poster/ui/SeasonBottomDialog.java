@@ -16,6 +16,9 @@ import az.amorphist.poster.presentation.season.SeasonPresenter;
 import az.amorphist.poster.presentation.season.SeasonView;
 import az.amorphist.poster.utils.GlideLoader;
 import az.amorphist.poster.utils.moxy.MvpBottomSheetDialogFragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
@@ -26,10 +29,15 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
 
     @InjectPresenter SeasonPresenter seasonPresenter;
 
+    @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
+    @BindView(R.id.poster_season_post) ImageView seasonImage;
+    @BindView(R.id.poster_season_name) TextView seasonName;
+    @BindView(R.id.poster_season_air_date) TextView seasonDate;
+    @BindView(R.id.poster_season_episode) TextView seasonEpisodes;
+    @BindView(R.id.poster_season_overview) TextView seasonOverview;
+
     private Season season;
-    private LinearLayout linearLayout;
-    private ImageView seasonImage;
-    private TextView seasonName, seasonDate, seasonEpisodes, seasonOverview;
+    private Unbinder unbinder;
 
     @ProvidePresenter
     SeasonPresenter seasonPresenter() {
@@ -39,7 +47,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             season = bundle.getParcelable("SEASON");
@@ -50,12 +58,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dialog_season_bottom, container, false);
-        seasonImage = view.findViewById(R.id.poster_season_post);
-        seasonName = view.findViewById(R.id.poster_season_name);
-        seasonDate = view.findViewById(R.id.poster_season_air_date);
-        seasonEpisodes = view.findViewById(R.id.poster_season_episode);
-        seasonOverview = view.findViewById(R.id.poster_season_overview);
-        linearLayout = view.findViewById(R.id.bottom_dialog_layout);
+        unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
         setDialog();
         return view;
@@ -67,5 +70,11 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
         seasonDate.setText(season.getAirDate());
         seasonEpisodes.setText(String.valueOf(season.getEpisodeCount()));
         seasonOverview.setText(season.getOverview());
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

@@ -19,6 +19,9 @@ import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.presentation.library.LibraryWatchedPresenter;
 import az.amorphist.poster.presentation.library.LibraryWatchedView;
 import az.amorphist.poster.utils.animation.VegaXLayoutManager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -30,8 +33,10 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
+    @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
+
     private LibraryAdapter libraryAdapter;
-    private RecyclerView recyclerViewWatched;
+    private Unbinder unbinder;
 
     @ProvidePresenter
     LibraryWatchedPresenter watchedPresenter() {
@@ -49,7 +54,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_library_watched, container, false);
-        recyclerViewWatched = view.findViewById(R.id.recycler_view_watched);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -65,5 +70,11 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     @Override
     public void showWatchedMovies(List<Movie> movies) {
         libraryAdapter.addAllMovies(movies);
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

@@ -40,6 +40,9 @@ import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.post.PostPresenter;
 import az.amorphist.poster.presentation.post.PostView;
 import az.amorphist.poster.utils.GlideLoader;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -54,21 +57,51 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @InjectPresenter PostPresenter postPresenter;
 
-    private Toolbar toolbar;
-    private RecyclerView recyclerViewSimilarMovies, recyclerViewSimilarShows, recyclerViewSeasons;
-    private RelativeLayout mainScreen, showScreen, personScreen;
-    private LinearLayout loadingScreen, errorScreen;
-    private LinearLayout imdbButton, watchedButton, watchedButtonAlt, planningButton;
-    private ImageView posterBackground, posterMain, posterShow, posterShowBackground, posterPerson;
-    private TextView posterTitle, posterDate, posterRate, posterViews, posterDesc;
-    private TextView posterShowTitle, posterShowDate, posterShowRate, posterShowViews, posterShowDesc;
-    private TextView posterPersonName, posterPersonBirthDate, posterPersonLocation, posterPersonPopularity, posterPersonBio;
-    private ChipGroup movieGenresChip, showGenresChip;
+    @BindView(R.id.post_toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler_view_similar_movies) RecyclerView recyclerViewSimilarMovies;
+    @BindView(R.id.recycler_view_similar_shows) RecyclerView recyclerViewSimilarShows;
+    @BindView(R.id.recycler_view_seasons) RecyclerView recyclerViewSeasons;
+    @BindView(R.id.main_screen) RelativeLayout mainScreen;
+    @BindView(R.id.show_screen) RelativeLayout showScreen;
+    @BindView(R.id.person_screen) RelativeLayout personScreen;
+    @BindView(R.id.loading_screen) LinearLayout loadingScreen;
+    @BindView(R.id.error_screen) LinearLayout errorScreen;
+    @BindView(R.id.imdb_button) LinearLayout imdbButton;
+    @BindView(R.id.watched_button) LinearLayout watchedButton;
+    @BindView(R.id.watched_button_alt) LinearLayout watchedButtonAlt;
+    @BindView(R.id.planning_button) LinearLayout planningButton;
+    @BindView(R.id.poster_background) ImageView posterBackground;
+    @BindView(R.id.poster_movie_post) ImageView posterMain;
+    @BindView(R.id.poster_show_post) ImageView posterShow;
+    @BindView(R.id.show_poster_background) ImageView posterShowBackground;
+    @BindView(R.id.poster_person_post) ImageView posterPerson;
+    @BindView(R.id.poster_title) TextView posterTitle;
+    @BindView(R.id.poster_date) TextView posterDate;
+    @BindView(R.id.poster_rate) TextView posterRate;
+    @BindView(R.id.poster_views) TextView posterViews;
+    @BindView(R.id.poster_desc) TextView posterDesc;
+    @BindView(R.id.poster_show_title) TextView posterShowTitle;
+    @BindView(R.id.poster_show_date) TextView posterShowDate;
+    @BindView(R.id.poster_show_rate) TextView posterShowRate;
+    @BindView(R.id.poster_show_views) TextView posterShowViews;
+    @BindView(R.id.poster_show_desc) TextView posterShowDesc;
+    @BindView(R.id.poster_person_title) TextView posterPersonName;
+    @BindView(R.id.poster_person_birthdate) TextView posterPersonBirthDate;
+    @BindView(R.id.poster_person_location) TextView posterPersonLocation;
+    @BindView(R.id.poster_person_popularity) TextView posterPersonPopularity;
+    @BindView(R.id.poster_person_bio) TextView posterPersonBio;
+    @BindView(R.id.movie_genres) ChipGroup movieGenresChip;
+    @BindView(R.id.show_genres) ChipGroup showGenresChip;
+    @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
+    @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
+    @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
+    @BindView(R.id.desc_show_card_layout) LinearLayout descShowCard;
     private MovieAdapter similarMoviesAdapter;
     private ShowAdapter similarShowsAdapter;
     private SeasonAdapter seasonAdapter;
-    private LinearLayout similarMoviesCard, similarShowsCard, descMovieCard, descShowCard;
     private LinearLayoutManager layoutManagerSimilarMovies, layoutManagerSimilarShows, layoutManagerSeasons;
+
+    private Unbinder unbinder;
 
     @ProvidePresenter
     PostPresenter postPresenter() {
@@ -103,14 +136,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_post, container, false);
-        toolbar = view.findViewById(R.id.post_toolbar);
-
-        initFunctionalButtons(view);
-        initPersonItems(view);
-        initMovieItems(view);
-        initShowItems(view);
-        initScreens(view);
-
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -307,58 +333,9 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
         seasonBottomDialog.show(getChildFragmentManager(), null);
     }
 
-    private void initFunctionalButtons(View view) {
-        imdbButton = view.findViewById(R.id.imdb_button);
-        watchedButton = view.findViewById(R.id.watched_button);
-        watchedButtonAlt = view.findViewById(R.id.watched_button_alt);
-        planningButton = view.findViewById(R.id.planning_button);
-    }
-
-    private void initPersonItems(View view) {
-        posterPerson = view.findViewById(R.id.poster_person_post);
-        posterPersonName = view.findViewById(R.id.poster_person_title);
-        posterPersonBirthDate = view.findViewById(R.id.poster_person_birthdate);
-        posterPersonLocation = view.findViewById(R.id.poster_person_location);
-        posterPersonPopularity = view.findViewById(R.id.poster_person_popularity);
-        posterPersonBio = view.findViewById(R.id.poster_person_bio);
-    }
-
-    private void initMovieItems(View view) {
-        posterBackground = view.findViewById(R.id.poster_background);
-        posterMain = view.findViewById(R.id.poster_movie_post);
-        posterTitle = view.findViewById(R.id.poster_title);
-        posterDate = view.findViewById(R.id.poster_date);
-        posterRate = view.findViewById(R.id.poster_rate);
-        posterViews = view.findViewById(R.id.poster_views);
-        movieGenresChip = view.findViewById(R.id.movie_genres);
-        posterDesc = view.findViewById(R.id.poster_desc);
-        recyclerViewSimilarMovies = view.findViewById(R.id.recycler_view_similar_movies);
-    }
-
-    private void initShowItems(View view) {
-        posterShowBackground = view.findViewById(R.id.show_poster_background);
-        posterShow = view.findViewById(R.id.poster_show_post);
-        posterShowTitle = view.findViewById(R.id.poster_show_title);
-        posterShowDate = view.findViewById(R.id.poster_show_date);
-        posterShowRate = view.findViewById(R.id.poster_show_rate);
-        posterShowViews = view.findViewById(R.id.poster_show_views);
-        showGenresChip = view.findViewById(R.id.show_genres);
-        posterShowDesc = view.findViewById(R.id.poster_show_desc);
-        recyclerViewSeasons = view.findViewById(R.id.recycler_view_seasons);
-        recyclerViewSimilarShows = view.findViewById(R.id.recycler_view_similar_shows);
-    }
-
-    private void initScreens(View view) {
-        loadingScreen = view.findViewById(R.id.loading_screen);
-        mainScreen = view.findViewById(R.id.main_screen);
-        errorScreen = view.findViewById(R.id.error_screen);
-        showScreen = view.findViewById(R.id.show_screen);
-        personScreen = view.findViewById(R.id.person_screen);
-
-        similarMoviesCard = view.findViewById(R.id.similar_movies_card_layout);
-        similarShowsCard = view.findViewById(R.id.similar_shows_card_layout);
-
-        descMovieCard = view.findViewById(R.id.desc_movie_card_layout);
-        descShowCard = view.findViewById(R.id.desc_show_card_layout);
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }
