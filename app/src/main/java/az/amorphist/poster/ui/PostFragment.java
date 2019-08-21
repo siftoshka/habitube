@@ -170,6 +170,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getMovie(Movie movie) {
+        toolbar.setTitle(movie.getTitle());
         GlideLoader.load(getContext(), movie.getPosterPath(), posterMain);
         GlideLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
         posterTitle.setText(movie.getTitle());
@@ -216,6 +217,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getShow(Show show) {
+        toolbar.setTitle(show.getName());
         GlideLoader.load(getContext(), show.getPosterPath(), posterShow);
         GlideLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
@@ -242,6 +244,7 @@ public class PostFragment extends MvpAppCompatFragment implements PostView {
 
     @Override
     public void getPerson(Person person) {
+        toolbar.setTitle(person.getName());
         GlideLoader.load(getContext(), person.getProfilePath(), posterPerson);
         posterPersonName.setText(person.getName());
         posterPersonBirthDate.setText(person.getBirthday());

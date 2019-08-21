@@ -22,6 +22,7 @@ import az.amorphist.poster.presentation.search.SearchPresenter;
 import az.amorphist.poster.presentation.search.SearchView;
 import az.amorphist.poster.utils.animation.VegaXLayoutManager;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
@@ -35,8 +36,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @InjectPresenter SearchPresenter searchPresenter;
 
     @BindView(R.id.search_toolbar) Toolbar toolbar;
-    @BindView(R.id.search_bar) RecyclerView recyclerViewSearch;
-    @BindView(R.id.recycler_view_search) androidx.appcompat.widget.SearchView searchView;
+    @BindView(R.id.recycler_view_search) RecyclerView recyclerViewSearch;
+    @BindView(R.id.search_bar) androidx.appcompat.widget.SearchView searchView;
 
     private SearchAdapter searchAdapter;
     private Unbinder unbinder;
@@ -57,7 +58,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        unbinder.unbind();
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 

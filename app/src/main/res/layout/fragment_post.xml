@@ -12,10 +12,9 @@
         android:id="@+id/post_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:elevation="14dp"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="Post"
         app:titleTextColor="@color/mainBackground" />
 
     <!--Loading Screen-->
