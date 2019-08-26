@@ -54,6 +54,7 @@ public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
 
     private void initNavBar() {
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            if(menuItem.isChecked()) return false;
             switch (menuItem.getItemId()) {
                 case R.id.nav_library:
                     navbarPresenter.goToLibrary();

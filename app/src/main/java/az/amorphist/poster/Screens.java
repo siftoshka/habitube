@@ -4,14 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import az.amorphist.poster.entities.show.Season;
 import az.amorphist.poster.ui.AccountFragment;
 import az.amorphist.poster.ui.ExploreFragment;
 import az.amorphist.poster.ui.LibraryFragment;
+import az.amorphist.poster.ui.MovieFragment;
 import az.amorphist.poster.ui.NavbarFragment;
-import az.amorphist.poster.ui.PostFragment;
 import az.amorphist.poster.ui.SearchFragment;
-import az.amorphist.poster.ui.SeasonBottomDialog;
+import az.amorphist.poster.ui.ShowFragment;
+import az.amorphist.poster.ui.StarFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
@@ -32,7 +32,7 @@ public final class Screens {
 
         @Override
         public Fragment getFragment() {
-            final PostFragment fragment = new PostFragment();
+            final MovieFragment fragment = new MovieFragment();
             final Bundle bundle = new Bundle();
             bundle.putInt("postPosition", movieID);
             fragment.setArguments(bundle);
@@ -49,7 +49,7 @@ public final class Screens {
 
         @Override
         public Fragment getFragment() {
-            final PostFragment fragment = new PostFragment();
+            final ShowFragment fragment = new ShowFragment();
             final Bundle bundle = new Bundle();
             bundle.putInt("showPosition", tvShowID);
             fragment.setArguments(bundle);
@@ -66,7 +66,7 @@ public final class Screens {
 
         @Override
         public Fragment getFragment() {
-            final PostFragment fragment = new PostFragment();
+            final MovieFragment fragment = new MovieFragment();
             final Bundle bundle = new Bundle();
             bundle.putInt("upcomingPosition", upcomingID);
             fragment.setArguments(bundle);
@@ -76,6 +76,10 @@ public final class Screens {
 
     public static final class SearchdItemScreen extends SupportAppScreen {
         private Integer postId, mediaType;
+        final Bundle bundle = new Bundle();
+        final MovieFragment movieFragment = new MovieFragment();
+        final ShowFragment showFragment = new ShowFragment();
+        final StarFragment starFragment = new StarFragment();
 
         public SearchdItemScreen(int postId, int mediaType) {
             this.postId = postId;
@@ -84,12 +88,20 @@ public final class Screens {
 
         @Override
         public Fragment getFragment() {
-            final PostFragment fragment = new PostFragment();
-            final Bundle bundle = new Bundle();
             bundle.putInt("postId", postId);
             bundle.putInt("mediaType", mediaType);
-            fragment.setArguments(bundle);
-            return fragment;
+            switch (mediaType) {
+                case 1:
+                    movieFragment.setArguments(bundle);
+                    return movieFragment;
+                case 2:
+                    showFragment.setArguments(bundle);
+                    return showFragment;
+                case 3:
+                    starFragment.setArguments(bundle);
+                    return starFragment;
+            }
+            return getFragment();
         }
     }
 

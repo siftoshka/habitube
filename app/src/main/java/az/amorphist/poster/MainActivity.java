@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import javax.inject.Inject;
 
+import az.amorphist.poster.ui.MovieFragment;
 import az.amorphist.poster.ui.NavbarFragment;
-import az.amorphist.poster.ui.PostFragment;
 import az.amorphist.poster.ui.SearchFragment;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
@@ -30,13 +30,13 @@ public class MainActivity extends MvpAppCompatActivity {
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
             if (command instanceof Forward) {
-                if (currentFragment instanceof NavbarFragment && nextFragment instanceof PostFragment) {
+                if (currentFragment instanceof NavbarFragment && nextFragment instanceof MovieFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
-                if (currentFragment instanceof PostFragment && nextFragment instanceof PostFragment) {
+                if (currentFragment instanceof MovieFragment && nextFragment instanceof MovieFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
-                if (currentFragment instanceof SearchFragment && nextFragment instanceof PostFragment) {
+                if (currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
             }

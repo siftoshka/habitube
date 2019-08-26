@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.PostFragment">
+    tools:context=".ui.MovieFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/post_toolbar"
+        android:id="@+id/movie_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorAccent"
@@ -18,48 +18,20 @@
         app:titleTextColor="@color/mainBackground" />
 
     <!--Loading Screen-->
-    <LinearLayout
+    <include
         android:id="@+id/loading_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:visibility="visible">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/progress_animation" />
-    </LinearLayout>
+        android:visibility="visible"
+        layout="@layout/include_loading" />
 
     <!--Error Screen-->
-    <LinearLayout
+    <include
         android:id="@+id/error_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_loading" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_text_title"
-            android:textColor="@color/textColor"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_text_body"
-            android:textColor="@color/textColor"
-            android:textSize="24sp" />
-    </LinearLayout>
+        android:visibility="gone"
+        layout="@layout/include_error" />
 
     <!--Movie Screen-->
     <RelativeLayout

@@ -15,9 +15,6 @@ public class NavbarPresenter extends MvpPresenter<NavbarView> {
 
     private final Router router;
     private final NavigatorHolder navigatorHolder;
-    private boolean isLibraryOpened = false;
-    private boolean isExploreOpened = false;
-    private boolean isAccountOpened = false;
 
     @Inject
     public NavbarPresenter(LocalRouter router) {
@@ -35,30 +32,9 @@ public class NavbarPresenter extends MvpPresenter<NavbarView> {
         return navigatorHolder;
     }
 
-    public void goToLibrary() {
-        if (!isLibraryOpened) {
-            router.newRootScreen(new Screens.LibraryScreen());
-            isLibraryOpened = true;
-            isExploreOpened = false;
-            isAccountOpened = false;
-        }
-    }
+    public void goToLibrary() { router.newRootScreen(new Screens.LibraryScreen()); }
 
-    public void goToExplore() {
-        if (!isExploreOpened) {
-            router.newRootScreen(new Screens.ExploreScreen());
-            isLibraryOpened = false;
-            isExploreOpened = true;
-            isAccountOpened = false;
-        }
-    }
+    public void goToExplore() { router.newRootScreen(new Screens.ExploreScreen()); }
 
-    public void goToAccount() {
-        if (!isAccountOpened) {
-            router.newRootScreen(new Screens.AccountScreen());
-            isLibraryOpened = false;
-            isExploreOpened = false;
-            isAccountOpened = true;
-        }
-    }
+    public void goToAccount() { router.newRootScreen(new Screens.AccountScreen()); }
 }
