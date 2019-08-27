@@ -8,7 +8,6 @@ import az.amorphist.poster.Screens;
 import az.amorphist.poster.di.qualifiers.MediaType;
 import az.amorphist.poster.di.qualifiers.MoviePosition;
 import az.amorphist.poster.di.qualifiers.PostId;
-import az.amorphist.poster.di.qualifiers.ShowPosition;
 import az.amorphist.poster.di.qualifiers.UpcomingMoviePosition;
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
@@ -79,7 +78,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(movie -> getViewState().showMovieScreen())
-                .subscribe(movie -> getViewState().getMovie(movie),
+                .subscribe(movie -> getViewState().showMovie(movie),
                         throwable -> getViewState().showErrorScreen()));
     }
 

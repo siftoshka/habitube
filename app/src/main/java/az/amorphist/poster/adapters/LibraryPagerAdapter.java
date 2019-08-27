@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import az.amorphist.poster.R;
-import az.amorphist.poster.ui.LibraryPlanningFragment;
-import az.amorphist.poster.ui.LibraryWatchedFragment;
+import az.amorphist.poster.ui.library.LibraryPlanningFragment;
+import az.amorphist.poster.ui.library.LibraryWatchedFragment;
 
 public class LibraryPagerAdapter extends FragmentPagerAdapter {
 

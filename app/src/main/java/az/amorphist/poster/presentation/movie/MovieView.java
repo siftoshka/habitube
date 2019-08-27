@@ -12,7 +12,7 @@ import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface MovieView extends MvpView {
-    void getMovie(Movie movie);
+    void showMovie(Movie movie);
 
     void showSimilarMovieList(List<MovieLite> similarMovies);
 

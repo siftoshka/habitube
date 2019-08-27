@@ -7,9 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import javax.inject.Inject;
 
-import az.amorphist.poster.ui.MovieFragment;
-import az.amorphist.poster.ui.NavbarFragment;
-import az.amorphist.poster.ui.SearchFragment;
+import az.amorphist.poster.ui.movie.MovieFragment;
+import az.amorphist.poster.ui.navbar.NavbarFragment;
+import az.amorphist.poster.ui.search.SearchFragment;
+import az.amorphist.poster.ui.show.ShowFragment;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -33,7 +34,13 @@ public class MainActivity extends MvpAppCompatActivity {
                 if (currentFragment instanceof NavbarFragment && nextFragment instanceof MovieFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
+                if (currentFragment instanceof NavbarFragment && nextFragment instanceof ShowFragment) {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                }
                 if (currentFragment instanceof MovieFragment && nextFragment instanceof MovieFragment) {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                }
+                if (currentFragment instanceof ShowFragment && nextFragment instanceof ShowFragment) {
                     fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 }
                 if (currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment) {

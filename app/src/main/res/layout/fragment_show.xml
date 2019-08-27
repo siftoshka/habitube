@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.ShowFragment">
+    tools:context=".ui.show.ShowFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/show_toolbar"
@@ -22,7 +22,7 @@
         android:id="@+id/loading_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         layout="@layout/include_loading" />
 
     <!--Error Screen-->
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:background="@color/mainBackground"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/show_poster_background"

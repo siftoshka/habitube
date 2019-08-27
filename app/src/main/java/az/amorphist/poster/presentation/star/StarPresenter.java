@@ -34,7 +34,7 @@ public class StarPresenter extends MvpPresenter<StarView> {
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(person -> getViewState().showPersonScreen())
-                .subscribe(person -> getViewState().getPerson( person),
+                .subscribe(person -> getViewState().showPerson( person),
                         throwable -> getViewState().showErrorScreen()));
     }
 

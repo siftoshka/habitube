@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.season;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

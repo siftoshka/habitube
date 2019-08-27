@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.movie;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -32,7 +32,6 @@ import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
-import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.presentation.movie.MoviePresenter;
 import az.amorphist.poster.presentation.movie.MovieView;
 import az.amorphist.poster.utils.GlideLoader;
@@ -124,7 +123,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     @Override
-    public void getMovie(Movie movie) {
+    public void showMovie(Movie movie) {
         toolbar.setTitle(movie.getTitle());
         GlideLoader.load(getContext(), movie.getPosterPath(), posterMain);
         GlideLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);

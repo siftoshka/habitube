@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:context=".ui.SeasonBottomDialog">
+    tools:context=".ui.season.SeasonBottomDialog">
 
     <ImageView
         android:id="@+id/poster_season_post"

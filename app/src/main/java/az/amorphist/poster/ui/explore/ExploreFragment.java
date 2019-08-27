@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.explore;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

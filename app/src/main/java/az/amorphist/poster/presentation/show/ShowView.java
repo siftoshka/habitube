@@ -11,7 +11,7 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface ShowView extends MvpView {
 
-    void getShow(Show show);
+    void showTVShow(Show show);
 
     void showSimilarTVShowList(List<MovieLite> similarShows);
 

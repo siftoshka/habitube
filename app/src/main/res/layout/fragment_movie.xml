@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.MovieFragment">
+    tools:context=".ui.movie.MovieFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/movie_toolbar"

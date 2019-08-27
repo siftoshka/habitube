@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.search;
 
 import android.os.Bundle;
 import android.text.TextUtils;

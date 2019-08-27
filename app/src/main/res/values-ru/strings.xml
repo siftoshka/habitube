@@ -16,7 +16,6 @@
     <string name="contact_us_menu">Контакты</string>
     <string name="about_menu">О Приложении</string>
     <string name="search_movies_menu">Поиск…</string>
-    <string name="settings_menu">Настройки</string>
     <string name="error_text_title">Простите!</string>
     <string name="error_text_body">Что-то произошло не так :(</string>
     <string name="description_card">Описание</string>
@@ -24,7 +23,7 @@
 
     <string name="navbar_library">Библеотека</string>
     <string name="navbar_explore">Исследуйте</string>
-    <string name="navbar_account">Аккаунт</string>
+    <string name="navbar_settings">Настройки</string>
     <string name="seasons">Сезоны</string>
 
     <string name="watched_tab">Просмотренные</string>
@@ -37,5 +36,6 @@
     <string name="yes">Да</string>
     <string name="are_you_sure">Вы уверены, что хотите удалить фильм из библеотеки?</string>
     <string name="delete_movie">Удалить Фильм</string>
+    <string name="version_name_text">Версия приложения:</string>
 
 </resources>

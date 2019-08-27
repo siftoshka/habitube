@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.star;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -81,7 +81,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     }
 
     @Override
-    public void getPerson(Person person) {
+    public void showPerson(Person person) {
         toolbar.setTitle(person.getName());
         GlideLoader.load(getContext(), person.getProfilePath(), posterPerson);
         posterPersonName.setText(person.getName());

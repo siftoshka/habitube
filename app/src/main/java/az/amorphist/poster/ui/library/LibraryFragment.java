@@ -1,4 +1,4 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.library;
 
 import android.content.Context;
 import android.os.Bundle;

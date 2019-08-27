@@ -4,14 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import az.amorphist.poster.ui.AccountFragment;
-import az.amorphist.poster.ui.ExploreFragment;
-import az.amorphist.poster.ui.LibraryFragment;
-import az.amorphist.poster.ui.MovieFragment;
-import az.amorphist.poster.ui.NavbarFragment;
-import az.amorphist.poster.ui.SearchFragment;
-import az.amorphist.poster.ui.ShowFragment;
-import az.amorphist.poster.ui.StarFragment;
+import az.amorphist.poster.ui.settings.SettingsFragment;
+import az.amorphist.poster.ui.explore.ExploreFragment;
+import az.amorphist.poster.ui.library.LibraryFragment;
+import az.amorphist.poster.ui.movie.MovieFragment;
+import az.amorphist.poster.ui.navbar.NavbarFragment;
+import az.amorphist.poster.ui.search.SearchFragment;
+import az.amorphist.poster.ui.show.ShowFragment;
+import az.amorphist.poster.ui.star.StarFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
@@ -116,7 +116,7 @@ public final class Screens {
 
         @Override
         public Fragment getFragment() {
-            return new AccountFragment();
+            return new SettingsFragment();
         }
     }
 

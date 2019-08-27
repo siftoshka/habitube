@@ -1,15 +1,6 @@
-package az.amorphist.poster.ui;
+package az.amorphist.poster.ui.show;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +8,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -32,9 +30,9 @@ import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.entities.show.Show;
 import az.amorphist.poster.entities.show.ShowGenre;
-import az.amorphist.poster.presentation.movie.MoviePresenter;
 import az.amorphist.poster.presentation.show.ShowPresenter;
 import az.amorphist.poster.presentation.show.ShowView;
+import az.amorphist.poster.ui.season.SeasonBottomDialog;
 import az.amorphist.poster.utils.GlideLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,7 +125,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     @Override
-    public void getShow(Show show) {
+    public void showTVShow(Show show) {
         toolbar.setTitle(show.getName());
         GlideLoader.load(getContext(), show.getPosterPath(), posterShow);
         GlideLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);

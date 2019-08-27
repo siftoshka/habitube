@@ -49,7 +49,7 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(show -> getViewState().showTVShowScreen())
-                .subscribe(show -> getViewState().getShow(show),
+                .subscribe(show -> getViewState().showTVShow(show),
                         throwable -> getViewState().showErrorScreen()));
     }
 
