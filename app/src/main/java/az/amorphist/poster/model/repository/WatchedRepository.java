@@ -8,10 +8,8 @@ import javax.inject.Inject;
 import az.amorphist.poster.entities.movie.Movie;
 import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.model.data.WatchedRoomRepository;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class WatchedRepository {
@@ -24,16 +22,16 @@ public class WatchedRepository {
     }
 
     public void addMovie(Movie movie, List<MovieGenre> movieGenres) {
-        watchedRepository.movieDAO().addMovie(movie)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
-
         List<MovieGenre> genreList = new ArrayList<>();
         for (MovieGenre genre : movieGenres) {
             genreList.add(new MovieGenre(movie.getId(), genre.getId(), genre.getName()));
         }
-        addMovieGenres(genreList);
+
+        watchedRepository.movieDAO().addMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> addMovieGenres(genreList))
+                .subscribe();
     }
 
     public void deleteMovie(Movie movie) {

@@ -5,4 +5,9 @@
     <color name="colorAccent">#673AB7</color>
     <color name="mainBackground">#FFFFFF</color>
     <color name="textColor">#757575</color>
+    <color name="mateBlack">#111111</color>
+
+    <color name="telegramColor">#2CA5E0</color>
+    <color name="githubColor">#181717</color>
+    <color name="instagramColor">#E4405F</color>
 </resources>

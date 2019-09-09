@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
-    tools:context=".ui.LibraryPlanningFragment">
+    tools:context=".ui.library.LibraryPlanningFragment">
+
+    <!--Empty Screen-->
+    <include
+        android:id="@+id/empty_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        layout="@layout/include_empty" />
 
 </LinearLayout>

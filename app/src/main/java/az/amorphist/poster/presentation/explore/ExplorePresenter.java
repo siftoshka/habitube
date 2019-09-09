@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import az.amorphist.poster.Screens;
 import az.amorphist.poster.model.interactor.RemoteExploreInteractor;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
@@ -25,6 +26,10 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     @Override
     protected void onFirstViewAttach() {
+        addContent();
+    }
+
+    private void addContent() {
         addUpcomingMovies();
         addMovies();
         addShows();

@@ -32,15 +32,9 @@ public class NavbarPresenter extends MvpPresenter<NavbarView> {
         return navigatorHolder;
     }
 
-    public void goToLibrary() {
-        router.newRootScreen(new Screens.LibraryScreen());
-    }
+    public void goToLibrary() { router.newRootScreen(new Screens.LibraryScreen()); }
 
-    public void goToExplore() {
-        router.newRootScreen(new Screens.ExploreScreen());
-    }
+    public void goToExplore() { router.newRootScreen(new Screens.ExploreScreen()); }
 
-    public void goToAccount() {
-        router.newRootScreen(new Screens.AccountScreen());
-    }
+    public void goToAccount() { router.newRootScreen(new Screens.AccountScreen()); }
 }
