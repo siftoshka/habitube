@@ -21,9 +21,7 @@ public class RemotePostInteractor {
     }
 
     public Single<Movie> getMovie(int movieId) {
-        return repository.getMovie(movieId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return repository.getMovie(movieId);
     }
 
     public Single<Show> getTVShow(int showId) {

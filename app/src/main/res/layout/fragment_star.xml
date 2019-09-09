@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorAccent"
         android:elevation="14dp"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/ic_back"
         app:titleTextColor="@color/mainBackground" />
 
     <!--Loading Screen-->
@@ -68,24 +68,18 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="8dp"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_person" />
 
                     <TextView
                         android:id="@+id/poster_person_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/textColor"
                         android:textSize="24sp"
-                        tools:text="AVENGERS" />
+                        tools:text="PERSON" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -97,6 +91,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:padding="3dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/ic_date" />
 
                     <TextView
@@ -119,7 +115,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
+                        android:padding="3dp"
                         android:src="@drawable/ic_location" />
 
                     <TextView
@@ -130,7 +127,7 @@
                         android:layout_marginStart="5dp"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
-                        tools:text="RATE" />
+                        tools:text="LOCATION" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,8 +139,9 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_poster_rate" />
+                        android:layout_gravity="center"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_rate" />
 
                     <TextView
                         android:id="@+id/poster_person_popularity"
@@ -153,7 +151,7 @@
                         android:layout_marginStart="5dp"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
-                        tools:text="VIEWS" />
+                        tools:text="POPULARITY" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -186,9 +184,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@string/biography_card"
                         android:textColor="@color/textColor"
                         android:textSize="20sp"
@@ -203,9 +201,9 @@
                             android:id="@+id/poster_person_bio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginBottom="10dp"
                             android:textColor="@color/textColor"
                             android:textSize="16sp"

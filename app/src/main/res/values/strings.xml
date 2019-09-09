@@ -39,4 +39,19 @@
     <string name="version_name_text">App Version:</string>
     <string name="credits">Credits</string>
 
+    <string name="m_01">January</string>
+    <string name="m_02">February</string>
+    <string name="m_03">March</string>
+    <string name="m_04">April</string>
+    <string name="m_05">May</string>
+    <string name="m_06">June</string>
+    <string name="m_07">July</string>
+    <string name="m_08">August</string>
+    <string name="m_09">September</string>
+    <string name="m_10">October</string>
+    <string name="m_11">November</string>
+    <string name="m_12">December</string>
+
+    <string name="minutes">minutes</string>
+
 </resources>

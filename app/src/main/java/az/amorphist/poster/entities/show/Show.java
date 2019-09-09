@@ -22,7 +22,7 @@ public class Show {
     @SerializedName("seasons") @Expose private List<Season> seasons = null;
     @SerializedName("status") @Expose private String status;
     @SerializedName("vote_average") @Expose private float voteAverage;
-    @SerializedName("vote_count") @Expose private float voteCount;
+    @SerializedName("vote_count") @Expose private int voteCount;
 
     public String getBackdropPath() {
         return backdropPath;
@@ -152,11 +152,11 @@ public class Show {
         this.voteAverage = voteAverage;
     }
 
-    public float getVoteCount() {
+    public int getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(float voteCount) {
+    public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
 }

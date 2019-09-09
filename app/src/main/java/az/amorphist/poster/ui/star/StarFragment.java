@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import az.amorphist.poster.di.modules.SearchModule;
 import az.amorphist.poster.entities.person.Person;
 import az.amorphist.poster.presentation.star.StarPresenter;
 import az.amorphist.poster.presentation.star.StarView;
+import az.amorphist.poster.utils.DateChanger;
 import az.amorphist.poster.utils.GlideLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,8 +46,9 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_location) TextView posterPersonLocation;
     @BindView(R.id.poster_person_popularity) TextView posterPersonPopularity;
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
+    @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
 
-
+    private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
 
     @ProvidePresenter
@@ -85,10 +88,14 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         toolbar.setTitle(person.getName());
         GlideLoader.load(getContext(), person.getProfilePath(), posterPerson);
         posterPersonName.setText(person.getName());
-        posterPersonBirthDate.setText(person.getBirthday());
+        posterPersonBirthDate.setText(dateChanger.changeDate(person.getBirthday()));
         posterPersonLocation.setText(person.getPlaceOfBirth());
         posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
         posterPersonBio.setText(person.getBiography());
+
+        if(person.getBiography().equals("")) {
+            personBioCard.setVisibility(View.GONE);
+        }
     }
 
     @Override

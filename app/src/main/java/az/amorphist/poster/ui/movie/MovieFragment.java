@@ -1,5 +1,6 @@
 package az.amorphist.poster.ui.movie;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import az.amorphist.poster.entities.movie.MovieGenre;
 import az.amorphist.poster.entities.movielite.MovieLite;
 import az.amorphist.poster.presentation.movie.MoviePresenter;
 import az.amorphist.poster.presentation.movie.MovieView;
+import az.amorphist.poster.utils.DateChanger;
 import az.amorphist.poster.utils.GlideLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,12 +69,13 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.poster_date) TextView posterDate;
     @BindView(R.id.poster_rate) TextView posterRate;
     @BindView(R.id.poster_views) TextView posterViews;
+    @BindView(R.id.poster_duration) TextView posterDuration;
     @BindView(R.id.poster_desc) TextView posterDesc;
     @BindView(R.id.movie_genres) ChipGroup movieGenresChip;
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
     @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
     private MovieAdapter similarMoviesAdapter;
-    private LinearLayoutManager layoutManagerSimilarMovies;
+    private DateChanger dateChanger = new DateChanger();
 
     private Unbinder unbinder;
 
@@ -114,7 +117,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         toolbar.setNavigationOnClickListener(v -> moviePresenter.goBack());
         watchedButton.setVisibility(View.VISIBLE);
         watchedButtonAlt.setVisibility(View.GONE);
-        layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
+        LinearLayoutManager layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
@@ -122,15 +125,17 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void showMovie(Movie movie) {
         toolbar.setTitle(movie.getTitle());
         GlideLoader.load(getContext(), movie.getPosterPath(), posterMain);
         GlideLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
         posterTitle.setText(movie.getTitle());
-        posterDate.setText(movie.getReleaseDate());
+        posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
-        posterViews.setText(String.valueOf(movie.getVoteCount()));
+        posterViews.setText("(" + movie.getVoteCount() + ")");
+        posterDuration.setText(movie.getRuntime() + " " + getResources().getString(R.string.minutes));
 
         for(MovieGenre mGenres: movie.getMovieGenres()) {
             Chip chip = new Chip(requireContext());

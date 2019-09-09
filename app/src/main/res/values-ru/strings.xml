@@ -37,5 +37,19 @@
     <string name="are_you_sure">Вы уверены, что хотите удалить фильм из библеотеки?</string>
     <string name="delete_movie">Удалить Фильм</string>
     <string name="version_name_text">Версия приложения:</string>
+    <string name="credits">Благодарность</string>
+    <string name="m_01">Январь</string>
+    <string name="m_02">Февраль</string>
+    <string name="m_03">Март</string>
+    <string name="m_04">Апрель</string>
+    <string name="m_05">Май</string>
+    <string name="m_06">Июнь</string>
+    <string name="m_07">Июль</string>
+    <string name="m_08">Август</string>
+    <string name="m_09">Сентябрь</string>
+    <string name="m_10">Октябрь</string>
+    <string name="m_11">Ноябрь</string>
+    <string name="m_12">Декабрь</string>
+    <string name="minutes">минуты</string>
 
 </resources>

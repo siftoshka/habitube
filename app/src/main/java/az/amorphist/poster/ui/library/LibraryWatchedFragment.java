@@ -34,7 +34,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
     @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
-
+    @BindView(R.id.empty_screen) View emptyScreen;
     private LibraryAdapter libraryAdapter;
     private Unbinder unbinder;
 
@@ -70,8 +70,18 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     @Override
     public void showWatchedMovies(List<Movie> movies) {
         libraryAdapter.addAllMovies(movies);
+        screenWatcher();
     }
 
+    private void screenWatcher() {
+        if (libraryAdapter.getItemCount() != 0) {
+            emptyScreen.setVisibility(View.GONE);
+            recyclerViewWatched.setVisibility(View.VISIBLE);
+        } else {
+            emptyScreen.setVisibility(View.VISIBLE);
+            recyclerViewWatched.setVisibility(View.GONE);
+        }
+    }
     @Override
     public void onDestroyView() {
         unbinder.unbind();

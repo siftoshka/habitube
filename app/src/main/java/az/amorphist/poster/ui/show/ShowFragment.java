@@ -1,5 +1,6 @@
 package az.amorphist.poster.ui.show;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import az.amorphist.poster.entities.show.ShowGenre;
 import az.amorphist.poster.presentation.show.ShowPresenter;
 import az.amorphist.poster.presentation.show.ShowView;
 import az.amorphist.poster.ui.season.SeasonBottomDialog;
+import az.amorphist.poster.utils.DateChanger;
 import az.amorphist.poster.utils.GlideLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +64,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.poster_show_date) TextView posterShowDate;
     @BindView(R.id.poster_show_rate) TextView posterShowRate;
     @BindView(R.id.poster_show_views) TextView posterShowViews;
+    @BindView(R.id.poster_show_duration) TextView posterShowDuration;
     @BindView(R.id.poster_show_desc) TextView posterShowDesc;
     @BindView(R.id.show_genres) ChipGroup showGenresChip;
     @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
@@ -69,7 +72,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     private ShowAdapter similarShowsAdapter;
     private SeasonAdapter seasonAdapter;
-    private LinearLayoutManager layoutManagerSimilarShows, layoutManagerSeasons;
+    private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
 
     @ProvidePresenter
@@ -94,7 +97,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
         similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId));
-        seasonAdapter = new SeasonAdapter(position -> showBottomSeasonDialog(position));
+        seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
     }
 
     @Override
@@ -109,14 +112,14 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> showPresenter.goBack());
 
-        layoutManagerSimilarShows = new LinearLayoutManager(getContext(),
+        LinearLayoutManager layoutManagerSimilarShows = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarShows.setLayoutManager(layoutManagerSimilarShows);
         recyclerViewSimilarShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarShows.setHasFixedSize(true);
         recyclerViewSimilarShows.setAdapter(similarShowsAdapter);
 
-        layoutManagerSeasons = new LinearLayoutManager(getContext(),
+        LinearLayoutManager layoutManagerSeasons = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSeasons.setLayoutManager(layoutManagerSeasons);
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
@@ -124,15 +127,17 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewSeasons.setAdapter(seasonAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void showTVShow(Show show) {
         toolbar.setTitle(show.getName());
         GlideLoader.load(getContext(), show.getPosterPath(), posterShow);
         GlideLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
-        posterShowDate.setText(show.getFirstAirDate());
+        posterShowDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
         posterShowRate.setText(String.valueOf(show.getVoteAverage()));
-        posterShowViews.setText(String.valueOf(show.getVoteCount()));
+        posterShowViews.setText("(" + show.getVoteCount() + ")");
+        episodeRuntime(show.getEpisodeRunTime().toString());
 
         for(ShowGenre sGenres: show.getShowGenres()) {
             Chip chip = new Chip(requireContext());
@@ -187,6 +192,11 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showErrorScreen() {
         errorScreen.setVisibility(View.VISIBLE);
         showScreen.setVisibility(View.GONE);
+    }
+
+    private void episodeRuntime(String episodeRuntime) {
+        String updatedText = episodeRuntime.substring(1, episodeRuntime.length() - 1);
+        posterShowDuration.setText(String.format("%s %s", updatedText, getResources().getString(R.string.minutes)));
     }
 
     @Override

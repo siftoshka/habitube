@@ -14,24 +14,24 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorAccent"
         android:elevation="14dp"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/ic_back"
         app:titleTextColor="@color/mainBackground" />
 
     <!--Loading Screen-->
     <include
         android:id="@+id/loading_screen"
+        layout="@layout/include_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        layout="@layout/include_loading" />
+        android:visibility="visible" />
 
     <!--Error Screen-->
     <include
         android:id="@+id/error_screen"
+        layout="@layout/include_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        layout="@layout/include_error" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/show_screen"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:background="@color/mainBackground"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/show_poster_background"
@@ -79,21 +79,15 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="8dp"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_poster_name" />
 
                     <TextView
                         android:id="@+id/poster_show_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/textColor"
                         android:textSize="24sp"
                         tools:text="AVENGERS" />
@@ -108,7 +102,9 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_poster_date" />
+                        android:layout_gravity="center"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_date" />
 
                     <TextView
                         android:id="@+id/poster_show_date"
@@ -130,8 +126,9 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_poster_rate" />
+                        android:layout_gravity="center"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_rate" />
 
                     <TextView
                         android:id="@+id/poster_show_rate"
@@ -142,6 +139,16 @@
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
                         tools:text="RATE" />
+
+                    <TextView
+                        android:id="@+id/poster_show_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"
+                        tools:text="VIEWS" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -153,18 +160,19 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_poster_views" />
+                        android:layout_gravity="center"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_duration" />
 
                     <TextView
-                        android:id="@+id/poster_show_views"
+                        android:id="@+id/poster_show_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
-                        tools:text="VIEWS" />
+                        tools:text="DURATION" />
                 </LinearLayout>
 
                 <HorizontalScrollView
@@ -218,9 +226,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@string/description_card"
                         android:textColor="@color/textColor"
                         android:textSize="20sp"
@@ -235,9 +243,9 @@
                             android:id="@+id/poster_show_desc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginBottom="10dp"
                             android:textColor="@color/textColor"
                             android:textSize="16sp"
@@ -262,9 +270,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@string/seasons"
                         android:textColor="@color/textColor"
                         android:textSize="20sp"
@@ -294,9 +302,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@string/similar_tv_shows"
                         android:textColor="@color/textColor"
                         android:textSize="20sp"

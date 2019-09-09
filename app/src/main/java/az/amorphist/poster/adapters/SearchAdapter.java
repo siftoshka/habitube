@@ -15,6 +15,7 @@ import java.util.List;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movielite.MovieLite;
+import az.amorphist.poster.utils.DateChanger;
 import az.amorphist.poster.utils.GlideLoader;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
@@ -25,10 +26,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
+    private DateChanger dateChanger;
     private int mediaState;
 
     public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
         this.searchMedia = new ArrayList<>();
+        this.dateChanger = new DateChanger();
         this.clickListener = clickListener;
     }
 
@@ -55,9 +58,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         }
 
         if(post.getReleaseDate() == null) {
-            holder.posterDate.setText(post.getFirstAirDate());
+            holder.posterDate.setText(dateChanger.changeDate(post.getFirstAirDate()));
         } else {
-            holder.posterDate.setText(post.getReleaseDate());
+            holder.posterDate.setText(dateChanger.changeDate(post.getReleaseDate()));
         }
 
         holder.posterLayout.setOnClickListener(v -> {

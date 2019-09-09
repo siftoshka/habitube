@@ -15,6 +15,7 @@ import java.util.List;
 
 import az.amorphist.poster.R;
 import az.amorphist.poster.entities.movie.Movie;
+import az.amorphist.poster.utils.DateChanger;
 import az.amorphist.poster.utils.GlideLoader;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {
@@ -25,9 +26,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
 
     private List<Movie> movies;
     private MovieItemClickListener clickListener;
+    private DateChanger dateChanger;
 
     public LibraryAdapter(@NonNull MovieItemClickListener clickListener) {
         this.movies = new ArrayList<>();
+        this.dateChanger = new DateChanger();
         this.clickListener = clickListener;
     }
 
@@ -43,7 +46,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
         final Movie movie = this.movies.get(position);
         GlideLoader.load(holder.itemView, movie.getPosterPath(), holder.posterImage);
         holder.posterTitle.setText(movie.getTitle());
-        holder.posterDate.setText(movie.getReleaseDate());
+        holder.posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getId()));
     }
 
