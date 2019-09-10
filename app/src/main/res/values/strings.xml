@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Poster</string>
+    <string name="app_name" translatable="false">Habitube</string>
     <string name="app_version">App Version</string>
     <string name="app_desc">See the most trending Movies &amp; TV Shows in one place</string>
     <string name="user_id_text">User ID</string>
@@ -29,7 +29,7 @@
     <string name="watched_tab">Watched</string>
     <string name="planning_tab">Planning</string>
     <string name="search_in_imdb">Search in IMDb</string>
-    <string name="add_to_watched">Add to Watched</string>
+    <string name="add_to_watched">Add as Watched</string>
     <string name="watch_later">Watch Later</string>
     <string name="already_added">Already added</string>
     <string name="are_you_sure">Are you sure to delete this movie from your library?</string>

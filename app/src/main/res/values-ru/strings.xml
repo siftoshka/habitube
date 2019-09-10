@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Poster</string>
     <string name="app_version">Версия приложения</string>
     <string name="app_desc">Популярные фильмы и сериалы в одном приложении</string>
     <string name="user_id_text">User ID</string>
@@ -29,7 +28,7 @@
     <string name="watched_tab">Просмотренные</string>
     <string name="planning_tab">На будущее</string>
     <string name="search_in_imdb">Поиск в IMDb</string>
-    <string name="add_to_watched">Отметить как просмотренное</string>
+    <string name="add_to_watched">Добавить как Просмотренное</string>
     <string name="watch_later">Посмотреть позже</string>
     <string name="already_added">Уже добавлен</string>
     <string name="no">Нет</string>
