@@ -15,7 +15,7 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.show.Season;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 
 public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHolder> {
 
@@ -41,7 +41,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHold
     @Override
     public void onBindViewHolder(@NonNull SeasonHolder holder, final int position) {
         final Season season = this.seasons.get(position);
-        GlideLoader.load(holder.itemView, season.getPosterPath(), holder.posterImage);
+        ImageLoader.load(holder.itemView, season.getPosterPath(), holder.posterImage);
         holder.posterTitle.setText(season.getName());
 
         holder.posterLayout.setOnClickListener(v ->

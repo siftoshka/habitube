@@ -1,5 +1,6 @@
 package az.siftoshka.habitube.ui.explore;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
 import az.siftoshka.habitube.Constants;
@@ -46,15 +49,26 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.trending_movies) LinearLayout trendingMovieScreen;
     @BindView(R.id.trendind_tv_shows) LinearLayout trendingShowScreen;
     @BindView(R.id.explore_loading) ProgressBar progressBar;
+    @BindView(R.id.explore_scroll) NestedScrollView scrollView;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter;
+    private MessageListener messageListener;
     private Unbinder unbinder;
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
         return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(ExplorePresenter.class);
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof MessageListener) {
+            this.messageListener = (MessageListener) context;
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +143,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public void unsuccessfulQueryError() {
-        Toast.makeText(getContext(),"Unsuccessful request", Toast.LENGTH_SHORT).show();
+        messageListener.showInternetError("Ups...");
     }
 
     @Override

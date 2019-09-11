@@ -18,42 +18,42 @@ import az.siftoshka.habitube.Constants;
 public class Movie {
 
     @ColumnInfo(name = "adult") @SerializedName("adult") @Expose private boolean adult;
-    @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") @Expose private String backdropPath;
+    @Ignore @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") @Expose private String backdropPath;
     @Ignore @SerializedName("genres") @Expose private List<MovieGenre> movieGenres;
     @PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") @Expose private int id;
     @ColumnInfo(name = "imdb_id") @SerializedName("imdb_id") @Expose private String imdbId;
     @ColumnInfo(name = "original_title") @SerializedName("original_title") @Expose private String originalTitle;
     @ColumnInfo(name = "overview") @SerializedName("overview") @Expose private String overview;
     @ColumnInfo(name = "popularity") @SerializedName("popularity") @Expose private double popularity;
-    @ColumnInfo(name = "poster_path") @SerializedName("poster_path") @Expose private String posterPath;
+    @Ignore @ColumnInfo(name = "poster_path") @SerializedName("poster_path") @Expose private String posterPath;
     @ColumnInfo(name = "release_date") @SerializedName("release_date") @Expose private String releaseDate;
     @ColumnInfo(name = "runtime") @SerializedName("runtime") @Expose private int runtime;
     @ColumnInfo(name = "status") @SerializedName("status") @Expose private String status;
-    @ColumnInfo(name = "tagline") @SerializedName("tagline") @Expose private String tagline;
     @ColumnInfo(name = "title") @SerializedName("title") @Expose private String title;
     @ColumnInfo(name = "vote_average") @SerializedName("vote_average") @Expose private double voteAverage;
     @ColumnInfo(name = "vote_count") @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
+    @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
+    @ColumnInfo(name = "poster_background", typeAffinity = ColumnInfo.BLOB) private byte[] posterBackground;
 
-    public Movie(boolean adult, String backdropPath, int id,
-                 String imdbId, String originalTitle, String overview, double popularity,
-                 String posterPath, String releaseDate, int runtime, String status, String tagline,
-                 String title, double voteAverage, int voteCount) {
+    public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
+                 double popularity, String releaseDate, int runtime, String status, String title,
+                 double voteAverage, int voteCount, Date addedDate, byte[] posterImage, byte[] posterBackground) {
         this.adult = adult;
-        this.backdropPath = backdropPath;
         this.id = id;
         this.imdbId = imdbId;
         this.originalTitle = originalTitle;
         this.overview = overview;
         this.popularity = popularity;
-        this.posterPath = posterPath;
         this.releaseDate = releaseDate;
         this.runtime = runtime;
         this.status = status;
-        this.tagline = tagline;
         this.title = title;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
+        this.addedDate = addedDate;
+        this.posterImage = posterImage;
+        this.posterBackground = posterBackground;
     }
 
     public boolean isAdult() {
@@ -152,14 +152,6 @@ public class Movie {
         this.status = status;
     }
 
-    public String getTagline() {
-        return tagline;
-    }
-
-    public void setTagline(String tagline) {
-        this.tagline = tagline;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -190,6 +182,22 @@ public class Movie {
 
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
+    }
+
+    public byte[] getPosterImage() {
+        return posterImage;
+    }
+
+    public void setPosterImage(byte[] posterImage) {
+        this.posterImage = posterImage;
+    }
+
+    public byte[] getPosterBackground() {
+        return posterBackground;
+    }
+
+    public void setPosterBackground(byte[] posterBackground) {
+        this.posterBackground = posterBackground;
     }
 
     @Override

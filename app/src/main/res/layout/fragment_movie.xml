@@ -88,9 +88,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textColor="@color/textColor"
                         android:layout_marginBottom="3dp"
-                        android:textSize="24sp"
+                        android:maxLines="2"
+                        android:textColor="@color/textColor"
+                        android:textSize="22sp"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -164,6 +165,7 @@
                         android:layout_gravity="center"
                         android:padding="3dp"
                         android:src="@drawable/ic_duration" />
+
                     <TextView
                         android:id="@+id/poster_duration"
                         android:layout_width="wrap_content"
@@ -258,9 +260,10 @@
                         android:visibility="visible">
 
                         <ImageView
+                            android:id="@+id/watched_image"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_favorites" />
+                            android:src="@drawable/ic_favorite_disactive" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -284,7 +287,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_favorites_filled" />
+                            android:src="@drawable/ic_favorite_filled" />
 
                         <TextView
                             android:layout_width="wrap_content"

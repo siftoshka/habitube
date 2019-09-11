@@ -53,5 +53,11 @@
     <string name="m_12">December</string>
 
     <string name="minutes">minutes</string>
+    <string name="your_list_is_empty">Your list is empty!</string>
+    <string name="hint_1">You can tap on Search Icon to find your favorite Movie/TV Show/Star</string>
+    <string name="or">or</string>
+    <string name="hint_2">Just click the Explore button</string>
+    <string name="language">en-US</string>
+    <string name="episodes">episodes</string>
 
 </resources>

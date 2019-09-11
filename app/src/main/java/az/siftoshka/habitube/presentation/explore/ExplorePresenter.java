@@ -1,7 +1,10 @@
 package az.siftoshka.habitube.presentation.explore;
 
+import android.content.Context;
+
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.model.interactor.RemoteExploreInteractor;
 import io.reactivex.disposables.CompositeDisposable;
@@ -13,13 +16,16 @@ import ru.terrakok.cicerone.Router;
 public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     private final Router router;
+    private final Context context;
     private final RemoteExploreInteractor remoteExploreInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Inject
-    public ExplorePresenter(Router router, RemoteExploreInteractor remoteExploreInteractor) {
+    public ExplorePresenter(Router router, Context context,
+                            RemoteExploreInteractor remoteExploreInteractor) {
         this.router = router;
+        this.context = context;
         this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
@@ -29,25 +35,25 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
     }
 
     private void addContent() {
-        addUpcomingMovies();
-        addMovies();
-        addShows();
+        addUpcomingMovies(context.getResources().getString(R.string.language));
+        addMovies(context.getResources().getString(R.string.language));
+        addShows(context.getResources().getString(R.string.language));
     }
 
-    private void addUpcomingMovies() {
-        compositeDisposable.add(remoteExploreInteractor.getUpcomingMovies()
+    private void addUpcomingMovies(String language) {
+        compositeDisposable.add(remoteExploreInteractor.getUpcomingMovies(language)
         .subscribe(movieResponse -> getViewState().showUpcomingMovieList(movieResponse.getResults()),
                 throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    private void addMovies() {
-        compositeDisposable.add(remoteExploreInteractor.getMovies()
+    private void addMovies(String language) {
+        compositeDisposable.add(remoteExploreInteractor.getMovies(language)
                 .subscribe(movieResponse -> getViewState().showMovieList(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    private void addShows() {
-        compositeDisposable.add(remoteExploreInteractor.getTVShows()
+    private void addShows(String language) {
+        compositeDisposable.add(remoteExploreInteractor.getTVShows(language)
                 .subscribe(movieResponse -> getViewState().showTVShowList(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }

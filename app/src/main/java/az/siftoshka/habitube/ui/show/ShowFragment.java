@@ -33,9 +33,8 @@ import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.show.ShowGenre;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
 import az.siftoshka.habitube.presentation.show.ShowView;
-import az.siftoshka.habitube.ui.season.SeasonBottomDialog;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -132,8 +131,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void showTVShow(Show show) {
         toolbar.setTitle(show.getName());
-        GlideLoader.load(getContext(), show.getPosterPath(), posterShow);
-        GlideLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
+        ImageLoader.load(getContext(), show.getPosterPath(), posterShow);
+        ImageLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
         posterShowDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
         posterShowRate.setText(String.valueOf(show.getVoteAverage()));

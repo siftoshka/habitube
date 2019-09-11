@@ -18,23 +18,23 @@ public class RemotePostInteractor {
         this.repository = repository;
     }
 
-    public Single<Movie> getMovie(int movieId) {
-        return repository.getMovie(movieId);
+    public Single<Movie> getMovie(int movieId, String language) {
+        return repository.getMovie(movieId, language);
     }
 
-    public Single<Show> getTVShow(int showId) {
-        return repository.getShow(showId);
+    public Single<Show> getTVShow(int showId, String language) {
+        return repository.getShow(showId, language);
     }
 
-    public Single<Person> getStar(int personId) {
-        return repository.getStar(personId);
+    public Single<Person> getStar(int personId, String language) {
+        return repository.getStar(personId, language);
     }
 
-    public Single<MovieResponse> getSimilarMovies(int id) {
-        return repository.getSimilarMovies(id);
+    public Single<MovieResponse> getSimilarMovies(int id, String language) {
+        return repository.getSimilarMovies(id, language);
     }
 
-    public Single<MovieResponse> getSimilarTVShows(int id) {
-        return repository.getSimilarTVShows(id);
+    public Single<MovieResponse> getSimilarTVShows(int id, String language) {
+        return repository.getSimilarTVShows(id, language);
     }
 }

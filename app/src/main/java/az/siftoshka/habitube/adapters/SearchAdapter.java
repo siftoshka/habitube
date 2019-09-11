@@ -16,7 +16,7 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
 
@@ -46,9 +46,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public void onBindViewHolder(@NonNull SearchHolder holder, final int position) {
         final MovieLite post = this.searchMedia.get(position);
         if (post.getMovieImage() == null) {
-            GlideLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
+            ImageLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
-            GlideLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
+            ImageLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
 
         if (post.getMovieTitle() == null) {

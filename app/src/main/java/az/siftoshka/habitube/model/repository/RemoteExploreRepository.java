@@ -9,8 +9,6 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static az.siftoshka.habitube.Constants.SYSTEM.APP_LANG;
-
 public class RemoteExploreRepository {
 
     private final MovieDBApi movieDBApi;
@@ -20,26 +18,26 @@ public class RemoteExploreRepository {
         this.movieDBApi = movieDBApi;
     }
 
-    public Single<MovieResponse> getUpcomingMovies() {
-        return movieDBApi.getUpcomingMovies()
+    public Single<MovieResponse> getUpcomingMovies(String language) {
+        return movieDBApi.getUpcomingMovies(language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getMovies() {
-        return movieDBApi.getTrendingMovies()
+    public Single<MovieResponse> getMovies(String language) {
+        return movieDBApi.getTrendingMovies(language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getTVShows() {
-        return movieDBApi.getTrendingTVShows()
+    public Single<MovieResponse> getTVShows(String language) {
+        return movieDBApi.getTrendingTVShows(language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getSearchResults(String queryName) {
-        return movieDBApi.getSearchResults(APP_LANG, queryName, 1, false)
+    public Observable<MovieResponse> getSearchResults(String queryName, String language) {
+        return movieDBApi.getSearchResults(language, queryName, 1, false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

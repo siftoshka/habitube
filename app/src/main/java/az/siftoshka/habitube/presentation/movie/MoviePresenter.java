@@ -1,9 +1,12 @@
 package az.siftoshka.habitube.presentation.movie;
 
+import android.content.Context;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.di.qualifiers.MediaType;
 import az.siftoshka.habitube.di.qualifiers.MoviePosition;
@@ -24,19 +27,21 @@ import ru.terrakok.cicerone.Router;
 public class MoviePresenter extends MvpPresenter<MovieView> {
 
     private final Router router;
+    private final Context context;
     private final WatchedMoviesInteractor watchedMoviesInteractor;
     private final Integer upcomingPosition, postPosition, postId, mediaType;
     private final RemotePostInteractor remotePostInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public MoviePresenter(Router router, RemotePostInteractor remotePostInteractor,
+    public MoviePresenter(Router router, Context context, RemotePostInteractor remotePostInteractor,
                           WatchedMoviesInteractor watchedMoviesInteractor,
                           @UpcomingMoviePosition Integer upcomingPosition,
                           @MoviePosition Integer postPosition,
                           @PostId Integer postId,
                           @MediaType Integer mediaType) {
         this.router = router;
+        this.context = context;
         this.remotePostInteractor = remotePostInteractor;
         this.watchedMoviesInteractor = watchedMoviesInteractor;
         this.upcomingPosition = upcomingPosition;
@@ -48,15 +53,15 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     @Override
     protected void onFirstViewAttach() {
         if (upcomingPosition != 0) {
-            getMovie(upcomingPosition);
-            getSimilarMovies(upcomingPosition);
+            getMovie(upcomingPosition, context.getResources().getString(R.string.language));
+            getSimilarMovies(upcomingPosition, context.getResources().getString(R.string.language));
             compositeDisposable.add(watchedMoviesInteractor.isMovieExists(upcomingPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
         } else if (postPosition != 0) {
-            getMovie(postPosition);
-            getSimilarMovies(postPosition);
+            getMovie(postPosition, context.getResources().getString(R.string.language));
+            getSimilarMovies(postPosition, context.getResources().getString(R.string.language));
             compositeDisposable.add(watchedMoviesInteractor.isMovieExists(postPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -64,8 +69,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         }
 
         if (mediaType == 1) {
-            getMovie(postId);
-            getSimilarMovies(postId);
+            getMovie(postId, context.getResources().getString(R.string.language));
+            getSimilarMovies(postId, context.getResources().getString(R.string.language));
             compositeDisposable.add(watchedMoviesInteractor.isMovieExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -73,8 +78,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         }
     }
 
-    private void getMovie(int id) {
-        compositeDisposable.add(remotePostInteractor.getMovie(id)
+    private void getMovie(int id, String language) {
+        compositeDisposable.add(remotePostInteractor.getMovie(id, language)
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(movie -> getViewState().showMovieScreen())
@@ -82,8 +87,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                         throwable -> getViewState().showErrorScreen()));
     }
 
-    private void getSimilarMovies(int id) {
-        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id)
+    private void getSimilarMovies(int id, String language) {
+        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id, language)
                 .subscribe(movieResponses -> getViewState().showSimilarMovieList(movieResponses.getResults()),
                         Throwable::printStackTrace));
     }

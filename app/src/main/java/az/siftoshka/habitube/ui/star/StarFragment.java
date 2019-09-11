@@ -19,7 +19,7 @@ import az.siftoshka.habitube.entities.person.Person;
 import az.siftoshka.habitube.presentation.star.StarPresenter;
 import az.siftoshka.habitube.presentation.star.StarView;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -86,7 +86,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @Override
     public void showPerson(Person person) {
         toolbar.setTitle(person.getName());
-        GlideLoader.load(getContext(), person.getProfilePath(), posterPerson);
+        ImageLoader.load(getContext(), person.getProfilePath(), posterPerson);
         posterPersonName.setText(person.getName());
         posterPersonBirthDate.setText(dateChanger.changeDate(person.getBirthday()));
         posterPersonLocation.setText(person.getPlaceOfBirth());

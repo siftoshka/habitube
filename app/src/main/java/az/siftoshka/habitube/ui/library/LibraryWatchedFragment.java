@@ -1,5 +1,6 @@
 package az.siftoshka.habitube.ui.library;
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +9,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -19,6 +22,7 @@ import az.siftoshka.habitube.adapters.LibraryAdapter;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedView;
+import az.siftoshka.habitube.utils.animation.SwipeDecorator;
 import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +71,35 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         recyclerViewWatched.setHasFixedSize(true);
         recyclerViewWatched.setAdapter(libraryAdapter);
         watchedPresenter.getMovies();
+        libraryAdapter.getItemCount();
+
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                watchedPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
+                screenWatcher();
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c,
+                                    @NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder,
+                                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                new SwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(requireContext(), R.color.deleteColor))
+                        .addActionIcon(R.drawable.ic_delete)
+                        .create()
+                        .decorate();
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+                });
+        itemTouchHelper.attachToRecyclerView(recyclerViewWatched);
     }
 
     @Override

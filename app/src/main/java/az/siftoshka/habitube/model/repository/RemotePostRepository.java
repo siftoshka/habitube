@@ -20,32 +20,32 @@ public class RemotePostRepository {
         this.movieDBApi = movieDBApi;
     }
 
-    public Single<Movie> getMovie(int movieId) {
-        return movieDBApi.getMovie(movieId)
+    public Single<Movie> getMovie(int movieId, String language) {
+        return movieDBApi.getMovie(movieId, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Show> getShow(int showId) {
-        return movieDBApi.getTVShow(showId)
+    public Single<Show> getShow(int showId, String language) {
+        return movieDBApi.getTVShow(showId, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Person> getStar(int personId) {
-        return movieDBApi.getMovieStar(personId)
+    public Single<Person> getStar(int personId, String language) {
+        return movieDBApi.getMovieStar(personId, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getSimilarMovies(int id) {
-        return movieDBApi.getSimilarMovies(id)
+    public Single<MovieResponse> getSimilarMovies(int id,String language) {
+        return movieDBApi.getSimilarMovies(id, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getSimilarTVShows(int id) {
-        return movieDBApi.getSimilarTVShow(id)
+    public Single<MovieResponse> getSimilarTVShows(int id, String language) {
+        return movieDBApi.getSimilarTVShow(id, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

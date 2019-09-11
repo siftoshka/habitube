@@ -24,8 +24,8 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
         this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
-    public void searchMedia(String queryName) {
-        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName)
+    public void searchMedia(String queryName, String language) {
+        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName, language)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe(movieResponse -> getViewState().showSearchedMediaList(movieResponse.getResults()),

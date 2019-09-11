@@ -1,5 +1,6 @@
 package az.siftoshka.habitube.ui.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.SearchAdapter;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.model.system.KeyboardBehavior;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.search.SearchPresenter;
 import az.siftoshka.habitube.presentation.search.SearchView;
 import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
@@ -41,12 +44,26 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @BindView(R.id.search_bar) androidx.appcompat.widget.SearchView searchView;
 
     private SearchAdapter searchAdapter;
+    private MessageListener messageListener;
+    private KeyboardBehavior keyboardBehavior;
     private Unbinder unbinder;
 
     @ProvidePresenter
     SearchPresenter searchPresenter() {
         return Toothpick.openScope(APP_SCOPE).getInstance(SearchPresenter.class);
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof MessageListener) {
+            this.messageListener = (MessageListener) context;
+        }
+        if (context instanceof KeyboardBehavior) {
+            this.keyboardBehavior = (KeyboardBehavior) context;
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +91,6 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         recyclerViewSearch.setHasFixedSize(true);
         recyclerViewSearch.setAdapter(searchAdapter);
 
-
         toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -86,9 +102,22 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             @Override
             public boolean onQueryTextChange(final String newText) {
                 if(!TextUtils.isEmpty(newText)) {
-                    searchPresenter.searchMedia(newText);
+                    searchPresenter.searchMedia(newText, getResources().getString(R.string.language));
                 }
                 return true;
+            }
+        });
+
+        recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                keyboardBehavior.hideKeyboard();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
@@ -100,7 +129,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @Override
     public void unsuccessfulQueryError() {
-        Toast.makeText(getContext(), "Unsuccessful request", Toast.LENGTH_SHORT).show();
+        messageListener.showInternetError("Unexpected error");
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.presentation.settings.SettingsPresenter;
@@ -28,11 +30,11 @@ import static az.siftoshka.habitube.Constants.SYSTEM.DEV_GITHUB;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_INSTAGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
 
-public class SettingsFragment extends MvpAppCompatFragment implements SettingsView {
+public class SettingsFragment extends MvpAppCompatFragment implements SettingsView, Toolbar.OnMenuItemClickListener {
 
     @InjectPresenter
     SettingsPresenter settingsPresenter;
-
+    @BindView(R.id.settings_toolbar) Toolbar toolbar;
     @BindView(R.id.telegram_contact) ImageView telegramButton;
     @BindView(R.id.github_contact) ImageView githubButton;
     @BindView(R.id.instagram_contact) ImageView instagramButton;
@@ -56,9 +58,19 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        toolbar.inflateMenu(R.menu.main_menu);
+        toolbar.setOnMenuItemClickListener(this);
         telegramButton.setOnClickListener(v -> showTelegramPage());
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.search_movies) {
+            settingsPresenter.goToSearchScreen();
+        }
+        return false;
     }
 
     private void showTelegramPage() {

@@ -15,7 +15,7 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
@@ -41,7 +41,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
-        GlideLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
+        ImageLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }

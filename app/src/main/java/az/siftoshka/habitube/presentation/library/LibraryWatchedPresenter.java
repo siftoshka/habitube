@@ -2,6 +2,7 @@ package az.siftoshka.habitube.presentation.library;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.model.interactor.WatchedMoviesInteractor;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
@@ -32,5 +33,9 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
     public void onDestroy() {
         compositeDisposable.dispose();
         super.onDestroy();
+    }
+
+    public void removeFromLocal(Movie movie) {
+        watchedMoviesInteractor.deleteMovie(movie);
     }
 }

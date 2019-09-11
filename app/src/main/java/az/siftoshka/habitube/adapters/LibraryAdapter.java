@@ -8,15 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.GlideLoader;
+import az.siftoshka.habitube.utils.ImageLoader;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {
 
@@ -44,7 +46,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
     @Override
     public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
         final Movie movie = this.movies.get(position);
-        GlideLoader.load(holder.itemView, movie.getPosterPath(), holder.posterImage);
+        ImageLoader.loadLocally(holder.itemView, movie.getPosterImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getTitle());
         holder.posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getId()));
@@ -64,8 +66,15 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
 
     public void addAllMovies(List<Movie> movies) {
         this.movies.clear();
-        this.movies.addAll(movies);
+        this.movies.addAll(0, movies);
         notifyDataSetChanged();
+    }
+
+    public Movie getMovieAt(int position) {
+        Movie movie = this.movies.get(position);
+        this.movies.remove(position);
+        notifyItemRemoved(position);
+        return movie;
     }
 
     static class LibraryHolder extends RecyclerView.ViewHolder {

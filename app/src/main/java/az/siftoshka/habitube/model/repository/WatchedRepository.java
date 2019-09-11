@@ -38,8 +38,8 @@ public class WatchedRepository {
         watchedRepository.movieDAO().deleteMovie(movie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> deleteMovieGenres(movie.getId()))
                 .subscribe();
-        deleteMovieGenres(movie.getId());
     }
 
     public Single<List<Movie>> getAllMovies() {

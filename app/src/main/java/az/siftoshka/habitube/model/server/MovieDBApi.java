@@ -13,37 +13,52 @@ import retrofit2.http.Query;
 public interface MovieDBApi {
 
     @GET("movie/upcoming")
-    Single<MovieResponse> getUpcomingMovies();
+    Single<MovieResponse> getUpcomingMovies(
+            @Query("language") String language
+    );
 
     @GET("trending/movie/day")
-    Single<MovieResponse> getTrendingMovies();
+    Single<MovieResponse> getTrendingMovies(
+            @Query("language") String language
+    );
 
     @GET("trending/tv/day")
-    Single<MovieResponse> getTrendingTVShows();
+    Single<MovieResponse> getTrendingTVShows(
+            @Query("language") String language
+    );
 
     @GET("movie/{movie_id}")
     Single<Movie> getMovie(
-            @Path("movie_id") int movieId
-    );
+            @Path("movie_id") int movieId,
+            @Query("language") String language
+            );
 
     @GET("movie/{movie_id}/similar")
     Single<MovieResponse> getSimilarMovies(
-            @Path("movie_id") int movieId
+            @Path("movie_id") int movieId,
+            @Query("language") String language
+
     );
 
     @GET("tv/{tv_id}")
     Single<Show> getTVShow(
-            @Path("tv_id") int showId
+            @Path("tv_id") int showId,
+            @Query("language") String language
+
     );
 
     @GET("tv/{tv_id}/similar")
     Single<MovieResponse> getSimilarTVShow(
-            @Path("tv_id") int showId
+            @Path("tv_id") int showId,
+            @Query("language") String language
+
     );
 
     @GET("person/{person_id}")
     Single<Person> getMovieStar(
-            @Path("person_id") int starId
+            @Path("person_id") int starId,
+            @Query("language") String language
+
     );
 
     @GET("search/multi")

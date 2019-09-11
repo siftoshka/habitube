@@ -1,12 +1,18 @@
 package az.siftoshka.habitube;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.model.system.KeyboardBehavior;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.ui.movie.MovieFragment;
 import az.siftoshka.habitube.ui.navbar.NavbarFragment;
 import az.siftoshka.habitube.ui.search.SearchFragment;
@@ -22,12 +28,10 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
-public class MainActivity extends MvpAppCompatActivity {
+public class MainActivity extends MvpAppCompatActivity implements MessageListener, KeyboardBehavior {
 
-    @Inject
-    NavigatorHolder navigatorHolder;
-    @Inject
-    Router router;
+    @Inject NavigatorHolder navigatorHolder;
+    @Inject Router router;
 
     private Navigator navigator = new SupportAppNavigator(this, R.id.fragment_container) {
         @Override
@@ -64,6 +68,24 @@ public class MainActivity extends MvpAppCompatActivity {
     protected void onResumeFragments() {
         super.onResumeFragments();
         navigatorHolder.setNavigator(navigator);
+    }
+
+    @Override
+    public void showInternetError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+    }
+
+    @Override
+    public void hideKeyboard() {
+        final View view = findViewById(R.id.fragment_container);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
     @Override

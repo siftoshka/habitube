@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.ui.season;
+package az.siftoshka.habitube.ui.show;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +10,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.show.Season;
-import az.siftoshka.habitube.presentation.season.SeasonPresenter;
-import az.siftoshka.habitube.presentation.season.SeasonView;
-import az.siftoshka.habitube.utils.GlideLoader;
-import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
+import az.siftoshka.habitube.utils.DateChanger;
+import az.siftoshka.habitube.utils.DateConverter;
+import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
-import toothpick.Toothpick;
 
-import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
-
-public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements SeasonView {
-
-    @InjectPresenter
-    SeasonPresenter seasonPresenter;
+public class SeasonBottomDialog extends BottomSheetDialogFragment {
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @BindView(R.id.poster_season_post) ImageView seasonImage;
@@ -39,11 +32,7 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
 
     private Season season;
     private Unbinder unbinder;
-
-    @ProvidePresenter
-    SeasonPresenter seasonPresenter() {
-       return Toothpick.openScope(APP_SCOPE).getInstance(SeasonPresenter.class);
-    }
+    private DateChanger dateChanger = new DateChanger();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,10 +55,10 @@ public class SeasonBottomDialog extends MvpBottomSheetDialogFragment implements 
     }
 
     private void setDialog() {
-        GlideLoader.load(getContext(), season.getPosterPath(), seasonImage);
+        ImageLoader.load(getContext(), season.getPosterPath(), seasonImage);
         seasonName.setText(season.getName());
-        seasonDate.setText(season.getAirDate());
-        seasonEpisodes.setText(String.valueOf(season.getEpisodeCount()));
+        seasonDate.setText(dateChanger.changeDate(season.getAirDate()));
+        seasonEpisodes.setText(season.getEpisodeCount() + getResources().getString(R.string.episodes));
         seasonOverview.setText(season.getOverview());
     }
 

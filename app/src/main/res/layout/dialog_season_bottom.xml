@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:context="az.siftoshka.habitube.ui.season.SeasonBottomDialog">
+    tools:context="az.siftoshka.habitube.ui.show.SeasonBottomDialog">
 
     <ImageView
         android:id="@+id/poster_season_post"
@@ -30,8 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:maxLines="2"
                 android:textColor="@color/textColor"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 tools:text="AVENGERS" />
         </LinearLayout>
 
@@ -70,7 +71,7 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:padding="3dp"
-                android:src="@drawable/ic_episode_count" />
+                android:src="@drawable/ic_episodes" />
 
             <TextView
                 android:id="@+id/poster_season_episode"
@@ -98,7 +99,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center_horizontal"
                     android:padding="3dp"
-                    android:src="@drawable/ic_overview" />
+                    android:src="@drawable/ic_desc" />
 
                 <TextView
                     android:id="@+id/poster_season_overview"

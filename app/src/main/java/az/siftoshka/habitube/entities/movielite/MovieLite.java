@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class MovieLite {
     @SerializedName("id") @Expose private int movieId;
-    @SerializedName("original_title") @Expose private String movieTitle;
+    @SerializedName("title") @Expose private String movieTitle;
     @SerializedName("name") @Expose private String showTitle;
     @SerializedName("poster_path") @Expose private String movieImage;
     @SerializedName("profile_path") @Expose private String starImage;
