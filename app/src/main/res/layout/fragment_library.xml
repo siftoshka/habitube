@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context="az.siftoshka.habitube.ui.settings.SettingsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

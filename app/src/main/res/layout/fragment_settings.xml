@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context="az.siftoshka.habitube.ui.settings.SettingsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/account_toolbar"
@@ -165,6 +165,18 @@
             android:textColor="@color/textColor"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/credits_oktay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:maxLines="1"
+            android:text="Application icon made by @ok__die"
+            android:textColor="@color/textColor"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/credits_designer"

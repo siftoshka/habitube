@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.explore.ExploreFragment">
-
+    tools:context="az.siftoshka.habitube.ui.explore.ExploreFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
@@ -23,6 +22,14 @@
         app:title="@string/app_name"
         app:titleTextColor="@color/mainBackground" />
 
+    <ProgressBar
+        android:id="@+id/explore_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="200dp"
+        android:visibility="visible"/>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -37,14 +44,14 @@
                 android:id="@+id/upcoming_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/textColor"
                     android:textSize="26sp" />
@@ -60,14 +67,14 @@
                 android:id="@+id/trending_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:text="@string/trending_movies"
                     android:textColor="@color/textColor"
                     android:textSize="26sp" />
@@ -83,14 +90,14 @@
                 android:id="@+id/trendind_tv_shows"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/textColor"
                     android:textSize="26sp" />

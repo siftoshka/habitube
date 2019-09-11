@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.movie.MovieFragment">
+    tools:context="az.siftoshka.habitube.ui.star.StarFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/star_toolbar"
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="3dp"
                         android:textColor="@color/textColor"
                         android:textSize="24sp"
                         tools:text="PERSON" />

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:orientation="vertical"
-    tools:context=".ui.movie.MovieFragment">
+    tools:context="az.siftoshka.habitube.ui.movie.MovieFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/movie_toolbar"
@@ -89,8 +89,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textColor="@color/textColor"
-                        android:layout_marginBottom="5dp"
-                        android:textSize="26sp"
+                        android:layout_marginBottom="3dp"
+                        android:textSize="24sp"
                         tools:text="AVENGERS" />
                 </LinearLayout>
 
@@ -220,7 +220,7 @@
                     android:background="@drawable/round_button"
                     android:backgroundTint="@color/mainBackground"
                     android:elevation="5dp"
-                    android:gravity="fill_vertical"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:padding="10dp">
 

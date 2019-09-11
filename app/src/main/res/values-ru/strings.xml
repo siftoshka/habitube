@@ -21,22 +21,22 @@
     <string name="biography_card">Биография</string>
 
     <string name="navbar_library">Библеотека</string>
-    <string name="navbar_explore">Исследуйте</string>
+    <string name="navbar_explore">Исследуй</string>
     <string name="navbar_settings">Настройки</string>
     <string name="seasons">Сезоны</string>
 
     <string name="watched_tab">Просмотренные</string>
-    <string name="planning_tab">На будущее</string>
+    <string name="planning_tab">На Будущее</string>
     <string name="search_in_imdb">Поиск в IMDb</string>
-    <string name="add_to_watched">Добавить как Просмотренное</string>
-    <string name="watch_later">Посмотреть позже</string>
-    <string name="already_added">Уже добавлен</string>
+    <string name="add_to_watched">В Избранное</string>
+    <string name="watch_later">На Будущее</string>
+    <string name="already_added">Добавлен</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
     <string name="are_you_sure">Вы уверены, что хотите удалить фильм из библеотеки?</string>
     <string name="delete_movie">Удалить Фильм</string>
     <string name="version_name_text">Версия приложения:</string>
-    <string name="credits">Благодарность</string>
+    <string name="credits">Благодарности</string>
     <string name="m_01">Январь</string>
     <string name="m_02">Февраль</string>
     <string name="m_03">Март</string>
@@ -49,6 +49,6 @@
     <string name="m_10">Октябрь</string>
     <string name="m_11">Ноябрь</string>
     <string name="m_12">Декабрь</string>
-    <string name="minutes">минуты</string>
+    <string name="minutes">минут</string>
 
 </resources>
