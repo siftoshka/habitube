@@ -1,5 +1,6 @@
 package az.siftoshka.habitube.ui.show;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,11 +55,12 @@ public class SeasonBottomDialog extends BottomSheetDialogFragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setDialog() {
         ImageLoader.load(getContext(), season.getPosterPath(), seasonImage);
         seasonName.setText(season.getName());
         seasonDate.setText(dateChanger.changeDate(season.getAirDate()));
-        seasonEpisodes.setText(season.getEpisodeCount() + getResources().getString(R.string.episodes));
+        seasonEpisodes.setText(season.getEpisodeCount() + " " + getResources().getString(R.string.episodes));
         seasonOverview.setText(season.getOverview());
     }
 

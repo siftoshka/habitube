@@ -145,7 +145,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void showMovie(Movie movie) {
         toolbar.setTitle(movie.getTitle());
-//        ImageLoader.load(getContext(), movie.getPosterPath(), posterMain);
+
         Glide.with(requireContext())
                 .load(IMAGE_URL + movie.getPosterPath())
                 .listener(new RequestListener<Drawable>() {
@@ -167,13 +167,16 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterMain);
 
-//        ImageLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
         Glide.with(requireContext())
                 .load(IMAGE_URL + movie.getBackdropPath())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        try {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                         watchedButton.setEnabled(true);
                         isBackgroundReady = true;
                         return false;
@@ -191,12 +194,21 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .placeholder(new ColorDrawable(Color.LTGRAY))
                 .error(R.drawable.image_not_found)
                 .into(posterBackground);
+
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
         posterViews.setText("(" + movie.getVoteCount() + ")");
         posterDuration.setText(movie.getRuntime() + " " + getResources().getString(R.string.minutes));
+        addGenres(movie);
+        checkDescription(movie);
+        posterDesc.setText(movie.getOverview());
+        showImdbWeb(movie.getImdbId());
+        addMovieToWatched(movie, movie.getMovieGenres());
+        deleteMovieFromWatched(movie);
+    }
 
+    private void addGenres(Movie movie) {
         for (MovieGenre mGenres : movie.getMovieGenres()) {
             Chip chip = new Chip(requireContext());
             ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(requireContext(),
@@ -205,15 +217,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             chip.setText(mGenres.getName());
             movieGenresChip.addView(chip);
         }
-
-        if (movie.getOverview().equals("")) {
-            descMovieCard.setVisibility(View.GONE);
-        }
-
-        posterDesc.setText(movie.getOverview());
-        showImdbWeb(movie.getImdbId());
-        addMovieToWatched(movie, movie.getMovieGenres());
-        deleteMovieFromWatched(movie);
     }
 
     private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
@@ -225,6 +228,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 moviePresenter.addMovieAsWatched(movie, movieGenres);
             }
         });
+    }
+
+    private void checkDescription(Movie movie) {
+        if (movie.getOverview().equals("")) {
+            descMovieCard.setVisibility(View.GONE);
+        }
     }
 
     private void deleteMovieFromWatched(Movie movie) {

@@ -334,7 +334,10 @@
                     android:backgroundTint="@color/mainBackground"
                     android:elevation="5dp"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -378,7 +381,10 @@
                     android:backgroundTint="@color/mainBackground"
                     android:elevation="5dp"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
