@@ -42,11 +42,13 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
         if(showPosition != 0) {
             getTVShow(showPosition, context.getResources().getString(R.string.language));
             getSimilarTVShows(showPosition, context.getResources().getString(R.string.language));
+            getVideos(showPosition, context.getResources().getString(R.string.language));
         }
 
         if (mediaType == 2) {
             getTVShow(postId, context.getResources().getString(R.string.language));
             getSimilarTVShows(postId, context.getResources().getString(R.string.language));
+            getVideos(postId, context.getResources().getString(R.string.language));
         }
     }
 
@@ -62,6 +64,12 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private void getSimilarTVShows(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, language)
                 .subscribe(movieResponses -> getViewState().showSimilarTVShowList(movieResponses.getResults()),
+                        Throwable::printStackTrace));
+    }
+
+    private void getVideos(int id, String language) {
+        compositeDisposable.add(remotePostInteractor.getTVShowVideos(id, language)
+                .subscribe(videoResponse -> getViewState().showVideos(videoResponse.getResults()),
                         Throwable::printStackTrace));
     }
 

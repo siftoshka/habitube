@@ -40,19 +40,19 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
         addShows(context.getResources().getString(R.string.language));
     }
 
-    private void addUpcomingMovies(String language) {
+    public void addUpcomingMovies(String language) {
         compositeDisposable.add(remoteExploreInteractor.getUpcomingMovies(language)
         .subscribe(movieResponse -> getViewState().showUpcomingMovieList(movieResponse.getResults()),
                 throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    private void addMovies(String language) {
+    public void addMovies(String language) {
         compositeDisposable.add(remoteExploreInteractor.getMovies(language)
                 .subscribe(movieResponse -> getViewState().showMovieList(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    private void addShows(String language) {
+    public void addShows(String language) {
         compositeDisposable.add(remoteExploreInteractor.getTVShows(language)
                 .subscribe(movieResponse -> getViewState().showTVShowList(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));

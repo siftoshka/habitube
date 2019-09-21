@@ -3,6 +3,8 @@ package az.siftoshka.habitube;
 public final class Constants {
 
     public static final class DB {
+        public static final String WATCHED = "watched";
+        public static final String PLANNED = "planned";
         public static final String MOVIE_TABLE = "movies";
         public static final String MOVIE_GENRE_TABLE = "movie_genres";
     }
@@ -17,6 +19,7 @@ public final class Constants {
         public static final String DESIGNER_OKTAY = "https://www.instagram.com/ok__die";
         public static final String API_URL = "https://api.themoviedb.org/3/";
         public static final String IMAGE_URL = "https://image.tmdb.org/t/p/original";
+        public static final String YOUTUBE_URL = "https://www.youtube.com/watch?v=";
         public static final String API_KEY = "2de4fcda741c028964fe7c0faca007bc";
     }
 

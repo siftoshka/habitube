@@ -32,8 +32,8 @@ import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
 
 public class SettingsFragment extends MvpAppCompatFragment implements SettingsView, Toolbar.OnMenuItemClickListener {
 
-    @InjectPresenter
-    SettingsPresenter settingsPresenter;
+    @InjectPresenter SettingsPresenter settingsPresenter;
+
     @BindView(R.id.settings_toolbar) Toolbar toolbar;
     @BindView(R.id.telegram_contact) ImageView telegramButton;
     @BindView(R.id.github_contact) ImageView githubButton;

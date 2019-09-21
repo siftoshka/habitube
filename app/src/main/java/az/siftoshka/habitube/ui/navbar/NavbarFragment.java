@@ -26,8 +26,7 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
 
-    @InjectPresenter
-    NavbarPresenter navbarPresenter;
+    @InjectPresenter NavbarPresenter navbarPresenter;
 
     @BindView(R.id.navigation_bar) BottomNavigationView bottomNavigationView;
 

@@ -1,6 +1,8 @@
 package az.siftoshka.habitube.ui.show;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,13 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.SeasonAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
+import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.show.ShowGenre;
+import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
 import az.siftoshka.habitube.presentation.show.ShowView;
 import az.siftoshka.habitube.utils.DateChanger;
@@ -46,15 +50,16 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
+import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
-    @InjectPresenter
-    ShowPresenter showPresenter;
+    @InjectPresenter ShowPresenter showPresenter;
 
     @BindView(R.id.show_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_similar_shows) RecyclerView recyclerViewSimilarShows;
     @BindView(R.id.recycler_view_seasons) RecyclerView recyclerViewSeasons;
+    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
     @BindView(R.id.show_screen) RelativeLayout showScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
@@ -67,10 +72,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.poster_show_duration) TextView posterShowDuration;
     @BindView(R.id.poster_show_desc) TextView posterShowDesc;
     @BindView(R.id.show_genres) ChipGroup showGenresChip;
+    @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
     @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
     @BindView(R.id.desc_show_card_layout) LinearLayout descShowCard;
 
     private ShowAdapter similarShowsAdapter;
+    private VideoAdapter videoAdapter;
     private SeasonAdapter seasonAdapter;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
@@ -97,6 +104,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
         similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId));
+        videoAdapter = new VideoAdapter(this::showVideo);
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
     }
 
@@ -125,6 +133,13 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeasons.setHasFixedSize(true);
         recyclerViewSeasons.setAdapter(seasonAdapter);
+
+        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewVideos.setLayoutManager(layoutManagerVideos);
+        recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewVideos.setHasFixedSize(true);
+        recyclerViewVideos.setAdapter(videoAdapter);
     }
 
     @SuppressLint("SetTextI18n")
@@ -174,6 +189,14 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     @Override
+    public void showVideos(List<Video> videos) {
+        if (videos.isEmpty()) {
+            videosCard.setVisibility(View.GONE);
+        }
+        videoAdapter.addAllVideos(videos);
+    }
+
+    @Override
     public void showProgress(boolean loadingState) {
         if(loadingState){
             loadingScreen.setVisibility(View.VISIBLE);
@@ -192,6 +215,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showErrorScreen() {
         errorScreen.setVisibility(View.VISIBLE);
         showScreen.setVisibility(View.GONE);
+    }
+
+    private void showVideo(String videoKey) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+        startActivity(intent);
     }
 
     private void episodeRuntime(String episodeRuntime) {

@@ -41,11 +41,13 @@ import java.util.List;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.MovieAdapter;
+import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.movie.MoviePresenter;
 import az.siftoshka.habitube.presentation.movie.MovieView;
 import az.siftoshka.habitube.utils.DateChanger;
@@ -60,6 +62,7 @@ import toothpick.Scope;
 import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
+import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
@@ -67,6 +70,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @BindView(R.id.movie_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_similar_movies) RecyclerView recyclerViewSimilarMovies;
+    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
     @BindView(R.id.main_screen) RelativeLayout mainScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
@@ -75,6 +79,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.watched_image) ImageView watchedImage;
     @BindView(R.id.watched_button_alt) LinearLayout watchedButtonAlt;
     @BindView(R.id.planning_button) LinearLayout planningButton;
+    @BindView(R.id.planned_image) ImageView plannedImage;
+    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
     @BindView(R.id.poster_background) ImageView posterBackground;
     @BindView(R.id.poster_movie_post) ImageView posterMain;
     @BindView(R.id.poster_title) TextView posterTitle;
@@ -85,9 +91,11 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.poster_desc) TextView posterDesc;
     @BindView(R.id.movie_genres) ChipGroup movieGenresChip;
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
+    @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
     @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
 
     private MovieAdapter similarMoviesAdapter;
+    private VideoAdapter videoAdapter;
     private DateChanger dateChanger = new DateChanger();
     private boolean isPosterReady = false, isBackgroundReady = false;
 
@@ -117,6 +125,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
         Toothpick.inject(this, Toothpick.openScope(Constants.DI.APP_SCOPE));
         similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId));
+        videoAdapter = new VideoAdapter(this::showVideo);
     }
 
     @Override
@@ -133,12 +142,21 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         watchedButton.setVisibility(View.VISIBLE);
         watchedButton.setEnabled(false);
         watchedButtonAlt.setVisibility(View.GONE);
+        planningButton.setVisibility(View.VISIBLE);
+        planningButton.setEnabled(false);
+        planningButtonAlt.setVisibility(View.GONE);
         LinearLayoutManager layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
+        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewVideos.setLayoutManager(layoutManagerVideos);
+        recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewVideos.setHasFixedSize(true);
+        recyclerViewVideos.setAdapter(videoAdapter);
     }
 
     @SuppressLint("SetTextI18n")
@@ -174,18 +192,26 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         try {
                             watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                         watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                         isBackgroundReady = true;
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        try {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                         isBackgroundReady = true;
                         return false;
                     }
@@ -205,7 +231,9 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         posterDesc.setText(movie.getOverview());
         showImdbWeb(movie.getImdbId());
         addMovieToWatched(movie, movie.getMovieGenres());
+        addMovieToPlanned(movie, movie.getMovieGenres());
         deleteMovieFromWatched(movie);
+        deleteMovieFromPlanned(movie);
     }
 
     private void addGenres(Movie movie) {
@@ -230,6 +258,18 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         });
     }
 
+    private void addMovieToPlanned(Movie movie, List<MovieGenre> movieGenres) {
+        planningButton.setOnClickListener(v -> {
+            if (isPosterReady & isBackgroundReady) {
+                movie.setAddedDate(new Date());
+                movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
+                movie.setPosterBackground(ImageLoader.imageView2Bitmap(posterBackground));
+                moviePresenter.addMovieAsPlanned(movie, movieGenres);
+            }
+        });
+    }
+
+
     private void checkDescription(Movie movie) {
         if (movie.getOverview().equals("")) {
             descMovieCard.setVisibility(View.GONE);
@@ -250,12 +290,34 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         });
     }
 
+    private void deleteMovieFromPlanned(Movie movie) {
+        planningButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
+    }
+
     @Override
     public void showSimilarMovieList(List<MovieLite> similarMovies) {
         if (similarMovies.isEmpty()) {
             similarMoviesCard.setVisibility(View.GONE);
         }
         similarMoviesAdapter.addAllMovies(similarMovies);
+    }
+
+    @Override
+    public void showVideos(List<Video> videos) {
+        if (videos.isEmpty()) {
+            videosCard.setVisibility(View.GONE);
+        }
+        videoAdapter.addAllVideos(videos);
     }
 
     private void showImdbWeb(String imdbId) {
@@ -282,6 +344,23 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             watchedButton.setVisibility(View.VISIBLE);
             watchedButtonAlt.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void setPlanButtonEnabled(boolean enabled) {
+        if (enabled) {
+            planningButton.setVisibility(View.GONE);
+            planningButtonAlt.setVisibility(View.VISIBLE);
+        } else {
+            planningButton.setVisibility(View.VISIBLE);
+            planningButtonAlt.setVisibility(View.GONE);
+        }
+    }
+
+    private void showVideo(String videoKey) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+        startActivity(intent);
     }
 
     @Override

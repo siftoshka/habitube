@@ -37,14 +37,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     @NonNull
     @Override
-    public SearchHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post_search, viewGroup, false);
+    public SearchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_search, parent, false);
         return new SearchHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchHolder holder, final int position) {
         final MovieLite post = this.searchMedia.get(position);
+
         if (post.getMovieImage() == null) {
             ImageLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
@@ -57,7 +58,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
             holder.posterTitle.setText(post.getMovieTitle());
         }
 
-        if(post.getReleaseDate() == null) {
+        if (post.getReleaseDate() == null) {
             holder.posterDate.setText(dateChanger.changeDate(post.getFirstAirDate()));
         } else {
             holder.posterDate.setText(dateChanger.changeDate(post.getReleaseDate()));
@@ -65,12 +66,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
         holder.posterLayout.setOnClickListener(v -> {
             switch (post.getMediaType()) {
-                case "movie": mediaState = 1; break;
-                case "tv": mediaState = 2; break;
-                case "person": mediaState = 3; break;
+                case "movie":
+                    mediaState = 1;
+                    break;
+                case "tv":
+                    mediaState = 2;
+                    break;
+                case "person":
+                    mediaState = 3;
+                    break;
             }
             clickListener.onPostClicked(post.getMovieId(), mediaState);
         });
+
     }
 
     @Override
@@ -82,7 +90,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     @Override
     public int getItemCount() {
-        return searchMedia.size();
+        return searchMedia == null ? 0 : searchMedia.size();
     }
 
     public void addAllMedia(List<MovieLite> searchMedia) {

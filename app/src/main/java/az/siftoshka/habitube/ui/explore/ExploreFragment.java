@@ -28,6 +28,7 @@ import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
 import az.siftoshka.habitube.Constants;
+import az.siftoshka.habitube.utils.PaginationListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -38,8 +39,7 @@ import toothpick.Toothpick;
 
 public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
 
-    @InjectPresenter
-    ExplorePresenter explorePresenter;
+    @InjectPresenter ExplorePresenter explorePresenter;
 
     @BindView(R.id.main_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_upcoming_movies) RecyclerView recyclerViewUpcoming;
@@ -50,6 +50,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.trendind_tv_shows) LinearLayout trendingShowScreen;
     @BindView(R.id.explore_loading) ProgressBar progressBar;
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
+    LinearLayoutManager layoutManagerUpcoming, layoutManagerMovies, layoutManagerTVShows;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter;
@@ -92,19 +93,19 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setOnMenuItemClickListener(this);
 
-        LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUpcoming.setHasFixedSize(true);
         recyclerViewUpcoming.setAdapter(upcomingAdapter);
 
-        LinearLayoutManager layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewMovies.setLayoutManager(layoutManagerMovies);
         recyclerViewMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMovies.setHasFixedSize(true);
         recyclerViewMovies.setAdapter(movieAdapter);
 
-        LinearLayoutManager layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTVShows.setLayoutManager(layoutManagerTVShows);
         recyclerViewTVShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTVShows.setHasFixedSize(true);

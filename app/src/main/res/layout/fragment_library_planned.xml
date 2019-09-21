@@ -4,14 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
-    tools:context="az.siftoshka.habitube.ui.library.LibraryPlanningFragment">
+    tools:context="az.siftoshka.habitube.ui.library.LibraryPlanningFragment"
+    android:orientation="horizontal">
 
     <!--Empty Screen-->
     <include
         android:id="@+id/empty_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         layout="@layout/include_empty" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_planning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

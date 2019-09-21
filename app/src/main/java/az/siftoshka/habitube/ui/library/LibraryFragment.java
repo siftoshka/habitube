@@ -33,8 +33,7 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryFragment extends MvpAppCompatFragment implements LibraryView, Toolbar.OnMenuItemClickListener {
 
-    @InjectPresenter
-    LibraryPresenter libraryPresenter;
+    @InjectPresenter LibraryPresenter libraryPresenter;
 
     @Inject Context context;
     @BindView(R.id.library_toolbar) Toolbar toolbar;

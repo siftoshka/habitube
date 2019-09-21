@@ -59,5 +59,7 @@
     <string name="hint_2">Just click the Explore button</string>
     <string name="language">en-US</string>
     <string name="episodes">episodes</string>
+    <string name="planned">Planned</string>
+    <string name="videos">Videos</string>
 
 </resources>

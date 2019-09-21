@@ -36,8 +36,7 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryWatchedFragment extends MvpAppCompatFragment implements LibraryWatchedView {
 
-    @InjectPresenter
-    LibraryWatchedPresenter watchedPresenter;
+    @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
     @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
     @BindView(R.id.empty_screen) View emptyScreen;
@@ -118,6 +117,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
             recyclerViewWatched.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void onDestroyView() {
         unbinder.unbind();

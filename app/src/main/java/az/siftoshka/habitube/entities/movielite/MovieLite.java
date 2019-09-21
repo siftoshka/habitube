@@ -24,6 +24,9 @@ public class MovieLite {
         this.mediaType = mediaType;
     }
 
+    public MovieLite() {
+    }
+
     public int getMovieId() {
         return movieId;
     }

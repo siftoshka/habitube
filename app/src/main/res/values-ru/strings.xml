@@ -56,5 +56,6 @@
     <string name="your_list_is_empty">Ваш список пуст!</string>
     <string name="language">ru-RU</string>
     <string name="episodes">епизодов</string>
+    <string name="planned">Запланирован</string>
 
 </resources>

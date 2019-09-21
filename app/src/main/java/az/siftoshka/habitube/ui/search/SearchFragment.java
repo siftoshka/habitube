@@ -36,8 +36,7 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
-    @InjectPresenter
-    SearchPresenter searchPresenter;
+    @InjectPresenter SearchPresenter searchPresenter;
 
     @BindView(R.id.search_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_search) RecyclerView recyclerViewSearch;

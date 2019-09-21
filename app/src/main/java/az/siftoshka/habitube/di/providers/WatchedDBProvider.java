@@ -9,7 +9,7 @@ import javax.inject.Provider;
 
 import az.siftoshka.habitube.model.data.WatchedRoomRepository;
 
-import static az.siftoshka.habitube.Constants.DB.MOVIE_TABLE;
+import static az.siftoshka.habitube.Constants.DB.WATCHED;
 
 public class WatchedDBProvider implements Provider<WatchedRoomRepository> {
 
@@ -22,6 +22,6 @@ public class WatchedDBProvider implements Provider<WatchedRoomRepository> {
 
     @Override
     public WatchedRoomRepository get() {
-        return Room.databaseBuilder(context, WatchedRoomRepository.class, MOVIE_TABLE).allowMainThreadQueries().build();
+        return Room.databaseBuilder(context, WatchedRoomRepository.class, WATCHED).allowMainThreadQueries().build();
     }
 }

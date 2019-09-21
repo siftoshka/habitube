@@ -4,6 +4,7 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movielite.MovieResponse;
 import az.siftoshka.habitube.entities.person.Person;
 import az.siftoshka.habitube.entities.show.Show;
+import az.siftoshka.habitube.entities.video.VideoResponse;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -40,6 +41,12 @@ public interface MovieDBApi {
 
     );
 
+    @GET("movie/{movie_id}/videos")
+    Single<VideoResponse> getMovieVideos(
+            @Path("movie_id") int movieId,
+            @Query("language") String language
+    );
+
     @GET("tv/{tv_id}")
     Single<Show> getTVShow(
             @Path("tv_id") int showId,
@@ -52,6 +59,12 @@ public interface MovieDBApi {
             @Path("tv_id") int showId,
             @Query("language") String language
 
+    );
+
+    @GET("tv/{tv_id}/videos")
+    Single<VideoResponse> getTVShowVideos(
+            @Path("tv_id") int movieId,
+            @Query("language") String language
     );
 
     @GET("person/{person_id}")
