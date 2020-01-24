@@ -19,7 +19,7 @@
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="20dp"
-        app:navigationIcon="@drawable/ic_back">
+        app:navigationIcon="@drawable/ic_back_w">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"

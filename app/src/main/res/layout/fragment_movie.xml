@@ -8,15 +8,6 @@
     android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.movie.MovieFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/movie_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/mainBackground"
-        android:elevation="14dp"
-        app:navigationIcon="@drawable/ic_back"
-        app:titleTextColor="@color/mateBlack" />
-
     <!--Loading Screen-->
     <include
         android:id="@+id/loading_screen"
@@ -41,6 +32,15 @@
         android:background="@color/mainBackground"
         android:orientation="vertical"
         android:visibility="gone">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/movie_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/mainBackground"
+            android:elevation="14dp"
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="@color/mateBlack" />
 
         <ImageView
             android:id="@+id/poster_background"
