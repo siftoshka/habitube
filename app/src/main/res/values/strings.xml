@@ -2,9 +2,11 @@
     <string name="app_name" translatable="false">Habitube</string>
     <string name="app_version">App Version</string>
     <string name="app_desc">See the most trending Movies &amp; TV Shows in one place</string>
-    <string name="user_id_text">User ID</string>
+    <string name="user_id_text" translatable="false">User ID</string>
     <string name="post_text">Post</string>
     <string name="post_id_text">Post ID</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
 
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="trending_movies">Trending Movies</string>

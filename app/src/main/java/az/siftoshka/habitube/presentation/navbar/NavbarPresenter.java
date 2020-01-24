@@ -25,7 +25,7 @@ public class NavbarPresenter extends MvpPresenter<NavbarView> {
 
     @Override
     protected void onFirstViewAttach() {
-        goToLibrary();
+        goToExplore();
     }
 
     public NavigatorHolder getNavigatorHolder() {

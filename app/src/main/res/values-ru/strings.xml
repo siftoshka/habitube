@@ -1,7 +1,6 @@
 <resources>
     <string name="app_version">Версия приложения</string>
     <string name="app_desc">Популярные фильмы и сериалы в одном приложении</string>
-    <string name="user_id_text">User ID</string>
     <string name="post_text">Пост</string>
     <string name="post_id_text">Post ID</string>
 
@@ -57,5 +56,8 @@
     <string name="language">ru-RU</string>
     <string name="episodes">епизодов</string>
     <string name="planned">Запланирован</string>
+    <string name="videos">Видео</string>
+    <string name="tv_shows">Сериалы</string>
+    <string name="movies">Фильмы</string>
 
 </resources>

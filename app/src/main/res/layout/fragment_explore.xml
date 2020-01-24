@@ -55,7 +55,7 @@
                     android:layout_marginStart="20dp"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/textColor"
-                    android:textSize="26sp" />
+                    android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_upcoming_movies"
@@ -78,7 +78,7 @@
                     android:layout_marginStart="20dp"
                     android:text="@string/trending_movies"
                     android:textColor="@color/textColor"
-                    android:textSize="26sp" />
+                    android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_movies"
@@ -101,7 +101,7 @@
                     android:layout_marginStart="20dp"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/textColor"
-                    android:textSize="26sp" />
+                    android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_tv_shows"

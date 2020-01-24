@@ -12,10 +12,10 @@
         android:id="@+id/show_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccent"
+        android:background="@color/mainBackground"
         android:elevation="14dp"
         app:navigationIcon="@drawable/ic_back"
-        app:titleTextColor="@color/mainBackground" />
+        app:titleTextColor="@color/mateBlack" />
 
     <!--Loading Screen-->
     <include

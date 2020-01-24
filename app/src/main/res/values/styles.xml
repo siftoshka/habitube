@@ -1,11 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/mainBackground</item>
         <item name="android:editTextColor">@color/mainBackground</item>
         <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppBottomSheetTheme" parent="Theme.Design.BottomSheetDialog">

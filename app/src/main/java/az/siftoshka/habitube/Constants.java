@@ -13,7 +13,7 @@ public final class Constants {
 
         public static final String IMDB_WEBSITE = "https://www.imdb.com/title/";
         public static final String DEV_TELEGRAM = "https://t.me/amorphist";
-        public static final String DEV_GITHUB = "https://github.com/amorphist";
+        public static final String DEV_GITHUB = "https://github.com/siftoshka";
         public static final String DEV_INSTAGRAM = "https://www.instagram.com/siftoshka";
         public static final String DESIGNER_FREEPIK = "https://www.freepik.com/";
         public static final String DESIGNER_OKTAY = "https://www.instagram.com/ok__die";

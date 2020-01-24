@@ -193,12 +193,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                         try {
                             watchedImage.setImageResource(R.drawable.ic_favorite);
                             plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                            isBackgroundReady = true;
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
-                        isBackgroundReady = true;
                         return false;
                     }
 
@@ -207,12 +207,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                         try {
                             watchedImage.setImageResource(R.drawable.ic_favorite);
                             plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                            isBackgroundReady = true;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
-                        isBackgroundReady = true;
                         return false;
                     }
                 })
@@ -220,7 +220,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .placeholder(new ColorDrawable(Color.LTGRAY))
                 .error(R.drawable.image_not_found)
                 .into(posterBackground);
-
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));

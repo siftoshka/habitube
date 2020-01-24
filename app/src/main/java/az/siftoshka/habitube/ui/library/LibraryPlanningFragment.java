@@ -2,7 +2,6 @@ package az.siftoshka.habitube.ui.library;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
+import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.LibraryAdapter;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningView;
-import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.utils.animation.SwipeDecorator;
 import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
 import butterknife.BindView;
@@ -53,7 +52,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> Log.d("LIBRARY ID", String.valueOf(postId)));
+        libraryAdapter = new LibraryAdapter(postId -> planningPresenter.goToDetailedMovieScreen(postId));
     }
 
     @Override

@@ -13,11 +13,13 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> {
 
+    private final Router router;
     private final PlannedMoviesInteractor plannedMoviesInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public LibraryPlanningPresenter(PlannedMoviesInteractor plannedMoviesInteractor) {
+    public LibraryPlanningPresenter(Router router, PlannedMoviesInteractor plannedMoviesInteractor) {
+        this.router = router;
         this.plannedMoviesInteractor = plannedMoviesInteractor;
     }
 
@@ -33,6 +35,10 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
 
     public void removeFromLocal(Movie movie) {
         plannedMoviesInteractor.deleteMovie(movie);
+    }
+
+    public void goToDetailedMovieScreen(int postId) {
+        router.navigateTo(new Screens.PostMovieScreen(postId));
     }
 
     @Override

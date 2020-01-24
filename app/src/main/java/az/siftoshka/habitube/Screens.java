@@ -74,14 +74,14 @@ public final class Screens {
         }
     }
 
-    public static final class SearchdItemScreen extends SupportAppScreen {
+    public static final class SearchItemScreen extends SupportAppScreen {
         private Integer postId, mediaType;
         final Bundle bundle = new Bundle();
         final MovieFragment movieFragment = new MovieFragment();
         final ShowFragment showFragment = new ShowFragment();
         final StarFragment starFragment = new StarFragment();
 
-        public SearchdItemScreen(int postId, int mediaType) {
+        public SearchItemScreen(int postId, int mediaType) {
             this.postId = postId;
             this.mediaType = mediaType;
         }

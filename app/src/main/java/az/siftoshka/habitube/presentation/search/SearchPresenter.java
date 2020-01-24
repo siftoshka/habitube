@@ -33,7 +33,7 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
     }
 
     public void goToDetailedScreen(Integer id, int mediaType) {
-        router.navigateTo(new Screens.SearchdItemScreen(id, mediaType));
+        router.navigateTo(new Screens.SearchItemScreen(id, mediaType));
     }
 
     public void goBack() {

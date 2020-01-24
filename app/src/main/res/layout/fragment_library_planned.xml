@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     tools:context="az.siftoshka.habitube.ui.library.LibraryPlanningFragment"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <!--Empty Screen-->
     <include

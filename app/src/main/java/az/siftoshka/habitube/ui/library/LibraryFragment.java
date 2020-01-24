@@ -1,11 +1,13 @@
 package az.siftoshka.habitube.ui.library;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,12 +35,21 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryFragment extends MvpAppCompatFragment implements LibraryView, Toolbar.OnMenuItemClickListener {
 
-    @InjectPresenter LibraryPresenter libraryPresenter;
+    @InjectPresenter
+    LibraryPresenter libraryPresenter;
 
-    @Inject Context context;
-    @BindView(R.id.library_toolbar) Toolbar toolbar;
-    @BindView(R.id.library_tab) TabLayout tabLayout;
-    @BindView(R.id.library_pager) ViewPager viewPager;
+    @Inject
+    Context context;
+    @BindView(R.id.library_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.library_tab)
+    TabLayout tabLayout;
+    @BindView(R.id.library_pager)
+    ViewPager viewPager;
+    @BindView(R.id.movies_pref)
+    TextView moviesPref;
+    @BindView(R.id.shows_pref)
+    TextView showsPref;
 
     private Unbinder unbinder;
 
@@ -61,6 +72,7 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
         FragmentPagerAdapter pagerAdapter = new LibraryPagerAdapter(context, getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        prefMovies();
         return view;
     }
 
@@ -68,6 +80,8 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setOnMenuItemClickListener(this);
+        moviesPref.setOnClickListener(view1 -> prefMovies());
+        showsPref.setOnClickListener(view1 -> prefShows());
     }
 
     @Override
@@ -76,6 +90,17 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
             libraryPresenter.goToSearchScreen();
         }
         return false;
+    }
+
+    private void prefMovies() {
+        moviesPref.setTextColor(getResources().getColor(R.color.mateBlack));
+        showsPref.setTextColor(getResources().getColor(R.color.textColor));
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void prefShows() {
+        showsPref.setTextColor(getResources().getColor(R.color.mateBlack));
+        moviesPref.setTextColor(getResources().getColor(R.color.textColor));
     }
 
     @Override

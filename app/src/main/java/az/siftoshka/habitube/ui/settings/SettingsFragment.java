@@ -34,7 +34,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @InjectPresenter SettingsPresenter settingsPresenter;
 
-    @BindView(R.id.settings_toolbar) Toolbar toolbar;
     @BindView(R.id.telegram_contact) ImageView telegramButton;
     @BindView(R.id.github_contact) ImageView githubButton;
     @BindView(R.id.instagram_contact) ImageView instagramButton;
@@ -58,8 +57,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setOnMenuItemClickListener(this);
         telegramButton.setOnClickListener(v -> showTelegramPage());
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());
