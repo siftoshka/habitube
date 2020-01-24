@@ -1,12 +1,11 @@
 package az.siftoshka.habitube.model.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.entities.movie.MovieGenre;
+import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.data.WatchedRoomRepository;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,13 +20,15 @@ public class WatchedRepository {
         this.watchedRepository = watchedRepository;
     }
 
-    public void addMovie(Movie movie, List<MovieGenre> movieGenres) {
-        List<MovieGenre> genreList = new ArrayList<>();
-        for (MovieGenre genre : movieGenres) {
-            genreList.add(new MovieGenre(movie.getId(), genre.getId(), genre.getName()));
-        }
-
+    public void addMovie(Movie movie) {
         watchedRepository.movieDAO().addMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public void addShow(Show show) {
+        watchedRepository.showDAO().addShow(show)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
@@ -40,6 +41,13 @@ public class WatchedRepository {
                 .subscribe();
     }
 
+    public void deleteShow(Show show) {
+        watchedRepository.showDAO().deleteShow(show)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
     public Single<List<Movie>> getAllMovies() {
         return watchedRepository.movieDAO().getMovies()
                 .subscribeOn(Schedulers.io())
@@ -47,8 +55,22 @@ public class WatchedRepository {
                 .doOnError(Throwable::printStackTrace);
     }
 
+    public Single<List<Show>> getAllShows() {
+        return watchedRepository.showDAO().getShows()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace);
+    }
+
     public Single<Boolean> isMovieExists(int movieId) {
         return Single.just(watchedRepository.movieDAO().getMovieById(movieId))
+                .map(integer -> integer > 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Boolean> isShowExists(int shiwId) {
+        return Single.just(watchedRepository.showDAO().getShowById(shiwId))
                 .map(integer -> integer > 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

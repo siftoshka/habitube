@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.entities.movie.Movie;
+import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.PlannedMoviesInteractor;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
@@ -33,12 +34,25 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
                 .subscribe((movies, throwable) -> getViewState().showPlannedMovies(movies)));
     }
 
+    public void getShows() {
+        compositeDisposable.add(plannedMoviesInteractor.getAllShows()
+                .subscribe((shows, throwable) -> getViewState().showPlannedShows(shows)));
+    }
+
     public void removeFromLocal(Movie movie) {
         plannedMoviesInteractor.deleteMovie(movie);
     }
 
+    public void removeFromLocal(Show show) {
+        plannedMoviesInteractor.deleteShow(show);
+    }
+
     public void goToDetailedMovieScreen(int postId) {
         router.navigateTo(new Screens.PostMovieScreen(postId));
+    }
+
+    public void goToDetailedShowScreen(int postId) {
+        router.navigateTo(new Screens.PostShowScreen(postId));
     }
 
     @Override

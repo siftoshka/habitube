@@ -34,11 +34,10 @@ public class Movie {
     @ColumnInfo(name = "vote_count") @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
-    @ColumnInfo(name = "poster_background", typeAffinity = ColumnInfo.BLOB) private byte[] posterBackground;
 
     public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
                  double popularity, String releaseDate, int runtime, String status, String title,
-                 double voteAverage, int voteCount, Date addedDate, byte[] posterImage, byte[] posterBackground) {
+                 double voteAverage, int voteCount, Date addedDate, byte[] posterImage) {
         this.adult = adult;
         this.id = id;
         this.imdbId = imdbId;
@@ -53,7 +52,6 @@ public class Movie {
         this.voteCount = voteCount;
         this.addedDate = addedDate;
         this.posterImage = posterImage;
-        this.posterBackground = posterBackground;
     }
 
     public boolean isAdult() {
@@ -190,14 +188,6 @@ public class Movie {
 
     public void setPosterImage(byte[] posterImage) {
         this.posterImage = posterImage;
-    }
-
-    public byte[] getPosterBackground() {
-        return posterBackground;
-    }
-
-    public void setPosterBackground(byte[] posterBackground) {
-        this.posterBackground = posterBackground;
     }
 
     @Override

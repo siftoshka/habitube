@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.LibraryPagerAdapter;
+import az.siftoshka.habitube.adapters.LibraryShowPagerAdapter;
 import az.siftoshka.habitube.presentation.library.LibraryPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryView;
 import butterknife.BindView;
@@ -35,21 +36,16 @@ import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryFragment extends MvpAppCompatFragment implements LibraryView, Toolbar.OnMenuItemClickListener {
 
-    @InjectPresenter
-    LibraryPresenter libraryPresenter;
+    @InjectPresenter LibraryPresenter libraryPresenter;
 
-    @Inject
-    Context context;
-    @BindView(R.id.library_toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.library_tab)
-    TabLayout tabLayout;
-    @BindView(R.id.library_pager)
-    ViewPager viewPager;
-    @BindView(R.id.movies_pref)
-    TextView moviesPref;
-    @BindView(R.id.shows_pref)
-    TextView showsPref;
+    @Inject Context context;
+    @BindView(R.id.library_toolbar) Toolbar toolbar;
+    @BindView(R.id.library_tab) TabLayout tabLayout;
+    @BindView(R.id.library_show_tab) TabLayout tabShowLayout;
+    @BindView(R.id.library_pager) ViewPager viewPager;
+    @BindView(R.id.library_show_pager) ViewPager viewShowPager;
+    @BindView(R.id.movies_pref) TextView moviesPref;
+    @BindView(R.id.shows_pref) TextView showsPref;
 
     private Unbinder unbinder;
 
@@ -70,8 +66,11 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
         final View view = inflater.inflate(R.layout.fragment_library, container, false);
         unbinder = ButterKnife.bind(this, view);
         FragmentPagerAdapter pagerAdapter = new LibraryPagerAdapter(context, getChildFragmentManager());
+        FragmentPagerAdapter pagerAdapterShow = new LibraryShowPagerAdapter(context, getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        viewShowPager.setAdapter(pagerAdapterShow);
         tabLayout.setupWithViewPager(viewPager);
+        tabShowLayout.setupWithViewPager(viewShowPager);
         prefMovies();
         return view;
     }
@@ -95,12 +94,19 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     private void prefMovies() {
         moviesPref.setTextColor(getResources().getColor(R.color.mateBlack));
         showsPref.setTextColor(getResources().getColor(R.color.textColor));
+        viewPager.setVisibility(View.VISIBLE);
+        viewShowPager.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.VISIBLE);
+        tabShowLayout.setVisibility(View.GONE);
     }
 
-    @SuppressLint("ResourceAsColor")
     private void prefShows() {
         showsPref.setTextColor(getResources().getColor(R.color.mateBlack));
         moviesPref.setTextColor(getResources().getColor(R.color.textColor));
+        viewPager.setVisibility(View.GONE);
+        viewShowPager.setVisibility(View.VISIBLE);
+        tabLayout.setVisibility(View.GONE);
+        tabShowLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

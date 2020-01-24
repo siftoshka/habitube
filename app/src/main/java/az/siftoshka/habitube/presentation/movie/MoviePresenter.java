@@ -117,8 +117,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                         Throwable::printStackTrace));
     }
 
-    public void addMovieAsWatched(Movie movie, List<MovieGenre> movieGenres) {
-        watchedMoviesInteractor.addMovie(movie, movieGenres);
+    public void addMovieAsWatched(Movie movie) {
+        watchedMoviesInteractor.addMovie(movie);
         getViewState().setSaveButtonEnabled(true);
     }
 
@@ -127,8 +127,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         getViewState().setSaveButtonEnabled(false);
     }
 
-    public void addMovieAsPlanned(Movie movie, List<MovieGenre> movieGenres) {
-        plannedMoviesInteractor.addMovie(movie, movieGenres);
+    public void addMovieAsPlanned(Movie movie) {
+        plannedMoviesInteractor.addMovie(movie);
         getViewState().setPlanButtonEnabled(true);
     }
 

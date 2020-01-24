@@ -14,9 +14,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_box" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_undraw_empty"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +28,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/your_list_is_empty"
             android:textColor="@color/textColor"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
