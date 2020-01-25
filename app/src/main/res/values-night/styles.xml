@@ -1,0 +1,29 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/mainBackground</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="AppBottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/round_button</item>
+        <item name="android:textColorPrimary">@color/dark_600</item>
+    </style>
+
+    <style name="CardView.DayNight" parent="Widget.MaterialComponents.CardView">
+        <item name="android:background">@color/background</item>
+    </style>
+
+</resources>

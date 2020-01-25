@@ -60,7 +60,7 @@
             android:layout_marginTop="-30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_button"
-            android:backgroundTint="@color/mainBackground"
+            android:backgroundTint="@color/background"
             android:elevation="16dp"
             android:padding="10dp">
 
@@ -219,7 +219,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button"
-                    android:backgroundTint="@color/mainBackground"
+                    android:backgroundTint="@color/background"
                     android:elevation="5dp"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
@@ -231,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/ripple_effect"
+                        android:backgroundTint="@color/background"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:visibility="visible">
@@ -256,6 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/ripple_effect"
+                        android:backgroundTint="@color/background"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:visibility="gone">
@@ -280,6 +282,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/ripple_effect"
+                        android:backgroundTint="@color/background"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
@@ -304,6 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/ripple_effect"
+                        android:backgroundTint="@color/background"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
@@ -331,7 +335,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button"
-                    android:backgroundTint="@color/mainBackground"
+                    android:backgroundTint="@color/background"
                     android:elevation="5dp"
                     android:orientation="vertical"
                     android:paddingStart="10dp"
@@ -378,7 +382,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button"
-                    android:backgroundTint="@color/mainBackground"
+                    android:backgroundTint="@color/background"
                     android:elevation="5dp"
                     android:orientation="vertical"
                     android:paddingStart="10dp"
@@ -415,7 +419,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button"
-                    android:backgroundTint="@color/mainBackground"
+                    android:backgroundTint="@color/background"
                     android:elevation="5dp"
                     android:orientation="vertical"
                     android:paddingStart="10dp"
@@ -450,7 +454,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button"
-                    android:backgroundTint="@color/mainBackground"
+                    android:backgroundTint="@color/background"
                     android:elevation="5dp"
                     android:orientation="vertical"
                     android:paddingStart="10dp"

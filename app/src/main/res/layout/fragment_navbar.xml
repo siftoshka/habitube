@@ -19,7 +19,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
         android:background="@color/mainBackground"
-        app:menu="@menu/nav_menu" />
-
+        app:itemIconTint="@drawable/selector_nav"
+        app:itemTextColor="@drawable/selector_nav"
+        app:menu="@menu/nav_menu"/>
 
 </LinearLayout>

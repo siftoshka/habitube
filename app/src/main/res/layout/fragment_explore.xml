@@ -19,7 +19,7 @@
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimary"
         app:title="@string/app_name"
-        app:titleTextColor="@color/mainBackground" />
+        app:titleTextColor="#FFFFFF" />
 
     <ProgressBar
         android:id="@+id/explore_loading"

@@ -99,6 +99,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         notifyDataSetChanged();
     }
 
+    public void clean() {
+        this.searchMedia.clear();
+        notifyDataSetChanged();
+    }
+
     static class SearchHolder extends RecyclerView.ViewHolder {
 
         LinearLayout posterLayout;

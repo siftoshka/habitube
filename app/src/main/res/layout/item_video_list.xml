@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/ripple_effect"
+    android:backgroundTint="@color/background"
     android:orientation="horizontal"
     android:padding="5dp">
 

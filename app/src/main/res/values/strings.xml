@@ -65,5 +65,7 @@
     <string name="videos">Videos</string>
     <string name="air_today">Air Today</string>
     <string name="nothing_found">Nothing Found...</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_text">Turn on the Dark Theme</string>
 
 </resources>

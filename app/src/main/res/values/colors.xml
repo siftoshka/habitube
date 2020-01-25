@@ -2,12 +2,19 @@
 <resources>
     <color name="colorPrimary">#673AB7</color>
     <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorAccent">#673AB7</color>
+    <color name="colorAccent">#863ab7</color>
+
+    <color name="white_is_white">#FFFFFF</color>
 
     <color name="deleteColor">#eb4034</color>
 
     <color name="colorPrimaryLight">#bdb5c9</color>
     <color name="mainBackground">#FFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="cardview">#FFFFFF</color>
+
+    <color name="tab_selected">#424242</color>
+    <color name="tab_unselected">#757575</color>
 
     <color name="dark_600">#757575</color>
     <color name="dark_800">#424242</color>

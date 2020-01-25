@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#673AB7</color>
+
+    <color name="white_is_white">#FFFFFF</color>
+
+    <color name="deleteColor">#eb4034</color>
+
+    <color name="colorPrimaryLight">#bdb5c9</color>
+    <color name="mainBackground">#111111</color>
+    <color name="background">#212121</color>
+    <color name="cardview">#272727</color>
+
+    <color name="tab_selected">#ffffff</color>
+    <color name="tab_unselected">#808080</color>
+
+    <color name="dark_600">#f6f6f6</color>
+    <color name="dark_800">#f4f4f4</color>
+    <color name="dark_900">#f1f1f1</color>
+    <color name="dark_1000">#ffffff</color>
+
+    <color name="telegramColor">#2CA5E0</color>
+    <color name="githubColor">#181717</color>
+    <color name="instagramColor">#E4405F</color>
+</resources>

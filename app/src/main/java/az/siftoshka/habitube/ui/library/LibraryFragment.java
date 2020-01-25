@@ -77,8 +77,6 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setOnMenuItemClickListener(this);
         moviesPref.setOnClickListener(view1 -> prefMovies());
         showsPref.setOnClickListener(view1 -> prefShows());
     }
@@ -92,8 +90,8 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     }
 
     private void prefMovies() {
-        moviesPref.setTextColor(getResources().getColor(R.color.dark_800));
-        showsPref.setTextColor(getResources().getColor(R.color.dark_600));
+        moviesPref.setTextColor(getResources().getColor(R.color.tab_selected));
+        showsPref.setTextColor(getResources().getColor(R.color.tab_unselected));
         viewPager.setVisibility(View.VISIBLE);
         viewShowPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
@@ -101,8 +99,8 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     }
 
     private void prefShows() {
-        showsPref.setTextColor(getResources().getColor(R.color.dark_800));
-        moviesPref.setTextColor(getResources().getColor(R.color.dark_600));
+        showsPref.setTextColor(getResources().getColor(R.color.tab_selected));
+        moviesPref.setTextColor(getResources().getColor(R.color.tab_unselected));
         viewPager.setVisibility(View.GONE);
         viewShowPager.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.GONE);

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -59,7 +60,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof MessageListener) {
+        if (context instanceof MessageListener) {
             this.messageListener = (MessageListener) context;
         }
         if (context instanceof KeyboardBehavior) {
@@ -106,11 +107,22 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if(!TextUtils.isEmpty(newText)) {
+                if (!TextUtils.isEmpty(newText)) {
                     searchPresenter.searchMedia(newText, getResources().getString(R.string.language));
                 }
                 return true;
             }
+        });
+        
+        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+        closeButton.setOnClickListener(view1 -> {
+            searchAdapter.clean();
+            searchIcon.setVisibility(View.VISIBLE);
+            recyclerViewSearch.setVisibility(View.GONE);
+            nothingIcon.setVisibility(View.GONE);
+            keyboardBehavior.hideKeyboard();
+            EditText et = searchView.findViewById(R.id.search_src_text);
+            et.setText(null);
         });
 
         recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -129,12 +141,13 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @Override
     public void showSearchedMediaList(List<MovieLite> searchResult) {
-        if(searchResult.size() == 0) {
+        if (searchResult.size() == 0) {
             searchIcon.setVisibility(View.GONE);
             recyclerViewSearch.setVisibility(View.GONE);
             nothingIcon.setVisibility(View.VISIBLE);
         } else {
             searchAdapter.addAllMedia(searchResult);
+            nothingIcon.setVisibility(View.GONE);
             searchIcon.setVisibility(View.GONE);
             recyclerViewSearch.setVisibility(View.VISIBLE);
         }

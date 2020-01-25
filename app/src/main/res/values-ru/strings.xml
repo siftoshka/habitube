@@ -61,5 +61,7 @@
     <string name="movies">Фильмы</string>
     <string name="air_today">Сегодня вышло</string>
     <string name="nothing_found">Ничего не найдено...</string>
+    <string name="dark_mode">Темная тема</string>
+    <string name="dark_mode_text">Переходи на темную сторону</string>
 
 </resources>

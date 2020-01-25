@@ -1,7 +1,9 @@
 package az.siftoshka.habitube.ui.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -12,11 +14,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import az.siftoshka.habitube.R;
@@ -30,6 +36,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_FREEPIK;
 import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_OKTAY;
@@ -47,7 +54,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.instagram_contact) ImageView instagramButton;
     @BindView(R.id.credits_oktay) TextView creditsOktay;
     @BindView(R.id.credits_freepik) TextView creditsFreepik;
-
+    @BindView(R.id.theme_switcher) SwitchCompat themeSwithcer;
+    @BindView(R.id.dark_mode_layout) LinearLayout darkModeCard;
 
     private Unbinder unbinder;
 
@@ -72,6 +80,31 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
         spannableCreditOktay();
         spannableCreditFreepik();
+
+        checkAndroidVersion();
+
+        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
+        int id = prefs.getInt("Dark", 0);
+
+        if (id == 101) {
+            themeSwithcer.setChecked(true);
+        } else {
+            themeSwithcer.setChecked(false);
+        }
+
+        themeSwithcer.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                SharedPreferences.Editor editor = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE).edit();
+                editor.putInt("Dark", 101);
+                editor.apply();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                SharedPreferences.Editor editor = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE).edit();
+                editor.putInt("Dark", 100);
+                editor.apply();
+            }
+        });
     }
 
     @Override
@@ -157,6 +190,14 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         spannableStringFreepik.setSpan(clickableSpan2,27,43, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         creditsFreepik.setText(spannableStringFreepik);
         creditsFreepik.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void checkAndroidVersion() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            darkModeCard.setVisibility(View.GONE);
+        } else {
+            darkModeCard.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
