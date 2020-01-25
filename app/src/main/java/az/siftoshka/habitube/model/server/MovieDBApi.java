@@ -28,6 +28,11 @@ public interface MovieDBApi {
             @Query("language") String language
     );
 
+    @GET("tv/airing_today")
+    Single<MovieResponse> getAirTodayShows(
+            @Query("language") String language
+    );
+
     @GET("movie/{movie_id}")
     Single<Movie> getMovie(
             @Path("movie_id") int movieId,

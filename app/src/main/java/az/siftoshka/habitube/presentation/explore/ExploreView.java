@@ -13,6 +13,7 @@ public interface ExploreView extends MvpView {
     void showUpcomingMovieList(List<MovieLite> upcomingList);
     void showMovieList(List<MovieLite> movies);
     void showTVShowList(List<MovieLite> tvShows);
+    void showAirTodayShows(List<MovieLite> tvShows);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void unsuccessfulQueryError();

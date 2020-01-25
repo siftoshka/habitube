@@ -36,6 +36,11 @@ public class RemoteExploreInteractor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<MovieResponse> getAirTodayShows(String language) {
+        return repository.getAirTodayShows(language)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
     public Observable<MovieResponse> getSearchResults(String queryName, String language) {
         return repository.getSearchResults(queryName, language)

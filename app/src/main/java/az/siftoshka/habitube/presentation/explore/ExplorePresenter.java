@@ -38,23 +38,30 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
         addUpcomingMovies(context.getResources().getString(R.string.language));
         addMovies(context.getResources().getString(R.string.language));
         addShows(context.getResources().getString(R.string.language));
+        addAirToday(context.getResources().getString(R.string.language));
     }
 
-    public void addUpcomingMovies(String language) {
+    private void addUpcomingMovies(String language) {
         compositeDisposable.add(remoteExploreInteractor.getUpcomingMovies(language)
         .subscribe(movieResponse -> getViewState().showUpcomingMovieList(movieResponse.getResults()),
                 throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    public void addMovies(String language) {
+    private void addMovies(String language) {
         compositeDisposable.add(remoteExploreInteractor.getMovies(language)
                 .subscribe(movieResponse -> getViewState().showMovieList(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
-    public void addShows(String language) {
+    private void addShows(String language) {
         compositeDisposable.add(remoteExploreInteractor.getTVShows(language)
                 .subscribe(movieResponse -> getViewState().showTVShowList(movieResponse.getResults()),
+                        throwable -> getViewState().unsuccessfulQueryError()));
+    }
+
+    private void addAirToday(String language) {
+        compositeDisposable.add(remoteExploreInteractor.getAirTodayShows(language)
+                .subscribe(movieResponse -> getViewState().showAirTodayShows(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 

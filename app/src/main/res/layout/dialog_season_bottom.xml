@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:maxLines="2"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_800"
                 android:textSize="22sp"
                 tools:text="AVENGERS" />
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="18sp"
                 tools:text="DATE" />
         </LinearLayout>
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="18sp"
                 tools:text="EPISODE COUNT" />
         </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/dark_600"
                     android:textSize="16sp"
                     tools:text="OVERVIEW" />
             </LinearLayout>

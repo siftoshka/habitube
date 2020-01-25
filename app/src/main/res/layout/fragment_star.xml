@@ -15,7 +15,7 @@
         android:background="@color/mainBackground"
         android:elevation="14dp"
         app:navigationIcon="@drawable/ic_back"
-        app:titleTextColor="@color/mateBlack" />
+        app:titleTextColor="@color/dark_900" />
 
     <!--Loading Screen-->
     <include
@@ -78,7 +78,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="3dp"
                         android:maxLines="2"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/dark_800"
                         android:textSize="22sp"
                         tools:text="PERSON" />
                 </LinearLayout>
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="BIRTHDATE" />
                 </LinearLayout>
@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="LOCATION" />
                 </LinearLayout>
@@ -150,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="POPULARITY" />
                 </LinearLayout>
@@ -192,7 +192,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:text="@string/biography_card"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/dark_800"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -209,7 +209,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
                             android:layout_marginBottom="10dp"
-                            android:textColor="@color/textColor"
+                            android:textColor="@color/dark_600"
                             android:textSize="16sp"
                             tools:text="Lorem" />
                     </androidx.core.widget.NestedScrollView>

@@ -8,15 +8,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_box" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_undraw_error"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:adjustViewBounds="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_text_title"
-            android:textColor="@color/mateBlack"
+            android:textColor="@color/dark_800"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -24,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_text_body"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_600"
             android:textSize="20sp" />
 
 </LinearLayout>

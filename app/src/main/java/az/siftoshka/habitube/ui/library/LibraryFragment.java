@@ -92,8 +92,8 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     }
 
     private void prefMovies() {
-        moviesPref.setTextColor(getResources().getColor(R.color.mateBlack));
-        showsPref.setTextColor(getResources().getColor(R.color.textColor));
+        moviesPref.setTextColor(getResources().getColor(R.color.dark_800));
+        showsPref.setTextColor(getResources().getColor(R.color.dark_600));
         viewPager.setVisibility(View.VISIBLE);
         viewShowPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
@@ -101,8 +101,8 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     }
 
     private void prefShows() {
-        showsPref.setTextColor(getResources().getColor(R.color.mateBlack));
-        moviesPref.setTextColor(getResources().getColor(R.color.textColor));
+        showsPref.setTextColor(getResources().getColor(R.color.dark_800));
+        moviesPref.setTextColor(getResources().getColor(R.color.dark_600));
         viewPager.setVisibility(View.GONE);
         viewShowPager.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.GONE);

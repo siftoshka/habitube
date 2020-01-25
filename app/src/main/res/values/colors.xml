@@ -8,8 +8,11 @@
 
     <color name="colorPrimaryLight">#bdb5c9</color>
     <color name="mainBackground">#FFFFFF</color>
-    <color name="textColor">#757575</color>
-    <color name="mateBlack">#111111</color>
+
+    <color name="dark_600">#757575</color>
+    <color name="dark_800">#424242</color>
+    <color name="dark_900">#242424</color>
+    <color name="dark_1000">#111111</color>
 
     <color name="telegramColor">#2CA5E0</color>
     <color name="githubColor">#181717</color>
