@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.settings.SettingsFragment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_undraw_settings"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/about_menu"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_800"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -41,7 +51,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/app_desc"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_600"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -56,14 +66,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="@string/version_name_text"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/version_name"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
@@ -82,7 +92,7 @@
         android:paddingStart="10dp"
         android:paddingTop="5dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +101,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/contact_us_menu"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_800"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -147,7 +157,7 @@
         android:paddingStart="10dp"
         android:paddingTop="5dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -156,7 +166,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/credits"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_800"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -169,19 +179,19 @@
             android:layout_marginEnd="10dp"
             android:maxLines="1"
             android:text="Application icon made by @ok__die"
-            android:textColor="@color/textColor"
+            android:textColor="@color/dark_600"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/credits_designer"
+            android:id="@+id/credits_freepik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:maxLines="1"
-            android:text="Icons made by Freepic from www.flaticon.com"
-            android:textColor="@color/textColor"
+            android:text="Icons made by Freepik from www.flaticon.com"
+            android:textColor="@color/dark_600"
             android:textSize="14sp" />
 
     </LinearLayout>

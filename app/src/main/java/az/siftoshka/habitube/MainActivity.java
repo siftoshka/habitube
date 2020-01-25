@@ -78,14 +78,18 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     @Override
     public void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        }
     }
 
     @Override
     public void hideKeyboard() {
         final View view = findViewById(R.id.fragment_container);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 
     @Override

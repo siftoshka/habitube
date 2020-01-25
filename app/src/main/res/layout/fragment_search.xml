@@ -18,7 +18,6 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimary"
-        android:elevation="20dp"
         app:navigationIcon="@drawable/ic_back_w">
 
         <androidx.appcompat.widget.SearchView
@@ -29,11 +28,54 @@
             android:backgroundTint="@color/colorPrimary" />
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:id="@+id/search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_undraw_search"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/nothing_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/ic_undraw_not_found"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing_found"
+            android:textSize="22sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/dark_800"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="24dp" />
+        android:paddingBottom="24dp"
+        android:visibility="gone" />
 
 </LinearLayout>

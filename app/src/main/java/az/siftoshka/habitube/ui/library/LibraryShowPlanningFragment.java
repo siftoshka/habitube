@@ -19,6 +19,7 @@ import java.util.List;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.LibraryAdapter;
+import az.siftoshka.habitube.adapters.LibraryShowAdapter;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningPresenter;
@@ -35,13 +36,13 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
-public class LibraryPlanningFragment extends MvpAppCompatFragment implements LibraryPlanningView {
+public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements LibraryPlanningView {
 
     @InjectPresenter LibraryPlanningPresenter planningPresenter;
 
     @BindView(R.id.recycler_view_planning) RecyclerView recyclerViewPlanning;
     @BindView(R.id.empty_screen) View emptyScreen;
-    private LibraryAdapter libraryAdapter;
+    private LibraryShowAdapter libraryAdapter;
     private Unbinder unbinder;
 
     @ProvidePresenter
@@ -53,7 +54,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> planningPresenter.goToDetailedMovieScreen(postId));
+        libraryAdapter = new LibraryShowAdapter(postId -> planningPresenter.goToDetailedShowScreen(postId));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
         recyclerViewPlanning.setItemAnimator(new DefaultItemAnimator());
         recyclerViewPlanning.setHasFixedSize(true);
         recyclerViewPlanning.setAdapter(libraryAdapter);
-        planningPresenter.getMovies();
+        planningPresenter.getShows();
         libraryAdapter.getItemCount();
 
         ItemTouchHelper itemTouchHelper =
@@ -82,7 +83,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
 
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        planningPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
+                        planningPresenter.removeFromLocal(libraryAdapter.getShowAt(viewHolder.getAdapterPosition()));
                         screenWatcher();
                     }
 
@@ -104,14 +105,14 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
 
     @Override
     public void showPlannedMovies(List<Movie> movies) {
-        Collections.sort(movies, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
-        libraryAdapter.addAllMovies(movies);
-        screenWatcher();
+
     }
 
     @Override
     public void showPlannedShows(List<Show> shows) {
-
+        Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
+        libraryAdapter.addAllShows(shows);
+        screenWatcher();
     }
 
     private void screenWatcher() {

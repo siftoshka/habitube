@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @BindView(R.id.search_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_search) RecyclerView recyclerViewSearch;
+    @BindView(R.id.search_icon) ImageView searchIcon;
+    @BindView(R.id.nothing_icon) LinearLayout nothingIcon;
     @BindView(R.id.search_bar) androidx.appcompat.widget.SearchView searchView;
 
     private SearchAdapter searchAdapter;
@@ -92,6 +96,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
         toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
+        init();
+
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -123,7 +129,21 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @Override
     public void showSearchedMediaList(List<MovieLite> searchResult) {
-        searchAdapter.addAllMedia(searchResult);
+        if(searchResult.size() == 0) {
+            searchIcon.setVisibility(View.GONE);
+            recyclerViewSearch.setVisibility(View.GONE);
+            nothingIcon.setVisibility(View.VISIBLE);
+        } else {
+            searchAdapter.addAllMedia(searchResult);
+            searchIcon.setVisibility(View.GONE);
+            recyclerViewSearch.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void init() {
+        searchIcon.setVisibility(View.VISIBLE);
+        recyclerViewSearch.setVisibility(View.GONE);
+        nothingIcon.setVisibility(View.GONE);
     }
 
     @Override

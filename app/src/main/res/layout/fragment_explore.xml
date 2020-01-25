@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="@string/upcoming_movies"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/dark_800"
                     android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="@string/trending_movies"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/dark_800"
                     android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -99,11 +99,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="@string/trending_tv_shows"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/dark_800"
                     android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_tv_shows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/airtoday_tv_shows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/air_today"
+                    android:textColor="@color/dark_800"
+                    android:textSize="22sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_airtoday_tv_shows"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false" />

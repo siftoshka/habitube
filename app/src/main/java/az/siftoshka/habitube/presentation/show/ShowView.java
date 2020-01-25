@@ -22,4 +22,7 @@ public interface ShowView extends MvpView {
     void showProgress(boolean loadingState);
     void showErrorScreen();
 
+    void setSaveButtonEnabled(boolean enabled);
+    void setPlanButtonEnabled(boolean enabled);
+
 }

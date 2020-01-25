@@ -43,15 +43,17 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.recycler_view_upcoming_movies) RecyclerView recyclerViewUpcoming;
     @BindView(R.id.recycler_view_movies) RecyclerView recyclerViewMovies;
     @BindView(R.id.recycler_view_tv_shows) RecyclerView recyclerViewTVShows;
+    @BindView(R.id.recycler_view_airtoday_tv_shows) RecyclerView recyclerViewAirToday;
     @BindView(R.id.upcoming_movies) LinearLayout upcomingMovieScreen;
     @BindView(R.id.trending_movies) LinearLayout trendingMovieScreen;
     @BindView(R.id.trendind_tv_shows) LinearLayout trendingShowScreen;
+    @BindView(R.id.airtoday_tv_shows) LinearLayout airTodayShowScreen;
     @BindView(R.id.explore_loading) ProgressBar progressBar;
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
-    LinearLayoutManager layoutManagerUpcoming, layoutManagerMovies, layoutManagerTVShows;
+    private LinearLayoutManager layoutManagerUpcoming, layoutManagerMovies, layoutManagerTVShows, layoutManagerAirToday;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
-    private ShowAdapter showAdapter;
+    private ShowAdapter showAdapter, airTodayAdapter;
     private MessageListener messageListener;
     private Unbinder unbinder;
 
@@ -73,9 +75,10 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        upcomingAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedUpcomingScreen( postId));
-        movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen( postId));
-        showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen( showId));
+        upcomingAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedUpcomingScreen(postId));
+        movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen(postId));
+        showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId));
+        airTodayAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId));
     }
 
     @Override
@@ -108,6 +111,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewTVShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTVShows.setHasFixedSize(true);
         recyclerViewTVShows.setAdapter(showAdapter);
+
+        layoutManagerAirToday = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAirToday.setLayoutManager(layoutManagerAirToday);
+        recyclerViewAirToday.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewAirToday.setHasFixedSize(true);
+        recyclerViewAirToday.setAdapter(airTodayAdapter);
     }
 
 
@@ -133,6 +142,13 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
+    public void showAirTodayShows(List<MovieLite> tvShows) {
+        airTodayAdapter.addAllMovies(tvShows);
+        progressBar.setVisibility(View.GONE);
+        airTodayShowScreen.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.search_movies) {
             explorePresenter.goToSearchScreen();
@@ -142,7 +158,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public void unsuccessfulQueryError() {
-        messageListener.showInternetError("Ups...");
+        messageListener.showInternetError("Internet error");
     }
 
     @Override

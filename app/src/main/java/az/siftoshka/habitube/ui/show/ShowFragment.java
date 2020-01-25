@@ -2,6 +2,9 @@ package az.siftoshka.habitube.ui.show;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +17,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.Date;
 import java.util.List;
 
 import az.siftoshka.habitube.R;
@@ -50,6 +63,7 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
+import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
@@ -63,6 +77,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.show_screen) RelativeLayout showScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
+    @BindView(R.id.watched_button) LinearLayout watchedButton;
+    @BindView(R.id.watched_image) ImageView watchedImage;
+    @BindView(R.id.watched_button_alt) LinearLayout watchedButtonAlt;
+    @BindView(R.id.planning_button) LinearLayout planningButton;
+    @BindView(R.id.planned_image) ImageView plannedImage;
+    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
     @BindView(R.id.poster_show_post) ImageView posterShow;
     @BindView(R.id.show_poster_background) ImageView posterShowBackground;
     @BindView(R.id.poster_show_title) TextView posterShowTitle;
@@ -146,7 +166,32 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void showTVShow(Show show) {
         toolbar.setTitle(show.getName());
-        ImageLoader.load(getContext(), show.getPosterPath(), posterShow);
+        Glide.with(requireContext())
+                .load(IMAGE_URL + show.getPosterPath())
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
+                        return false;
+                    }
+                })
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .placeholder(new ColorDrawable(Color.LTGRAY))
+                .error(R.drawable.notfound)
+                .transform(new CenterCrop(), new RoundedCorners(16))
+                .into(posterShow);
         ImageLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
         posterShowDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
@@ -169,6 +214,10 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
         posterShowDesc.setText(show.getOverview());
         seasonAdapter.addAllMovies(show.getSeasons());
+        addMovieToPlanned(show);
+        addMovieToWatched(show);
+        deleteMovieFromPlanned(show);
+        deleteMovieFromWatched(show);
     }
 
     @Override
@@ -215,6 +264,72 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showErrorScreen() {
         errorScreen.setVisibility(View.VISIBLE);
         showScreen.setVisibility(View.GONE);
+    }
+
+    private void addMovieToWatched(Show show) {
+        watchedButton.setOnClickListener(v -> {
+            show.setAddedDate(new Date());
+            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            showPresenter.addShowAsWatched(show);
+        });
+    }
+
+    private void addMovieToPlanned(Show show) {
+        planningButton.setOnClickListener(v -> {
+            show.setAddedDate(new Date());
+            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            showPresenter.addShowAsPlanned(show);
+        });
+    }
+
+    private void deleteMovieFromWatched(Show show) {
+        watchedButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> showPresenter.deleteShowFromWatched(show));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
+    }
+
+    private void deleteMovieFromPlanned(Show show) {
+        planningButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
+    }
+
+    @Override
+    public void setSaveButtonEnabled(boolean enabled) {
+        if (enabled) {
+            watchedButton.setVisibility(View.GONE);
+            watchedButtonAlt.setVisibility(View.VISIBLE);
+        } else {
+            watchedButton.setVisibility(View.VISIBLE);
+            watchedButtonAlt.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setPlanButtonEnabled(boolean enabled) {
+        if (enabled) {
+            planningButton.setVisibility(View.GONE);
+            planningButtonAlt.setVisibility(View.VISIBLE);
+        } else {
+            planningButton.setVisibility(View.VISIBLE);
+            planningButtonAlt.setVisibility(View.GONE);
+        }
     }
 
     private void showVideo(String videoKey) {

@@ -2,7 +2,6 @@ package az.siftoshka.habitube.ui.library;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +35,13 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
-public class LibraryWatchedFragment extends MvpAppCompatFragment implements LibraryWatchedView {
+public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements LibraryWatchedView {
 
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
     @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
     @BindView(R.id.empty_screen) View emptyScreen;
-    private LibraryAdapter libraryAdapter;
+    private LibraryShowAdapter libraryAdapter;
     private Unbinder unbinder;
 
     @ProvidePresenter
@@ -54,7 +53,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId));
+        libraryAdapter = new LibraryShowAdapter(postId -> watchedPresenter.goToDetailedShowScreen(postId));
     }
 
     @Override
@@ -71,7 +70,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         recyclerViewWatched.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWatched.setHasFixedSize(true);
         recyclerViewWatched.setAdapter(libraryAdapter);
-        watchedPresenter.getMovies();
+        watchedPresenter.getShows();
         libraryAdapter.getItemCount();
 
         ItemTouchHelper itemTouchHelper =
@@ -83,7 +82,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                watchedPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
+                watchedPresenter.removeFromLocal(libraryAdapter.getShowAt(viewHolder.getAdapterPosition()));
                 screenWatcher();
             }
 
@@ -105,14 +104,14 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @Override
     public void showWatchedMovies(List<Movie> movies) {
-        Collections.sort(movies, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
-        libraryAdapter.addAllMovies(movies);
-        screenWatcher();
+
     }
 
     @Override
     public void showWatchedShows(List<Show> shows) {
-
+        Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
+        libraryAdapter.addAllShows(shows);
+        screenWatcher();
     }
 
     private void screenWatcher() {

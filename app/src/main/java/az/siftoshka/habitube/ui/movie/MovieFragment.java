@@ -97,8 +97,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private MovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;
     private DateChanger dateChanger = new DateChanger();
-    private boolean isPosterReady = false, isBackgroundReady = false;
-
 
     private Unbinder unbinder;
 
@@ -169,13 +167,19 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        isPosterReady = true;
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        isPosterReady = true;
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                         return false;
                     }
                 })
@@ -184,42 +188,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .error(R.drawable.notfound)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterMain);
-
-        Glide.with(requireContext())
-                .load(IMAGE_URL + movie.getBackdropPath())
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        try {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                            isBackgroundReady = true;
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        try {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                            isBackgroundReady = true;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return false;
-                    }
-                })
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.image_not_found)
-                .into(posterBackground);
+        ImageLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
@@ -229,8 +198,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         checkDescription(movie);
         posterDesc.setText(movie.getOverview());
         showImdbWeb(movie.getImdbId());
-        addMovieToWatched(movie, movie.getMovieGenres());
-        addMovieToPlanned(movie, movie.getMovieGenres());
+        addMovieToWatched(movie);
+        addMovieToPlanned(movie);
         deleteMovieFromWatched(movie);
         deleteMovieFromPlanned(movie);
     }
@@ -246,25 +215,19 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         }
     }
 
-    private void addMovieToWatched(Movie movie, List<MovieGenre> movieGenres) {
+    private void addMovieToWatched(Movie movie) {
         watchedButton.setOnClickListener(v -> {
-            if (isPosterReady & isBackgroundReady) {
-                movie.setAddedDate(new Date());
-                movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
-                movie.setPosterBackground(ImageLoader.imageView2Bitmap(posterBackground));
-                moviePresenter.addMovieAsWatched(movie, movieGenres);
-            }
+            movie.setAddedDate(new Date());
+            movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
+            moviePresenter.addMovieAsWatched(movie);
         });
     }
 
-    private void addMovieToPlanned(Movie movie, List<MovieGenre> movieGenres) {
+    private void addMovieToPlanned(Movie movie) {
         planningButton.setOnClickListener(v -> {
-            if (isPosterReady & isBackgroundReady) {
-                movie.setAddedDate(new Date());
-                movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
-                movie.setPosterBackground(ImageLoader.imageView2Bitmap(posterBackground));
-                moviePresenter.addMovieAsPlanned(movie, movieGenres);
-            }
+            movie.setAddedDate(new Date());
+            movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
+            moviePresenter.addMovieAsPlanned(movie);
         });
     }
 

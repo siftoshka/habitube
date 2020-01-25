@@ -3,6 +3,11 @@ package az.siftoshka.habitube.ui.settings;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +31,12 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
+import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_FREEPIK;
+import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_OKTAY;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_GITHUB;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_INSTAGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
+import static az.siftoshka.habitube.Constants.SYSTEM.FLATICON;
 
 public class SettingsFragment extends MvpAppCompatFragment implements SettingsView, Toolbar.OnMenuItemClickListener {
 
@@ -37,7 +45,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.telegram_contact) ImageView telegramButton;
     @BindView(R.id.github_contact) ImageView githubButton;
     @BindView(R.id.instagram_contact) ImageView instagramButton;
-    @BindView(R.id.credits_designer) TextView creditsDesigner;
+    @BindView(R.id.credits_oktay) TextView creditsOktay;
+    @BindView(R.id.credits_freepik) TextView creditsFreepik;
 
 
     private Unbinder unbinder;
@@ -60,6 +69,9 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         telegramButton.setOnClickListener(v -> showTelegramPage());
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());
+
+        spannableCreditOktay();
+        spannableCreditFreepik();
     }
 
     @Override
@@ -86,6 +98,65 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(DEV_INSTAGRAM));
         startActivity(intent);
+    }
+
+    private void spannableCreditOktay() {
+        String cOktay = creditsOktay.getText().toString();
+        SpannableString spannableStringOktay = new SpannableString(cOktay);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(DESIGNER_OKTAY));
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        spannableStringOktay.setSpan(clickableSpan,25,33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        creditsOktay.setText(spannableStringOktay);
+        creditsOktay.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void spannableCreditFreepik() {
+        String cFreepik = creditsFreepik.getText().toString();
+        SpannableString spannableStringFreepik = new SpannableString(cFreepik);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(DESIGNER_FREEPIK));
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(FLATICON));
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        spannableStringFreepik.setSpan(clickableSpan1,14,21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringFreepik.setSpan(clickableSpan2,27,43, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        creditsFreepik.setText(spannableStringFreepik);
+        creditsFreepik.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Habitube</string>
     <string name="app_version">App Version</string>
-    <string name="app_desc">See the most trending Movies &amp; TV Shows in one place</string>
+    <string name="app_desc">Habitude - is an open-source project with the purpose of help people to find movies &amp; tv shows and store them in a personal offline library</string>
     <string name="user_id_text" translatable="false">User ID</string>
     <string name="post_text">Post</string>
     <string name="post_id_text">Post ID</string>
@@ -63,5 +63,7 @@
     <string name="episodes">episodes</string>
     <string name="planned">Planned</string>
     <string name="videos">Videos</string>
+    <string name="air_today">Air Today</string>
+    <string name="nothing_found">Nothing Found...</string>
 
 </resources>

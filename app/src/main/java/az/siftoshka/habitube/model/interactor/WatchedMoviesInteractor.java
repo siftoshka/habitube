@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
+import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.repository.WatchedRepository;
 import io.reactivex.Single;
 
@@ -18,19 +19,35 @@ public class WatchedMoviesInteractor {
         this.watchedRepository = watchedRepository;
     }
 
-    public void addMovie(Movie movie, List<MovieGenre> movieGenres) {
-        watchedRepository.addMovie(movie, movieGenres);
+    public void addMovie(Movie movie) {
+        watchedRepository.addMovie(movie);
+    }
+
+    public void addShow(Show show) {
+        watchedRepository.addShow(show);
     }
 
     public Single<List<Movie>> getAllMovies() {
         return watchedRepository.getAllMovies();
     }
 
+    public Single<List<Show>> getAllShows() {
+        return watchedRepository.getAllShows();
+    }
+
     public Single<Boolean> isMovieExists(int movieId) {
         return watchedRepository.isMovieExists(movieId);
     }
 
+    public Single<Boolean> isShowExists(int showId) {
+        return watchedRepository.isShowExists(showId);
+    }
+
     public void deleteMovie(Movie movie) {
         watchedRepository.deleteMovie(movie);
+    }
+
+    public void deleteShow(Show show) {
+        watchedRepository.deleteShow(show);
     }
 }

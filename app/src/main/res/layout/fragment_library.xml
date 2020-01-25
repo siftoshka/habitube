@@ -27,7 +27,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/movies"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/tv_shows"
-                android:textColor="@color/textColor"
+                android:textColor="@color/dark_600"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
@@ -53,6 +53,20 @@
             android:background="@drawable/round_button"
             android:backgroundTint="@color/mainBackground"
             app:tabIndicatorColor="@color/colorPrimary"
+            android:visibility="visible"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/library_show_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/mainBackground"
+            app:tabIndicatorColor="@color/colorPrimary"
+            android:visibility="gone"
             app:tabIndicatorHeight="4dp"
             app:tabMode="fixed" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -60,6 +74,12 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/library_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/library_show_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </LinearLayout>
