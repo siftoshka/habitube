@@ -50,6 +50,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.airtoday_tv_shows) LinearLayout airTodayShowScreen;
     @BindView(R.id.explore_loading) ProgressBar progressBar;
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
+    @BindView(R.id.error_screen) View errorScreen;
     private LinearLayoutManager layoutManagerUpcoming, layoutManagerMovies, layoutManagerTVShows, layoutManagerAirToday;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
@@ -93,6 +94,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setOnMenuItemClickListener(this);
+        errorScreen.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
@@ -124,6 +127,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void showUpcomingMovieList(List<MovieLite> upcomingList) {
         upcomingAdapter.addAllMovies(upcomingList);
         progressBar.setVisibility(View.GONE);
+        errorScreen.setVisibility(View.GONE);
         upcomingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -131,6 +135,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void showMovieList(List<MovieLite> movies) {
         movieAdapter.addAllMovies(movies);
         progressBar.setVisibility(View.GONE);
+        errorScreen.setVisibility(View.GONE);
         trendingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -138,6 +143,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void showTVShowList(List<MovieLite> tvShows) {
         showAdapter.addAllMovies(tvShows);
         progressBar.setVisibility(View.GONE);
+        errorScreen.setVisibility(View.GONE);
         trendingShowScreen.setVisibility(View.VISIBLE);
     }
 
@@ -145,6 +151,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void showAirTodayShows(List<MovieLite> tvShows) {
         airTodayAdapter.addAllMovies(tvShows);
         progressBar.setVisibility(View.GONE);
+        errorScreen.setVisibility(View.GONE);
         airTodayShowScreen.setVisibility(View.VISIBLE);
     }
 
@@ -158,7 +165,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public void unsuccessfulQueryError() {
-        messageListener.showInternetError("Internet error");
+        errorScreen.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

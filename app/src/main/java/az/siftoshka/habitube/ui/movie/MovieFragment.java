@@ -50,6 +50,7 @@ import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.movie.MoviePresenter;
 import az.siftoshka.habitube.presentation.movie.MovieView;
+import az.siftoshka.habitube.utils.CurrencyFormatter;
 import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
@@ -88,6 +89,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.poster_rate) TextView posterRate;
     @BindView(R.id.poster_views) TextView posterViews;
     @BindView(R.id.poster_duration) TextView posterDuration;
+    @BindView(R.id.poster_budget) TextView posterBudget;
+    @BindView(R.id.poster_revenue) TextView posterRevenue;
     @BindView(R.id.poster_desc) TextView posterDesc;
     @BindView(R.id.movie_genres) ChipGroup movieGenresChip;
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
@@ -131,6 +134,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
+        posterTitle.setSelected(true);
         return view;
     }
 
@@ -194,6 +198,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
         posterViews.setText("(" + movie.getVoteCount() + ")");
         posterDuration.setText(movie.getRuntime() + " " + getResources().getString(R.string.minutes));
+        posterBudget.setText("$" + CurrencyFormatter.format(movie.getBudget()));
+        posterRevenue.setText("$" + CurrencyFormatter.format(movie.getRevenue()));
         addGenres(movie);
         checkDescription(movie);
         posterDesc.setText(movie.getOverview());

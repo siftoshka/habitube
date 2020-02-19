@@ -27,7 +27,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:padding="180dp"
-        android:visibility="visible"/>
+        android:visibility="visible" />
+
+    <!--Error Screen-->
+    <include
+        android:id="@+id/error_screen"
+        layout="@layout/include_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -51,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="22dp"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -60,7 +68,9 @@
                     android:id="@+id/recycler_view_upcoming_movies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="22dp"
                     android:text="@string/trending_movies"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -83,7 +93,9 @@
                     android:id="@+id/recycler_view_movies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="22dp"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -106,7 +118,9 @@
                     android:id="@+id/recycler_view_tv_shows"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +134,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="22dp"
                     android:text="@string/air_today"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -129,7 +143,9 @@
                     android:id="@+id/recycler_view_airtoday_tv_shows"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

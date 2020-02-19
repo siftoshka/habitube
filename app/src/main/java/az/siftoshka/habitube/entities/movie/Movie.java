@@ -32,12 +32,14 @@ public class Movie {
     @ColumnInfo(name = "title") @SerializedName("title") @Expose private String title;
     @ColumnInfo(name = "vote_average") @SerializedName("vote_average") @Expose private double voteAverage;
     @ColumnInfo(name = "vote_count") @SerializedName("vote_count") @Expose private int voteCount;
+    @ColumnInfo(name = "budget") @SerializedName("budget") @Expose private int budget;
+    @ColumnInfo(name = "revenue") @SerializedName("revenue") @Expose private int revenue;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
 
     public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
                  double popularity, String releaseDate, int runtime, String status, String title,
-                 double voteAverage, int voteCount, Date addedDate, byte[] posterImage) {
+                 double voteAverage, int voteCount, int budget, int revenue, Date addedDate, byte[] posterImage) {
         this.adult = adult;
         this.id = id;
         this.imdbId = imdbId;
@@ -50,6 +52,8 @@ public class Movie {
         this.title = title;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
+        this.budget = budget;
+        this.revenue = revenue;
         this.addedDate = addedDate;
         this.posterImage = posterImage;
     }
@@ -188,6 +192,22 @@ public class Movie {
 
     public void setPosterImage(byte[] posterImage) {
         this.posterImage = posterImage;
+    }
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public int getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(int revenue) {
+        this.revenue = revenue;
     }
 
     @Override
