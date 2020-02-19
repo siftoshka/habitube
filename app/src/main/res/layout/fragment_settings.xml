@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/mainBackground"
     android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.settings.SettingsFragment">
@@ -89,6 +89,74 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/background"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/sorting"
+                    android:textColor="@color/dark_800"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/radio_sort"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/radio_recent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_recent"
+                            android:textColor="@color/dark_800" />
+
+                        <RadioButton
+                            android:id="@+id/radio_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_year"
+                            android:textColor="@color/dark_800" />
+
+                        <RadioButton
+                            android:id="@+id/radio_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_name"
+                            android:textColor="@color/dark_800" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/dark_mode_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -128,8 +196,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:maxLines="1"
                         android:gravity="center_vertical"
+                        android:maxLines="1"
                         android:text="@string/dark_mode_text"
                         android:textColor="@color/dark_600"
                         android:textSize="16sp" />
@@ -138,8 +206,8 @@
                         android:id="@+id/theme_switcher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:checked="false" />
+                        android:checked="false"
+                        android:gravity="center_vertical" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,6 +1,5 @@
 package az.siftoshka.habitube.ui.library;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;

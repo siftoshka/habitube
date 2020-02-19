@@ -14,9 +14,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,10 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.credits_freepik) TextView creditsFreepik;
     @BindView(R.id.theme_switcher) SwitchCompat themeSwithcer;
     @BindView(R.id.dark_mode_layout) LinearLayout darkModeCard;
+    @BindView(R.id.radio_sort) RadioGroup radioSorting;
+    @BindView(R.id.radio_recent) RadioButton radioRecent;
+    @BindView(R.id.radio_name) RadioButton radioName;
+    @BindView(R.id.radio_year) RadioButton radioYear;
 
     private Unbinder unbinder;
 
@@ -69,6 +74,30 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_settings, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
+        int idTheme = prefs.getInt("Dark", 0);
+
+        if (idTheme == 101) {
+            themeSwithcer.setChecked(true);
+        } else {
+            themeSwithcer.setChecked(false);
+        }
+
+        SharedPreferences prefsRadio = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
+        int idRadio = prefsRadio.getInt("Radio", 0);
+
+        switch (idRadio) {
+            case 200:
+                radioRecent.setChecked(true);
+                break;
+            case 201:
+                radioName.setChecked(true);
+                break;
+            case 202:
+                radioYear.setChecked(true);
+                break;
+        }
         return view;
     }
 
@@ -80,17 +109,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
         spannableCreditOktay();
         spannableCreditFreepik();
-
-        checkAndroidVersion();
-
-        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
-        int id = prefs.getInt("Dark", 0);
-
-        if (id == 101) {
-            themeSwithcer.setChecked(true);
-        } else {
-            themeSwithcer.setChecked(false);
-        }
+        checkDarkModeVisibility();
+        radioListener();
 
         themeSwithcer.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
@@ -113,6 +133,24 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             settingsPresenter.goToSearchScreen();
         }
         return false;
+    }
+
+    private void radioListener() {
+        radioRecent.setOnClickListener(view -> {
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 200);
+            editor.apply();
+        });
+        radioName.setOnClickListener(view -> {
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 201);
+            editor.apply();
+        });
+        radioYear.setOnClickListener(view -> {
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 202);
+            editor.apply();
+        });
     }
 
     private void showTelegramPage() {
@@ -192,7 +230,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         creditsFreepik.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void checkAndroidVersion() {
+    private void checkDarkModeVisibility() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             darkModeCard.setVisibility(View.GONE);
         } else {

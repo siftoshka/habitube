@@ -1,5 +1,6 @@
 package az.siftoshka.habitube.ui.library;
 
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements LibraryPlanningView {
@@ -110,7 +112,18 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
 
     @Override
     public void showPlannedShows(List<Show> shows) {
-        Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
+        SharedPreferences prefs = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
+        int id = prefs.getInt("Radio", 0);
+        switch (id) {
+            case 200:
+                Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
+                break;
+            case 201:
+                Collections.sort(shows, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+                break;
+            case 202:
+                Collections.sort(shows, (o1, o2) -> o2.getFirstAirDate().compareTo(o1.getFirstAirDate()));
+        }
         libraryAdapter.addAllShows(shows);
         screenWatcher();
     }

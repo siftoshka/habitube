@@ -63,5 +63,9 @@
     <string name="nothing_found">Ничего не найдено...</string>
     <string name="dark_mode">Темная тема</string>
     <string name="dark_mode_text">Переходи на темную сторону</string>
+    <string name="sorting">Сортировка по</string>
+    <string name="radio_year">Году выпуска</string>
+    <string name="radio_recent">Недавно добавленным</string>
+    <string name="radio_name">Названию</string>
 
 </resources>

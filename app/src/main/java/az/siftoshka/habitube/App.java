@@ -19,6 +19,21 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        initDarkMode();
+
+        initToothPick();
+
+        initSorting();
+    }
+
+    private void initToothPick() {
+        final Scope scope = Toothpick.openScope(Constants.DI.APP_SCOPE);
+        scope.installModules(new AppModule(this));
+        scope.installModules(new ServerModule());
+        scope.installModules(new RepositoryModule());
+    }
+
+    private void initDarkMode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else {
@@ -36,14 +51,15 @@ public class App extends Application {
                     break;
             }
         }
-
-        initToothPick();
     }
 
-    private void initToothPick() {
-        final Scope scope = Toothpick.openScope(Constants.DI.APP_SCOPE);
-        scope.installModules(new AppModule(this));
-        scope.installModules(new ServerModule());
-        scope.installModules(new RepositoryModule());
+    private void initSorting() {
+        SharedPreferences prefs = getSharedPreferences("Radio-Sort", MODE_PRIVATE);
+        int id = prefs.getInt("Radio", 0);
+        if (id == 0) {
+            SharedPreferences.Editor editor = getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 200);
+            editor.apply();
+        }
     }
 }
