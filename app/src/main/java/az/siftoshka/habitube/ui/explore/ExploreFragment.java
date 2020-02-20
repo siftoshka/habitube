@@ -1,6 +1,5 @@
 package az.siftoshka.habitube.ui.explore;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,14 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
-import az.siftoshka.habitube.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -51,26 +49,15 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.explore_loading) ProgressBar progressBar;
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
     @BindView(R.id.error_screen) View errorScreen;
-    private LinearLayoutManager layoutManagerUpcoming, layoutManagerMovies, layoutManagerTVShows, layoutManagerAirToday;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
-    private MessageListener messageListener;
     private Unbinder unbinder;
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
         return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(ExplorePresenter.class);
     }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof MessageListener) {
-            this.messageListener = (MessageListener) context;
-        }
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +70,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_explore, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -97,25 +83,25 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         errorScreen.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 
-        layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUpcoming.setHasFixedSize(true);
         recyclerViewUpcoming.setAdapter(upcomingAdapter);
 
-        layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewMovies.setLayoutManager(layoutManagerMovies);
         recyclerViewMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMovies.setHasFixedSize(true);
         recyclerViewMovies.setAdapter(movieAdapter);
 
-        layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTVShows.setLayoutManager(layoutManagerTVShows);
         recyclerViewTVShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTVShows.setHasFixedSize(true);
         recyclerViewTVShows.setAdapter(showAdapter);
 
-        layoutManagerAirToday = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerAirToday = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewAirToday.setLayoutManager(layoutManagerAirToday);
         recyclerViewAirToday.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAirToday.setHasFixedSize(true);

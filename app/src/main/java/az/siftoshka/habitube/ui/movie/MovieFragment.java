@@ -123,15 +123,13 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Toothpick.inject(this, Toothpick.openScope(Constants.DI.APP_SCOPE));
         similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId));
         videoAdapter = new VideoAdapter(this::showVideo);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
         posterTitle.setSelected(true);
@@ -238,7 +236,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         });
     }
 
-
     private void checkDescription(Movie movie) {
         if (movie.getOverview().equals("")) {
             descMovieCard.setVisibility(View.GONE);
@@ -273,6 +270,18 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         });
     }
 
+    private void showVideo(String videoKey) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+        startActivity(intent);
+    }
+
+    private void showImdbWeb(String imdbId) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(Constants.SYSTEM.IMDB_WEBSITE + imdbId));
+        imdbButton.setOnClickListener(v -> startActivity(intent));
+    }
+
     @Override
     public void showSimilarMovieList(List<MovieLite> similarMovies) {
         if (similarMovies.isEmpty()) {
@@ -287,12 +296,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             videosCard.setVisibility(View.GONE);
         }
         videoAdapter.addAllVideos(videos);
-    }
-
-    private void showImdbWeb(String imdbId) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(Constants.SYSTEM.IMDB_WEBSITE + imdbId));
-        imdbButton.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
@@ -324,12 +327,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             planningButton.setVisibility(View.VISIBLE);
             planningButtonAlt.setVisibility(View.GONE);
         }
-    }
-
-    private void showVideo(String videoKey) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
-        startActivity(intent);
     }
 
     @Override

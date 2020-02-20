@@ -60,8 +60,7 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_library_planned, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -76,6 +75,42 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
         planningPresenter.getShows();
         libraryAdapter.getItemCount();
 
+        initSwipes();
+    }
+
+    @Override
+    public void showPlannedShows(List<Show> shows) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
+        int id = prefs.getInt("Radio", 0);
+        switch (id) {
+            case 200: Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));break;
+            case 201: Collections.sort(shows, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));break;
+            case 202: Collections.sort(shows, (o1, o2) -> o2.getFirstAirDate().compareTo(o1.getFirstAirDate()));break;
+        }
+        libraryAdapter.addAllShows(shows);
+        screenWatcher();
+    }
+
+    @Override
+    public void showOfflineCard(Show show) {
+        OfflineShowCardDialog offlineShowCardDialog = new OfflineShowCardDialog();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Shows", show);
+        offlineShowCardDialog.setArguments(bundle);
+        offlineShowCardDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void screenWatcher() {
+        if (libraryAdapter.getItemCount() != 0) {
+            emptyScreen.setVisibility(View.GONE);
+            recyclerViewPlanning.setVisibility(View.VISIBLE);
+        } else {
+            emptyScreen.setVisibility(View.VISIBLE);
+            recyclerViewPlanning.setVisibility(View.GONE);
+        }
+    }
+
+    private void initSwipes() {
         ItemTouchHelper itemTouchHelper =
                 new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                     @Override
@@ -106,50 +141,12 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
     }
 
     @Override
-    public void showPlannedMovies(List<Movie> movies) {
-
-    }
-
-    @Override
-    public void showPlannedShows(List<Show> shows) {
-        SharedPreferences prefs = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
-        int id = prefs.getInt("Radio", 0);
-        switch (id) {
-            case 200:
-                Collections.sort(shows, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
-                break;
-            case 201:
-                Collections.sort(shows, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
-                break;
-            case 202:
-                Collections.sort(shows, (o1, o2) -> o2.getFirstAirDate().compareTo(o1.getFirstAirDate()));
-        }
-        libraryAdapter.addAllShows(shows);
-        screenWatcher();
-    }
-
-    @Override
     public void showOfflineCard(Movie movie) {
 
     }
 
     @Override
-    public void showOfflineCard(Show show) {
-        OfflineShowCardDialog offlineShowCardDialog = new OfflineShowCardDialog();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Shows", show);
-        offlineShowCardDialog.setArguments(bundle);
-        offlineShowCardDialog.show(getChildFragmentManager(), null);
-    }
-
-    private void screenWatcher() {
-        if (libraryAdapter.getItemCount() != 0) {
-            emptyScreen.setVisibility(View.GONE);
-            recyclerViewPlanning.setVisibility(View.VISIBLE);
-        } else {
-            emptyScreen.setVisibility(View.VISIBLE);
-            recyclerViewPlanning.setVisibility(View.GONE);
-        }
+    public void showPlannedMovies(List<Movie> movies) {
     }
 
     @Override

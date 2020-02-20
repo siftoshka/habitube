@@ -121,7 +121,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
         similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId));
         videoAdapter = new VideoAdapter(this::showVideo);
@@ -129,8 +128,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -209,9 +207,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             showGenresChip.addView(chip);
         }
 
-        if(show.getOverview().equals("")) {
-            descShowCard.setVisibility(View.GONE);
-        }
+        checkDescription(show);
 
         posterShowDesc.setText(show.getOverview());
         seasonAdapter.addAllMovies(show.getSeasons());
@@ -219,6 +215,67 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         addMovieToWatched(show);
         deleteMovieFromPlanned(show);
         deleteMovieFromWatched(show);
+    }
+
+    private void addMovieToWatched(Show show) {
+        watchedButton.setOnClickListener(v -> {
+            show.setAddedDate(new Date());
+            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            showPresenter.addShowAsWatched(show);
+        });
+    }
+
+    private void addMovieToPlanned(Show show) {
+        planningButton.setOnClickListener(v -> {
+            show.setAddedDate(new Date());
+            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            showPresenter.addShowAsPlanned(show);
+        });
+    }
+
+    private void deleteMovieFromWatched(Show show) {
+        watchedButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> showPresenter.deleteShowFromWatched(show));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
+    }
+
+    private void deleteMovieFromPlanned(Show show) {
+        planningButtonAlt.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
+            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
+                    (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show));
+
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
+
+            alertDialogBuilder.show();
+        });
+    }
+
+    private void showVideo(String videoKey) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+        startActivity(intent);
+    }
+
+    private void episodeRuntime(String episodeRuntime) {
+        String updatedText = episodeRuntime.substring(1, episodeRuntime.length() - 1);
+        posterShowDuration.setText(String.format("%s %s", updatedText, getResources().getString(R.string.minutes)));
+    }
+
+    private void checkDescription(Show show) {
+        if (show.getOverview().equals("")) {
+            descShowCard.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -267,50 +324,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         showScreen.setVisibility(View.GONE);
     }
 
-    private void addMovieToWatched(Show show) {
-        watchedButton.setOnClickListener(v -> {
-            show.setAddedDate(new Date());
-            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
-            showPresenter.addShowAsWatched(show);
-        });
-    }
-
-    private void addMovieToPlanned(Show show) {
-        planningButton.setOnClickListener(v -> {
-            show.setAddedDate(new Date());
-            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
-            showPresenter.addShowAsPlanned(show);
-        });
-    }
-
-    private void deleteMovieFromWatched(Show show) {
-        watchedButtonAlt.setOnClickListener(v -> {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> showPresenter.deleteShowFromWatched(show));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
-            alertDialogBuilder.show();
-        });
-    }
-
-    private void deleteMovieFromPlanned(Show show) {
-        planningButtonAlt.setOnClickListener(v -> {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
-            alertDialogBuilder.show();
-        });
-    }
-
     @Override
     public void setSaveButtonEnabled(boolean enabled) {
         if (enabled) {
@@ -331,17 +344,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             planningButton.setVisibility(View.VISIBLE);
             planningButtonAlt.setVisibility(View.GONE);
         }
-    }
-
-    private void showVideo(String videoKey) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
-        startActivity(intent);
-    }
-
-    private void episodeRuntime(String episodeRuntime) {
-        String updatedText = episodeRuntime.substring(1, episodeRuntime.length() - 1);
-        posterShowDuration.setText(String.format("%s %s", updatedText, getResources().getString(R.string.minutes)));
     }
 
     @Override

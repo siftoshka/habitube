@@ -59,8 +59,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_library_planned, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -75,33 +74,7 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
         planningPresenter.getMovies();
         libraryAdapter.getItemCount();
 
-        ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        planningPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
-                        screenWatcher();
-                    }
-
-                    @Override
-                    public void onChildDraw(@NonNull Canvas c,
-                                            @NonNull RecyclerView recyclerView,
-                                            @NonNull RecyclerView.ViewHolder viewHolder,
-                                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                        new SwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.deleteColor))
-                                .addActionIcon(R.drawable.ic_delete)
-                                .create()
-                                .decorate();
-                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                    }
-                });
-        itemTouchHelper.attachToRecyclerView(recyclerViewPlanning);
+        initSwipes();
     }
 
     @Override
@@ -109,15 +82,9 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
         SharedPreferences prefs = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
         int id = prefs.getInt("Radio", 0);
         switch (id) {
-            case 200:
-                Collections.sort(movies, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));
-                break;
-            case 201:
-                Collections.sort(movies, (o1, o2) -> o1.getTitle().compareToIgnoreCase(o2.getTitle()));
-                break;
-            case 202:
-                Collections.sort(movies, (o1, o2) -> o2.getReleaseDate().compareTo(o1.getReleaseDate()));
-
+            case 200: Collections.sort(movies, (o1, o2) -> o2.getAddedDate().compareTo(o1.getAddedDate()));break;
+            case 201: Collections.sort(movies, (o1, o2) -> o1.getTitle().compareToIgnoreCase(o2.getTitle()));break;
+            case 202: Collections.sort(movies, (o1, o2) -> o2.getReleaseDate().compareTo(o1.getReleaseDate()));break;
         }
         libraryAdapter.addAllMovies(movies);
         screenWatcher();
@@ -150,6 +117,36 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewPlanning.setVisibility(View.GONE);
         }
+    }
+
+    private void initSwipes() {
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        planningPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
+                        screenWatcher();
+                    }
+
+                    @Override
+                    public void onChildDraw(@NonNull Canvas c,
+                                            @NonNull RecyclerView recyclerView,
+                                            @NonNull RecyclerView.ViewHolder viewHolder,
+                                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                        new SwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.deleteColor))
+                                .addActionIcon(R.drawable.ic_delete)
+                                .create()
+                                .decorate();
+                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                    }
+                });
+        itemTouchHelper.attachToRecyclerView(recyclerViewPlanning);
     }
 
     @Override

@@ -70,34 +70,13 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_settings, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
-        int idTheme = prefs.getInt("Dark", 0);
+        checkTheme();
+        checkSort();
 
-        if (idTheme == 101) {
-            themeSwithcer.setChecked(true);
-        } else {
-            themeSwithcer.setChecked(false);
-        }
-
-        SharedPreferences prefsRadio = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
-        int idRadio = prefsRadio.getInt("Radio", 0);
-
-        switch (idRadio) {
-            case 200:
-                radioRecent.setChecked(true);
-                break;
-            case 201:
-                radioName.setChecked(true);
-                break;
-            case 202:
-                radioYear.setChecked(true);
-                break;
-        }
         return view;
     }
 
@@ -235,6 +214,34 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             darkModeCard.setVisibility(View.GONE);
         } else {
             darkModeCard.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkTheme() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
+        int idTheme = prefs.getInt("Dark", 0);
+
+        if (idTheme == 101) {
+            themeSwithcer.setChecked(true);
+        } else {
+            themeSwithcer.setChecked(false);
+        }
+    }
+
+    private void checkSort() {
+        SharedPreferences prefsRadio = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
+        int idRadio = prefsRadio.getInt("Radio", 0);
+
+        switch (idRadio) {
+            case 200:
+                radioRecent.setChecked(true);
+                break;
+            case 201:
+                radioName.setChecked(true);
+                break;
+            case 202:
+                radioYear.setChecked(true);
+                break;
         }
     }
 

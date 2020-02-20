@@ -47,8 +47,7 @@ public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_navbar, container, false);
         unbinder = ButterKnife.bind(this, view);
         initNavBar();

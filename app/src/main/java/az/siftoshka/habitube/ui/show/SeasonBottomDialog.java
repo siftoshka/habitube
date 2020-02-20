@@ -30,6 +30,7 @@ public class SeasonBottomDialog extends BottomSheetDialogFragment {
     @BindView(R.id.poster_season_air_date) TextView seasonDate;
     @BindView(R.id.poster_season_episode) TextView seasonEpisodes;
     @BindView(R.id.poster_season_overview) TextView seasonOverview;
+    @BindView(R.id.desc_icon) ImageView descIcon;
 
     private Season season;
     private Unbinder unbinder;
@@ -46,8 +47,7 @@ public class SeasonBottomDialog extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dialog_season_bottom, container, false);
         unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
@@ -62,6 +62,13 @@ public class SeasonBottomDialog extends BottomSheetDialogFragment {
         seasonDate.setText(dateChanger.changeDate(season.getAirDate()));
         seasonEpisodes.setText(season.getEpisodeCount() + " " + getResources().getString(R.string.episodes));
         seasonOverview.setText(season.getOverview());
+
+        checkOverview();
+    }
+
+    private void checkOverview() {
+        if(season.getOverview().equals(""))
+            descIcon.setVisibility(View.GONE);
     }
 
     @Override

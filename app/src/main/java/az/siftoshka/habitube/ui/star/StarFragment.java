@@ -66,13 +66,11 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_star, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -93,7 +91,11 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
         posterPersonBio.setText(person.getBiography());
 
-        if(person.getBiography().equals("")) {
+        checkDescription(person);
+    }
+
+    private void checkDescription(Person person) {
+        if (person.getBiography().equals("")) {
             personBioCard.setVisibility(View.GONE);
         }
     }
