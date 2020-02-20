@@ -10,6 +10,7 @@ import moxy.viewstate.strategy.OneExecutionStateStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 
 public interface LibraryPlanningView extends MvpView {
+
     void showPlannedMovies(List<Movie> movies);
     void showPlannedShows(List<Show> shows);
 

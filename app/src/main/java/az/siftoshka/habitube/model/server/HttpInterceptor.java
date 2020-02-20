@@ -13,6 +13,7 @@ import okhttp3.Response;
 import static az.siftoshka.habitube.Constants.SYSTEM.API_KEY;
 
 public class HttpInterceptor implements Interceptor {
+
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         final Request request = chain.request();

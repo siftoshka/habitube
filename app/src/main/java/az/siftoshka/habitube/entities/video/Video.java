@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Video {
+
     @SerializedName("id") @Expose private String id;
     @SerializedName("iso_639_1") @Expose private String iso6391;
     @SerializedName("iso_3166_1") @Expose private String iso31661;
@@ -77,4 +78,3 @@ public class Video {
         this.type = type;
     }
 }
-

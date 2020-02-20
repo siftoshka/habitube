@@ -7,6 +7,7 @@ import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface StarView extends MvpView {
+
     void showPerson(Person person);
     void showProgress(boolean loadingState);
     void showPersonScreen();

@@ -135,5 +135,4 @@ public final class Screens {
             return new NavbarFragment();
         }
     }
-
 }

@@ -15,6 +15,7 @@ import io.reactivex.Single;
 
 @Dao
 public interface MovieDAO {
+
     @Insert Completable addMovie(Movie movie);
     @Transaction @Query("SELECT * FROM movies") Single<List<Movie>> getMovies();
     @Transaction @Query("SELECT count(*) FROM movies WHERE id = :movieId") int getMovieCount(int movieId);

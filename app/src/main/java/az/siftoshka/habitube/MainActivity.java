@@ -101,5 +101,4 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
         super.onPause();
         navigatorHolder.removeNavigator();
     }
-
 }

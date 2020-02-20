@@ -1,13 +1,11 @@
 package az.siftoshka.habitube.ui.navbar;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,7 +22,6 @@ import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class NavbarFragment extends MvpAppCompatFragment implements NavbarView {

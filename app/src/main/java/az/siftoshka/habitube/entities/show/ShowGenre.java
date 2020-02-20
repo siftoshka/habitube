@@ -24,5 +24,4 @@ public class ShowGenre {
     public void setName(String name) {
         this.name = name;
     }
-
 }

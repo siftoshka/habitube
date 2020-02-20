@@ -11,6 +11,7 @@ import ru.terrakok.cicerone.Router;
 public class LibraryPresenter extends MvpPresenter<LibraryView> {
 
     private final Router router;
+
     @Inject
     public LibraryPresenter(Router router) {
         this.router = router;

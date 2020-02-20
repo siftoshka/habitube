@@ -9,6 +9,7 @@ import moxy.viewstate.strategy.OneExecutionStateStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 
 public interface LibraryWatchedView extends MvpView {
+
     void showWatchedMovies(List<Movie> movies);
     void showWatchedShows(List<Show> shows);
 

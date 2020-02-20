@@ -24,5 +24,4 @@ public interface ShowView extends MvpView {
 
     void setSaveButtonEnabled(boolean enabled);
     void setPlanButtonEnabled(boolean enabled);
-
 }

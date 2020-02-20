@@ -90,4 +90,3 @@ public class PlannedRepository {
                 .doOnError(Throwable::printStackTrace);
     }
 }
-
