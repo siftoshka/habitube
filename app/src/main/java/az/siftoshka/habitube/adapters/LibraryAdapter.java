@@ -77,6 +77,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
         return movie;
     }
 
+    public Movie getMovie(int position) {
+        return this.movies.get(position);
+    }
+
     static class LibraryHolder extends RecyclerView.ViewHolder {
 
         LinearLayout posterLayout;

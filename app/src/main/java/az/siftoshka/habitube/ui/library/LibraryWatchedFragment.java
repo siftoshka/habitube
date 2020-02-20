@@ -129,6 +129,20 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     }
 
+    @Override
+    public void showOfflineCard(Movie movie) {
+        OfflineCardDialog offlineCardDialog = new OfflineCardDialog();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Movies", movie);
+        offlineCardDialog.setArguments(bundle);
+        offlineCardDialog.show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void showOfflineCard(Show show) {
+
+    }
+
     private void screenWatcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);

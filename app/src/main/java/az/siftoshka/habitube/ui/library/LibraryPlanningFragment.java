@@ -124,6 +124,20 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
     }
 
     @Override
+    public void showOfflineCard(Movie movie) {
+        OfflineCardDialog offlineCardDialog = new OfflineCardDialog();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Movies", movie);
+        offlineCardDialog.setArguments(bundle);
+        offlineCardDialog.show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void showOfflineCard(Show show) {
+
+    }
+
+    @Override
     public void showPlannedShows(List<Show> shows) {
 
     }

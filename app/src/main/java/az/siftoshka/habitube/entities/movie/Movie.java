@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.entities.movie;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -15,7 +18,7 @@ import java.util.Objects;
 import az.siftoshka.habitube.Constants;
 
 @Entity(tableName = Constants.DB.MOVIE_TABLE)
-public class Movie {
+public class Movie implements Parcelable {
 
     @ColumnInfo(name = "adult") @SerializedName("adult") @Expose private boolean adult;
     @Ignore @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") @Expose private String backdropPath;
@@ -32,14 +35,14 @@ public class Movie {
     @ColumnInfo(name = "title") @SerializedName("title") @Expose private String title;
     @ColumnInfo(name = "vote_average") @SerializedName("vote_average") @Expose private double voteAverage;
     @ColumnInfo(name = "vote_count") @SerializedName("vote_count") @Expose private int voteCount;
-    @ColumnInfo(name = "budget") @SerializedName("budget") @Expose private int budget;
-    @ColumnInfo(name = "revenue") @SerializedName("revenue") @Expose private int revenue;
+    @ColumnInfo(name = "budget") @SerializedName("budget") @Expose private long budget;
+    @ColumnInfo(name = "revenue") @SerializedName("revenue") @Expose private long revenue;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
 
     public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
                  double popularity, String releaseDate, int runtime, String status, String title,
-                 double voteAverage, int voteCount, int budget, int revenue, Date addedDate, byte[] posterImage) {
+                 double voteAverage, int voteCount, long budget, long revenue, Date addedDate, byte[] posterImage) {
         this.adult = adult;
         this.id = id;
         this.imdbId = imdbId;
@@ -57,6 +60,38 @@ public class Movie {
         this.addedDate = addedDate;
         this.posterImage = posterImage;
     }
+
+    protected Movie(Parcel in) {
+        adult = in.readByte() != 0;
+        backdropPath = in.readString();
+        id = in.readInt();
+        imdbId = in.readString();
+        originalTitle = in.readString();
+        overview = in.readString();
+        popularity = in.readDouble();
+        posterPath = in.readString();
+        releaseDate = in.readString();
+        runtime = in.readInt();
+        status = in.readString();
+        title = in.readString();
+        voteAverage = in.readDouble();
+        voteCount = in.readInt();
+        budget = in.readLong();
+        revenue = in.readLong();
+        posterImage = in.createByteArray();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public boolean isAdult() {
         return adult;
@@ -194,19 +229,19 @@ public class Movie {
         this.posterImage = posterImage;
     }
 
-    public int getBudget() {
+    public long getBudget() {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(long budget) {
         this.budget = budget;
     }
 
-    public int getRevenue() {
+    public long getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(int revenue) {
+    public void setRevenue(long revenue) {
         this.revenue = revenue;
     }
 
@@ -221,5 +256,31 @@ public class Movie {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByte((byte) (adult ? 1 : 0));
+        parcel.writeString(backdropPath);
+        parcel.writeInt(id);
+        parcel.writeString(imdbId);
+        parcel.writeString(originalTitle);
+        parcel.writeString(overview);
+        parcel.writeDouble(popularity);
+        parcel.writeString(posterPath);
+        parcel.writeString(releaseDate);
+        parcel.writeInt(runtime);
+        parcel.writeString(status);
+        parcel.writeString(title);
+        parcel.writeDouble(voteAverage);
+        parcel.writeInt(voteCount);
+        parcel.writeLong(budget);
+        parcel.writeLong(revenue);
+        parcel.writeByteArray(posterImage);
     }
 }

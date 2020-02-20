@@ -180,6 +180,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        showProgress(false);
                         watchedImage.setImageResource(R.drawable.ic_favorite);
                         plannedImage.setImageResource(R.drawable.ic_watch);
                         watchedButton.setEnabled(true);
@@ -189,7 +190,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
                 })
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.notfound)
+                .error(R.drawable.ic_box)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterShow);
         ImageLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);

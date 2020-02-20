@@ -9,11 +9,10 @@ import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.di.qualifiers.MediaType;
 import az.siftoshka.habitube.di.qualifiers.PostId;
 import az.siftoshka.habitube.di.qualifiers.ShowPosition;
-import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
-import az.siftoshka.habitube.model.interactor.PlannedMoviesInteractor;
+import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
-import az.siftoshka.habitube.model.interactor.WatchedMoviesInteractor;
+import az.siftoshka.habitube.model.interactor.WatchedInteractor;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -27,22 +26,22 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private final Router router;
     private final Context context;
     private final Integer showPosition, postId, mediaType;
-    private final WatchedMoviesInteractor watchedMoviesInteractor;
-    private final PlannedMoviesInteractor plannedMoviesInteractor;
+    private final WatchedInteractor watchedInteractor;
+    private final PlannedInteractor plannedInteractor;
     private final RemotePostInteractor remotePostInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public ShowPresenter(Router router, Context context,
-                         WatchedMoviesInteractor watchedMoviesInteractor,
-                         PlannedMoviesInteractor plannedMoviesInteractor,
+                         WatchedInteractor watchedInteractor,
+                         PlannedInteractor plannedInteractor,
                          RemotePostInteractor remotePostInteractor,
                          @ShowPosition Integer showPosition, @PostId Integer postId,
                          @MediaType Integer mediaType) {
         this.router = router;
         this.context = context;
-        this.watchedMoviesInteractor = watchedMoviesInteractor;
-        this.plannedMoviesInteractor = plannedMoviesInteractor;
+        this.watchedInteractor = watchedInteractor;
+        this.plannedInteractor = plannedInteractor;
         this.remotePostInteractor = remotePostInteractor;
         this.showPosition = showPosition;
         this.postId = postId;
@@ -55,11 +54,11 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
             getTVShow(showPosition, context.getResources().getString(R.string.language));
             getSimilarTVShows(showPosition, context.getResources().getString(R.string.language));
             getVideos(showPosition, context.getResources().getString(R.string.language));
-            compositeDisposable.add(watchedMoviesInteractor.isShowExists(showPosition)
+            compositeDisposable.add(watchedInteractor.isShowExists(showPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
-            compositeDisposable.add(plannedMoviesInteractor.isShowExists(showPosition)
+            compositeDisposable.add(plannedInteractor.isShowExists(showPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setPlanButtonEnabled));
@@ -69,11 +68,11 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
             getTVShow(postId, context.getResources().getString(R.string.language));
             getSimilarTVShows(postId, context.getResources().getString(R.string.language));
             getVideos(postId, context.getResources().getString(R.string.language));
-            compositeDisposable.add(watchedMoviesInteractor.isShowExists(postId)
+            compositeDisposable.add(watchedInteractor.isShowExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
-            compositeDisposable.add(plannedMoviesInteractor.isShowExists(postId)
+            compositeDisposable.add(plannedInteractor.isShowExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setPlanButtonEnabled));
@@ -83,7 +82,6 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private void getTVShow(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getTVShow(id, language)
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
-                .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(show -> getViewState().showTVShowScreen())
                 .subscribe(show -> getViewState().showTVShow(show),
                         throwable -> getViewState().showErrorScreen()));
@@ -116,22 +114,22 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     }
 
     public void addShowAsWatched(Show show) {
-        watchedMoviesInteractor.addShow(show);
+        watchedInteractor.addShow(show);
         getViewState().setSaveButtonEnabled(true);
     }
 
     public void addShowAsPlanned(Show show) {
-        plannedMoviesInteractor.addShow(show);
+        plannedInteractor.addShow(show);
         getViewState().setPlanButtonEnabled(true);
     }
 
     public void deleteShowFromWatched(Show show) {
-        watchedMoviesInteractor.deleteShow(show);
+        watchedInteractor.deleteShow(show);
         getViewState().setSaveButtonEnabled(false);
     }
 
     public void deleteShowFromPlanned(Show show) {
-        plannedMoviesInteractor.deleteShow(show);
+        plannedInteractor.deleteShow(show);
         getViewState().setPlanButtonEnabled(false);
     }
 }

@@ -64,12 +64,13 @@
     <string name="planned">Planned</string>
     <string name="videos">Videos</string>
     <string name="air_today">Air Today</string>
-    <string name="nothing_found">Nothing Found...</string>
+    <string name="nothing_found">Nothing Found…</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="dark_mode_text">Turn on the Dark Theme</string>
     <string name="sorting">Sorting by</string>
     <string name="radio_recent">Recently Added</string>
     <string name="radio_name">Title</string>
     <string name="radio_year">Release Year</string>
+    <string name="close">Close</string>
 
 </resources>

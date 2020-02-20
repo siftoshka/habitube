@@ -2,8 +2,6 @@ package az.siftoshka.habitube.presentation.movie;
 
 import android.content.Context;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
@@ -13,10 +11,9 @@ import az.siftoshka.habitube.di.qualifiers.MoviePosition;
 import az.siftoshka.habitube.di.qualifiers.PostId;
 import az.siftoshka.habitube.di.qualifiers.UpcomingMoviePosition;
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.entities.movie.MovieGenre;
-import az.siftoshka.habitube.model.interactor.PlannedMoviesInteractor;
+import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
-import az.siftoshka.habitube.model.interactor.WatchedMoviesInteractor;
+import az.siftoshka.habitube.model.interactor.WatchedInteractor;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,16 +26,16 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     private final Router router;
     private final Context context;
-    private final WatchedMoviesInteractor watchedMoviesInteractor;
-    private final PlannedMoviesInteractor plannedMoviesInteractor;
+    private final WatchedInteractor watchedInteractor;
+    private final PlannedInteractor plannedInteractor;
     private final Integer upcomingPosition, postPosition, postId, mediaType;
     private final RemotePostInteractor remotePostInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public MoviePresenter(Router router, Context context, RemotePostInteractor remotePostInteractor,
-                          WatchedMoviesInteractor watchedMoviesInteractor,
-                          PlannedMoviesInteractor plannedMoviesInteractor,
+                          WatchedInteractor watchedInteractor,
+                          PlannedInteractor plannedInteractor,
                           @UpcomingMoviePosition Integer upcomingPosition,
                           @MoviePosition Integer postPosition,
                           @PostId Integer postId,
@@ -46,8 +43,8 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         this.router = router;
         this.context = context;
         this.remotePostInteractor = remotePostInteractor;
-        this.watchedMoviesInteractor = watchedMoviesInteractor;
-        this.plannedMoviesInteractor = plannedMoviesInteractor;
+        this.watchedInteractor = watchedInteractor;
+        this.plannedInteractor = plannedInteractor;
         this.upcomingPosition = upcomingPosition;
         this.postPosition = postPosition;
         this.postId = postId;
@@ -60,11 +57,11 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(upcomingPosition, context.getResources().getString(R.string.language));
             getSimilarMovies(upcomingPosition, context.getResources().getString(R.string.language));
             getVideos(upcomingPosition, context.getResources().getString(R.string.language));
-            compositeDisposable.add(watchedMoviesInteractor.isMovieExists(upcomingPosition)
+            compositeDisposable.add(watchedInteractor.isMovieExists(upcomingPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
-            compositeDisposable.add(plannedMoviesInteractor.isMovieExists(upcomingPosition)
+            compositeDisposable.add(plannedInteractor.isMovieExists(upcomingPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setPlanButtonEnabled));
@@ -72,11 +69,11 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(postPosition, context.getResources().getString(R.string.language));
             getSimilarMovies(postPosition, context.getResources().getString(R.string.language));
             getVideos(postPosition, context.getResources().getString(R.string.language));
-            compositeDisposable.add(watchedMoviesInteractor.isMovieExists(postPosition)
+            compositeDisposable.add(watchedInteractor.isMovieExists(postPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
-            compositeDisposable.add(plannedMoviesInteractor.isMovieExists(postPosition)
+            compositeDisposable.add(plannedInteractor.isMovieExists(postPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setPlanButtonEnabled));
@@ -85,11 +82,11 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(postId, context.getResources().getString(R.string.language));
             getSimilarMovies(postId, context.getResources().getString(R.string.language));
             getVideos(postId, context.getResources().getString(R.string.language));
-            compositeDisposable.add(watchedMoviesInteractor.isMovieExists(postId)
+            compositeDisposable.add(watchedInteractor.isMovieExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setSaveButtonEnabled));
-            compositeDisposable.add(plannedMoviesInteractor.isMovieExists(postId)
+            compositeDisposable.add(plannedInteractor.isMovieExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getViewState()::setPlanButtonEnabled));
@@ -99,7 +96,6 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private void getMovie(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getMovie(id, language)
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
-                .doAfterTerminate(() -> getViewState().showProgress(false))
                 .doAfterSuccess(movie -> getViewState().showMovieScreen())
                 .subscribe(movie -> getViewState().showMovie(movie),
                         throwable -> getViewState().showErrorScreen()));
@@ -118,22 +114,22 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     }
 
     public void addMovieAsWatched(Movie movie) {
-        watchedMoviesInteractor.addMovie(movie);
+        watchedInteractor.addMovie(movie);
         getViewState().setSaveButtonEnabled(true);
     }
 
     public void deleteMovieFromWatched(Movie movie) {
-        watchedMoviesInteractor.deleteMovie(movie);
+        watchedInteractor.deleteMovie(movie);
         getViewState().setSaveButtonEnabled(false);
     }
 
     public void addMovieAsPlanned(Movie movie) {
-        plannedMoviesInteractor.addMovie(movie);
+        plannedInteractor.addMovie(movie);
         getViewState().setPlanButtonEnabled(true);
     }
 
     public void deleteMovieFromPlanned(Movie movie) {
-        plannedMoviesInteractor.deleteMovie(movie);
+        plannedInteractor.deleteMovie(movie);
         getViewState().setPlanButtonEnabled(false);
     }
 

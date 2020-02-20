@@ -53,7 +53,8 @@ public class ImageLoader {
     public static void loadBackground(Context context, String url, ImageView into) {
         Glide.with(context)
                 .load(IMAGE_URL + url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .placeholder(new ColorDrawable(Color.LTGRAY))
                 .error(R.drawable.ic_box)
                 .into(into);

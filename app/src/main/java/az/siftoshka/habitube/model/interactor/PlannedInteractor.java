@@ -10,12 +10,12 @@ import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.repository.PlannedRepository;
 import io.reactivex.Single;
 
-public class PlannedMoviesInteractor {
+public class PlannedInteractor {
 
     private final PlannedRepository plannedRepository;
 
     @Inject
-    public PlannedMoviesInteractor(PlannedRepository plannedRepository) {
+    public PlannedInteractor(PlannedRepository plannedRepository) {
         this.plannedRepository = plannedRepository;
     }
 
@@ -41,6 +41,14 @@ public class PlannedMoviesInteractor {
 
     public Single<Boolean> isShowExists(int showId) {
         return plannedRepository.isShowExists(showId);
+    }
+
+    public Single<Movie> getMovie(int movieId) {
+        return plannedRepository.getMovie(movieId);
+    }
+
+    public Single<Show> getShow(int showId) {
+        return plannedRepository.getShow(showId);
     }
 
     public void deleteMovie(Movie movie) {

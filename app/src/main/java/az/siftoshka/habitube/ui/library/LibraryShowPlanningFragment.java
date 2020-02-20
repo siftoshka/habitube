@@ -128,6 +128,20 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
         screenWatcher();
     }
 
+    @Override
+    public void showOfflineCard(Movie movie) {
+
+    }
+
+    @Override
+    public void showOfflineCard(Show show) {
+        OfflineShowCardDialog offlineShowCardDialog = new OfflineShowCardDialog();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Shows", show);
+        offlineShowCardDialog.setArguments(bundle);
+        offlineShowCardDialog.show(getChildFragmentManager(), null);
+    }
+
     private void screenWatcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);

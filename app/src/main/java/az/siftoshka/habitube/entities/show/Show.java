@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.entities.show;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -14,7 +17,7 @@ import java.util.List;
 import az.siftoshka.habitube.Constants;
 
 @Entity(tableName = Constants.DB.SHOW_TABLE)
-public class Show {
+public class Show implements Parcelable {
 
     @Ignore @SerializedName("backdrop_path") @Expose private String backdropPath;
     @Ignore @SerializedName("episode_run_time") @Expose private List<Integer> episodeRunTime = null;
@@ -35,6 +38,58 @@ public class Show {
     @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
+
+
+    public Show(String firstAirDate, int id, boolean inProduction, String lastAirDate, String name,
+                int numberOfEpisodes, int numberOfSeasons, String overview, double popularity,
+                String posterPath, String status, float voteAverage, int voteCount, Date addedDate, byte[] posterImage) {
+        this.firstAirDate = firstAirDate;
+        this.id = id;
+        this.inProduction = inProduction;
+        this.lastAirDate = lastAirDate;
+        this.name = name;
+        this.numberOfEpisodes = numberOfEpisodes;
+        this.numberOfSeasons = numberOfSeasons;
+        this.overview = overview;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.status = status;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+        this.addedDate = addedDate;
+        this.posterImage = posterImage;
+    }
+
+    protected Show(Parcel in) {
+        backdropPath = in.readString();
+        firstAirDate = in.readString();
+        id = in.readInt();
+        inProduction = in.readByte() != 0;
+        lastAirDate = in.readString();
+        name = in.readString();
+        numberOfEpisodes = in.readInt();
+        numberOfSeasons = in.readInt();
+        overview = in.readString();
+        popularity = in.readDouble();
+        posterPath = in.readString();
+        seasons = in.createTypedArrayList(Season.CREATOR);
+        status = in.readString();
+        voteAverage = in.readFloat();
+        voteCount = in.readInt();
+        posterImage = in.createByteArray();
+    }
+
+    public static final Creator<Show> CREATOR = new Creator<Show>() {
+        @Override
+        public Show createFromParcel(Parcel in) {
+            return new Show(in);
+        }
+
+        @Override
+        public Show[] newArray(int size) {
+            return new Show[size];
+        }
+    };
 
     public Date getAddedDate() {
         return addedDate;
@@ -186,5 +241,30 @@ public class Show {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(backdropPath);
+        parcel.writeString(firstAirDate);
+        parcel.writeInt(id);
+        parcel.writeByte((byte) (inProduction ? 1 : 0));
+        parcel.writeString(lastAirDate);
+        parcel.writeString(name);
+        parcel.writeInt(numberOfEpisodes);
+        parcel.writeInt(numberOfSeasons);
+        parcel.writeString(overview);
+        parcel.writeDouble(popularity);
+        parcel.writeString(posterPath);
+        parcel.writeTypedList(seasons);
+        parcel.writeString(status);
+        parcel.writeFloat(voteAverage);
+        parcel.writeInt(voteCount);
+        parcel.writeByteArray(posterImage);
     }
 }

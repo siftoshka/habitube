@@ -8,6 +8,7 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
+import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -16,6 +17,7 @@ import io.reactivex.Single;
 public interface ShowDAO {
     @Insert Completable addShow(Show show);
     @Transaction @Query("SELECT * FROM shows") Single<List<Show>> getShows();
-    @Transaction @Query("SELECT count(*) FROM shows WHERE id = :showId") int getShowById(int showId);
+    @Transaction @Query("SELECT count(*) FROM shows WHERE id = :showId") int getShowCount(int showId);
+    @Transaction @Query("SELECT * FROM shows WHERE id = :showId") Single<Show> getShowById(int showId);
     @Delete Completable deleteShow(Show show);
 }

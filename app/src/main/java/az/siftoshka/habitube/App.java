@@ -7,6 +7,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+
 import az.siftoshka.habitube.di.modules.AppModule;
 import az.siftoshka.habitube.di.modules.RepositoryModule;
 import az.siftoshka.habitube.di.modules.ServerModule;

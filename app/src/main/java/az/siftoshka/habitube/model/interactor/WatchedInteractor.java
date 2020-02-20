@@ -8,14 +8,15 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.repository.WatchedRepository;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Single;
 
-public class WatchedMoviesInteractor {
+public class WatchedInteractor {
 
     private final WatchedRepository watchedRepository;
 
     @Inject
-    public WatchedMoviesInteractor(WatchedRepository watchedRepository) {
+    public WatchedInteractor(WatchedRepository watchedRepository) {
         this.watchedRepository = watchedRepository;
     }
 
@@ -49,5 +50,13 @@ public class WatchedMoviesInteractor {
 
     public void deleteShow(Show show) {
         watchedRepository.deleteShow(show);
+    }
+
+    public Single<Movie> getMovie(int postId) {
+        return watchedRepository.getMovie(postId);
+    }
+
+    public Single<Show> getShow(int postId) {
+        return watchedRepository.getShow(postId);
     }
 }

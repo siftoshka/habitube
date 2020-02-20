@@ -63,17 +63,31 @@ public class PlannedRepository {
     }
 
     public Single<Boolean> isMovieExists(int movieId) {
-        return Single.just(plannedRepository.movieDAO().getMovieById(movieId))
+        return Single.just(plannedRepository.movieDAO().getMovieCount(movieId))
                 .map(integer -> integer > 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Boolean> isShowExists(int shiwId) {
-        return Single.just(plannedRepository.showDAO().getShowById(shiwId))
+        return Single.just(plannedRepository.showDAO().getShowCount(shiwId))
                 .map(integer -> integer > 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Movie> getMovie(int movieId) {
+        return plannedRepository.movieDAO().getMovieById(movieId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace);
+    }
+
+    public Single<Show> getShow(int showId) {
+        return plannedRepository.showDAO().getShowById(showId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace);
     }
 }
 

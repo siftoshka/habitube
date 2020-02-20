@@ -67,5 +67,6 @@
     <string name="radio_year">Году выпуска</string>
     <string name="radio_recent">Недавно добавленным</string>
     <string name="radio_name">Названию</string>
+    <string name="close">Закрыть</string>
 
 </resources>
