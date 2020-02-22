@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,19 +33,25 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.adapters.CastAdapter;
+import az.siftoshka.habitube.adapters.CrewAdapter;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
+import az.siftoshka.habitube.entities.credits.Cast;
+import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
@@ -72,6 +80,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.movie_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_similar_movies) RecyclerView recyclerViewSimilarMovies;
     @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
     @BindView(R.id.main_screen) RelativeLayout mainScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
@@ -96,9 +106,21 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
     @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
     @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
+    @BindView(R.id.tab_info) MaterialButton tabInfo;
+    @BindView(R.id.tab_credits) MaterialButton tabCredits;
+    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
+    @BindView(R.id.cast_button) MaterialButton castButton;
+    @BindView(R.id.crew_button) MaterialButton crewButton;
+    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
+    @BindView(R.id.cast_text) TextView castText;
+    @BindView(R.id.crew_text) TextView crewText;
+
 
     private MovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;
+    private CastAdapter castAdapter;
+    private CrewAdapter crewAdapter;
     private DateChanger dateChanger = new DateChanger();
 
     private Unbinder unbinder;
@@ -126,6 +148,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         Toothpick.inject(this, Toothpick.openScope(Constants.DI.APP_SCOPE));
         similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId));
         videoAdapter = new VideoAdapter(this::showVideo);
+        castAdapter = new CastAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
+        crewAdapter = new CrewAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
     }
 
     @Override
@@ -139,14 +163,15 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> moviePresenter.goBack());
+        initialTab();
+        initTabs();
         watchedButton.setVisibility(View.VISIBLE);
         watchedButton.setEnabled(false);
         watchedButtonAlt.setVisibility(View.GONE);
         planningButton.setVisibility(View.VISIBLE);
         planningButton.setEnabled(false);
         planningButtonAlt.setVisibility(View.GONE);
-        LinearLayoutManager layoutManagerSimilarMovies = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
@@ -157,6 +182,18 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
+        LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewCast.setLayoutManager(layoutManagerCasts);
+        recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCast.setHasFixedSize(true);
+        recyclerViewCast.setAdapter(castAdapter);
+        LinearLayoutManager layoutManagerCrews = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewCrew.setLayoutManager(layoutManagerCrews);
+        recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCrew.setHasFixedSize(true);
+        recyclerViewCrew.setAdapter(crewAdapter);
     }
 
     @SuppressLint("SetTextI18n")
@@ -251,7 +288,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                     (arg0, arg1) -> moviePresenter.deleteMovieFromWatched(movie));
 
             alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
             alertDialogBuilder.show();
         });
     }
@@ -265,7 +301,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                     (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie));
 
             alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
             alertDialogBuilder.show();
         });
     }
@@ -274,6 +309,37 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
         startActivity(intent);
+    }
+
+    private void initialTab() {
+        tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.VISIBLE);
+        tabCreditsCard.setVisibility(View.GONE);
+        similarMoviesCard.setVisibility(View.GONE);
+    }
+
+    private void initTabs() {
+        tabInfo.setOnClickListener(view -> {
+            initialTab();
+        });
+        tabCredits.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+            tabInfoCard.setVisibility(View.GONE);
+            tabCreditsCard.setVisibility(View.VISIBLE);
+            similarMoviesCard.setVisibility(View.GONE);
+        });
+        tabSimilar.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+            tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabInfoCard.setVisibility(View.GONE);
+            tabCreditsCard.setVisibility(View.GONE);
+            similarMoviesCard.setVisibility(View.VISIBLE);
+        });
     }
 
     private void showImdbWeb(String imdbId) {
@@ -296,6 +362,44 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             videosCard.setVisibility(View.GONE);
         }
         videoAdapter.addAllVideos(videos);
+    }
+
+    @Override
+    public void showCast(List<Cast> casts) {
+        if (casts == null)
+            castText.setVisibility(View.GONE);
+        castAdapter.addAllPersons(casts);
+    }
+
+    @Override
+    public void showCastExpandButton(List<Cast> casts) {
+        castButton.setVisibility(View.VISIBLE);
+        castButton.setOnClickListener(view -> {
+            CastBottomDialog castBottomDialog = new CastBottomDialog(moviePresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            castBottomDialog.setArguments(bundle);
+            castBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
+    public void showCrew(List<Crew> crews) {
+        if (crews == null)
+            crewText.setVisibility(View.GONE);
+        crewAdapter.addAllPersons(crews);
+    }
+
+    @Override
+    public void showCrewExpandButton(List<Crew> crews) {
+        crewButton.setVisibility(View.VISIBLE);
+        crewButton.setOnClickListener(view -> {
+            CrewBottomDialog crewBottomDialog = new CrewBottomDialog(moviePresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            crewBottomDialog.setArguments(bundle);
+            crewBottomDialog.show(getChildFragmentManager(), null);
+        });
     }
 
     @Override

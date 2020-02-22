@@ -42,8 +42,8 @@ public class RemoteExploreInteractor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getSearchResults(String queryName, String language) {
-        return repository.getSearchResults(queryName, language)
+    public Observable<MovieResponse> getSearchResults(String queryName, String language, boolean isAdult) {
+        return repository.getSearchResults(queryName, language, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

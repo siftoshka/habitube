@@ -156,7 +156,6 @@
 
 
             <LinearLayout
-                android:id="@+id/dark_mode_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -178,12 +177,13 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="@string/dark_mode"
+                    android:text="@string/navbar_settings"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/dark_mode_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -193,7 +193,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:maxLines="1"
@@ -208,6 +207,31 @@
                         android:checked="false"
                         android:gravity="center_vertical" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="@string/turn_on_adult_content"
+                        android:textColor="@color/dark_600"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/adult_switcher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
 
             </LinearLayout>
 

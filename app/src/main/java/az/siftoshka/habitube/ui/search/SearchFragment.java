@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.search;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class SearchFragment extends MvpAppCompatFragment implements SearchView {
@@ -96,6 +98,9 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
         init();
+        SharedPreferences prefs = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean adult = idAdult == 1;
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -106,7 +111,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             @Override
             public boolean onQueryTextChange(final String newText) {
                 if (!TextUtils.isEmpty(newText)) {
-                    searchPresenter.searchMedia(newText, getResources().getString(R.string.language));
+                    searchPresenter.searchMedia(newText, getResources().getString(R.string.language), adult);
                 }
                 return true;
             }

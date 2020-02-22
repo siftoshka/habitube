@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -16,6 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import java.io.ByteArrayOutputStream;
 
 import az.siftoshka.habitube.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 
@@ -28,6 +31,16 @@ public class ImageLoader {
                 .placeholder(new ColorDrawable(Color.LTGRAY))
                 .error(R.drawable.ic_box)
                 .transform(new CenterCrop(), new RoundedCorners(16))
+                .into(into);
+    }
+
+    @Nullable
+    public static void loadPersons(View view, String url, CircleImageView into) {
+        Glide.with(view)
+                .load(IMAGE_URL + url)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(new ColorDrawable(Color.LTGRAY))
+                .error(R.drawable.ic_box)
                 .into(into);
     }
 

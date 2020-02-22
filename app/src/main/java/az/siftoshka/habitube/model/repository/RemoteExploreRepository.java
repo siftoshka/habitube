@@ -42,8 +42,8 @@ public class RemoteExploreRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getSearchResults(String queryName, String language) {
-        return movieDBApi.getSearchResults(language, queryName, 1, false)
+    public Observable<MovieResponse> getSearchResults(String queryName, String language, boolean isAdult) {
+        return movieDBApi.getSearchResults(language, queryName, 1, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

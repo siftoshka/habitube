@@ -68,5 +68,13 @@
     <string name="radio_recent">Недавно добавленным</string>
     <string name="radio_name">Названию</string>
     <string name="close">Закрыть</string>
+    <string name="tab_credits">Актеры и Команда</string>
+    <string name="tab_info">Инфо</string>
+    <string name="tab_similar">Похожие</string>
+    <string name="cast">Актёры</string>
+    <string name="crew">Команда</string>
+    <string name="show_all_cast">Показать всех</string>
+    <string name="show_all_crew">Показать всех</string>
+    <string name="turn_on_adult_content">Включить взрослые материалы</string>
 
 </resources>

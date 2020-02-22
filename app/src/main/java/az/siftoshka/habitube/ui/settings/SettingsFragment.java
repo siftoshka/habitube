@@ -55,7 +55,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.instagram_contact) ImageView instagramButton;
     @BindView(R.id.credits_oktay) TextView creditsOktay;
     @BindView(R.id.credits_freepik) TextView creditsFreepik;
-    @BindView(R.id.theme_switcher) SwitchCompat themeSwithcer;
+    @BindView(R.id.theme_switcher) SwitchCompat themeSwither;
+    @BindView(R.id.adult_switcher) SwitchCompat adultSwitcher;
     @BindView(R.id.dark_mode_layout) LinearLayout darkModeCard;
     @BindView(R.id.radio_sort) RadioGroup radioSorting;
     @BindView(R.id.radio_recent) RadioButton radioRecent;
@@ -75,6 +76,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         unbinder = ButterKnife.bind(this, view);
 
         checkTheme();
+        checkAdult();
         checkSort();
 
         return view;
@@ -91,7 +93,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         checkDarkModeVisibility();
         radioListener();
 
-        themeSwithcer.setOnCheckedChangeListener((compoundButton, b) -> {
+        themeSwither.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 SharedPreferences.Editor editor = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE).edit();
@@ -101,6 +103,17 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 SharedPreferences.Editor editor = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE).edit();
                 editor.putInt("Dark", 100);
+                editor.apply();
+            }
+        });
+        adultSwitcher.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                SharedPreferences.Editor editor = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE).edit();
+                editor.putInt("Adult", 301);
+                editor.apply();
+            } else {
+                SharedPreferences.Editor editor = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE).edit();
+                editor.putInt("Adult", 300);
                 editor.apply();
             }
         });
@@ -155,7 +168,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         SpannableString spannableStringOktay = new SpannableString(cOktay);
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View textView) {
+            public void onClick(@NonNull View textView) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(DESIGNER_OKTAY));
                 startActivity(intent);
@@ -177,28 +190,29 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         SpannableString spannableStringFreepik = new SpannableString(cFreepik);
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             @Override
-            public void onClick(View textView) {
+            public void onClick(@NonNull View textView) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(DESIGNER_FREEPIK));
                 startActivity(intent);
             }
 
             @Override
-            public void updateDrawState(TextPaint ds) {
+            public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
         };
         ClickableSpan clickableSpan2 = new ClickableSpan() {
             @Override
-            public void onClick(View textView) {
+            public void onClick(@NonNull View textView) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(FLATICON));
                 startActivity(intent);
             }
 
+            @NonNull
             @Override
-            public void updateDrawState(TextPaint ds) {
+            public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -222,9 +236,20 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         int idTheme = prefs.getInt("Dark", 0);
 
         if (idTheme == 101) {
-            themeSwithcer.setChecked(true);
+            themeSwither.setChecked(true);
         } else {
-            themeSwithcer.setChecked(false);
+            themeSwither.setChecked(false);
+        }
+    }
+
+    private void checkAdult() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+
+        if(idAdult == 301) {
+            adultSwitcher.setChecked(true);
+        } else {
+            adultSwitcher.setChecked(false);
         }
     }
 

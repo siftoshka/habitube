@@ -2,6 +2,7 @@ package az.siftoshka.habitube.model.repository;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.entities.credits.Credits;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movielite.MovieResponse;
 import az.siftoshka.habitube.entities.person.Person;
@@ -59,6 +60,12 @@ public class RemotePostRepository {
 
     public Single<MovieResponse> getSimilarTVShows(int id, String language) {
         return movieDBApi.getSimilarTVShow(id, language)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Credits> getCredits(int id) {
+        return movieDBApi.getCredits(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

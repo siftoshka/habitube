@@ -62,12 +62,11 @@ public class SeasonBottomDialog extends BottomSheetDialogFragment {
         seasonDate.setText(dateChanger.changeDate(season.getAirDate()));
         seasonEpisodes.setText(season.getEpisodeCount() + " " + getResources().getString(R.string.episodes));
         seasonOverview.setText(season.getOverview());
-
         checkOverview();
     }
 
     private void checkOverview() {
-        if(season.getOverview().equals(""))
+        if(season.getOverview().equals("") || season.getOverview() == null)
             descIcon.setVisibility(View.GONE);
     }
 

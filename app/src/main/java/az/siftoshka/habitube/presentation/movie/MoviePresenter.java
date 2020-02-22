@@ -1,15 +1,23 @@
 package az.siftoshka.habitube.presentation.movie;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.di.qualifiers.MediaType;
 import az.siftoshka.habitube.di.qualifiers.MoviePosition;
 import az.siftoshka.habitube.di.qualifiers.PostId;
 import az.siftoshka.habitube.di.qualifiers.UpcomingMoviePosition;
+import az.siftoshka.habitube.entities.credits.Cast;
+import az.siftoshka.habitube.entities.credits.Credits;
+import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
@@ -21,6 +29,8 @@ import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
+import static android.content.Context.MODE_PRIVATE;
+
 @InjectViewState
 public class MoviePresenter extends MvpPresenter<MovieView> {
 
@@ -31,6 +41,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private final Integer upcomingPosition, postPosition, postId, mediaType;
     private final RemotePostInteractor remotePostInteractor;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private boolean adult;
 
     @Inject
     public MoviePresenter(Router router, Context context, RemotePostInteractor remotePostInteractor,
@@ -57,6 +68,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(upcomingPosition, context.getResources().getString(R.string.language));
             getSimilarMovies(upcomingPosition, context.getResources().getString(R.string.language));
             getVideos(upcomingPosition, context.getResources().getString(R.string.language));
+            getCredits(upcomingPosition);
             compositeDisposable.add(watchedInteractor.isMovieExists(upcomingPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -69,6 +81,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(postPosition, context.getResources().getString(R.string.language));
             getSimilarMovies(postPosition, context.getResources().getString(R.string.language));
             getVideos(postPosition, context.getResources().getString(R.string.language));
+            getCredits(postPosition);
             compositeDisposable.add(watchedInteractor.isMovieExists(postPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -82,6 +95,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
             getMovie(postId, context.getResources().getString(R.string.language));
             getSimilarMovies(postId, context.getResources().getString(R.string.language));
             getVideos(postId, context.getResources().getString(R.string.language));
+            getCredits(postId);
             compositeDisposable.add(watchedInteractor.isMovieExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -94,10 +108,22 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     }
 
     private void getMovie(int id, String language) {
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        adult = idAdult == 1;
         compositeDisposable.add(remotePostInteractor.getMovie(id, language)
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterSuccess(movie -> getViewState().showMovieScreen())
-                .subscribe(movie -> getViewState().showMovie(movie),
+                .subscribe(movie -> {
+                    if (adult) {
+                        getViewState().showMovie(movie);
+                    } else {
+                        if (movie.isAdult()) {
+                            getViewState().showErrorScreen();
+                        } else {
+                            getViewState().showMovie(movie);
+                        }
+                    }},
                         throwable -> getViewState().showErrorScreen()));
     }
 
@@ -111,6 +137,38 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         compositeDisposable.add(remotePostInteractor.getMovieVideos(id, language)
                 .subscribe(videoResponse -> getViewState().showVideos(videoResponse.getResults()),
                         Throwable::printStackTrace));
+    }
+
+    private void getCredits(int id) {
+        compositeDisposable.add(remotePostInteractor.getCredits(id)
+                .subscribe(this::sendCredits, Throwable::printStackTrace));
+    }
+
+    private void sendCredits(Credits credits) {
+        List<Cast> newCastList = new ArrayList<>();
+        List<Crew> newCrewList = new ArrayList<>();
+        for (int number = 0; number <= credits.getCrew().size() - 1; number++) {
+            if (credits.getCrew().get(number).getJob().equals("Director") ||
+                    credits.getCrew().get(number).getJob().equals("Screenplay") ||
+                    credits.getCrew().get(number).getJob().equals("Producer") ||
+                    credits.getCrew().get(number).getJob().equals("Original Music Composer")) {
+                newCrewList.add(credits.getCrew().get(number));
+            }
+        }
+        if(credits.getCrew().size() > 10) {
+            getViewState().showCrewExpandButton(credits.getCrew());
+        }
+        for (int number = 0; number <= credits.getCast().size() - 1; number++) {
+            if (number < 10) {
+                newCastList.add(credits.getCast().get(number));
+            }
+        }
+        if(credits.getCast().size() > 10) {
+            getViewState().showCastExpandButton(credits.getCast());
+        }
+
+        getViewState().showCrew(newCrewList);
+        getViewState().showCast(newCastList);
     }
 
     public void addMovieAsWatched(Movie movie) {
@@ -135,6 +193,14 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     public void goToDetailedMovieScreen(Integer id) {
         router.navigateTo(new Screens.PostMovieScreen(id));
+    }
+
+    public void goToDetailedPersonScreen(int id) {
+        router.navigateTo(new Screens.SearchItemScreen(id, 3));
+    }
+
+    public Router getRouter() {
+        return router;
     }
 
     public void goBack() {

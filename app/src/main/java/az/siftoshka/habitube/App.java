@@ -23,9 +23,7 @@ public class App extends Application {
         super.onCreate();
 
         initDarkMode();
-
         initToothPick();
-
         initSorting();
     }
 

@@ -2,6 +2,7 @@ package az.siftoshka.habitube.model.interactor;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.entities.credits.Credits;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movielite.MovieResponse;
 import az.siftoshka.habitube.entities.person.Person;
@@ -45,5 +46,9 @@ public class RemotePostInteractor {
 
     public Single<MovieResponse> getSimilarTVShows(int id, String language) {
         return repository.getSimilarTVShows(id, language);
+    }
+
+    public Single<Credits> getCredits(int id) {
+        return repository.getCredits(id);
     }
 }
