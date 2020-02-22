@@ -25,23 +25,38 @@ import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 public class ImageLoader {
 
     public static void load(View view, String url, ImageView into) {
-        Glide.with(view)
-                .load(IMAGE_URL + url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(into);
+        if (url != null) {
+            Glide.with(view)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_box)
+                    .transform(new CenterCrop(), new RoundedCorners(16))
+                    .into(into);
+        } else {
+            Glide.with(view)
+                    .load(R.drawable.ic_box)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
     }
 
-    @Nullable
     public static void loadPersons(View view, String url, CircleImageView into) {
-        Glide.with(view)
-                .load(IMAGE_URL + url)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
-                .into(into);
+        if (url != null) {
+            Glide.with(view)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_box)
+                    .into(into);
+        } else {
+            Glide.with(view)
+                    .load(R.drawable.ic_box)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
     }
 
     public static void loadLocally(View view, byte[] image, ImageView into) {
@@ -54,23 +69,39 @@ public class ImageLoader {
     }
 
     public static void load(Context context, String url, ImageView into) {
-        Glide.with(context)
-                .load(IMAGE_URL + url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(into);
+        if (url != null) {
+            Glide.with(context)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_box)
+                    .transform(new CenterCrop(), new RoundedCorners(16))
+                    .into(into);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_box)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
     }
 
     public static void loadBackground(Context context, String url, ImageView into) {
-        Glide.with(context)
-                .load(IMAGE_URL + url)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
-                .into(into);
+        if (url != null) {
+            Glide.with(context)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_box)
+                    .into(into);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_box)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
     }
 
     public static byte[] imageView2Bitmap(ImageView view) {

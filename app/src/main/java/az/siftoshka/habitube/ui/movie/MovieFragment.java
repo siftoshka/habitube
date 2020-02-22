@@ -212,7 +212,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                         planningButton.setEnabled(true);
                         return false;
                     }
-
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         showProgress(false);
