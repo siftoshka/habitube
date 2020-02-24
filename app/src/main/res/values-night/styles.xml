@@ -6,6 +6,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/mainBackground</item>
         <item name="android:editTextColor">#FFFFFF</item>
+        <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
+        <item name="colorControlActivated">@color/white_is_white</item>
+        <item name="android:textColorHighlight">#99000000</item>
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
@@ -24,6 +27,10 @@
 
     <style name="CardView.DayNight" parent="Widget.MaterialComponents.CardView">
         <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="cursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
     </style>
 
 </resources>

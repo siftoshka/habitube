@@ -36,7 +36,7 @@ public class CrewBottomDialog extends BottomSheetDialogFragment {
     private CrewAdapter crewAdapter;
     private Unbinder unbinder;
 
-    CrewBottomDialog(Router router) {
+    public CrewBottomDialog(Router router) {
         this.router = router;
     }
 

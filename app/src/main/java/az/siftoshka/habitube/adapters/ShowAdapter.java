@@ -43,12 +43,14 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
         final MovieLite movie = this.movies.get(position);
         ImageLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
         holder.posterTitle.setText(movie.getShowTitle());
+        holder.posterRate.setText(String.valueOf(movie.getVoteAverage()));
         holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }
 
     @Override
     public void onViewRecycled(@NonNull ShowHolder holder) {
         holder.posterTitle.setText(null);
+        holder.posterRate.setText(null);
         holder.posterLayout.setOnClickListener(null);
     }
 
@@ -67,13 +69,14 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
 
         LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle;
+        TextView posterTitle, posterRate;
 
         ShowHolder(@NonNull View itemView) {
             super(itemView);
             this.posterLayout = itemView.findViewById(R.id.item_layout);
             this.posterImage = itemView.findViewById(R.id.poster_image);
             this.posterTitle = itemView.findViewById(R.id.poster_main_text);
+            this.posterRate = itemView.findViewById(R.id.poster_rate);
         }
     }
 }

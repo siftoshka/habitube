@@ -63,7 +63,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     }
 
     @Override
-    protected void onFirstViewAttach() {
+    public void onFirstViewAttach() {
         if (upcomingPosition != 0) {
             getMovie(upcomingPosition, context.getResources().getString(R.string.language));
             getSimilarMovies(upcomingPosition, context.getResources().getString(R.string.language));
@@ -155,7 +155,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                 newCrewList.add(credits.getCrew().get(number));
             }
         }
-        if(credits.getCrew().size() > 10) {
+        if (credits.getCrew().size() > 10) {
             getViewState().showCrewExpandButton(credits.getCrew());
         }
         for (int number = 0; number <= credits.getCast().size() - 1; number++) {
@@ -163,7 +163,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                 newCastList.add(credits.getCast().get(number));
             }
         }
-        if(credits.getCast().size() > 10) {
+        if (credits.getCast().size() > 10) {
             getViewState().showCastExpandButton(credits.getCast());
         }
 

@@ -34,7 +34,7 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
         addContent();
     }
 
-    private void addContent() {
+    public void addContent() {
         addUpcomingMovies(context.getResources().getString(R.string.language));
         addMovies(context.getResources().getString(R.string.language));
         addShows(context.getResources().getString(R.string.language));

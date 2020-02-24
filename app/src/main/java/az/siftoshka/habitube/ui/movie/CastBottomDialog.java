@@ -36,7 +36,7 @@ public class CastBottomDialog extends BottomSheetDialogFragment {
     private CastAdapter castAdapter;
     private Unbinder unbinder;
 
-    CastBottomDialog(Router router) {
+    public CastBottomDialog(Router router) {
         this.router = router;
     }
 

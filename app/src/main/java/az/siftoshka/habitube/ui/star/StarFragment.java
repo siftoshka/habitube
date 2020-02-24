@@ -47,6 +47,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_popularity) TextView posterPersonPopularity;
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
     @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
+    @BindView(R.id.refresh) ImageView refreshButton;
 
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
@@ -119,6 +120,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     public void showErrorScreen() {
         personScreen.setVisibility(View.GONE);
         errorScreen.setVisibility(View.VISIBLE);
+        refreshButton.setOnClickListener(view -> starPresenter.onFirstViewAttach());
     }
 
     @Override

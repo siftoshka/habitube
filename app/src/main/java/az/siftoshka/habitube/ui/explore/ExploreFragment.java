@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -49,6 +50,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.explore_loading) ProgressBar progressBar;
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
     @BindView(R.id.error_screen) View errorScreen;
+    @BindView(R.id.refresh) ImageView refreshButton;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
@@ -153,6 +155,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void unsuccessfulQueryError() {
         errorScreen.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+        refreshButton.setOnClickListener(view -> explorePresenter.addContent());
     }
 
     @Override

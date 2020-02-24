@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -115,6 +116,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
     @BindView(R.id.cast_text) TextView castText;
     @BindView(R.id.crew_text) TextView crewText;
+    @BindView(R.id.refresh) ImageView refreshButton;
 
 
     private MovieAdapter similarMoviesAdapter;
@@ -122,6 +124,10 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
     private DateChanger dateChanger = new DateChanger();
+    private LinearLayoutManager layoutManagerSimilarMovies;
+    private LinearLayoutManager layoutManagerVideos;
+    private LinearLayoutManager layoutManagerCasts;
+    private LinearLayoutManager layoutManagerCrews;
 
     private Unbinder unbinder;
 
@@ -171,25 +177,23 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         planningButton.setVisibility(View.VISIBLE);
         planningButton.setEnabled(false);
         planningButtonAlt.setVisibility(View.GONE);
-        LinearLayoutManager layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
+
+        layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
-        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+        layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
-        LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+        layoutManagerCasts = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCast.setLayoutManager(layoutManagerCasts);
         recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCast.setHasFixedSize(true);
         recyclerViewCast.setAdapter(castAdapter);
-        LinearLayoutManager layoutManagerCrews = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+        layoutManagerCrews = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCrew.setLayoutManager(layoutManagerCrews);
         recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCrew.setHasFixedSize(true);
@@ -442,6 +446,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     public void showErrorScreen() {
         mainScreen.setVisibility(View.GONE);
         errorScreen.setVisibility(View.VISIBLE);
+        refreshButton.setOnClickListener(view -> moviePresenter.onFirstViewAttach());
     }
 
     @Override

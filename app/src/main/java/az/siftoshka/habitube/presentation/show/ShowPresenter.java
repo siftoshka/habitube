@@ -2,6 +2,9 @@ package az.siftoshka.habitube.presentation.show;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
@@ -9,6 +12,9 @@ import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.di.qualifiers.MediaType;
 import az.siftoshka.habitube.di.qualifiers.PostId;
 import az.siftoshka.habitube.di.qualifiers.ShowPosition;
+import az.siftoshka.habitube.entities.credits.Cast;
+import az.siftoshka.habitube.entities.credits.Credits;
+import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
@@ -49,11 +55,12 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     }
 
     @Override
-    protected void onFirstViewAttach() {
+    public void onFirstViewAttach() {
         if(showPosition != 0) {
             getTVShow(showPosition, context.getResources().getString(R.string.language));
             getSimilarTVShows(showPosition, context.getResources().getString(R.string.language));
             getVideos(showPosition, context.getResources().getString(R.string.language));
+            getCredits(showPosition);
             compositeDisposable.add(watchedInteractor.isShowExists(showPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -68,6 +75,7 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
             getTVShow(postId, context.getResources().getString(R.string.language));
             getSimilarTVShows(postId, context.getResources().getString(R.string.language));
             getVideos(postId, context.getResources().getString(R.string.language));
+            getCredits(postId);
             compositeDisposable.add(watchedInteractor.isShowExists(postId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -99,18 +107,53 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
                         Throwable::printStackTrace));
     }
 
+    private void getCredits(int id) {
+        compositeDisposable.add(remotePostInteractor.getShowCredits(id)
+                .subscribe(this::sendCredits, Throwable::printStackTrace));
+    }
+
+    private void sendCredits(Credits credits) {
+        List<Cast> newCastList = new ArrayList<>();
+        List<Crew> newCrewList = new ArrayList<>();
+        for (int number = 0; number <= credits.getCrew().size() - 1; number++) {
+            if (credits.getCrew().get(number).getJob().equals("Novel") ||
+                    credits.getCrew().get(number).getJob().equals("Director") ||
+                    credits.getCrew().get(number).getJob().equals("Screenplay") ||
+                    credits.getCrew().get(number).getJob().equals("Producer") ||
+                    credits.getCrew().get(number).getJob().equals("Original Music Composer")) {
+                newCrewList.add(credits.getCrew().get(number));
+            }
+        }
+        if (credits.getCrew().size() > 10) {
+            getViewState().showCrewExpandButton(credits.getCrew());
+        }
+        for (int number = 0; number <= credits.getCast().size() - 1; number++) {
+            if (number < 10) {
+                newCastList.add(credits.getCast().get(number));
+            }
+        }
+        if (credits.getCast().size() > 10) {
+            getViewState().showCastExpandButton(credits.getCast());
+        }
+
+        getViewState().showCrew(newCrewList);
+        getViewState().showCast(newCastList);
+    }
+
     public void goToDetailedShowScreen(Integer id) {
         router.navigateTo(new Screens.PostShowScreen(id));
     }
 
-    public void goBack() {
-        router.exit();
+    public void goToDetailedPersonScreen(int id) {
+        router.navigateTo(new Screens.SearchItemScreen(id, 3));
     }
 
-    @Override
-    public void onDestroy() {
-        compositeDisposable.dispose();
-        super.onDestroy();
+    public Router getRouter() {
+        return router;
+    }
+
+    public void goBack() {
+        router.exit();
     }
 
     public void addShowAsWatched(Show show) {
@@ -131,5 +174,11 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     public void deleteShowFromPlanned(Show show) {
         plannedInteractor.deleteShow(show);
         getViewState().setPlanButtonEnabled(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 }

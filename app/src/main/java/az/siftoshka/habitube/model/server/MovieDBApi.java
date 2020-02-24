@@ -86,6 +86,11 @@ public interface MovieDBApi {
             @Path("movie_id") int movieId
     );
 
+    @GET("tv/{tv_id}/credits")
+    Single<Credits> getShowCredits(
+            @Path("tv_id") int tvId
+    );
+
     @GET("search/multi")
     Observable<MovieResponse> getSearchResults(
             @Query("language") String language,

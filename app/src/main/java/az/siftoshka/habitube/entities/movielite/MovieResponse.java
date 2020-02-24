@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MovieResponse {
+
     @SerializedName("page") @Expose private int page;
     @SerializedName("results") @Expose private List<MovieLite> results = null;
     @SerializedName("total_pages") @Expose private int totalPages;

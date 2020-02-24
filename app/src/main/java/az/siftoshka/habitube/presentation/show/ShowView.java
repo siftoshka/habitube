@@ -2,6 +2,8 @@ package az.siftoshka.habitube.presentation.show;
 
 import java.util.List;
 
+import az.siftoshka.habitube.entities.credits.Cast;
+import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.video.Video;
@@ -17,6 +19,11 @@ public interface ShowView extends MvpView {
     void showSimilarTVShowList(List<MovieLite> similarShows);
     void showVideos(List<Video> videos);
     void showBottomSeasonDialog(int position);
+    void showCrew(List<Crew> crews);
+    void showCast(List<Cast> casts);
+
+    void showCastExpandButton(List<Cast> casts);
+    void showCrewExpandButton(List<Crew> crews);
 
     void showTVShowScreen();
     void showProgress(boolean loadingState);

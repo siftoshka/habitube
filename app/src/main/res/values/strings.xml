@@ -82,6 +82,8 @@
     <string name="show_all_cast">Show All Cast</string>
     <string name="show_all_crew">Show All Crew</string>
     <string name="turn_on_adult_content">Turn on Adult Content</string>
+    <string name="tab_similar_alt">Similar</string>
+    <string name="tab_credits_alt">Credits</string>
 
 
 </resources>

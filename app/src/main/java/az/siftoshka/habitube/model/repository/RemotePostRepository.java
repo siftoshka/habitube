@@ -69,4 +69,10 @@ public class RemotePostRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Credits> getShowCredits(int id) {
+        return movieDBApi.getShowCredits(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

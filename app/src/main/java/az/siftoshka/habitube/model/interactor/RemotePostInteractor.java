@@ -51,4 +51,8 @@ public class RemotePostInteractor {
     public Single<Credits> getCredits(int id) {
         return repository.getCredits(id);
     }
+
+    public Single<Credits> getShowCredits(int id) {
+        return repository.getShowCredits(id);
+    }
 }

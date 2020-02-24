@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,25 +33,33 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.adapters.CastAdapter;
+import az.siftoshka.habitube.adapters.CrewAdapter;
 import az.siftoshka.habitube.adapters.SeasonAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
+import az.siftoshka.habitube.entities.credits.Cast;
+import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.show.ShowGenre;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
 import az.siftoshka.habitube.presentation.show.ShowView;
+import az.siftoshka.habitube.ui.movie.CastBottomDialog;
+import az.siftoshka.habitube.ui.movie.CrewBottomDialog;
 import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
@@ -74,6 +84,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.recycler_view_similar_shows) RecyclerView recyclerViewSimilarShows;
     @BindView(R.id.recycler_view_seasons) RecyclerView recyclerViewSeasons;
     @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
     @BindView(R.id.show_screen) RelativeLayout showScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
@@ -93,12 +105,27 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.poster_show_desc) TextView posterShowDesc;
     @BindView(R.id.show_genres) ChipGroup showGenresChip;
     @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
+    @BindView(R.id.seasons_card_layout) LinearLayout seasonsCard;
     @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
     @BindView(R.id.desc_show_card_layout) LinearLayout descShowCard;
+    @BindView(R.id.tab_info) MaterialButton tabInfo;
+    @BindView(R.id.tab_credits) MaterialButton tabCredits;
+    @BindView(R.id.tab_seasons) MaterialButton tabSeasons;
+    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
+    @BindView(R.id.cast_button) MaterialButton castButton;
+    @BindView(R.id.crew_button) MaterialButton crewButton;
+    @BindView(R.id.cast_text) TextView castText;
+    @BindView(R.id.crew_text) TextView crewText;
+    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
+    @BindView(R.id.refresh) ImageView refreshButton;
+
 
     private ShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
     private SeasonAdapter seasonAdapter;
+    private CastAdapter castAdapter;
+    private CrewAdapter crewAdapter;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
 
@@ -125,6 +152,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId));
         videoAdapter = new VideoAdapter(this::showVideo);
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
+        castAdapter = new CastAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
+        crewAdapter = new CrewAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
     }
 
     @Override
@@ -137,16 +166,16 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> showPresenter.goBack());
+        initialTab();
+        initTabs();
 
-        LinearLayoutManager layoutManagerSimilarShows = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManagerSimilarShows = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarShows.setLayoutManager(layoutManagerSimilarShows);
         recyclerViewSimilarShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarShows.setHasFixedSize(true);
         recyclerViewSimilarShows.setAdapter(similarShowsAdapter);
 
-        LinearLayoutManager layoutManagerSeasons = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManagerSeasons = new GridLayoutManager(getContext(), 3);
         recyclerViewSeasons.setLayoutManager(layoutManagerSeasons);
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeasons.setHasFixedSize(true);
@@ -158,6 +187,19 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
+
+        LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewCast.setLayoutManager(layoutManagerCasts);
+        recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCast.setHasFixedSize(true);
+        recyclerViewCast.setAdapter(castAdapter);
+        LinearLayoutManager layoutManagerCrews = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerViewCrew.setLayoutManager(layoutManagerCrews);
+        recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCrew.setHasFixedSize(true);
+        recyclerViewCrew.setAdapter(crewAdapter);
     }
 
     @SuppressLint("SetTextI18n")
@@ -278,6 +320,54 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         }
     }
 
+    private void initialTab() {
+        tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.VISIBLE);
+        tabCreditsCard.setVisibility(View.GONE);
+        seasonsCard.setVisibility(View.GONE);
+        similarShowsCard.setVisibility(View.GONE);
+
+    }
+
+    private void initTabs() {
+        tabInfo.setOnClickListener(view -> {
+            initialTab();
+        });
+        tabCredits.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
+            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+            tabInfoCard.setVisibility(View.GONE);
+            tabCreditsCard.setVisibility(View.VISIBLE);
+            seasonsCard.setVisibility(View.GONE);
+            similarShowsCard.setVisibility(View.GONE);
+        });
+        tabSeasons.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+            tabSeasons.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+            tabInfoCard.setVisibility(View.GONE);
+            tabCreditsCard.setVisibility(View.GONE);
+            seasonsCard.setVisibility(View.VISIBLE);
+            similarShowsCard.setVisibility(View.GONE);
+        });
+        tabSimilar.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+            tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
+            tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabInfoCard.setVisibility(View.GONE);
+            tabCreditsCard.setVisibility(View.GONE);
+            seasonsCard.setVisibility(View.GONE);
+            similarShowsCard.setVisibility(View.VISIBLE);
+        });
+    }
+
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
         if(similarShows.isEmpty()) {
@@ -313,6 +403,44 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     @Override
+    public void showCast(List<Cast> casts) {
+        if (casts == null)
+            castText.setVisibility(View.GONE);
+        castAdapter.addAllPersons(casts);
+    }
+
+    @Override
+    public void showCastExpandButton(List<Cast> casts) {
+        castButton.setVisibility(View.VISIBLE);
+        castButton.setOnClickListener(view -> {
+            CastBottomDialog castBottomDialog = new CastBottomDialog(showPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            castBottomDialog.setArguments(bundle);
+            castBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
+    public void showCrew(List<Crew> crews) {
+        if (crews == null || crews.size() == 0)
+            crewText.setVisibility(View.GONE);
+        crewAdapter.addAllPersons(crews);
+    }
+
+    @Override
+    public void showCrewExpandButton(List<Crew> crews) {
+        crewButton.setVisibility(View.VISIBLE);
+        crewButton.setOnClickListener(view -> {
+            CrewBottomDialog crewBottomDialog = new CrewBottomDialog(showPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            crewBottomDialog.setArguments(bundle);
+            crewBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
     public void showTVShowScreen() {
         errorScreen.setVisibility(View.GONE);
         showScreen.setVisibility(View.VISIBLE);
@@ -322,6 +450,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showErrorScreen() {
         errorScreen.setVisibility(View.VISIBLE);
         showScreen.setVisibility(View.GONE);
+        refreshButton.setOnClickListener(view -> showPresenter.onFirstViewAttach());
     }
 
     @Override

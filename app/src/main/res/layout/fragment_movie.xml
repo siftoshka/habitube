@@ -406,7 +406,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/tab_color"
                     android:gravity="start"
@@ -424,7 +424,6 @@
                         android:textColor="@color/colorPrimary"
                         app:rippleColor="@android:color/transparent" />
 
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/tab_credits"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -435,9 +434,7 @@
                         android:gravity="center"
                         android:text="@string/tab_credits"
                         android:textColor="@color/dark_800"
-
                         app:rippleColor="@android:color/transparent" />
-
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/tab_similar"
@@ -545,8 +542,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:clipToPadding="false" />
+                            android:layout_marginBottom="5dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -580,8 +576,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_cast"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false" />
+                        android:layout_height="wrap_content" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cast_button"
@@ -614,8 +609,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_crew"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false" />
+                        android:layout_height="wrap_content" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/crew_button"
@@ -650,8 +644,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_similar_movies"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

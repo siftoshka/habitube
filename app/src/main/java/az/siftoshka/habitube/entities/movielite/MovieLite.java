@@ -4,22 +4,25 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MovieLite {
+
     @SerializedName("id") @Expose private int movieId;
     @SerializedName("title") @Expose private String movieTitle;
     @SerializedName("name") @Expose private String showTitle;
     @SerializedName("poster_path") @Expose private String movieImage;
     @SerializedName("profile_path") @Expose private String starImage;
     @SerializedName("release_date") @Expose private String releaseDate;
+    @SerializedName("vote_average") @Expose private double voteAverage;
     @SerializedName("first_air_date") @Expose private String firstAirDate;
     @SerializedName("media_type") @Expose private String mediaType;
 
-    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String starImage, String releaseDate, String firstAirDate, String mediaType) {
+    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String starImage, String releaseDate, double voteAverage, String firstAirDate, String mediaType) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.showTitle = showTitle;
         this.movieImage = movieImage;
         this.starImage = starImage;
         this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
         this.firstAirDate = firstAirDate;
         this.mediaType = mediaType;
     }
@@ -89,6 +92,14 @@ public class MovieLite {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     @Override

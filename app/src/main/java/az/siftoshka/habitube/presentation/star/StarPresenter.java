@@ -31,7 +31,7 @@ public class StarPresenter extends MvpPresenter<StarView> {
     }
 
     @Override
-    protected void onFirstViewAttach() {
+    public void onFirstViewAttach() {
         getMovieStar(context.getResources().getString(R.string.language));
     }
 
