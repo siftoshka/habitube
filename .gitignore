@@ -17,7 +17,7 @@ out/
 release/
 
 #Firebase
-app/google-services.json
+google-services.json
 
 # Gradle files
 .gradle/
