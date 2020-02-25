@@ -299,15 +299,9 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         SharedPreferences prefsRadio = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
         int idRadio = prefsRadio.getInt("Radio", 0);
         switch (idRadio) {
-            case 200:
-                radioRecent.setChecked(true);
-                break;
-            case 201:
-                radioName.setChecked(true);
-                break;
-            case 202:
-                radioYear.setChecked(true);
-                break;
+            case 200: radioRecent.setChecked(true);break;
+            case 201: radioName.setChecked(true);break;
+            case 202: radioYear.setChecked(true);break;
         }
     }
 
