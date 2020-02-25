@@ -17,6 +17,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         android:fullBackupContent="true">
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
         <activity android:name="az.siftoshka.habitube.MainActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">

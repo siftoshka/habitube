@@ -34,23 +34,6 @@
                 android:src="@drawable/splash"
                 tools:contentDescription="Poster of the movie"
                 tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/poster_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="65dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/round_button"
-                android:backgroundTint="#99000000"
-                android:maxLines="1"
-                android:paddingStart="5dp"
-                android:paddingTop="1dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="1dp"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                tools:text="9.5" />
         </RelativeLayout>
 
         <TextView

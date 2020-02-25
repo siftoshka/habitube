@@ -1,5 +1,7 @@
 package az.siftoshka.habitube.ui.settings;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -26,7 +28,21 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.settings.SettingsPresenter;
 import az.siftoshka.habitube.presentation.settings.SettingsView;
 import butterknife.BindView;
@@ -62,12 +78,26 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.radio_recent) RadioButton radioRecent;
     @BindView(R.id.radio_name) RadioButton radioName;
     @BindView(R.id.radio_year) RadioButton radioYear;
+    @BindView(R.id.google_auth) MaterialButton googleAuthButton;
+    @BindView(R.id.sign_out_layout) LinearLayout userLayout;
+    @BindView(R.id.user_text) TextView userText;
+    @BindView(R.id.warning_text) TextView warningText;
+    @BindView(R.id.sign_out) ImageView signOutButton;
 
     private Unbinder unbinder;
+    private MessageListener messageListener;
+    private GoogleSignInClient signInClient;
+    private FirebaseAuth firebaseAuth;
 
     @ProvidePresenter
     SettingsPresenter accountPresenter() {
         return Toothpick.openScope(APP_SCOPE).getInstance(SettingsPresenter.class);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
     }
 
     @Override
@@ -79,6 +109,14 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         checkAdult();
         checkSort();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        signInClient = GoogleSignIn.getClient(requireActivity(), gso);
+
         return view;
     }
 
@@ -87,6 +125,10 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         telegramButton.setOnClickListener(v -> showTelegramPage());
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());
+        googleAuthButton.setOnClickListener(view1 -> signIn());
+        signOutButton.setOnClickListener(view1 -> {
+            firebaseAuth.signOut();
+            signInClient.signOut().addOnCompleteListener(runnable -> showGoogleSignIn()); });
 
         spannableCreditOktay();
         spannableCreditFreepik();
@@ -175,7 +217,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             }
 
             @Override
-            public void updateDrawState(TextPaint ds) {
+            public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -256,7 +298,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     private void checkSort() {
         SharedPreferences prefsRadio = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
         int idRadio = prefsRadio.getInt("Radio", 0);
-
         switch (idRadio) {
             case 200:
                 radioRecent.setChecked(true);
@@ -268,6 +309,62 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
                 radioYear.setChecked(true);
                 break;
         }
+    }
+
+    private void signIn() {
+        Intent signInIntent = signInClient.getSignInIntent();
+        startActivityForResult(signInIntent,1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handlingSignInResult(accountTask);
+        }
+    }
+
+    private void handlingSignInResult(Task<GoogleSignInAccount> accountTask) {
+        try {
+            GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
+            messageListener.showInternetError("Sign In Successfully");
+            if (signInAccount != null) firebaseGoogleAuth(signInAccount);
+        } catch (ApiException e) {
+            messageListener.showInternetError("FAIL");
+        }
+    }
+
+    private void firebaseGoogleAuth(GoogleSignInAccount signInAccount) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
+        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                updateUI(user);
+            }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            userLayout.setVisibility(View.VISIBLE);
+            googleAuthButton.setVisibility(View.GONE);
+            warningText.setVisibility(View.GONE);
+            userText.setText(user.getDisplayName() + " (" + user.getEmail() + ")");
+        }
+    }
+
+    @Override
+    public void showGoogleSignIn() {
+        userLayout.setVisibility(View.GONE);
+        googleAuthButton.setVisibility(View.VISIBLE);
+        warningText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showUser(FirebaseUser user) {
+        updateUI(user);
     }
 
     @Override

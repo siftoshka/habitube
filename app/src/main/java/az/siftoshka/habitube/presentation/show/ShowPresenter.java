@@ -135,7 +135,6 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
         if (credits.getCast().size() > 10) {
             getViewState().showCastExpandButton(credits.getCast());
         }
-
         getViewState().showCrew(newCrewList);
         getViewState().showCast(newCastList);
     }

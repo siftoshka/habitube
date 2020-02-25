@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,6 +58,8 @@ import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.movie.MoviePresenter;
 import az.siftoshka.habitube.presentation.movie.MovieView;
+import az.siftoshka.habitube.ui.credits.CastBottomDialog;
+import az.siftoshka.habitube.ui.credits.CrewBottomDialog;
 import az.siftoshka.habitube.utils.CurrencyFormatter;
 import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
@@ -247,6 +248,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         addMovieToPlanned(movie);
         deleteMovieFromWatched(movie);
         deleteMovieFromPlanned(movie);
+
     }
 
     private void addGenres(Movie movie) {
@@ -285,26 +287,20 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private void deleteMovieFromWatched(Movie movie) {
         watchedButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> moviePresenter.deleteMovieFromWatched(movie));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-            alertDialogBuilder.show();
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
+                    .setMessage(getResources().getString(R.string.are_you_sure))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> moviePresenter.deleteMovieFromWatched(movie))
+                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
     private void deleteMovieFromPlanned(Movie movie) {
         planningButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-            alertDialogBuilder.show();
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
+                    .setMessage(getResources().getString(R.string.are_you_sure))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie))
+                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
@@ -388,7 +384,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showCrew(List<Crew> crews) {
-        if (crews == null)
+        if (crews == null || crews.size() == 0)
             crewText.setVisibility(View.GONE);
         crewAdapter.addAllPersons(crews);
     }

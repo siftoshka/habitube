@@ -147,7 +147,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private void sendCredits(Credits credits) {
         List<Cast> newCastList = new ArrayList<>();
         List<Crew> newCrewList = new ArrayList<>();
-        for (int number = 0; number <= credits.getCrew().size() - 1; number++) {
+        for (int number = 0; number < credits.getCrew().size(); number++) {
             if (credits.getCrew().get(number).getJob().equals("Director") ||
                     credits.getCrew().get(number).getJob().equals("Screenplay") ||
                     credits.getCrew().get(number).getJob().equals("Producer") ||
@@ -158,7 +158,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         if (credits.getCrew().size() > 10) {
             getViewState().showCrewExpandButton(credits.getCrew());
         }
-        for (int number = 0; number <= credits.getCast().size() - 1; number++) {
+        for (int number = 0; number < credits.getCast().size(); number++) {
             if (number < 10) {
                 newCastList.add(credits.getCast().get(number));
             }
@@ -166,7 +166,6 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         if (credits.getCast().size() > 10) {
             getViewState().showCastExpandButton(credits.getCast());
         }
-
         getViewState().showCrew(newCrewList);
         getViewState().showCast(newCastList);
     }

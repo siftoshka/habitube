@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.ui.movie;
+package az.siftoshka.habitube.ui.credits;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,24 +19,24 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
-import az.siftoshka.habitube.adapters.CrewAdapter;
-import az.siftoshka.habitube.entities.credits.Crew;
+import az.siftoshka.habitube.adapters.CastAdapter;
+import az.siftoshka.habitube.entities.credits.Cast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.terrakok.cicerone.Router;
 
-public class CrewBottomDialog extends BottomSheetDialogFragment {
+public class CastBottomDialog extends BottomSheetDialogFragment {
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
-    @BindView(R.id.recycler_view_credits) RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_credits) RecyclerView recyclerViewCast;
 
     private final Router router;
-    private List<Crew> crew;
-    private CrewAdapter crewAdapter;
+    private List<Cast> cast;
+    private CastAdapter castAdapter;
     private Unbinder unbinder;
 
-    public CrewBottomDialog(Router router) {
+    public CastBottomDialog(Router router) {
         this.router = router;
     }
 
@@ -46,9 +46,9 @@ public class CrewBottomDialog extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            crew = bundle.getParcelableArrayList("CREW");
+            cast = bundle.getParcelableArrayList("CAST");
         }
-        crewAdapter = new CrewAdapter(id -> {
+        castAdapter = new CastAdapter(id -> {
             dismiss();
             router.navigateTo(new Screens.SearchItemScreen(id, 3));});
     }
@@ -64,15 +64,15 @@ public class CrewBottomDialog extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        GridLayoutManager layoutManagerCrew = new GridLayoutManager(getContext(), 2);
-        recyclerViewCrew.setLayoutManager(layoutManagerCrew);
-        recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewCrew.setHasFixedSize(true);
-        recyclerViewCrew.setAdapter(crewAdapter);
+        GridLayoutManager layoutManagerCasts = new GridLayoutManager(getContext(), 2);
+        recyclerViewCast.setLayoutManager(layoutManagerCasts);
+        recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCast.setHasFixedSize(true);
+        recyclerViewCast.setAdapter(castAdapter);
     }
 
     private void setDialog() {
-        crewAdapter.addAllPersons(crew);
+        castAdapter.addAllPersons(cast);
     }
 
     @Override

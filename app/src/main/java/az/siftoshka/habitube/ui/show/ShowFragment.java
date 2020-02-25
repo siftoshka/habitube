@@ -58,8 +58,8 @@ import az.siftoshka.habitube.entities.show.ShowGenre;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
 import az.siftoshka.habitube.presentation.show.ShowView;
-import az.siftoshka.habitube.ui.movie.CastBottomDialog;
-import az.siftoshka.habitube.ui.movie.CrewBottomDialog;
+import az.siftoshka.habitube.ui.credits.CastBottomDialog;
+import az.siftoshka.habitube.ui.credits.CrewBottomDialog;
 import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
@@ -278,28 +278,20 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private void deleteMovieFromWatched(Show show) {
         watchedButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> showPresenter.deleteShowFromWatched(show));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
-            alertDialogBuilder.show();
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
+                    .setMessage(getResources().getString(R.string.are_you_sure))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> showPresenter.deleteShowFromWatched(show))
+                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
     private void deleteMovieFromPlanned(Show show) {
         planningButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
-            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie));
-            alertDialogBuilder.setMessage(getResources().getString(R.string.are_you_sure));
-            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.yes),
-                    (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show));
-
-            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss());
-
-            alertDialogBuilder.show();
+            alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
+                    .setMessage(getResources().getString(R.string.are_you_sure))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show))
+                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 

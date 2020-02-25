@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name" translatable="false">Habitube</string>
     <string name="app_version">App Version</string>
     <string name="app_desc">Habitude - is an open-source project with the purpose of help people to find movies &amp; tv shows and store them in a personal offline library</string>
@@ -56,9 +56,7 @@
 
     <string name="minutes">minutes</string>
     <string name="your_list_is_empty">Your list is empty!</string>
-    <string name="hint_1">You can tap on Search Icon to find your favorite Movie/TV Show/Star</string>
-    <string name="or">or</string>
-    <string name="hint_2">Just click the Explore button</string>
+    <string name="hint">You can tap on Search Icon to find your favorite Movie/TV Show/Star \n or \n Just click the explore button</string>
     <string name="language">en-US</string>
     <string name="episodes">episodes</string>
     <string name="planned">Arranged ✓</string>
@@ -84,6 +82,12 @@
     <string name="turn_on_adult_content">Turn on Adult Content</string>
     <string name="tab_similar_alt">Similar</string>
     <string name="tab_credits_alt">Credits</string>
+    <string name="details">Details</string>
+    <string name="budget">Budget:</string>
+    <string name="revenue">Revenue:</string>
+    <string name="backup_amp_sync">Backup &amp; Sync</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="google_warning">Google Account will be only used to store your movies and tv shows in Google Firebase Realtime Database.\n All your information is private for us.</string>
 
 
 </resources>

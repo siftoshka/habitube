@@ -49,9 +49,7 @@
     <string name="m_11">Ноябрь</string>
     <string name="m_12">Декабрь</string>
     <string name="minutes">минут</string>
-    <string name="hint_1">Вы можете нажать на иконку Поиск, чтобы найти любимый Фильм/Сериал/Звезду</string>
-    <string name="or">или</string>
-    <string name="hint_2">Просто нажмите на кнопку Исследовать</string>
+    <string name="hint">Вы можете нажать на иконку Поиск, чтобы найти любимый Фильм/Сериал/Звезду \n или \n Просто нажать на кнопку Исследовать</string>
     <string name="your_list_is_empty">Ваш список пуст!</string>
     <string name="language">ru-RU</string>
     <string name="episodes">епизодов</string>
@@ -76,5 +74,12 @@
     <string name="show_all_cast">Показать всех</string>
     <string name="show_all_crew">Показать всех</string>
     <string name="turn_on_adult_content">Включить взрослые материалы</string>
+    <string name="budget">Бюджет:</string>
+    <string name="details">Детали</string>
+    <string name="revenue">Прибыль:</string>
+    <string name="tab_credits_alt">Благодарность</string>
+    <string name="tab_similar_alt">Похожие</string>
+    <string name="backup_amp_sync">Резервное копирование</string>
+    <string name="sign_in_with_google">Войти через Google</string>
 
 </resources>
