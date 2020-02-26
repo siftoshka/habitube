@@ -9,6 +9,7 @@ import az.siftoshka.habitube.entities.person.Person;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.video.VideoResponse;
 import az.siftoshka.habitube.model.server.MovieDBApi;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -70,8 +71,20 @@ public class RemotePostRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonMovieCredits(int id, String language) {
+        return movieDBApi.getPersonMovieCredits(id, language)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Single<Credits> getShowCredits(int id) {
         return movieDBApi.getShowCredits(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonShowCredits(int id, String language) {
+        return movieDBApi.getPersonShowCredits(id, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

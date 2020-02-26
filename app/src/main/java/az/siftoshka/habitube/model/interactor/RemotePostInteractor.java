@@ -52,7 +52,15 @@ public class RemotePostInteractor {
         return repository.getCredits(id);
     }
 
+    public Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonMovieCredits(int id, String language) {
+        return repository.getPersonMovieCredits(id, language);
+    }
+
     public Single<Credits> getShowCredits(int id) {
         return repository.getShowCredits(id);
+    }
+
+    public Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonShowCredits(int id, String language) {
+        return repository.getPersonShowCredits(id, language);
     }
 }

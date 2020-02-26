@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.star;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.adapters.CastPersonAdapter;
+import az.siftoshka.habitube.adapters.CrewPersonAdapter;
 import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.person.Person;
+import az.siftoshka.habitube.entities.personcredits.Cast;
+import az.siftoshka.habitube.entities.personcredits.Crew;
 import az.siftoshka.habitube.presentation.star.StarPresenter;
 import az.siftoshka.habitube.presentation.star.StarView;
+import az.siftoshka.habitube.ui.credits.CastBottomDialog;
+import az.siftoshka.habitube.ui.credits.CastPersonBottomDialog;
+import az.siftoshka.habitube.ui.credits.CrewBottomDialog;
+import az.siftoshka.habitube.ui.credits.CrewPersonBottomDialog;
 import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
@@ -48,9 +65,30 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
     @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
     @BindView(R.id.refresh) ImageView refreshButton;
+    @BindView(R.id.tab_info) MaterialButton tabInfo;
+    @BindView(R.id.tab_movies) MaterialButton tabMovies;
+    @BindView(R.id.tab_shows) MaterialButton tabShows;
+    @BindView(R.id.cast_movie_button) MaterialButton castMovieButton;
+    @BindView(R.id.crew_movie_button) MaterialButton crewMovieButton;
+    @BindView(R.id.cast_show_button) MaterialButton castShowButton;
+    @BindView(R.id.crew_show_button) MaterialButton crewShowButton;
+    @BindView(R.id.cast_movie_text) TextView castMovieText;
+    @BindView(R.id.crew_movie_text) TextView crewMovieText;
+    @BindView(R.id.cast_show_text) TextView castShowText;
+    @BindView(R.id.crew_show_text) TextView crewShowText;
+    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_movie_layout) LinearLayout tabMovieCreditsCard;
+    @BindView(R.id.tab_credits_show_layout) LinearLayout tabShowCreditsCard;
+    @BindView(R.id.recycler_view_movie_crew) RecyclerView recyclerViewMovieCrew;
+    @BindView(R.id.recycler_view_movie_cast) RecyclerView recyclerViewMovieCast;
+    @BindView(R.id.recycler_view_show_crew) RecyclerView recyclerViewShowCrew;
+    @BindView(R.id.recycler_view_show_cast) RecyclerView recyclerViewShowCast;
+
 
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
+    private CastPersonAdapter movieCastAdapter, showCastAdapter;
+    private CrewPersonAdapter movieCrewAdapter, showCrewAdapter;
 
     @ProvidePresenter
     StarPresenter starPresenter() {
@@ -68,6 +106,10 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
+        movieCastAdapter = new CastPersonAdapter(id -> starPresenter.goToDetailedMovieScreen(id));
+        movieCrewAdapter = new CrewPersonAdapter(id -> starPresenter.goToDetailedMovieScreen(id));
+        showCastAdapter = new CastPersonAdapter(id -> starPresenter.goToDetailedShowScreen(id));
+        showCrewAdapter = new CrewPersonAdapter(id -> starPresenter.goToDetailedShowScreen(id));
     }
 
     @Override
@@ -80,6 +122,28 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> starPresenter.goBack());
+        initialTab();
+        initTabs();
+        LinearLayoutManager linearLayoutMovieCast = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewMovieCast.setLayoutManager(linearLayoutMovieCast);
+        recyclerViewMovieCast.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewMovieCast.setHasFixedSize(true);
+        recyclerViewMovieCast.setAdapter(movieCastAdapter);
+        LinearLayoutManager linearLayoutMovieCrew = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewMovieCrew.setLayoutManager(linearLayoutMovieCrew);
+        recyclerViewMovieCrew.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewMovieCrew.setHasFixedSize(true);
+        recyclerViewMovieCrew.setAdapter(movieCrewAdapter);
+        LinearLayoutManager linearLayoutShowCast = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewShowCast.setLayoutManager(linearLayoutShowCast);
+        recyclerViewShowCast.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewShowCast.setHasFixedSize(true);
+        recyclerViewShowCast.setAdapter(showCastAdapter);
+        LinearLayoutManager linearLayoutShowCrew = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewShowCrew.setLayoutManager(linearLayoutShowCrew);
+        recyclerViewShowCrew.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewShowCrew.setHasFixedSize(true);
+        recyclerViewShowCrew.setAdapter(showCrewAdapter);
     }
 
     @Override
@@ -91,8 +155,112 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonLocation.setText(person.getPlaceOfBirth());
         posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
         posterPersonBio.setText(person.getBiography());
-
         checkDescription(person);
+    }
+
+    private void initialTab() {
+        tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabMovies.setTextColor(getResources().getColor(R.color.dark_800));
+        tabShows.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.VISIBLE);
+        tabMovieCreditsCard.setVisibility(View.GONE);
+        tabShowCreditsCard.setVisibility(View.GONE);
+    }
+
+    private void initTabs() {
+        tabInfo.setOnClickListener(view -> initialTab());
+        tabMovies.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabMovies.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabShows.setTextColor(getResources().getColor(R.color.dark_800));
+            tabInfoCard.setVisibility(View.GONE);
+            tabMovieCreditsCard.setVisibility(View.VISIBLE);
+            tabShowCreditsCard.setVisibility(View.GONE);
+        });
+        tabShows.setOnClickListener(view -> {
+            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+            tabMovies.setTextColor(getResources().getColor(R.color.dark_800));
+            tabShows.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tabInfoCard.setVisibility(View.GONE);
+            tabMovieCreditsCard.setVisibility(View.GONE);
+            tabShowCreditsCard.setVisibility(View.VISIBLE);
+        });
+    }
+
+    @Override
+    public void showMovieCast(List<Cast> casts) {
+        if (casts == null || casts.size() != 0)
+            castMovieText.setVisibility(View.GONE);
+        movieCastAdapter.addAllPersons(casts);
+    }
+
+    @Override
+    public void showTVShowCast(List<Cast> casts) {
+        if (casts == null || casts.size() != 0)
+            castShowText.setVisibility(View.GONE);
+        showCastAdapter.addAllPersons(casts);
+    }
+
+    @Override
+    public void showMovieCrew(List<Crew> crews) {
+        if (crews == null || crews.size() == 0)
+            crewMovieText.setVisibility(View.GONE);
+        movieCrewAdapter.addAllPersons(crews);
+    }
+
+    @Override
+    public void showTVShowCrew(List<Crew> crews) {
+        if (crews == null || crews.size() == 0)
+            crewShowText.setVisibility(View.GONE);
+        showCrewAdapter.addAllPersons(crews);
+    }
+
+    @Override
+    public void showMovieCastExpandButton(List<Cast> casts) {
+        castMovieButton.setVisibility(View.VISIBLE);
+        castMovieButton.setOnClickListener(view -> {
+            CastPersonBottomDialog castBottomDialog = new CastPersonBottomDialog(starPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            castBottomDialog.setArguments(bundle);
+            castBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
+    public void showTVShowCastExpandButton(List<Cast> casts) {
+        castShowButton.setVisibility(View.VISIBLE);
+        castShowButton.setOnClickListener(view -> {
+            CastPersonBottomDialog castBottomDialog = new CastPersonBottomDialog(starPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            castBottomDialog.setArguments(bundle);
+            castBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
+    public void showMovieCrewExpandButton(List<Crew> crews) {
+        crewMovieButton.setVisibility(View.VISIBLE);
+        crewMovieButton.setOnClickListener(view -> {
+            CrewPersonBottomDialog crewBottomDialog = new CrewPersonBottomDialog(starPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            crewBottomDialog.setArguments(bundle);
+            crewBottomDialog.show(getChildFragmentManager(), null);
+        });
+    }
+
+    @Override
+    public void showTVShowCrewExpandButton(List<Crew> crews) {
+        crewShowButton.setVisibility(View.VISIBLE);
+        crewShowButton.setOnClickListener(view -> {
+            CrewPersonBottomDialog crewBottomDialog = new CrewPersonBottomDialog(starPresenter.getRouter());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            crewBottomDialog.setArguments(bundle);
+            crewBottomDialog.show(getChildFragmentManager(), null);
+        });
     }
 
     private void checkDescription(Person person) {

@@ -1,7 +1,6 @@
 package az.siftoshka.habitube.model.server;
 
 import az.siftoshka.habitube.entities.credits.Credits;
-import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movielite.MovieResponse;
 import az.siftoshka.habitube.entities.person.Person;
@@ -89,6 +88,18 @@ public interface MovieDBApi {
     @GET("tv/{tv_id}/credits")
     Single<Credits> getShowCredits(
             @Path("tv_id") int tvId
+    );
+
+    @GET("person/{person_id}/movie_credits")
+    Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonMovieCredits(
+            @Path("person_id") int personId,
+            @Query("language") String language
+    );
+
+    @GET("person/{person_id}/tv_credits")
+    Single<az.siftoshka.habitube.entities.personcredits.Credits> getPersonShowCredits(
+            @Path("person_id") int personId,
+            @Query("language") String language
     );
 
     @GET("search/multi")

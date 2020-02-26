@@ -320,9 +320,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> {
-            initialTab();
-        });
+        tabInfo.setOnClickListener(view -> initialTab());
         tabCredits.setOnClickListener(view -> {
             tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
             tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
