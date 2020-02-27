@@ -88,6 +88,8 @@
     <string name="backup_amp_sync">Backup &amp; Sync</string>
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="google_warning">Google Account will be only used to store your movies and tv shows in Google Firebase Realtime Database.\n All your information is private for us.</string>
+    <string name="show_all_tv_shows">Show all TV Shows</string>
+    <string name="show_all_movies">Show All Movies</string>
 
 
 </resources>

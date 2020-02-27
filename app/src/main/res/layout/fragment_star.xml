@@ -154,6 +154,28 @@
                         android:textSize="18sp"
                         tools:text="POPULARITY" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/imdb_button"
+                        android:layout_marginStart="3dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/search_in_imdb"
+                        android:textColor="#E6B91E"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_imdb"
+                        app:iconTint="#E6B91E"
+                        app:strokeColor="#E6B91E" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -316,7 +338,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
-                        android:text="@string/show_all_cast"
+                        android:text="@string/show_all_movies"
                         android:textColor="@color/colorPrimary"
                         android:visibility="gone"
                         app:cornerRadius="10dp"
@@ -349,7 +371,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
-                        android:text="@string/show_all_crew"
+                        android:text="@string/show_all_movies"
                         android:textColor="@color/colorPrimary"
                         android:visibility="gone"
                         app:cornerRadius="10dp"
@@ -396,7 +418,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
-                        android:text="@string/show_all_cast"
+                        android:text="@string/show_all_tv_shows"
                         android:textColor="@color/colorPrimary"
                         android:visibility="gone"
                         app:cornerRadius="10dp"
@@ -429,7 +451,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
-                        android:text="@string/show_all_crew"
+                        android:text="@string/show_all_tv_shows"
                         android:textColor="@color/colorPrimary"
                         android:visibility="gone"
                         app:cornerRadius="10dp"

@@ -9,6 +9,7 @@ public class Person {
     @SerializedName("known_for_department") @Expose private String knownForDepartment;
     @SerializedName("id") @Expose private int id;
     @SerializedName("name") @Expose private String name;
+    @SerializedName("imdb_id") @Expose private String imdbId;
     @SerializedName("biography") @Expose private String biography;
     @SerializedName("popularity") @Expose private double popularity;
     @SerializedName("place_of_birth") @Expose private String placeOfBirth;
@@ -76,5 +77,13 @@ public class Person {
 
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
+    }
+
+    public String getImdbId() {
+        return imdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 }

@@ -1,5 +1,7 @@
 package az.siftoshka.habitube.ui.star;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.CastPersonAdapter;
 import az.siftoshka.habitube.adapters.CrewPersonAdapter;
@@ -64,6 +67,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_popularity) TextView posterPersonPopularity;
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
     @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
+    @BindView(R.id.imdb_button) MaterialButton imdbButton;
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.tab_info) MaterialButton tabInfo;
     @BindView(R.id.tab_movies) MaterialButton tabMovies;
@@ -156,6 +160,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
         posterPersonBio.setText(person.getBiography());
         checkDescription(person);
+        checkImdbAvailability(person);
     }
 
     private void initialTab() {
@@ -189,14 +194,14 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     @Override
     public void showMovieCast(List<Cast> casts) {
-        if (casts == null || casts.size() != 0)
+        if (casts == null || casts.size() == 0)
             castMovieText.setVisibility(View.GONE);
         movieCastAdapter.addAllPersons(casts);
     }
 
     @Override
     public void showTVShowCast(List<Cast> casts) {
-        if (casts == null || casts.size() != 0)
+        if (casts == null || casts.size() == 0)
             castShowText.setVisibility(View.GONE);
         showCastAdapter.addAllPersons(casts);
     }
@@ -264,9 +269,20 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     }
 
     private void checkDescription(Person person) {
-        if (person.getBiography().equals("")) {
-            personBioCard.setVisibility(View.GONE);
+        if (person.getBiography().equals("")) personBioCard.setVisibility(View.GONE);
+    }
+
+    private void checkImdbAvailability(Person person) {
+        if (!person.getImdbId().equals("")) {
+            imdbButton.setVisibility(View.VISIBLE);
+            showImdbWeb(person.getImdbId());
         }
+    }
+
+    private void showImdbWeb(String imdbId) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(Constants.SYSTEM.IMDB_PERSON + imdbId));
+        imdbButton.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override

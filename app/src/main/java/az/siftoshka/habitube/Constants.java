@@ -11,6 +11,7 @@ public final class Constants {
 
     public static final class SYSTEM {
         public static final String IMDB_WEBSITE = "https://www.imdb.com/title/";
+        public static final String IMDB_PERSON = "https://www.imdb.com/name/";
         public static final String DEV_TELEGRAM = "https://t.me/siftoshka";
         public static final String DEV_GITHUB = "https://github.com/siftoshka";
         public static final String DEV_INSTAGRAM = "https://www.instagram.com/siftoshka";
