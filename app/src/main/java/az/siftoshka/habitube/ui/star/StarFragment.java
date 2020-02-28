@@ -68,6 +68,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
     @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
     @BindView(R.id.imdb_button) MaterialButton imdbButton;
+    @BindView(R.id.social_layout) LinearLayout socialLayout;
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.tab_info) MaterialButton tabInfo;
     @BindView(R.id.tab_movies) MaterialButton tabMovies;
@@ -274,7 +275,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     private void checkImdbAvailability(Person person) {
         if (!person.getImdbId().equals("")) {
-            imdbButton.setVisibility(View.VISIBLE);
+            socialLayout.setVisibility(View.VISIBLE);
             showImdbWeb(person.getImdbId());
         }
     }

@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -250,7 +251,24 @@ public class Movie implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id;
+        return adult == movie.adult &&
+                id == movie.id &&
+                Double.compare(movie.popularity, popularity) == 0 &&
+                runtime == movie.runtime &&
+                Double.compare(movie.voteAverage, voteAverage) == 0 &&
+                voteCount == movie.voteCount &&
+                budget == movie.budget &&
+                revenue == movie.revenue &&
+                Objects.equals(backdropPath, movie.backdropPath) &&
+                Objects.equals(movieGenres, movie.movieGenres) &&
+                Objects.equals(imdbId, movie.imdbId) &&
+                Objects.equals(originalTitle, movie.originalTitle) &&
+                Objects.equals(overview, movie.overview) &&
+                Objects.equals(posterPath, movie.posterPath) &&
+                Objects.equals(releaseDate, movie.releaseDate) &&
+                Objects.equals(status, movie.status) &&
+                Objects.equals(title, movie.title) &&
+                Arrays.equals(posterImage, movie.posterImage);
     }
 
     @Override
@@ -283,4 +301,6 @@ public class Movie implements Parcelable {
         parcel.writeLong(revenue);
         parcel.writeByteArray(posterImage);
     }
+
+
 }

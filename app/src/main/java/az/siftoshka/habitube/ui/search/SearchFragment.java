@@ -59,7 +59,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @BindView(R.id.search_toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view_search) RecyclerView recyclerViewSearch;
-    @BindView(R.id.search_icon) ImageView searchIcon;
+    @BindView(R.id.search_icon) LinearLayout searchIcon;
     @BindView(R.id.nothing_icon) LinearLayout nothingIcon;
     @BindView(R.id.search_bar) androidx.appcompat.widget.SearchView searchView;
 
@@ -76,12 +76,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof MessageListener) {
-            this.messageListener = (MessageListener) context;
-        }
-        if (context instanceof KeyboardBehavior) {
-            this.keyboardBehavior = (KeyboardBehavior) context;
-        }
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
+        if (context instanceof KeyboardBehavior) this.keyboardBehavior = (KeyboardBehavior) context;
     }
 
 

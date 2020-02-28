@@ -11,8 +11,10 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import az.siftoshka.habitube.Constants;
 
@@ -241,6 +243,36 @@ public class Show implements Parcelable {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Show show = (Show) o;
+        return id == show.id &&
+                inProduction == show.inProduction &&
+                numberOfEpisodes == show.numberOfEpisodes &&
+                numberOfSeasons == show.numberOfSeasons &&
+                Double.compare(show.popularity, popularity) == 0 &&
+                Float.compare(show.voteAverage, voteAverage) == 0 &&
+                voteCount == show.voteCount &&
+                Objects.equals(backdropPath, show.backdropPath) &&
+                Objects.equals(episodeRunTime, show.episodeRunTime) &&
+                Objects.equals(firstAirDate, show.firstAirDate) &&
+                Objects.equals(showGenres, show.showGenres) &&
+                Objects.equals(lastAirDate, show.lastAirDate) &&
+                Objects.equals(name, show.name) &&
+                Objects.equals(overview, show.overview) &&
+                Objects.equals(posterPath, show.posterPath) &&
+                Objects.equals(seasons, show.seasons) &&
+                Objects.equals(status, show.status) &&
+                Arrays.equals(posterImage, show.posterImage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

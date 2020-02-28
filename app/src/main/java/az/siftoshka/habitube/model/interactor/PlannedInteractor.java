@@ -27,6 +27,14 @@ public class PlannedInteractor {
         plannedRepository.addShow(show);
     }
 
+    public void updateMovie(Movie movie) {
+        plannedRepository.updateMovie(movie);
+    }
+
+    public void updateShow(Show show) {
+        plannedRepository.updateShow(show);
+    }
+
     public Single<List<Movie>> getAllMovies() {
         return plannedRepository.getAllMovies();
     }

@@ -2,6 +2,7 @@ package az.siftoshka.habitube.presentation.movie;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
+import az.siftoshka.habitube.utils.ImageLoader;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -123,14 +125,29 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                         } else {
                             getViewState().showMovie(movie);
                         }
-                    }},
-                        throwable -> getViewState().showErrorScreen()));
+                    }}, throwable -> getViewState().showErrorScreen()));
     }
 
     private void getSimilarMovies(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getSimilarMovies(id, language)
                 .subscribe(movieResponses -> getViewState().showSimilarMovieList(movieResponses.getResults()),
                         Throwable::printStackTrace));
+    }
+
+    private void updatePlannedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
+        if (!movieFromLocal.equals(movieFromWeb)) {
+            movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
+            movieFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            plannedInteractor.updateMovie(movieFromWeb);
+        }
+    }
+
+    private void updateWatchedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
+        if (!movieFromLocal.equals(movieFromWeb)) {
+            movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
+            movieFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            watchedInteractor.updateMovie(movieFromWeb);
+        }
     }
 
     private void getVideos(int id, String language) {
@@ -155,17 +172,11 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                 newCrewList.add(credits.getCrew().get(number));
             }
         }
-        if (credits.getCrew().size() > 10) {
-            getViewState().showCrewExpandButton(credits.getCrew());
-        }
+        if (credits.getCrew().size() > 10) getViewState().showCrewExpandButton(credits.getCrew());
         for (int number = 0; number < credits.getCast().size(); number++) {
-            if (number < 10) {
-                newCastList.add(credits.getCast().get(number));
-            }
+            if (number < 10) newCastList.add(credits.getCast().get(number));
         }
-        if (credits.getCast().size() > 10) {
-            getViewState().showCastExpandButton(credits.getCast());
-        }
+        if (credits.getCast().size() > 10) getViewState().showCastExpandButton(credits.getCast());
         getViewState().showCrew(newCrewList);
         getViewState().showCast(newCastList);
     }
@@ -188,6 +199,16 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     public void deleteMovieFromPlanned(Movie movie) {
         plannedInteractor.deleteMovie(movie);
         getViewState().setPlanButtonEnabled(false);
+    }
+
+    public boolean isPlannedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
+        return compositeDisposable.add(plannedInteractor.getMovie(id)
+                .subscribe(movie -> updatePlannedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
+    }
+
+    public boolean isWatchedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
+        return compositeDisposable.add(watchedInteractor.getMovie(id)
+                .subscribe(movie -> updateWatchedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
     }
 
     public void goToDetailedMovieScreen(Integer id) {

@@ -28,6 +28,14 @@ public class WatchedInteractor {
         watchedRepository.addShow(show);
     }
 
+    public void updateMovie(Movie movie) {
+        watchedRepository.updateMovie(movie);
+    }
+
+    public void updateShow(Show show) {
+        watchedRepository.updateShow(show);
+    }
+
     public Single<List<Movie>> getAllMovies() {
         return watchedRepository.getAllMovies();
     }

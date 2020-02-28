@@ -125,10 +125,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
     private DateChanger dateChanger = new DateChanger();
-    private LinearLayoutManager layoutManagerSimilarMovies;
-    private LinearLayoutManager layoutManagerVideos;
-    private LinearLayoutManager layoutManagerCasts;
-    private LinearLayoutManager layoutManagerCrews;
 
     private Unbinder unbinder;
 
@@ -179,22 +175,22 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         planningButton.setEnabled(false);
         planningButtonAlt.setVisibility(View.GONE);
 
-        layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
+        LinearLayoutManager layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
-        layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
-        layoutManagerCasts = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCast.setLayoutManager(layoutManagerCasts);
         recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCast.setHasFixedSize(true);
         recyclerViewCast.setAdapter(castAdapter);
-        layoutManagerCrews = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManagerCrews = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCrew.setLayoutManager(layoutManagerCrews);
         recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCrew.setHasFixedSize(true);
@@ -248,7 +244,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         addMovieToPlanned(movie);
         deleteMovieFromWatched(movie);
         deleteMovieFromPlanned(movie);
-
+        moviePresenter.isPlannedMovieChanged(movie.getId(), movie, posterMain);
+        moviePresenter.isWatchedMovieChanged(movie.getId(), movie, posterMain);
     }
 
     private void addGenres(Movie movie) {
@@ -279,9 +276,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     private void checkDescription(Movie movie) {
-        if (movie.getOverview().equals("")) {
-            descMovieCard.setVisibility(View.GONE);
-        }
+        if (movie.getOverview().equals("")) descMovieCard.setVisibility(View.GONE);
     }
 
     private void deleteMovieFromWatched(Movie movie) {
@@ -347,24 +342,19 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showSimilarMovieList(List<MovieLite> similarMovies) {
-        if (similarMovies.isEmpty()) {
-            similarMoviesCard.setVisibility(View.GONE);
-        }
+        if (similarMovies.isEmpty()) similarMoviesCard.setVisibility(View.GONE);
         similarMoviesAdapter.addAllMovies(similarMovies);
     }
 
     @Override
     public void showVideos(List<Video> videos) {
-        if (videos.isEmpty()) {
-            videosCard.setVisibility(View.GONE);
-        }
+        if (videos.isEmpty()) videosCard.setVisibility(View.GONE);
         videoAdapter.addAllVideos(videos);
     }
 
     @Override
     public void showCast(List<Cast> casts) {
-        if (casts == null)
-            castText.setVisibility(View.GONE);
+        if (casts == null) castText.setVisibility(View.GONE);
         castAdapter.addAllPersons(casts);
     }
 
@@ -382,8 +372,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showCrew(List<Crew> crews) {
-        if (crews == null || crews.size() == 0)
-            crewText.setVisibility(View.GONE);
+        if (crews == null || crews.size() == 0) crewText.setVisibility(View.GONE);
         crewAdapter.addAllPersons(crews);
     }
 

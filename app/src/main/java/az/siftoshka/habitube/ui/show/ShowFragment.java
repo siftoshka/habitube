@@ -257,6 +257,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         addMovieToWatched(show);
         deleteMovieFromPlanned(show);
         deleteMovieFromWatched(show);
+        showPresenter.isPlannedShowChanged(show.getId(), show, posterShow);
+        showPresenter.isWatchedShowChanged(show.getId(), show, posterShow);
     }
 
     private void addMovieToWatched(Show show) {
@@ -307,9 +309,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     private void checkDescription(Show show) {
-        if (show.getOverview().equals("")) {
-            descShowCard.setVisibility(View.GONE);
-        }
+        if (show.getOverview().equals("")) descShowCard.setVisibility(View.GONE);
     }
 
     private void initialTab() {
@@ -325,9 +325,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> {
-            initialTab();
-        });
+        tabInfo.setOnClickListener(view -> initialTab());
         tabCredits.setOnClickListener(view -> {
             tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
             tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -362,9 +360,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
-        if(similarShows.isEmpty()) {
-            similarShowsCard.setVisibility(View.GONE);
-        }
+        if(similarShows.isEmpty()) similarShowsCard.setVisibility(View.GONE);
         similarShowsAdapter.addAllMovies(similarShows);
     }
 
@@ -379,9 +375,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showVideos(List<Video> videos) {
-        if (videos.isEmpty()) {
-            videosCard.setVisibility(View.GONE);
-        }
+        if (videos.isEmpty()) videosCard.setVisibility(View.GONE);
         videoAdapter.addAllVideos(videos);
     }
 
@@ -396,8 +390,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showCast(List<Cast> casts) {
-        if (casts == null)
-            castText.setVisibility(View.GONE);
+        if (casts == null) castText.setVisibility(View.GONE);
         castAdapter.addAllPersons(casts);
     }
 
@@ -415,8 +408,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showCrew(List<Crew> crews) {
-        if (crews == null || crews.size() == 0)
-            crewText.setVisibility(View.GONE);
+        if (crews == null || crews.size() == 0) crewText.setVisibility(View.GONE);
         crewAdapter.addAllPersons(crews);
     }
 

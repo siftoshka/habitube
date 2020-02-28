@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.presentation.show;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
+import az.siftoshka.habitube.utils.ImageLoader;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -95,6 +97,22 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
                         throwable -> getViewState().showErrorScreen()));
     }
 
+    private void updatePlannedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
+        if (!showFromLocal.equals(showFromWeb)) {
+            showFromWeb.setAddedDate(showFromLocal.getAddedDate());
+            showFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            plannedInteractor.updateShow(showFromWeb);
+        }
+    }
+
+    private void updateWatchedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
+        if (!showFromLocal.equals(showFromWeb)) {
+            showFromWeb.setAddedDate(showFromLocal.getAddedDate());
+            showFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            watchedInteractor.updateShow(showFromWeb);
+        }
+    }
+
     private void getSimilarTVShows(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, language)
                 .subscribe(movieResponses -> getViewState().showSimilarTVShowList(movieResponses.getResults()),
@@ -124,35 +142,13 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
                 newCrewList.add(credits.getCrew().get(number));
             }
         }
-        if (credits.getCrew().size() > 10) {
-            getViewState().showCrewExpandButton(credits.getCrew());
-        }
+        if (credits.getCrew().size() > 10) getViewState().showCrewExpandButton(credits.getCrew());
         for (int number = 0; number <= credits.getCast().size() - 1; number++) {
-            if (number < 10) {
-                newCastList.add(credits.getCast().get(number));
-            }
+            if (number < 10) newCastList.add(credits.getCast().get(number));
         }
-        if (credits.getCast().size() > 10) {
-            getViewState().showCastExpandButton(credits.getCast());
-        }
+        if (credits.getCast().size() > 10) getViewState().showCastExpandButton(credits.getCast());
         getViewState().showCrew(newCrewList);
         getViewState().showCast(newCastList);
-    }
-
-    public void goToDetailedShowScreen(Integer id) {
-        router.navigateTo(new Screens.PostShowScreen(id));
-    }
-
-    public void goToDetailedPersonScreen(int id) {
-        router.navigateTo(new Screens.SearchItemScreen(id, 3));
-    }
-
-    public Router getRouter() {
-        return router;
-    }
-
-    public void goBack() {
-        router.exit();
     }
 
     public void addShowAsWatched(Show show) {
@@ -173,6 +169,32 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     public void deleteShowFromPlanned(Show show) {
         plannedInteractor.deleteShow(show);
         getViewState().setPlanButtonEnabled(false);
+    }
+
+    public boolean isPlannedShowChanged(int id, Show showFromWeb, ImageView image) {
+        return compositeDisposable.add(plannedInteractor.getShow(id)
+                .subscribe(show -> updatePlannedShow(show, showFromWeb, image), Throwable::printStackTrace));
+    }
+
+    public boolean isWatchedShowChanged(int id, Show showFromWeb, ImageView image) {
+        return compositeDisposable.add(watchedInteractor.getShow(id)
+                .subscribe(show -> updateWatchedShow(show, showFromWeb, image), Throwable::printStackTrace));
+    }
+
+    public void goToDetailedShowScreen(Integer id) {
+        router.navigateTo(new Screens.PostShowScreen(id));
+    }
+
+    public void goToDetailedPersonScreen(int id) {
+        router.navigateTo(new Screens.SearchItemScreen(id, 3));
+    }
+
+    public Router getRouter() {
+        return router;
+    }
+
+    public void goBack() {
+        router.exit();
     }
 
     @Override

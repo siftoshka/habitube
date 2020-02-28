@@ -34,6 +34,20 @@ public class PlannedRepository {
                 .subscribe();
     }
 
+    public void updateMovie(Movie movie) {
+        plannedRepository.movieDAO().updateMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public void updateShow(Show show) {
+        plannedRepository.showDAO().updateShow(show)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
     public void deleteMovie(Movie movie) {
         plannedRepository.movieDAO().deleteMovie(movie)
                 .subscribeOn(Schedulers.io())

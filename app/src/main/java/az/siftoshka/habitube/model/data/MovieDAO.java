@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import io.reactivex.Single;
 public interface MovieDAO {
 
     @Insert Completable addMovie(Movie movie);
+    @Update Completable updateMovie(Movie movie);
     @Transaction @Query("SELECT * FROM movies") Single<List<Movie>> getMovies();
     @Transaction @Query("SELECT count(*) FROM movies WHERE id = :movieId") int getMovieCount(int movieId);
     @Transaction @Query("SELECT * FROM movies WHERE id = :movieId") Single<Movie> getMovieById(int movieId);

@@ -126,6 +126,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
                         android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="LOCATION" />
@@ -156,9 +160,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/social_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
@@ -171,7 +177,6 @@
                         android:text="@string/search_in_imdb"
                         android:textColor="#E6B91E"
                         android:textStyle="bold"
-                        android:visibility="gone"
                         app:icon="@drawable/ic_imdb"
                         app:iconTint="#E6B91E"
                         app:strokeColor="#E6B91E" />
