@@ -62,7 +62,7 @@ import static az.siftoshka.habitube.Constants.SYSTEM.DEV_INSTAGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.FLATICON;
 
-public class SettingsFragment extends MvpAppCompatFragment implements SettingsView, Toolbar.OnMenuItemClickListener {
+public class SettingsFragment extends MvpAppCompatFragment implements SettingsView {
 
     @InjectPresenter SettingsPresenter settingsPresenter;
 
@@ -74,10 +74,14 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.theme_switcher) SwitchCompat themeSwither;
     @BindView(R.id.adult_switcher) SwitchCompat adultSwitcher;
     @BindView(R.id.dark_mode_layout) LinearLayout darkModeCard;
-    @BindView(R.id.radio_sort) RadioGroup radioSorting;
+    @BindView(R.id.group_left) RadioGroup leftGroup;
+    @BindView(R.id.group_right) RadioGroup rightGroup;
     @BindView(R.id.radio_recent) RadioButton radioRecent;
     @BindView(R.id.radio_name) RadioButton radioName;
     @BindView(R.id.radio_year) RadioButton radioYear;
+    @BindView(R.id.radio_old) RadioButton radioOld;
+    @BindView(R.id.radio_year_alt) RadioButton radioYearAlt;
+    @BindView(R.id.radio_rate) RadioButton radioRate;
     @BindView(R.id.google_auth) MaterialButton googleAuthButton;
     @BindView(R.id.sign_out_layout) LinearLayout userLayout;
     @BindView(R.id.user_text) TextView userText;
@@ -110,7 +114,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         checkSort();
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -161,30 +164,51 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         });
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.search_movies) {
-            settingsPresenter.goToSearchScreen();
-        }
-        return false;
-    }
-
     private void radioListener() {
         radioRecent.setOnClickListener(view -> {
+            clearRightGroup();
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
             editor.putInt("Radio", 200);
             editor.apply();
         });
         radioName.setOnClickListener(view -> {
+            clearRightGroup();
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
             editor.putInt("Radio", 201);
             editor.apply();
         });
         radioYear.setOnClickListener(view -> {
+            clearRightGroup();
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
             editor.putInt("Radio", 202);
             editor.apply();
         });
+        radioOld.setOnClickListener(view -> {
+            clearLeftGroup();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 203);
+            editor.apply();
+        });
+        radioYearAlt.setOnClickListener(view -> {
+            clearLeftGroup();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 204);
+            editor.apply();
+        });
+        radioRate.setOnClickListener(view -> {
+            clearLeftGroup();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE).edit();
+            editor.putInt("Radio", 205);
+            editor.apply();
+        });
+    }
+
+    private void clearRightGroup() {
+        rightGroup.clearCheck();
+    }
+
+    private void clearLeftGroup() {
+        leftGroup.clearCheck();
     }
 
     private void showTelegramPage() {
@@ -288,7 +312,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         SharedPreferences prefs = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
 
-        if(idAdult == 301) {
+        if (idAdult == 301) {
             adultSwitcher.setChecked(true);
         } else {
             adultSwitcher.setChecked(false);
@@ -302,6 +326,9 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             case 200: radioRecent.setChecked(true);break;
             case 201: radioName.setChecked(true);break;
             case 202: radioYear.setChecked(true);break;
+            case 203: radioOld.setChecked(true);break;
+            case 204: radioYearAlt.setChecked(true);break;
+            case 205: radioRate.setChecked(true);break;
         }
     }
 

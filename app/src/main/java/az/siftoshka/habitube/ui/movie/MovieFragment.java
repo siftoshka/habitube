@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.movie;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +58,7 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.video.Video;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.movie.MoviePresenter;
 import az.siftoshka.habitube.presentation.movie.MovieView;
 import az.siftoshka.habitube.ui.credits.CastBottomDialog;
@@ -124,6 +127,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private VideoAdapter videoAdapter;
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
+    private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
 
     private Unbinder unbinder;
@@ -146,10 +150,16 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(Constants.DI.APP_SCOPE));
-        similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId));
+        similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId), postName -> messageListener.showText(postName));
         videoAdapter = new VideoAdapter(this::showVideo);
         castAdapter = new CastAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
@@ -354,7 +364,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showCast(List<Cast> casts) {
-        if (casts == null) castText.setVisibility(View.GONE);
+        if (casts == null || casts.size() == 0) castText.setVisibility(View.GONE);
         castAdapter.addAllPersons(casts);
     }
 

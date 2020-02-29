@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,12 +25,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         void onPostClicked(int postId);
     }
 
+    public interface OnItemLongClickListener {
+        void showPostName(String postName);
+    }
+
     private List<MovieLite> movies;
     private MovieItemClickListener clickListener;
+    private OnItemLongClickListener longClickListener;
 
-    public MovieAdapter(@NonNull MovieItemClickListener clickListener) {
+    public MovieAdapter(@NonNull MovieItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
         this.movies = new ArrayList<>();
         this.clickListener = clickListener;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -42,16 +50,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
         ImageLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
-        holder.posterTitle.setText(movie.getMovieTitle());
+//        holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterRate.setText(String.valueOf(movie.getVoteAverage()));
-        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
+//        holder.itemView.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
+        holder.itemView.setOnClickListener(view -> clickListener.onPostClicked(movie.getMovieId()));
+        holder.itemView.setOnLongClickListener(view -> {
+            longClickListener.showPostName(movie.getMovieTitle());
+            return true;
+        });
     }
 
     @Override
     public void onViewRecycled(@NonNull MovieHolder holder) {
-        holder.posterTitle.setText(null);
+//        holder.posterTitle.setText(null);
         holder.posterRate.setText(null);
-        holder.posterLayout.setOnClickListener(null);
+        holder.itemView.setOnClickListener(null);
     }
 
     @Override
@@ -67,7 +80,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     static class MovieHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout posterLayout;
+        RelativeLayout posterLayout;
         ImageView posterImage;
         TextView posterTitle, posterRate;
 

@@ -68,7 +68,11 @@
     <string name="sorting">Sorting by</string>
     <string name="radio_recent">Recently Added</string>
     <string name="radio_name">Title</string>
-    <string name="radio_year">Release Year</string>
+    <string name="radio_year">Release Year ↓</string>
+    <string name="radio_first">Added First</string>
+    <string name="radio_year_2">Release Year ↑</string>
+    <string name="radio_rating">Rating</string>
+
 
     <string name="close">Close</string>
 
@@ -91,6 +95,5 @@
     <string name="show_all_tv_shows">Show all TV Shows</string>
     <string name="show_all_movies">Show All Movies</string>
     <string name="search_hint">What are you looking for? \n Just type it! \nSearch for a movie, tv show, person.</string>
-
 
 </resources>

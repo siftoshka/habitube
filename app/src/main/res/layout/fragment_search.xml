@@ -26,8 +26,10 @@
             android:layout_height="match_parent"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/colorPrimary"
-            app:searchHintIcon="@drawable/ic_search"
-            app:closeIcon="@drawable/ic_delete"/>
+            app:closeIcon="@drawable/ic_delete"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_movies_menu"
+            app:searchIcon="@null" />
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -36,22 +38,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="70dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_undraw_search"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_hint"
-        android:textColor="@color/dark_600"
-        android:gravity="center"
-        android:textSize="18sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="70dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_undraw_search" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/search_hint"
+            android:textColor="@color/dark_600"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,28 +63,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
             android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="50dp"
+            android:adjustViewBounds="true"
             android:src="@drawable/ic_undraw_not_found"
             android:visibility="visible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nothing_found"
-            android:textSize="22sp"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:text="@string/nothing_found"
             android:textColor="@color/dark_800"
-            android:layout_gravity="center" />
+            android:textSize="22sp" />
     </LinearLayout>
 
 

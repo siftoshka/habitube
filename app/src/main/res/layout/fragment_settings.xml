@@ -88,91 +88,91 @@
                 </LinearLayout>
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@color/background"
-            android:elevation="5dp"
-            android:orientation="vertical"
-            android:paddingStart="10dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/backup_amp_sync"
-                android:textColor="@color/dark_800"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/google_auth"
+            <LinearLayout
                 android:layout_width="match_parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="@string/sign_in_with_google"
-                app:icon="@drawable/ic_google"
-                app:iconSize="20dp"
-                android:inputType="text"
-                app:strokeColor="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="@color/background"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:visibility="visible"/>
-
-            <TextView
-                android:id="@+id/warning_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/google_warning"
-                android:gravity="center"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:textColor="@color/dark_600"
-                android:textSize="12sp"/>
-
-            <LinearLayout
-                android:id="@+id/sign_out_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp">
 
                 <TextView
-                    android:id="@+id/user_text"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:layout_weight="1"
-                    android:textColor="@color/dark_600"
-                    android:textSize="14sp"
-                    tools:text="test.111@gmail.com"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/backup_amp_sync"
+                    android:textColor="@color/dark_800"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/sign_out"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_logout"
-                    android:padding="5dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/google_auth"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/background"
+                    android:inputType="text"
+                    android:text="@string/sign_in_with_google"
+                    android:visibility="visible"
+                    app:icon="@drawable/ic_google"
+                    app:iconSize="20dp"
+                    app:strokeColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/warning_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/google_warning"
+                    android:textColor="@color/dark_600"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/sign_out_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/user_text"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:textColor="@color/dark_600"
+                        android:textSize="14sp"
+                        tools:text="test.111@gmail.com" />
+
+                    <ImageView
+                        android:id="@+id/sign_out"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_logout" />
+
+                </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,8 +207,8 @@
                     android:orientation="horizontal">
 
                     <RadioGroup
-                        android:id="@+id/radio_sort"
-                        android:layout_width="match_parent"
+                        android:id="@+id/group_left"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -237,6 +237,40 @@
                             android:textColor="@color/dark_800" />
 
                     </RadioGroup>
+
+                    <RadioGroup
+                        android:id="@+id/group_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/radio_old"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_first"
+                            android:textColor="@color/dark_800" />
+
+                        <RadioButton
+                            android:id="@+id/radio_year_alt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_year_2"
+                            android:textColor="@color/dark_800" />
+
+                        <RadioButton
+                            android:id="@+id/radio_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/radio_rating"
+                            android:textColor="@color/dark_800" />
+
+                    </RadioGroup>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -319,7 +353,7 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:gravity="center_vertical"
-                        app:theme="@style/ColorSwitchStyle"/>
+                        app:theme="@style/ColorSwitchStyle" />
                 </LinearLayout>
 
 
@@ -363,9 +397,9 @@
                         android:id="@+id/telegram_contact"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="Telegram"
                         android:background="@drawable/circle_button"
                         android:backgroundTint="@color/telegramColor"
+                        android:contentDescription="Telegram"
                         android:padding="10dp"
                         android:src="@drawable/ic_telegram"
                         tools:ignore="HardcodedText" />
@@ -376,9 +410,9 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="30dp"
-                        android:contentDescription="Github"
                         android:background="@drawable/circle_button"
                         android:backgroundTint="@color/githubColor"
+                        android:contentDescription="Github"
                         android:padding="10dp"
                         android:src="@drawable/ic_github"
                         tools:ignore="HardcodedText" />
@@ -387,9 +421,9 @@
                         android:id="@+id/instagram_contact"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="Instagram"
                         android:background="@drawable/circle_button"
                         android:backgroundTint="@color/instagramColor"
+                        android:contentDescription="Instagram"
                         android:padding="10dp"
                         android:src="@drawable/ic_instagram"
                         tools:ignore="HardcodedText" />

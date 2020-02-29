@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.show;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -56,6 +57,7 @@ import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.show.ShowGenre;
 import az.siftoshka.habitube.entities.video.Video;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
 import az.siftoshka.habitube.presentation.show.ShowView;
 import az.siftoshka.habitube.ui.credits.CastBottomDialog;
@@ -126,6 +128,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private SeasonAdapter seasonAdapter;
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
+    private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
 
@@ -146,10 +149,16 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId));
+        similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
         videoAdapter = new VideoAdapter(this::showVideo);
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
         castAdapter = new CastAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
@@ -390,7 +399,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showCast(List<Cast> casts) {
-        if (casts == null) castText.setVisibility(View.GONE);
+        if (casts == null || casts.size() == 0) castText.setVisibility(View.GONE);
         castAdapter.addAllPersons(casts);
     }
 

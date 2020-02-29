@@ -33,7 +33,7 @@ import toothpick.Toothpick;
 
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
-public class LibraryFragment extends MvpAppCompatFragment implements LibraryView, Toolbar.OnMenuItemClickListener {
+public class LibraryFragment extends MvpAppCompatFragment implements LibraryView {
 
     @InjectPresenter LibraryPresenter libraryPresenter;
 
@@ -77,14 +77,6 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         moviesPref.setOnClickListener(view1 -> prefMovies());
         showsPref.setOnClickListener(view1 -> prefShows());
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.search_movies) {
-            libraryPresenter.goToSearchScreen();
-        }
-        return false;
     }
 
     private void prefMovies() {

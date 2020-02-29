@@ -8,18 +8,40 @@
     android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.explore.ExploreFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/round_button"
-        android:backgroundTint="@color/colorPrimary"
-        app:title="@string/app_name"
-        app:titleTextColor="#FFFFFF" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:text="@string/app_name"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="200dp"
+            android:layout_marginEnd="15dp"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:background="@drawable/round_button"
+            android:textColor="@color/white_is_white"
+            android:backgroundTint="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/ic_search"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="15dp" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/explore_loading"

@@ -1,5 +1,7 @@
 package az.siftoshka.habitube.ui.explore;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +27,7 @@ import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
 import butterknife.BindView;
@@ -34,11 +38,11 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class ExploreFragment extends MvpAppCompatFragment implements ExploreView, Toolbar.OnMenuItemClickListener {
+public class ExploreFragment extends MvpAppCompatFragment implements ExploreView {
 
     @InjectPresenter ExplorePresenter explorePresenter;
 
-    @BindView(R.id.main_toolbar) Toolbar toolbar;
+    @BindView(R.id.search) ImageView searchButton;
     @BindView(R.id.recycler_view_upcoming_movies) RecyclerView recyclerViewUpcoming;
     @BindView(R.id.recycler_view_movies) RecyclerView recyclerViewMovies;
     @BindView(R.id.recycler_view_tv_shows) RecyclerView recyclerViewTVShows;
@@ -54,6 +58,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
+    private MessageListener messageListener;
     private Unbinder unbinder;
 
     @ProvidePresenter
@@ -62,13 +67,19 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        upcomingAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedUpcomingScreen(postId));
-        movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen(postId));
-        showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId));
-        airTodayAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId));
+        upcomingAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedUpcomingScreen(postId), postName -> messageListener.showText(postName));
+        movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen(postId), postName -> messageListener.showText(postName));
+        showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
+        airTodayAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
     }
 
     @Override
@@ -80,11 +91,9 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setOnMenuItemClickListener(this);
         errorScreen.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-
+        searchButton.setOnClickListener(view1 -> explorePresenter.goToSearchScreen());
         LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
@@ -141,14 +150,6 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         airTodayShowScreen.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.search_movies) {
-            explorePresenter.goToSearchScreen();
-        }
-        return false;
     }
 
     @Override

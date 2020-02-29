@@ -80,6 +80,11 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     }
 
     @Override
+    public void showText(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
