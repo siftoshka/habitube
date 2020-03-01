@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,12 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @BindView(R.id.search_icon) LinearLayout searchIcon;
     @BindView(R.id.nothing_icon) LinearLayout nothingIcon;
     @BindView(R.id.search_bar) androidx.appcompat.widget.SearchView searchView;
+    @BindView(R.id.page_down) ImageView pageDown;
+    @BindView(R.id.radio_group) LinearLayout radioLayout;
+    @BindView(R.id.radio_multi) RadioButton radioMulti;
+    @BindView(R.id.radio_movie) RadioButton radioMovie;
+    @BindView(R.id.radio_tv) RadioButton radioShow;
+    @BindView(R.id.radio_people) RadioButton radioPeople;
 
     private SearchAdapter searchAdapter;
     private MessageListener messageListener;
@@ -99,12 +106,11 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         super.onViewCreated(view, savedInstanceState);
         searchView.requestFocus();
         searchView.onActionViewExpanded();
-
         recyclerViewSearch.setLayoutManager(new VegaXLayoutManager());
         recyclerViewSearch.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSearch.setHasFixedSize(true);
         recyclerViewSearch.setAdapter(searchAdapter);
-
+        pageDown.setOnClickListener(view1 -> pageCheck());
         toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
         init();
@@ -121,7 +127,10 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             @Override
             public boolean onQueryTextChange(final String newText) {
                 if (!TextUtils.isEmpty(newText)) {
-                    searchPresenter.searchMedia(newText, getResources().getString(R.string.language), adult);
+                    if(radioMulti.isChecked()) searchPresenter.multiSearch(newText, getResources().getString(R.string.language), adult);
+                    if(radioMovie.isChecked()) searchPresenter.movieSearch(newText, getResources().getString(R.string.language), adult);
+                    if(radioShow.isChecked()) searchPresenter.showSearch(newText, getResources().getString(R.string.language), adult);
+                    if(radioPeople.isChecked()) searchPresenter.personSearch(newText, getResources().getString(R.string.language), adult);
                 }
                 return true;
             }
@@ -163,6 +172,31 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             nothingIcon.setVisibility(View.GONE);
             searchIcon.setVisibility(View.GONE);
             recyclerViewSearch.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void radioListener() {
+        radioMulti.setOnClickListener(view -> {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+        radioMovie.setOnClickListener(view -> {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+        radioShow.setOnClickListener(view -> {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow);});
+        radioPeople.setOnClickListener(view -> {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+    }
+
+    private void pageCheck() {
+        if (pageDown.getDrawable().getConstantState() == pageDown.getResources().getDrawable(R.drawable.ic_down_arrow).getConstantState()) {
+            radioLayout.setVisibility(View.VISIBLE); radioListener();
+            pageDown.setImageResource(R.drawable.ic_up_arrow);
+        } else {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
         }
     }
 

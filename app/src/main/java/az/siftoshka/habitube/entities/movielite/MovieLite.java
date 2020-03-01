@@ -15,7 +15,8 @@ public class MovieLite {
     @SerializedName("first_air_date") @Expose private String firstAirDate;
     @SerializedName("media_type") @Expose private String mediaType;
 
-    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String starImage, String releaseDate, double voteAverage, String firstAirDate, String mediaType) {
+    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage,
+                     String starImage, String releaseDate, double voteAverage, String firstAirDate, String mediaType) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.showTitle = showTitle;

@@ -3,6 +3,7 @@ package az.siftoshka.habitube.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.video.Video;
+import az.siftoshka.habitube.utils.ImageLoader;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder> {
 
@@ -40,13 +42,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     public void onBindViewHolder(@NonNull VideoHolder holder, final int position) {
         final Video video = this.videos.get(position);
         holder.posterTitle.setText(video.getName());
-        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(video.getKey()));
+        ImageLoader.loadYoutube(holder.itemView, video.getKey(), holder.posterImage);
+        holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(video.getKey()));
     }
 
     @Override
     public void onViewRecycled(@NonNull VideoHolder holder) {
         holder.posterTitle.setText(null);
-        holder.posterLayout.setOnClickListener(null);
+        holder.posterImage.setOnClickListener(null);
     }
 
     @Override
@@ -61,13 +64,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     }
 
     static class VideoHolder extends RecyclerView.ViewHolder {
-        LinearLayout posterLayout;
+        ImageView posterImage;
         TextView posterTitle;
 
         VideoHolder(@NonNull View itemView) {
             super(itemView);
-            this.posterLayout = itemView.findViewById(R.id.item_layout);
-            this.posterTitle = itemView.findViewById(R.id.poster_main_text);
+            this.posterImage = itemView.findViewById(R.id.poster_image);
+            this.posterTitle = itemView.findViewById(R.id.poster_text);
         }
     }
 }

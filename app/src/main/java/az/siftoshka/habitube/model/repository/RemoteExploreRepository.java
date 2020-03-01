@@ -47,4 +47,22 @@ public class RemoteExploreRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<MovieResponse> getMovieSearchResults(String queryName, String language, boolean isAdult) {
+        return movieDBApi.getMovieSearchResults(language, queryName, 1, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<MovieResponse> getShowSearchResults(String queryName, String language, boolean isAdult) {
+        return movieDBApi.getShowSearchResults(language, queryName, 1, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<MovieResponse> getPersonSearchResults(String queryName, String language, boolean isAdult) {
+        return movieDBApi.getPersonSearchResults(language, queryName, 1, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

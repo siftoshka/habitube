@@ -190,7 +190,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
-        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);

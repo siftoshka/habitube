@@ -191,7 +191,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewSeasons.setAdapter(seasonAdapter);
 
         LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+                LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);

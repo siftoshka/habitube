@@ -47,4 +47,22 @@ public class RemoteExploreInteractor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<MovieResponse> getMovieSearchResults(String queryName, String language, boolean isAdult) {
+        return repository.getMovieSearchResults(queryName, language, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<MovieResponse> getShowSearchResults(String queryName, String language, boolean isAdult) {
+        return repository.getShowSearchResults(queryName, language, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<MovieResponse> getPersonSearchResults(String queryName, String language, boolean isAdult) {
+        return repository.getPersonSearchResults(queryName, language, isAdult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -109,4 +109,28 @@ public interface MovieDBApi {
             @Query("page") int page,
             @Query("include_adult") boolean isAdult
     );
+
+    @GET("search/movie")
+    Observable<MovieResponse> getMovieSearchResults(
+            @Query("language") String language,
+            @Query("query") String searchQuery,
+            @Query("page") int page,
+            @Query("include_adult") boolean isAdult
+    );
+
+    @GET("search/tv")
+    Observable<MovieResponse> getShowSearchResults(
+            @Query("language") String language,
+            @Query("query") String searchQuery,
+            @Query("page") int page,
+            @Query("include_adult") boolean isAdult
+    );
+
+    @GET("search/person")
+    Observable<MovieResponse> getPersonSearchResults(
+            @Query("language") String language,
+            @Query("query") String searchQuery,
+            @Query("page") int page,
+            @Query("include_adult") boolean isAdult
+    );
 }

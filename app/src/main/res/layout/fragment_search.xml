@@ -8,29 +8,120 @@
     android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.search.SearchFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/search_toolbar"
+    <LinearLayout
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/round_button"
-        android:backgroundTint="@color/colorPrimary"
-        app:navigationIcon="@drawable/ic_back_w">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="300dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/colorPrimary"
-            app:closeIcon="@drawable/ic_delete"
-            app:iconifiedByDefault="false"
-            app:queryHint="@string/search_movies_menu"
-            app:searchIcon="@null" />
-    </androidx.appcompat.widget.Toolbar>
+            app:navigationIcon="@drawable/ic_back_w">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/colorPrimary"
+                app:closeIcon="@drawable/ic_delete"
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/search_movies_menu"
+                app:searchIcon="@null" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/page_down"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="15dp"
+            android:src="@drawable/ic_down_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_multi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/radio_button"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Multi"
+                android:textColor="@color/dark_800" />
+
+            <RadioButton
+                android:id="@+id/radio_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/radio_button"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="@string/movies"
+                android:textColor="@color/dark_800" />
+
+            <RadioButton
+                android:id="@+id/radio_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/radio_button"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="@string/tv_shows"
+                android:textColor="@color/dark_800" />
+
+            <RadioButton
+                android:id="@+id/radio_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/radio_button"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="People"
+                android:textColor="@color/dark_800" />
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/search_icon"
@@ -43,9 +134,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="100dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_undraw_search" />
 
@@ -55,7 +146,7 @@
             android:gravity="center"
             android:text="@string/search_hint"
             android:textColor="@color/dark_600"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout

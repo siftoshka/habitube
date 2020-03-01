@@ -105,9 +105,23 @@ public class ImageLoader {
     }
 
     public static byte[] imageView2Bitmap(ImageView view) {
-        Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        try {
+            Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return baos.toByteArray();
+    }
+
+    public static void loadYoutube(View view, String key, ImageView image) {
+        Glide.with(view)
+                .load("https://img.youtube.com/vi/"+key+"/hqdefault.jpg")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(new ColorDrawable(Color.LTGRAY))
+                .error(R.drawable.ic_box)
+                .into(image);
     }
 }

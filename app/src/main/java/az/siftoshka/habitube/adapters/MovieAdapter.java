@@ -50,9 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(@NonNull MovieHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
         ImageLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
-//        holder.posterTitle.setText(movie.getMovieTitle());
         holder.posterRate.setText(String.valueOf(movie.getVoteAverage()));
-//        holder.itemView.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
         holder.itemView.setOnClickListener(view -> clickListener.onPostClicked(movie.getMovieId()));
         holder.itemView.setOnLongClickListener(view -> {
             longClickListener.showPostName(movie.getMovieTitle());
