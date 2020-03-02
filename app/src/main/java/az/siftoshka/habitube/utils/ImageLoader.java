@@ -72,7 +72,8 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(context)
                     .load(IMAGE_URL + url)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .error(R.drawable.ic_box)
                     .transform(new CenterCrop(), new RoundedCorners(16))
@@ -81,6 +82,7 @@ public class ImageLoader {
             Glide.with(context)
                     .load(R.drawable.ic_box)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
         }
@@ -120,6 +122,7 @@ public class ImageLoader {
                 .load("https://img.youtube.com/vi/"+key+"/hqdefault.jpg")
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
+                .centerCrop()
                 .placeholder(new ColorDrawable(Color.LTGRAY))
                 .error(R.drawable.ic_box)
                 .into(image);

@@ -25,8 +25,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public LibraryWatchedPresenter(Router router, Context context,
-                                   WatchedInteractor watchedInteractor) {
+    public LibraryWatchedPresenter(Router router, Context context, WatchedInteractor watchedInteractor) {
         this.router = router;
         this.context = context;
         this.watchedInteractor = watchedInteractor;
@@ -47,13 +46,14 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                 .subscribe((shows, throwable) -> getViewState().showWatchedShows(shows)));
     }
 
-
-    public void removeFromLocal(Movie movie) {
+    public void removeFromLocal(Movie movie, int position) {
         watchedInteractor.deleteMovie(movie);
+        getViewState().screenWatcher(position);
     }
 
-    public void removeFromLocal(Show show) {
+    public void removeFromLocal(Show show, int position) {
         watchedInteractor.deleteShow(show);
+        getViewState().screenWatcher(position);
     }
 
     public void goToDetailedMovieScreen(int postId) {

@@ -13,6 +13,7 @@ public interface LibraryPlanningView extends MvpView {
 
     void showPlannedMovies(List<Movie> movies);
     void showPlannedShows(List<Show> shows);
+    void screenWatcher(int position);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showOfflineCard(Movie movie);

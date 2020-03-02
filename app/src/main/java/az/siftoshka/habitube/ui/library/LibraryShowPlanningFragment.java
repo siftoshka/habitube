@@ -1,7 +1,6 @@
 package az.siftoshka.habitube.ui.library;
 
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -19,14 +17,13 @@ import java.util.List;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.adapters.LibraryAdapter;
 import az.siftoshka.habitube.adapters.LibraryShowAdapter;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningView;
-import az.siftoshka.habitube.utils.animation.SwipeDecorator;
-import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
+import az.siftoshka.habitube.ui.library.dialogs.OfflineShowCardDialog;
+import az.siftoshka.habitube.ui.library.dialogs.OptionMenuDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -56,7 +53,8 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryShowAdapter(postId -> planningPresenter.goToDetailedShowScreen(postId));
+        libraryAdapter = new LibraryShowAdapter(postId -> planningPresenter.goToDetailedShowScreen(postId),
+                (show, position) -> showOptionMenu(show, position));
     }
 
     @Override
@@ -68,14 +66,13 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerViewPlanning.setLayoutManager(new VegaXLayoutManager());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerViewPlanning.setLayoutManager(layoutManager);
         recyclerViewPlanning.setItemAnimator(new DefaultItemAnimator());
         recyclerViewPlanning.setHasFixedSize(true);
         recyclerViewPlanning.setAdapter(libraryAdapter);
         planningPresenter.getShows();
         libraryAdapter.getItemCount();
-
-        initSwipes();
     }
 
     @Override
@@ -91,7 +88,7 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
             case 205: Collections.sort(shows, (o1, o2) -> Double.compare(o2.getVoteAverage(), o1.getVoteAverage()));break;
         }
         libraryAdapter.addAllShows(shows);
-        screenWatcher();
+        watcher();
     }
 
     @Override
@@ -103,7 +100,13 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
         offlineShowCardDialog.show(getChildFragmentManager(), null);
     }
 
-    private void screenWatcher() {
+    @Override
+    public void screenWatcher(int position) {
+        libraryAdapter.dataChanged(position);
+        watcher();
+    }
+
+    private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
             recyclerViewPlanning.setVisibility(View.VISIBLE);
@@ -113,34 +116,13 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
         }
     }
 
-    private void initSwipes() {
-        ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        planningPresenter.removeFromLocal(libraryAdapter.getShowAt(viewHolder.getAdapterPosition()));
-                        screenWatcher();
-                    }
-
-                    @Override
-                    public void onChildDraw(@NonNull Canvas c,
-                                            @NonNull RecyclerView recyclerView,
-                                            @NonNull RecyclerView.ViewHolder viewHolder,
-                                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                        new SwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.deleteColor))
-                                .addActionIcon(R.drawable.ic_delete)
-                                .create()
-                                .decorate();
-                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                    }
-                });
-        itemTouchHelper.attachToRecyclerView(recyclerViewPlanning);
+    private void showOptionMenu(Show show, int position) {
+        OptionMenuDialog menuDialog = new OptionMenuDialog(planningPresenter, null);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("show-library-planning", show);
+        bundle.putInt("position", position);
+        menuDialog.setArguments(bundle);
+        menuDialog.show(getChildFragmentManager(), null);
     }
 
     @Override

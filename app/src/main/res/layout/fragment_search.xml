@@ -9,9 +9,9 @@
     tools:context="az.siftoshka.habitube.ui.search.SearchFragment">
 
     <LinearLayout
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.Toolbar
@@ -55,8 +55,8 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:gravity="center"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="Multi"
+                android:text="@string/multi"
                 android:textColor="@color/dark_800" />
 
             <RadioButton
@@ -118,7 +118,7 @@
                 android:gravity="center"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="People"
+                android:text="@string/people"
                 android:textColor="@color/dark_800" />
         </RadioGroup>
     </LinearLayout>
@@ -183,7 +183,9 @@
         android:id="@+id/recycler_view_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:clipToPadding="true"
         android:paddingBottom="24dp"
         android:visibility="gone" />
 

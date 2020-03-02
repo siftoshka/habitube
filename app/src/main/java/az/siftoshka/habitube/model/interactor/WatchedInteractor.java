@@ -67,4 +67,12 @@ public class WatchedInteractor {
     public Single<Show> getShow(int postId) {
         return watchedRepository.getShow(postId);
     }
+
+    public void deleteAllMovies() {
+        watchedRepository.deleteAllMovies();
+    }
+
+    public void deleteAllShows() {
+        watchedRepository.deleteAllShows();
+    }
 }

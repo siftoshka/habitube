@@ -1,18 +1,15 @@
 package az.siftoshka.habitube.ui.library;
 
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -20,13 +17,12 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.LibraryAdapter;
-import az.siftoshka.habitube.adapters.LibraryShowAdapter;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedView;
-import az.siftoshka.habitube.utils.animation.SwipeDecorator;
-import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
+import az.siftoshka.habitube.ui.library.dialogs.OfflineCardDialog;
+import az.siftoshka.habitube.ui.library.dialogs.OptionMenuDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -56,7 +52,8 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId));
+        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId),
+                (movie, position) -> showOptionMenu(movie, position));
     }
 
     @Override
@@ -68,14 +65,13 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerViewWatched.setLayoutManager(new VegaXLayoutManager());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerViewWatched.setLayoutManager(layoutManager);
         recyclerViewWatched.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWatched.setHasFixedSize(true);
         recyclerViewWatched.setAdapter(libraryAdapter);
         watchedPresenter.getMovies();
         libraryAdapter.getItemCount();
-
-        initSwipes();
     }
 
     @Override
@@ -91,7 +87,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
             case 205: Collections.sort(movies, (o1, o2) -> Double.compare(o2.getVoteAverage(), o1.getVoteAverage()));break;
         }
         libraryAdapter.addAllMovies(movies);
-        screenWatcher();
+        watcher();
     }
 
     @Override
@@ -103,7 +99,13 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         offlineCardDialog.show(getChildFragmentManager(), null);
     }
 
-    private void screenWatcher() {
+    @Override
+    public void screenWatcher(int position) {
+        libraryAdapter.dataChanged(position);
+        watcher();
+    }
+
+    private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
             recyclerViewWatched.setVisibility(View.VISIBLE);
@@ -113,34 +115,13 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         }
     }
 
-    private void initSwipes() {
-        ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        watchedPresenter.removeFromLocal(libraryAdapter.getMovieAt(viewHolder.getAdapterPosition()));
-                        screenWatcher();
-                    }
-
-                    @Override
-                    public void onChildDraw(@NonNull Canvas c,
-                                            @NonNull RecyclerView recyclerView,
-                                            @NonNull RecyclerView.ViewHolder viewHolder,
-                                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                        new SwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                                .addSwipeRightBackgroundColor(ContextCompat.getColor(requireContext(), R.color.deleteColor))
-                                .addActionIcon(R.drawable.ic_delete)
-                                .create()
-                                .decorate();
-                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                    }
-                });
-        itemTouchHelper.attachToRecyclerView(recyclerViewWatched);
+    private void showOptionMenu(Movie movie, int position) {
+        OptionMenuDialog menuDialog = new OptionMenuDialog(null , watchedPresenter);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("movie-library-watched", movie);
+        bundle.putInt("position", position);
+        menuDialog.setArguments(bundle);
+        menuDialog.show(getChildFragmentManager(), null);
     }
 
     @Override

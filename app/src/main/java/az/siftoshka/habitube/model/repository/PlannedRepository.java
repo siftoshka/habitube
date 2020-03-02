@@ -103,4 +103,18 @@ public class PlannedRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(Throwable::printStackTrace);
     }
+
+    public void deleteAllMovies() {
+        plannedRepository.movieDAO().deleteAllMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public void deleteAllShows() {
+        plannedRepository.showDAO().deleteAllShows()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

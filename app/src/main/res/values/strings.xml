@@ -95,5 +95,13 @@
     <string name="show_all_tv_shows">Show all TV Shows</string>
     <string name="show_all_movies">Show All Movies</string>
     <string name="search_hint">What are you looking for? \n Just type it! \nSearch for a movie, tv show, person.</string>
+    <string name="multi">Multi</string>
+    <string name="people">People</string>
+    <string name="storage">Storage</string>
+    <string name="delete_all_watched_shows">Delete all Watched Shows</string>
+    <string name="delete_all_planning_shows">Delete all Planning Shows</string>
+    <string name="delete_all_watched_movies">Delete all Watched Movies</string>
+    <string name="delete_all_planning_movies">Delete all Planning Movies</string>
+    <string name="clear_cache">Clear Cache</string>
 
 </resources>

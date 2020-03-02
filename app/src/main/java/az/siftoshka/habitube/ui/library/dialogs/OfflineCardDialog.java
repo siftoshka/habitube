@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.ui.library;
+package az.siftoshka.habitube.ui.library.dialogs;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;

@@ -66,4 +66,12 @@ public class PlannedInteractor {
     public void deleteShow(Show show) {
         plannedRepository.deleteShow(show);
     }
+
+    public void deleteAllMovies() {
+        plannedRepository.deleteAllMovies();
+    }
+
+    public void deleteAllShows() {
+        plannedRepository.deleteAllShows();
+    }
 }

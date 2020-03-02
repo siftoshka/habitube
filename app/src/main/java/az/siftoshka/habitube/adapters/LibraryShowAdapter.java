@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
-import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 
 public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.LibraryHolder> {
@@ -25,14 +22,19 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
         void onPostClicked(int postId);
     }
 
+    public interface OnItemLongClickListener {
+        void showPost(Show show, int position);
+    }
+
     private List<Show> shows;
     private ShowItemClickListener clickListener;
-    private DateChanger dateChanger;
+    private OnItemLongClickListener longClickListener;
 
-    public LibraryShowAdapter(@NonNull ShowItemClickListener clickListener) {
+
+    public LibraryShowAdapter(@NonNull ShowItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
         this.shows = new ArrayList<>();
-        this.dateChanger = new DateChanger();
         this.clickListener = clickListener;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -46,16 +48,19 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
     public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
         final Show show = this.shows.get(position);
         ImageLoader.loadLocally(holder.itemView, show.getPosterImage(), holder.posterImage);
-        holder.posterTitle.setText(show.getName());
-        holder.posterDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
-        holder.posterLayout.setOnClickListener(v -> clickListener.onPostClicked(show.getId()));
+        holder.posterRate.setText(String.valueOf(show.getVoteAverage()));
+        holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(show.getId()));
+        holder.posterImage.setOnLongClickListener(view -> {
+            longClickListener.showPost(show, position);
+            return true;
+        });
     }
 
     @Override
     public void onViewRecycled(@NonNull LibraryHolder holder) {
-        holder.posterTitle.setText(null);
-        holder.posterDate.setText(null);
-        holder.posterLayout.setOnClickListener(null);
+        holder.posterRate.setText(null);
+        holder.posterImage.setOnClickListener(null);
+        holder.posterImage.setOnLongClickListener(null);
     }
 
     @Override
@@ -69,6 +74,12 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
         notifyDataSetChanged();
     }
 
+    public void dataChanged(int position) {
+        this.shows.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, this.shows.size());
+    }
+
     public Show getShowAt(int position) {
         Show show = this.shows.get(position);
         this.shows.remove(position);
@@ -78,16 +89,13 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
 
     static class LibraryHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle, posterDate;
+        TextView posterRate;
 
         LibraryHolder(@NonNull View itemView) {
             super(itemView);
-            this.posterLayout = itemView.findViewById(R.id.item_layout_search);
-            this.posterImage = itemView.findViewById(R.id.poster_image_search);
-            this.posterTitle = itemView.findViewById(R.id.poster_main_text_search);
-            this.posterDate = itemView.findViewById(R.id.poster_main_date_search);
+            this.posterImage = itemView.findViewById(R.id.poster_image);
+            this.posterRate = itemView.findViewById(R.id.poster_rate);
         }
     }
 }

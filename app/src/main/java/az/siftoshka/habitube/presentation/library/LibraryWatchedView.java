@@ -12,6 +12,7 @@ public interface LibraryWatchedView extends MvpView {
 
     void showWatchedMovies(List<Movie> movies);
     void showWatchedShows(List<Show> shows);
+    void screenWatcher(int position);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showOfflineCard(Movie movie);

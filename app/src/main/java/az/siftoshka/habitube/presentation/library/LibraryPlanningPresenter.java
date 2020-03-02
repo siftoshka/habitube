@@ -24,8 +24,7 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public LibraryPlanningPresenter(Router router, Context context,
-                                    PlannedInteractor plannedInteractor) {
+    public LibraryPlanningPresenter(Router router, Context context, PlannedInteractor plannedInteractor) {
         this.router = router;
         this.context = context;
         this.plannedInteractor = plannedInteractor;
@@ -46,12 +45,14 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
                 .subscribe((shows, throwable) -> getViewState().showPlannedShows(shows)));
     }
 
-    public void removeFromLocal(Movie movie) {
+    public void removeFromLocal(Movie movie, int position) {
         plannedInteractor.deleteMovie(movie);
+        getViewState().screenWatcher(position);
     }
 
-    public void removeFromLocal(Show show) {
+    public void removeFromLocal(Show show, int position) {
         plannedInteractor.deleteShow(show);
+        getViewState().screenWatcher(position);
     }
 
     public void goToDetailedMovieScreen(int postId) {

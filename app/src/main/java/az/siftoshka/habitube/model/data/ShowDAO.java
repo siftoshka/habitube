@@ -22,4 +22,5 @@ public interface ShowDAO {
     @Transaction @Query("SELECT count(*) FROM shows WHERE id = :showId") int getShowCount(int showId);
     @Transaction @Query("SELECT * FROM shows WHERE id = :showId") Single<Show> getShowById(int showId);
     @Delete Completable deleteShow(Show show);
+    @Transaction @Query("DELETE FROM shows") Completable deleteAllShows();
 }

@@ -23,4 +23,5 @@ public interface MovieDAO {
     @Transaction @Query("SELECT count(*) FROM movies WHERE id = :movieId") int getMovieCount(int movieId);
     @Transaction @Query("SELECT * FROM movies WHERE id = :movieId") Single<Movie> getMovieById(int movieId);
     @Delete Completable deleteMovie(Movie movie);
+    @Transaction @Query("DELETE FROM movies") Completable deleteAllMovies();
 }

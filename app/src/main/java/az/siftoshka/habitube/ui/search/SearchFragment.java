@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -91,7 +92,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchAdapter = new SearchAdapter((id, mediaType) -> searchPresenter.goToDetailedScreen(id, mediaType));
+        searchAdapter = new SearchAdapter((id, mediaType) -> searchPresenter.goToDetailedScreen(id, mediaType), postName -> messageListener.showText(postName));
     }
 
     @Override
@@ -106,7 +107,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         super.onViewCreated(view, savedInstanceState);
         searchView.requestFocus();
         searchView.onActionViewExpanded();
-        recyclerViewSearch.setLayoutManager(new VegaXLayoutManager());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerViewSearch.setLayoutManager(layoutManager);
         recyclerViewSearch.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSearch.setHasFixedSize(true);
         recyclerViewSearch.setAdapter(searchAdapter);

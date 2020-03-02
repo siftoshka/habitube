@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> {
@@ -24,15 +22,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         void onPostClicked(int id, int mediaType);
     }
 
+    public interface OnItemLongClickListener {
+        void showPostName(String postName);
+    }
+
     private List<MovieLite> searchMedia;
     private SearchItemClickListener clickListener;
-    private DateChanger dateChanger;
+    private OnItemLongClickListener longClickListener;
     private int mediaState;
 
-    public SearchAdapter(@NonNull SearchItemClickListener clickListener) {
+    public SearchAdapter(@NonNull SearchItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
         this.searchMedia = new ArrayList<>();
-        this.dateChanger = new DateChanger();
         this.clickListener = clickListener;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -51,20 +53,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         } else {
             ImageLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
-
-        if (post.getMovieTitle() == null) {
-            holder.posterTitle.setText(post.getShowTitle());
-        } else {
-            holder.posterTitle.setText(post.getMovieTitle());
-        }
-
-        if (post.getReleaseDate() == null) {
-            holder.posterDate.setText(dateChanger.changeDate(post.getFirstAirDate()));
-        } else {
-            holder.posterDate.setText(dateChanger.changeDate(post.getReleaseDate()));
-        }
-
-        holder.posterLayout.setOnClickListener(v -> {
+        holder.posterRate.setText(String.valueOf(post.getVoteAverage()));
+        holder.posterImage.setOnClickListener(v -> {
             switch (post.getMediaType()) {
                 case "movie": mediaState = 1;break;
                 case "tv": mediaState = 2;break;
@@ -72,14 +62,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
             }
             clickListener.onPostClicked(post.getMovieId(), mediaState);
         });
-
+        holder.posterImage.setOnLongClickListener(view -> {
+            if(post.getMovieTitle() == null) {
+                longClickListener.showPostName(post.getShowTitle());
+            } else {
+                longClickListener.showPostName(post.getMovieTitle());
+            }
+            return true;
+        });
     }
 
     @Override
     public void onViewRecycled(@NonNull SearchHolder holder) {
-        holder.posterTitle.setText(null);
-        holder.posterDate.setText(null);
-        holder.posterLayout.setOnClickListener(null);
+        holder.posterRate.setText(null);
+        holder.posterImage.setOnClickListener(null);
+        holder.posterImage.setOnLongClickListener(null);
     }
 
     @Override
@@ -100,16 +97,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     static class SearchHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout posterLayout;
         ImageView posterImage;
-        TextView posterTitle, posterDate;
+        TextView posterRate;
 
         SearchHolder(@NonNull View itemView) {
             super(itemView);
-            this.posterLayout = itemView.findViewById(R.id.item_layout_search);
-            this.posterImage = itemView.findViewById(R.id.poster_image_search);
-            this.posterTitle = itemView.findViewById(R.id.poster_main_text_search);
-            this.posterDate = itemView.findViewById(R.id.poster_main_date_search);
+            this.posterImage = itemView.findViewById(R.id.poster_image);
+            this.posterRate = itemView.findViewById(R.id.poster_rate);
         }
     }
 }

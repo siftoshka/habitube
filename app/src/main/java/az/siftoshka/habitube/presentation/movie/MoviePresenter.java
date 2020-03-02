@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,11 +203,13 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         getViewState().setPlanButtonEnabled(false);
     }
 
+    @Nullable
     public boolean isPlannedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
         return compositeDisposable.add(plannedInteractor.getMovie(id)
                 .subscribe(movie -> updatePlannedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
     }
 
+    @Nullable
     public boolean isWatchedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
         return compositeDisposable.add(watchedInteractor.getMovie(id)
                 .subscribe(movie -> updateWatchedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
