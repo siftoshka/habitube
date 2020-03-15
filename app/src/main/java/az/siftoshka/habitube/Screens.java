@@ -1,9 +1,17 @@
 package az.siftoshka.habitube;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.ui.explore.DiscoverDialog;
+import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.settings.SettingsFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
@@ -102,6 +110,23 @@ public final class Screens {
                     return starFragment;
             }
             return getFragment();
+        }
+    }
+
+    public static final class DiscoverScreen extends SupportAppScreen {
+        private List<MovieLite> movies;
+
+        public DiscoverScreen(List<MovieLite> movies) {
+            this.movies = movies;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final DiscoverFragment discoverFragment = new DiscoverFragment();
+            bundle.putParcelableArrayList("Discover-M", (ArrayList<? extends Parcelable>) movies);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
         }
     }
 

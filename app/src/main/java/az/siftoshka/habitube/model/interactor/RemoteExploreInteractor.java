@@ -7,6 +7,7 @@ import az.siftoshka.habitube.model.repository.RemoteExploreRepository;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RemoteExploreInteractor {
@@ -64,5 +65,9 @@ public class RemoteExploreInteractor {
         return repository.getPersonSearchResults(queryName, language, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<MovieResponse> discoverMovies(String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
+        return repository.getDiscoveredMovies(language, sortSelection, isAdult, yearIndex, voteIndex);
     }
 }

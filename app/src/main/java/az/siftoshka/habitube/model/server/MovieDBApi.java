@@ -133,4 +133,15 @@ public interface MovieDBApi {
             @Query("page") int page,
             @Query("include_adult") boolean isAdult
     );
+
+    @GET("discover/movie")
+    Observable<MovieResponse> getDiscoverMovies(
+        @Query("language") String language,
+        @Query("sort_by") String sort,
+        @Query("page") int page,
+        @Query("include_adult") boolean isAdult,
+        @Query("primary_release_date.lte") String releaseDate,
+        @Query("vote_average.gte") int rating,
+        @Query("vote_count.gte") int voteCount
+    );
 }

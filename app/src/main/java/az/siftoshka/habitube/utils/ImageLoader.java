@@ -106,6 +106,25 @@ public class ImageLoader {
         }
     }
 
+    public static void loadBackground(View view, String url, ImageView into) {
+        if (url != null) {
+            Glide.with(view)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .centerCrop()
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_box)
+                    .into(into);
+        } else {
+            Glide.with(view)
+                    .load(R.drawable.ic_box)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
+    }
+
     public static byte[] imageView2Bitmap(ImageView view) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {

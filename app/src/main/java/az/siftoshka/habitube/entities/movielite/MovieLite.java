@@ -1,26 +1,33 @@
 package az.siftoshka.habitube.entities.movielite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MovieLite {
+import java.io.Serializable;
+
+public class MovieLite implements Parcelable {
 
     @SerializedName("id") @Expose private int movieId;
     @SerializedName("title") @Expose private String movieTitle;
     @SerializedName("name") @Expose private String showTitle;
     @SerializedName("poster_path") @Expose private String movieImage;
+    @SerializedName("backdrop_path") @Expose private String backdropPath;
     @SerializedName("profile_path") @Expose private String starImage;
     @SerializedName("release_date") @Expose private String releaseDate;
     @SerializedName("vote_average") @Expose private double voteAverage;
     @SerializedName("first_air_date") @Expose private String firstAirDate;
     @SerializedName("media_type") @Expose private String mediaType;
 
-    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage,
+    public MovieLite(int movieId, String movieTitle, String showTitle, String movieImage, String backdropPath,
                      String starImage, String releaseDate, double voteAverage, String firstAirDate, String mediaType) {
         this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.showTitle = showTitle;
         this.movieImage = movieImage;
+        this.backdropPath = backdropPath;
         this.starImage = starImage;
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
@@ -30,6 +37,30 @@ public class MovieLite {
 
     public MovieLite() {
     }
+
+    protected MovieLite(Parcel in) {
+        movieId = in.readInt();
+        movieTitle = in.readString();
+        showTitle = in.readString();
+        movieImage = in.readString();
+        starImage = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+        firstAirDate = in.readString();
+        mediaType = in.readString();
+    }
+
+    public static final Creator<MovieLite> CREATOR = new Creator<MovieLite>() {
+        @Override
+        public MovieLite createFromParcel(Parcel in) {
+            return new MovieLite(in);
+        }
+
+        @Override
+        public MovieLite[] newArray(int size) {
+            return new MovieLite[size];
+        }
+    };
 
     public int getMovieId() {
         return movieId;
@@ -103,6 +134,14 @@ public class MovieLite {
         this.voteAverage = voteAverage;
     }
 
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,5 +155,23 @@ public class MovieLite {
     @Override
     public int hashCode() {
         return movieId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(movieId);
+        parcel.writeString(movieTitle);
+        parcel.writeString(showTitle);
+        parcel.writeString(movieImage);
+        parcel.writeString(starImage);
+        parcel.writeString(releaseDate);
+        parcel.writeDouble(voteAverage);
+        parcel.writeString(firstAirDate);
+        parcel.writeString(mediaType);
     }
 }

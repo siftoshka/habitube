@@ -18,25 +18,40 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/colorPrimary"
-            android:gravity="center_vertical"
-            android:paddingStart="15dp"
-            android:paddingEnd="200dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white_is_white"
-            android:textSize="20sp"
-            android:textStyle="normal" />
+            android:orientation="horizontal"
+            android:paddingStart="20dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:paddingEnd="160dp"
+                android:text="@string/app_name"
+                android:textColor="@color/white_is_white"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/search"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/colorPrimary"
             android:padding="15dp"
@@ -62,7 +77,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/explore_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,31 +94,31 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_movies"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
+                    android:backgroundTint="#32a6a8"
                     android:text="@string/movies"
-                    android:textColor="#3bd1ff"
+                    android:textColor="@color/white_is_white"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_episodes"
                     app:iconSize="20dp"
-                    app:iconTint="#3bd1ff"
-                    app:strokeColor="#3bd1ff" />
+                    app:iconTint="@color/white_is_white" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_shows"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:backgroundTint="#ff5f4a"
                     android:text="@string/tv_shows"
-                    android:textColor="#ff5f4a"
+                    android:textColor="@color/white_is_white"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_episodes"
                     app:iconSize="20dp"
-                    app:iconTint="#ff5f4a"
-                    app:strokeColor="#ff5f4a" />
+                    app:iconTint="@color/white_is_white" />
             </LinearLayout>
 
             <LinearLayout
@@ -153,6 +169,34 @@
                     android:clipToPadding="false"
                     android:paddingStart="16dp"
                     tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/background"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_undraw_netflix" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Enjoy The Most Trending TV Shows on Netflix"
+                    android:textColor="@color/dark_800"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout

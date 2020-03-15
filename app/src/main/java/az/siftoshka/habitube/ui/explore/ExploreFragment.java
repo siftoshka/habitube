@@ -1,24 +1,22 @@
 package az.siftoshka.habitube.ui.explore;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -55,6 +53,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.explore_scroll) NestedScrollView scrollView;
     @BindView(R.id.error_screen) View errorScreen;
     @BindView(R.id.refresh) ImageView refreshButton;
+    @BindView(R.id.explore_movies) MaterialButton discoverMovies;
+    @BindView(R.id.explore_shows) MaterialButton discoverShows;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
@@ -94,6 +94,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         errorScreen.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         searchButton.setOnClickListener(view1 -> explorePresenter.goToSearchScreen());
+        discoverMovies.setOnClickListener(view1 -> showDiscoverMovieDialog());
         LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
@@ -119,6 +120,13 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewAirToday.setAdapter(airTodayAdapter);
     }
 
+    private void showDiscoverMovieDialog() {
+        DiscoverDialog discoverDialog = new DiscoverDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt("DISCOVER", 0);
+        discoverDialog.setArguments(bundle);
+        discoverDialog.show(getChildFragmentManager(), null);
+    }
 
     @Override
     public void showUpcomingMovieList(List<MovieLite> upcomingList) {

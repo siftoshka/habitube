@@ -86,5 +86,13 @@
     <string name="radio_rating">Рейтингу</string>
     <string name="show_all_tv_shows">Показать все Сериалы</string>
     <string name="show_all_movies">Показать все Фильмы</string>
+    <string name="multi">Все</string>
+    <string name="people">Люди</string>
+    <string name="storage">Память</string>
+    <string name="delete_all_watched_shows">Удалить все просмотренные сериалы</string>
+    <string name="delete_all_planning_shows">Удалить все запланированные сериалы</string>
+    <string name="delete_all_watched_movies">Удалить все просмотренные фильмы</string>
+    <string name="delete_all_planning_movies">Удалить все запланированные фильмф</string>
+    <string name="clear_cache">Очистить кэш</string>
 
 </resources>

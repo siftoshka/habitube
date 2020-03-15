@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/circle_button"
+        android:backgroundTint="@color/dark_600" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/sorting"
+        android:textColor="@color/dark_800"
+        android:textSize="18sp"
+        android:textStyle="normal" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/sort_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:checkedButton="@id/popularity"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/popularity"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Popularity"
+            android:textColor="@color/dark_800"
+            app:strokeColor="@color/colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/revenue"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Revenue"
+            android:textColor="@color/dark_800"
+            app:strokeColor="@color/colorPrimary" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Release Date"
+            android:textColor="@color/dark_800"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/text_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:textColor="@color/dark_800"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="YEAR" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from current to lower"
+        android:textColor="@color/dark_600"
+        android:padding="1dp"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/slider_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bsb_hide_bubble="true"
+        app:bsb_max="2020"
+        app:bsb_min="1900"
+        app:bsb_progress="2010"
+        app:bsb_second_track_color="@color/colorPrimary"
+        app:bsb_section_text_position="bottom_sides"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_section_text="true"
+        app:bsb_touch_to_seek="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vote Average"
+            android:textColor="@color/dark_800"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/text_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:textColor="@color/dark_800"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="YEAR" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from current to higher"
+        android:textColor="@color/dark_600"
+        android:padding="1dp"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/slider_vote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bsb_auto_adjust_section_mark="true"
+        app:bsb_hide_bubble="true"
+        app:bsb_max="9"
+        app:bsb_min="4"
+        app:bsb_progress="6"
+        app:bsb_second_track_color="@color/colorPrimary"
+        app:bsb_section_text_position="bottom_sides"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_section_text="true"
+        app:bsb_touch_to_seek="true" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/discover"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+        android:text="Discover Movies"
+        android:textColor="@color/white_is_white"
+        app:cornerRadius="10dp"/>
+
+
+</LinearLayout>
