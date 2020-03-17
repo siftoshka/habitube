@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:maxLines="1"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="23sp"
                     tools:text="Person Name" />
@@ -58,6 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="16sp"
                     tools:text="as ..." />

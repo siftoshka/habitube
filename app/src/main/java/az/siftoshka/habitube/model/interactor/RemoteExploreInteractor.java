@@ -70,4 +70,8 @@ public class RemoteExploreInteractor {
     public Observable<MovieResponse> discoverMovies(String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
         return repository.getDiscoveredMovies(language, sortSelection, isAdult, yearIndex, voteIndex);
     }
+
+    public Observable<MovieResponse> discoverShows(String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
+        return repository.getDiscoveredShows(language, sortSelection, isAdult, network, yearIndex, voteIndex, voteCount);
+    }
 }

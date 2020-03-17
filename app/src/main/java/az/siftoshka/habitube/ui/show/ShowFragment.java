@@ -239,7 +239,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
                 })
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
+                .error(R.drawable.ic_missing)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterShow);
         ImageLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);

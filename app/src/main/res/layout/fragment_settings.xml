@@ -49,6 +49,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/about_menu"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -60,6 +61,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/regular"
                     android:text="@string/app_desc"
                     android:textColor="@color/dark_600"
                     android:textSize="16sp" />
@@ -75,6 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/regular"
                         android:text="@string/version_name_text"
                         android:textColor="@color/dark_600"
                         android:textSize="12sp" />
@@ -82,6 +85,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
                         android:text="@string/version_name"
                         android:textColor="@color/dark_600"
                         android:textSize="12sp" />
@@ -110,6 +114,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/backup_amp_sync"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -125,6 +130,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/round_button"
                     android:backgroundTint="@color/background"
+                    android:fontFamily="@font/regular"
                     android:inputType="text"
                     android:text="@string/sign_in_with_google"
                     android:textColor="@color/dark_800"
@@ -138,6 +144,7 @@
                     android:id="@+id/warning_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -198,6 +205,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/sorting"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -219,6 +227,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_recent"
                             android:textColor="@color/dark_800" />
 
@@ -227,6 +236,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_year"
                             android:textColor="@color/dark_800" />
 
@@ -235,6 +245,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_name"
                             android:textColor="@color/dark_800" />
 
@@ -252,6 +263,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_first"
                             android:textColor="@color/dark_800" />
 
@@ -260,6 +272,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_year_2"
                             android:textColor="@color/dark_800" />
 
@@ -268,13 +281,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorPrimary"
+                            android:fontFamily="@font/regular"
                             android:text="@string/radio_rating"
                             android:textColor="@color/dark_800" />
-
                     </RadioGroup>
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -299,6 +310,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/navbar_settings"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -316,6 +328,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/dark_mode_text"
@@ -341,6 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/turn_on_adult_content"
@@ -381,6 +395,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/storage"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -399,6 +414,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:text="@string/delete_all_watched_movies"
                         android:textColor="@color/dark_800"
                         app:cornerRadius="10dp"
@@ -413,6 +429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:text="@string/delete_all_planning_movies"
                         android:textColor="@color/dark_800"
                         app:cornerRadius="10dp"
@@ -433,6 +450,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:text="@string/delete_all_watched_shows"
                         android:textColor="@color/dark_800"
                         app:cornerRadius="10dp"
@@ -447,6 +465,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/regular"
                         android:text="@string/delete_all_planning_shows"
                         android:textColor="@color/dark_800"
                         app:cornerRadius="10dp"
@@ -461,6 +480,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
                     android:text="@string/clear_cache"
                     android:textColor="@color/dark_800"
                     app:cornerRadius="10dp"
@@ -492,6 +512,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/contact_us_menu"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -563,6 +584,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/credits"
                     android:textColor="@color/dark_800"
                     android:textSize="20sp"
@@ -575,6 +597,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/regular"
                     android:maxLines="1"
                     android:text="Application icon made by @ok__die"
                     android:textColor="@color/dark_600"
@@ -588,6 +611,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/regular"
                     android:maxLines="1"
                     android:text="Icons made by Freepik from www.flaticon.com"
                     android:textColor="@color/dark_600"

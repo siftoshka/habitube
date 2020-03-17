@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_explore"
-        android:title="@string/navbar_explore"
+        android:fontFamily="@font/bold"
         android:icon="@drawable/ic_trending"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/navbar_explore"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_library"
-        android:title="@string/navbar_library"
+        android:fontFamily="@font/bold"
         android:icon="@drawable/ic_lib"
+        android:title="@string/navbar_library"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_account"
-        android:title="@string/navbar_settings"
+        android:fontFamily="@font/bold"
         android:icon="@drawable/ic_settings"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/navbar_settings"
+        app:showAsAction="ifRoom" />
 </menu>

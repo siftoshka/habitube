@@ -144,4 +144,16 @@ public interface MovieDBApi {
         @Query("vote_average.gte") int rating,
         @Query("vote_count.gte") int voteCount
     );
+
+    @GET("discover/tv")
+    Observable<MovieResponse> getDiscoverShows(
+            @Query("language") String language,
+            @Query("sort_by") String sort,
+            @Query("page") int page,
+            @Query("include_adult") boolean isAdult,
+            @Query("with_networks") String network,
+            @Query("first_air_date.lte") String releaseDate,
+            @Query("vote_average.gte") int rating,
+            @Query("vote_count.gte") int voteCount
+    );
 }

@@ -72,4 +72,10 @@ public class RemoteExploreRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<MovieResponse> getDiscoveredShows(String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
+        return movieDBApi.getDiscoverShows(language, sortSelection, 1, isAdult, network,  yearIndex, voteIndex, voteCount)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

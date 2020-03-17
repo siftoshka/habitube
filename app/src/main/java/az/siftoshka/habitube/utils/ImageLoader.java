@@ -8,8 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -30,12 +28,12 @@ public class ImageLoader {
                     .load(IMAGE_URL + url)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_box)
+                    .error(R.drawable.ic_missing)
                     .transform(new CenterCrop(), new RoundedCorners(16))
                     .into(into);
         } else {
             Glide.with(view)
-                    .load(R.drawable.ic_box)
+                    .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -48,11 +46,11 @@ public class ImageLoader {
                     .load(IMAGE_URL + url)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_box)
+                    .error(R.drawable.ic_missing)
                     .into(into);
         } else {
             Glide.with(view)
-                    .load(R.drawable.ic_box)
+                    .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -63,7 +61,7 @@ public class ImageLoader {
         Glide.with(view)
                 .load(image)
                 .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
+                .error(R.drawable.ic_missing)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(into);
     }
@@ -75,12 +73,12 @@ public class ImageLoader {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_box)
+                    .error(R.drawable.ic_missing)
                     .transform(new CenterCrop(), new RoundedCorners(16))
                     .into(into);
         } else {
             Glide.with(context)
-                    .load(R.drawable.ic_box)
+                    .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
@@ -95,11 +93,11 @@ public class ImageLoader {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_box)
+                    .error(R.drawable.ic_missing)
                     .into(into);
         } else {
             Glide.with(context)
-                    .load(R.drawable.ic_box)
+                    .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -114,11 +112,11 @@ public class ImageLoader {
                     .skipMemoryCache(true)
                     .centerCrop()
                     .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_box)
+                    .error(R.drawable.ic_missing)
                     .into(into);
         } else {
             Glide.with(view)
-                    .load(R.drawable.ic_box)
+                    .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -143,7 +141,7 @@ public class ImageLoader {
                 .skipMemoryCache(true)
                 .centerCrop()
                 .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
+                .error(R.drawable.ic_missing)
                 .into(image);
     }
 }

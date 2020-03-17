@@ -34,6 +34,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/star_toolbar"
+            style="@style/ToolbarTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/mainBackground"
@@ -77,6 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="3dp"
+                        android:fontFamily="@font/bold"
                         android:maxLines="2"
                         android:textColor="@color/dark_800"
                         android:textSize="22sp"
@@ -102,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
+                        android:fontFamily="@font/regular"
                         android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="BIRTHDATE" />
@@ -127,6 +130,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:ellipsize="marquee"
+                        android:fontFamily="@font/regular"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
@@ -154,6 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
+                        android:fontFamily="@font/regular"
                         android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="POPULARITY" />
@@ -164,15 +169,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/imdb_button"
-                        android:layout_marginStart="3dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:fontFamily="@font/bold"
                         android:inputType="text"
                         android:text="@string/search_in_imdb"
                         android:textColor="#E6B91E"
@@ -199,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/tab_color"
                     android:gravity="start"
@@ -212,6 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/tab_info"
                         android:textColor="@color/colorPrimary"
@@ -224,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/movies"
                         android:textColor="@color/dark_800"
@@ -236,6 +244,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/tv_shows"
                         android:textColor="@color/dark_800"
@@ -278,6 +287,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/biography_card"
                             android:textColor="@color/dark_800"
                             android:textSize="20sp"
@@ -296,6 +306,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/regular"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
                                 tools:text="Lorem" />
@@ -324,6 +335,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -342,6 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_movies"
                         android:textColor="@color/colorPrimary"
@@ -357,6 +370,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -375,6 +389,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_movies"
                         android:textColor="@color/colorPrimary"
@@ -404,6 +419,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -422,6 +438,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_tv_shows"
                         android:textColor="@color/colorPrimary"
@@ -437,6 +454,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -455,6 +473,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_tv_shows"
                         android:textColor="@color/colorPrimary"
@@ -462,7 +481,6 @@
                         app:cornerRadius="10dp"
                         app:strokeColor="@color/colorPrimary" />
                 </LinearLayout>
-
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -939,18 +939,4 @@
   <path
       android:pathData="M759.61,71.37m-71.37,0a71.37,71.37 0,1 1,142.74 0a71.37,71.37 0,1 1,-142.74 0">
   </path>
-  <path
-      android:pathData="M759.61,71.37m-66.98,0a66.98,66.98 0,1 1,133.96 0a66.98,66.98 0,1 1,-133.96 0"
-      android:fillColor="#3ad29f"/>
-  <path
-      android:pathData="M803.96,71.37l-67.04,32.94l0,-32.94l0,-32.94l67.04,32.94z">
-  </path>
-  <path
-      android:pathData="M799.93,71.37l-58.99,28.99l0,-28.99l0,-28.99l58.99,28.99z"
-      android:fillColor="#fff"/>
-  <path
-      android:pathData="M698.11,79.06a67,67 0,0 1,118.62 -42.66,67 67,0 1,0 -108.77,77.64A66.66,66.66 0,0 1,698.11 79.06Z"
-      android:strokeAlpha="0.2"
-      android:fillColor="#fff"
-      android:fillAlpha="0.2"/>
 </vector>

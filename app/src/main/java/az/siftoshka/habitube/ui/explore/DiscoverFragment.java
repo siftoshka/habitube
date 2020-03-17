@@ -53,7 +53,12 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             movies = bundle.getParcelableArrayList("Discover-M");
-            discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToMovieScreen(id));
+            if (movies != null) {
+                discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToMovieScreen(id));
+            } else {
+                movies = bundle.getParcelableArrayList("Discover-S");
+                discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToShowScreen(id));
+            }
         }
     }
 

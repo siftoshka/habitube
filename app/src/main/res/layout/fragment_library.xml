@@ -26,6 +26,7 @@
                 android:layout_marginEnd="10dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/semibold"
                 android:text="@string/movies"
                 android:textColor="@color/tab_unselected"
                 android:textSize="24sp"
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/semibold"
                 android:text="@string/tv_shows"
                 android:textColor="@color/tab_unselected"
                 android:textSize="24sp"
@@ -52,12 +54,14 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/mainBackground"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorPrimary"
+            android:fontFamily="@font/regular"
             android:visibility="visible"
-            app:tabTextColor="@color/dark_600"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="4dp"
-            app:tabMode="fixed" />
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/dark_600" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/library_show_tab"
             android:layout_width="match_parent"
@@ -67,23 +71,24 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/round_button"
             android:backgroundTint="@color/mainBackground"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/dark_600"
+            android:fontFamily="@font/regular"
             android:visibility="gone"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="4dp"
-            app:tabMode="fixed" />
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/dark_600" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/library_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/library_show_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>

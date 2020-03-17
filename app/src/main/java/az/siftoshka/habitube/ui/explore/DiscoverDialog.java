@@ -31,9 +31,9 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     @InjectPresenter DiscoverPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
-    @BindView(R.id.sort_buttons) MaterialButtonToggleGroup toggleGroup;
-    @BindView(R.id.popularity) MaterialButton sortPopularity;
-    @BindView(R.id.revenue) MaterialButton sortRevenue;
+    @Nullable @BindView(R.id.sort_buttons) MaterialButtonToggleGroup toggleGroup;
+    @Nullable @BindView(R.id.popularity) MaterialButton sortPopularity;
+    @Nullable @BindView(R.id.revenue) MaterialButton sortRevenue;
     @BindView(R.id.slider_year) BubbleSeekBar sliderYear;
     @BindView(R.id.slider_vote) BubbleSeekBar sliderVote;
     @BindView(R.id.text_year) TextView textYear;
@@ -56,13 +56,22 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            index = bundle.getInt("DISCOVER");
+            if (bundle.getInt("DISCOVER") == 0)
+                index = 0;
+            else if (bundle.getInt("DISCOVER") == 1)
+                index = 1;
         }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_discover, container, false);
+        View view = null;
+        if (index == 0) {
+            view = inflater.inflate(R.layout.dialog_discover, container, false);
+        } else if (index == 1) {
+            view = inflater.inflate(R.layout.dialog_show_discover, container, false);
+        }
+        assert view != null;
         unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
         return view;
@@ -121,6 +130,35 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
 
             discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(sortSelection, yearIndex + "-01-01", voteIndex));
         }
+        if (index == 1) {
+            defaultShowSorting();
+            sliderYear.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+                @Override
+                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                    textYear.setText(String.valueOf(progress));
+                    yearIndex = String.valueOf(progress);
+                }
+
+                @Override
+                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
+
+                @Override
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+            sliderVote.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+                @Override
+                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                    textVote.setText(String.valueOf(progress));
+                    voteIndex = progress;
+                }
+
+                @Override
+                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
+
+                @Override
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(yearIndex + "-01-01", voteIndex));
+        }
     }
 
     private void defaultSorting() {
@@ -129,6 +167,13 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
         sortRevenue.setBackgroundColor(getResources().getColor(R.color.background));
         sortRevenue.setTextColor(getResources().getColor(R.color.dark_800));
         sortSelection = "popularity.desc";
+        textYear.setText(String.valueOf(sliderYear.getProgress()));
+        textVote.setText(String.valueOf(sliderVote.getProgress()));
+        yearIndex = String.valueOf(sliderYear.getProgress());
+        voteIndex = sliderVote.getProgress();
+    }
+
+    private void defaultShowSorting() {
         textYear.setText(String.valueOf(sliderYear.getProgress()));
         textVote.setText(String.valueOf(sliderVote.getProgress()));
         yearIndex = String.valueOf(sliderYear.getProgress());

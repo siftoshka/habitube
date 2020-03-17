@@ -43,7 +43,6 @@ import az.siftoshka.habitube.model.system.KeyboardBehavior;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.search.SearchPresenter;
 import az.siftoshka.habitube.presentation.search.SearchView;
-import az.siftoshka.habitube.utils.animation.VegaXLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

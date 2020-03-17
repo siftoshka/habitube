@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -235,7 +234,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 })
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_box)
+                .error(R.drawable.ic_missing)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterMain);
         ImageLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);

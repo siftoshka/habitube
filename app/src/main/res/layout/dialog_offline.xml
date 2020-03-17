@@ -41,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="3dp"
+                    android:fontFamily="@font/bold"
                     android:maxLines="2"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp"
@@ -66,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="18sp"
                     tools:text="DATE" />
@@ -90,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="18sp"
                     tools:text="RATE" />
@@ -100,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="18sp"
                     tools:text="VIEWS" />
@@ -124,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
                     android:textColor="@color/dark_600"
                     android:textSize="18sp"
                     tools:text="DURATION" />
@@ -151,6 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
+            android:fontFamily="@font/regular"
             android:textColor="@color/dark_600"
             android:textSize="16sp"
             tools:text="BUDGET" />
@@ -165,6 +171,7 @@
             android:id="@+id/poster_revenue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
             android:textColor="@color/dark_600"
             android:textSize="16sp"
             tools:text="REVENUE" />
@@ -179,6 +186,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:ellipsize="end"
+        android:fontFamily="@font/regular"
         android:maxLines="3"
         android:textColor="@color/dark_600"
         android:textSize="16sp"
@@ -198,6 +206,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:background="@color/background"
+        android:fontFamily="@font/bold"
         android:gravity="center"
         android:text="@string/close" />
 

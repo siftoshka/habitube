@@ -139,7 +139,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private void updatePlannedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
         if (!movieFromLocal.equals(movieFromWeb)) {
             movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
-            movieFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            movieFromWeb.setPosterImage(movieFromLocal.getPosterImage());
             plannedInteractor.updateMovie(movieFromWeb);
         }
     }
@@ -147,7 +147,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private void updateWatchedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
         if (!movieFromLocal.equals(movieFromWeb)) {
             movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
-            movieFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            movieFromWeb.setPosterImage(movieFromLocal.getPosterImage());
             watchedInteractor.updateMovie(movieFromWeb);
         }
     }

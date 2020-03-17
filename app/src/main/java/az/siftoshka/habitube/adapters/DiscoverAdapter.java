@@ -40,7 +40,11 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
     @Override
     public void onBindViewHolder(@NonNull DiscoverHolder holder, final int position) {
         final MovieLite movie = this.movies.get(position);
-        holder.posterTitle.setText(movie.getMovieTitle());
+        if (movie.getMovieTitle() != null) {
+            holder.posterTitle.setText(movie.getMovieTitle());
+        } else {
+            holder.posterTitle.setText(movie.getShowTitle());
+        }
         ImageLoader.loadBackground(holder.itemView, movie.getBackdropPath(), holder.posterImage);
         holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }

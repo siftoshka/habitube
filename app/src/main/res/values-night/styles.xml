@@ -41,10 +41,17 @@
     <style name="CollapsingExpanded" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/dark_900</item>
+        <item name="android:fontFamily">@font/bold</item>
     </style>
+
     <style name="CollapsingCollapsed" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/dark_900</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:fontFamily">@font/bold</item>
     </style>
 
 </resources>

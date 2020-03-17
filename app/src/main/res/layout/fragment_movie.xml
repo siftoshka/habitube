@@ -35,6 +35,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/movie_toolbar"
+            style="@style/ToolbarTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/mainBackground"
@@ -96,6 +97,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="3dp"
                             android:ellipsize="marquee"
+                            android:fontFamily="@font/bold"
                             android:marqueeRepeatLimit="marquee_forever"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
@@ -123,6 +125,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="5dp"
+                            android:fontFamily="@font/regular"
                             android:textColor="@color/dark_600"
                             android:textSize="18sp"
                             tools:text="DATE" />
@@ -147,6 +150,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="5dp"
+                            android:fontFamily="@font/regular"
                             android:textColor="@color/dark_600"
                             android:textSize="18sp"
                             tools:text="RATE" />
@@ -157,6 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="5dp"
+                            android:fontFamily="@font/regular"
                             android:textColor="@color/dark_600"
                             android:textSize="18sp"
                             tools:text="VIEWS" />
@@ -181,6 +186,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="5dp"
+                            android:fontFamily="@font/regular"
                             android:textColor="@color/dark_600"
                             android:textSize="18sp"
                             tools:text="DURATION" />
@@ -204,6 +210,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/regular"
                                 app:singleLine="true" />
                         </LinearLayout>
                     </HorizontalScrollView>
@@ -256,6 +263,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/search_in_imdb"
                             android:textColor="@color/dark_600" />
@@ -282,6 +290,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/add_to_watched"
                             android:textColor="@color/dark_600" />
@@ -307,6 +316,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/already_added"
                             android:textColor="@color/dark_800" />
@@ -332,6 +342,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/watch_later"
                             android:textColor="@color/dark_600" />
@@ -357,6 +368,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/planned"
                             android:textColor="@color/dark_800" />
@@ -367,7 +379,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/tab_color"
                     android:gravity="start"
@@ -380,6 +392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/tab_info"
                         android:textColor="@color/colorPrimary"
@@ -392,6 +405,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/tab_credits"
                         android:textColor="@color/dark_800"
@@ -404,6 +418,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/tab_similar"
                         android:textColor="@color/dark_800"
@@ -446,6 +461,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/videos"
                             android:textColor="@color/dark_800"
                             android:textSize="20sp"
@@ -482,6 +498,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/description_card"
                             android:textColor="@color/dark_800"
                             android:textSize="20sp"
@@ -500,6 +517,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/regular"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
                                 tools:text="Lorem" />
@@ -528,6 +546,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/details"
                             android:textColor="@color/dark_800"
                             android:textSize="20sp"
@@ -545,6 +564,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/regular"
                                 android:text="@string/budget"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
@@ -554,6 +574,7 @@
                                 android:id="@+id/poster_budget"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/regular"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
                                 tools:text="BUDGET" />
@@ -571,6 +592,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/regular"
                                 android:text="@string/revenue"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
@@ -580,6 +602,7 @@
                                 android:id="@+id/poster_revenue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/regular"
                                 android:textColor="@color/dark_600"
                                 android:textSize="16sp"
                                 tools:text="REVENUE" />
@@ -610,6 +633,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -628,6 +652,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_cast"
                         android:textColor="@color/colorPrimary"
@@ -643,6 +668,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
                         android:textSize="24sp"
@@ -661,6 +687,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="@string/show_all_crew"
                         android:textColor="@color/colorPrimary"

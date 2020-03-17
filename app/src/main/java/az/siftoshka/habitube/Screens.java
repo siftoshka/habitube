@@ -130,6 +130,23 @@ public final class Screens {
         }
     }
 
+    public static final class DiscoverShowScreen extends SupportAppScreen {
+        private List<MovieLite> movies;
+
+        public DiscoverShowScreen(List<MovieLite> movies) {
+            this.movies = movies;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final DiscoverFragment discoverFragment = new DiscoverFragment();
+            bundle.putParcelableArrayList("Discover-S", (ArrayList<? extends Parcelable>) movies);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
+        }
+    }
+
     public static final class SearchScreen extends SupportAppScreen {
         @Override
         public Fragment getFragment() {

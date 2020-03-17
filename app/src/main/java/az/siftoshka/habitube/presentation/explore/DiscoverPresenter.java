@@ -46,12 +46,31 @@ public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
                 .subscribe(movieResponse -> goToDiscoverScreen(movieResponse.getResults()), Throwable::printStackTrace));
     }
 
+    public void discoverShows(String yearIndex, int voteIndex) {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(language, "popularity.desc", isAdult, null, yearIndex, voteIndex, 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> goToDiscoverShowScreen(movieResponse.getResults()), Throwable::printStackTrace));
+    }
+
     private void goToDiscoverScreen(List<MovieLite> movies) {
         router.navigateTo(new Screens.DiscoverScreen(movies));
     }
 
+    private void goToDiscoverShowScreen(List<MovieLite> movies) {
+        router.navigateTo(new Screens.DiscoverShowScreen(movies));
+    }
+
     public void goToMovieScreen(int id) {
         router.navigateTo(new Screens.PostMovieScreen(id));
+    }
+
+    public void goToShowScreen(int id) {
+        router.navigateTo(new Screens.PostShowScreen(id));
     }
 
     public void goBack() {
@@ -62,5 +81,38 @@ public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
     public void onDestroy() {
         compositeDisposable.dispose();
         super.onDestroy();
+    }
+
+    public void showNetflixPopular() {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(language, "popularity.desc", isAdult, "213", null, 0, 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> goToDiscoverShowScreen(movieResponse.getResults()), Throwable::printStackTrace));
+    }
+
+    public void showNetflixBest() {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(language, "vote_average.desc", isAdult, "213", null, 0, 300)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> goToDiscoverShowScreen(movieResponse.getResults()), Throwable::printStackTrace));
+    }
+
+    public void showNetflixNew() {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(language, "first_air_date.desc", isAdult, "213", null, 0, 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> goToDiscoverShowScreen(movieResponse.getResults()), Throwable::printStackTrace));
     }
 }

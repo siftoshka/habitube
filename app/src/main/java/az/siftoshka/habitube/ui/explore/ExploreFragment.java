@@ -55,6 +55,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.explore_movies) MaterialButton discoverMovies;
     @BindView(R.id.explore_shows) MaterialButton discoverShows;
+    @BindView(R.id.explore_netflix) LinearLayout discoverNetflix;
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
@@ -95,6 +96,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.VISIBLE);
         searchButton.setOnClickListener(view1 -> explorePresenter.goToSearchScreen());
         discoverMovies.setOnClickListener(view1 -> showDiscoverMovieDialog());
+        discoverShows.setOnClickListener(view1 -> showDiscoverTVShowDialog());
+        discoverNetflix.setOnClickListener(view1 -> showNetflixDialog());
         LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
@@ -126,6 +129,19 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         bundle.putInt("DISCOVER", 0);
         discoverDialog.setArguments(bundle);
         discoverDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void showDiscoverTVShowDialog() {
+        DiscoverDialog discoverDialog = new DiscoverDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt("DISCOVER", 1);
+        discoverDialog.setArguments(bundle);
+        discoverDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void showNetflixDialog() {
+        NetflixDialog netflixDialog = new NetflixDialog();
+        netflixDialog.show(getChildFragmentManager(), null);
     }
 
     @Override

@@ -40,7 +40,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:paddingEnd="160dp"
+                android:paddingEnd="152dp"
+                android:fontFamily="@font/bold"
                 android:text="@string/app_name"
                 android:textColor="@color/white_is_white"
                 android:textSize="20sp"
@@ -99,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="#32a6a8"
+                    android:fontFamily="@font/bold"
                     android:text="@string/movies"
                     android:textColor="@color/white_is_white"
                     app:cornerRadius="10dp"
@@ -113,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:backgroundTint="#ff5f4a"
+                    android:fontFamily="@font/bold"
                     android:text="@string/tv_shows"
                     android:textColor="@color/white_is_white"
                     app:cornerRadius="10dp"
@@ -133,6 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -158,6 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/trending_movies"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -172,6 +177,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/explore_netflix"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -193,6 +199,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
                     android:gravity="end"
                     android:text="Enjoy The Most Trending TV Shows on Netflix"
                     android:textColor="@color/dark_800"
@@ -211,6 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
@@ -236,6 +244,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
+                    android:fontFamily="@font/bold"
                     android:text="@string/air_today"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp" />
