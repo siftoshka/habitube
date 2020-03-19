@@ -1,8 +1,6 @@
 package az.siftoshka.habitube;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,21 +9,16 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
-
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.model.system.KeyboardBehavior;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.ui.movie.MovieFragment;
-import az.siftoshka.habitube.ui.navbar.NavbarFragment;
-import az.siftoshka.habitube.ui.search.SearchFragment;
-import az.siftoshka.habitube.ui.show.ShowFragment;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
+import ru.terrakok.cicerone.commands.Back;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
@@ -41,21 +34,7 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
             if (command instanceof Forward) {
-                if (currentFragment instanceof NavbarFragment && nextFragment instanceof MovieFragment) {
-                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                }
-                if (currentFragment instanceof NavbarFragment && nextFragment instanceof ShowFragment) {
-                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                }
-                if (currentFragment instanceof MovieFragment && nextFragment instanceof MovieFragment) {
-                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                }
-                if (currentFragment instanceof ShowFragment && nextFragment instanceof ShowFragment) {
-                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                }
-                if (currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment) {
-                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                }
+                fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
             }
         }
     };
@@ -88,16 +67,16 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     public void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         }
     }
 
     @Override
     public void hideKeyboard() {
         final View view = findViewById(R.id.fragment_container);
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

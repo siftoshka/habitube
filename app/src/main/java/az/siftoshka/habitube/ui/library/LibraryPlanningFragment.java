@@ -11,9 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
@@ -113,18 +117,26 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
 
     @Override
     public void screenWatcher(int position) {
-        libraryAdapter.dataChanged(position);
+        libraryAdapter.removedItem(position);
         watcher();
     }
 
     private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
+            toggle(recyclerViewPlanning);
             emptyScreen.setVisibility(View.GONE);
             recyclerViewPlanning.setVisibility(View.VISIBLE);
         } else {
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewPlanning.setVisibility(View.GONE);
         }
+    }
+
+    private void toggle(View target) {
+        Transition transition = new Fade();
+        transition.setDuration(1000);
+        transition.addTarget(target);
+        TransitionManager.beginDelayedTransition((ViewGroup) Objects.requireNonNull(getView()).getParent(), transition);
     }
 
     private void showOptionMenu(Movie movie, int position) {

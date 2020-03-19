@@ -97,7 +97,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="3dp"
                             android:ellipsize="marquee"
-                            android:fontFamily="@font/bold"
+                            android:fontFamily="@font/regular"
                             android:marqueeRepeatLimit="marquee_forever"
                             android:scrollHorizontally="true"
                             android:singleLine="true"

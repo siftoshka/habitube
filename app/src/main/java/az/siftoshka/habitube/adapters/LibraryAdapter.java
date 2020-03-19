@@ -14,7 +14,6 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.utils.DateChanger;
 import az.siftoshka.habitube.utils.ImageLoader;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {
@@ -75,17 +74,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
         notifyDataSetChanged();
     }
 
-    public void dataChanged(int position) {
+    public void removedItem(int position) {
         this.movies.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, this.movies.size());
-    }
-
-    public Movie getMovieAt(int position) {
-        Movie movie = this.movies.get(position);
-        this.movies.remove(position);
-        notifyItemRemoved(position);
-        return movie;
     }
 
     public Movie getMovie(int position) {

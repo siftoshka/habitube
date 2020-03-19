@@ -5,15 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.LibraryAdapter;
@@ -23,6 +29,7 @@ import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedView;
 import az.siftoshka.habitube.ui.library.dialogs.OfflineCardDialog;
 import az.siftoshka.habitube.ui.library.dialogs.OptionMenuDialog;
+import az.siftoshka.habitube.utils.GridRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -38,7 +45,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
-    @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
+    @BindView(R.id.recycler_view_watched) GridRecyclerView recyclerViewWatched;
     @BindView(R.id.empty_screen) View emptyScreen;
     private LibraryAdapter libraryAdapter;
     private Unbinder unbinder;
@@ -52,8 +59,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId),
-                (movie, position) -> showOptionMenu(movie, position));
+        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId), this::showOptionMenu);
     }
 
     @Override
@@ -67,7 +73,6 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerViewWatched.setLayoutManager(layoutManager);
-        recyclerViewWatched.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWatched.setHasFixedSize(true);
         recyclerViewWatched.setAdapter(libraryAdapter);
         watchedPresenter.getMovies();
@@ -101,14 +106,20 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @Override
     public void screenWatcher(int position) {
-        libraryAdapter.dataChanged(position);
-        watcher();
+        libraryAdapter.removedItem(position);
+        if (libraryAdapter.getItemCount() == 0) {
+            emptyScreen.setVisibility(View.VISIBLE);
+            recyclerViewWatched.setVisibility(View.GONE);
+        }
     }
 
     private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
             recyclerViewWatched.setVisibility(View.VISIBLE);
+            int resId = R.anim.grid_layout_animation_from_bottom;
+            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId);
+            recyclerViewWatched.setLayoutAnimation(animation);
         } else {
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewWatched.setVisibility(View.GONE);

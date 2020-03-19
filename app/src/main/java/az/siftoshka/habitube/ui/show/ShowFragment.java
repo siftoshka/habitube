@@ -169,6 +169,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, view);
+        posterShowTitle.setSelected(true);
         return view;
     }
 

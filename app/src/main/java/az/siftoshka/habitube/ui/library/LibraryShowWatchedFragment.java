@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,7 @@ import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedView;
 import az.siftoshka.habitube.ui.library.dialogs.OfflineShowCardDialog;
 import az.siftoshka.habitube.ui.library.dialogs.OptionMenuDialog;
+import az.siftoshka.habitube.utils.GridRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -38,7 +41,7 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
 
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
-    @BindView(R.id.recycler_view_watched) RecyclerView recyclerViewWatched;
+    @BindView(R.id.recycler_view_watched) GridRecyclerView recyclerViewWatched;
     @BindView(R.id.empty_screen) View emptyScreen;
     private LibraryShowAdapter libraryAdapter;
     private Unbinder unbinder;
@@ -101,13 +104,19 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
     @Override
     public void screenWatcher(int position) {
         libraryAdapter.dataChanged(position);
-        watcher();
+        if (libraryAdapter.getItemCount() == 0) {
+            emptyScreen.setVisibility(View.VISIBLE);
+            recyclerViewWatched.setVisibility(View.GONE);
+        }
     }
 
     private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
             recyclerViewWatched.setVisibility(View.VISIBLE);
+            int resId = R.anim.grid_layout_animation_from_bottom;
+            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId);
+            recyclerViewWatched.setLayoutAnimation(animation);
         } else {
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewWatched.setVisibility(View.GONE);

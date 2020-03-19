@@ -100,7 +100,7 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private void updatePlannedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
         if (!showFromLocal.equals(showFromWeb)) {
             showFromWeb.setAddedDate(showFromLocal.getAddedDate());
-            showFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            showFromWeb.setPosterImage(showFromLocal.getPosterImage());
             plannedInteractor.updateShow(showFromWeb);
         }
     }
@@ -108,7 +108,7 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private void updateWatchedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
         if (!showFromLocal.equals(showFromWeb)) {
             showFromWeb.setAddedDate(showFromLocal.getAddedDate());
-            showFromWeb.setPosterImage(ImageLoader.imageView2Bitmap(image));
+            showFromWeb.setPosterImage(showFromLocal.getPosterImage());
             watchedInteractor.updateShow(showFromWeb);
         }
     }

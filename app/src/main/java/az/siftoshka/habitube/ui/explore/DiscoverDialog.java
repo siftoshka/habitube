@@ -41,7 +41,8 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     @BindView(R.id.discover) MaterialButton discoverButton;
 
     private Unbinder unbinder;
-    private int index, voteIndex;
+    private short index;
+    private int voteIndex;
     private String yearIndex;
     private String sortSelection;
 

@@ -15,10 +15,14 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
+import java.util.Objects;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
@@ -144,11 +148,19 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         netflixDialog.show(getChildFragmentManager(), null);
     }
 
+    private void toggle(View target) {
+        Transition transition = new Fade();
+        transition.setDuration(1000);
+        transition.addTarget(target);
+        TransitionManager.beginDelayedTransition((ViewGroup) Objects.requireNonNull(getView()).getParent(), transition);
+    }
+
     @Override
     public void showUpcomingMovieList(List<MovieLite> upcomingList) {
         upcomingAdapter.addAllMovies(upcomingList);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
+        toggle(upcomingMovieScreen);
         upcomingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -157,6 +169,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         movieAdapter.addAllMovies(movies);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
+        toggle(trendingMovieScreen);
         trendingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -165,6 +178,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         showAdapter.addAllMovies(tvShows);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
+        toggle(trendingShowScreen);
         trendingShowScreen.setVisibility(View.VISIBLE);
     }
 
@@ -173,6 +187,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         airTodayAdapter.addAllMovies(tvShows);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
+        toggle(airTodayShowScreen);
         airTodayShowScreen.setVisibility(View.VISIBLE);
     }
 
