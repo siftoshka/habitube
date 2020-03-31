@@ -7,6 +7,14 @@
     android:orientation="horizontal"
     tools:context="az.siftoshka.habitube.ui.library.LibraryWatchedFragment">
 
+    <!--Loading Screen-->
+    <include
+        android:id="@+id/loading_screen"
+        layout="@layout/include_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
     <!--Empty Screen-->
     <include
         android:id="@+id/empty_screen"

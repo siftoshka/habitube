@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
+import com.google.firebase.database.FirebaseDatabase;
 
 import az.siftoshka.habitube.di.modules.AppModule;
 import az.siftoshka.habitube.di.modules.RepositoryModule;
@@ -25,6 +26,7 @@ public class App extends Application {
         initDarkMode();
         initToothPick();
         initSorting();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     private void initToothPick() {

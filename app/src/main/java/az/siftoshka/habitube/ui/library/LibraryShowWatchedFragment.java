@@ -42,6 +42,7 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
     @BindView(R.id.recycler_view_watched) GridRecyclerView recyclerViewWatched;
+    @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.empty_screen) View emptyScreen;
     private LibraryShowAdapter libraryAdapter;
     private Unbinder unbinder;
@@ -55,7 +56,7 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryShowAdapter(postId -> watchedPresenter.goToDetailedShowScreen(postId), this::showOptionMenu);
+        libraryAdapter = new LibraryShowAdapter(requireContext(), postId -> watchedPresenter.goToDetailedShowScreen(postId), this::showOptionMenu);
     }
 
     @Override
@@ -113,10 +114,10 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
     private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
-            recyclerViewWatched.setVisibility(View.VISIBLE);
             int resId = R.anim.grid_layout_animation_from_bottom;
             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId);
             recyclerViewWatched.setLayoutAnimation(animation);
+            recyclerViewWatched.setVisibility(View.VISIBLE);
         } else {
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewWatched.setVisibility(View.GONE);
@@ -130,6 +131,11 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
         bundle.putInt("position", position);
         menuDialog.setArguments(bundle);
         menuDialog.show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void showProgress(boolean loadingState) {
+        loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

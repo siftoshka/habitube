@@ -13,7 +13,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,13 +25,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -41,8 +38,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import javax.inject.Inject;
+
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
+import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.settings.SettingsPresenter;
 import az.siftoshka.habitube.presentation.settings.SettingsView;
 import butterknife.BindView;
@@ -83,7 +83,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.radio_year_alt) RadioButton radioYearAlt;
     @BindView(R.id.radio_rate) RadioButton radioRate;
     @BindView(R.id.google_auth) MaterialButton googleAuthButton;
-    @BindView(R.id.sign_out_layout) LinearLayout userLayout;
+    @Nullable @BindView(R.id.sign_out_layout) LinearLayout userLayout;
     @BindView(R.id.user_text) TextView userText;
     @BindView(R.id.warning_text) TextView warningText;
     @BindView(R.id.sign_out) ImageView signOutButton;
@@ -92,7 +92,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.delete_watched_shows) MaterialButton deleteWatchedShows;
     @BindView(R.id.delete_planning_movies) MaterialButton deletePlanningMovies;
     @BindView(R.id.delete_planning_shows) MaterialButton deletePlanningShows;
-
 
     private Unbinder unbinder;
     private MessageListener messageListener;
@@ -360,10 +359,11 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     private void handlingSignInResult(Task<GoogleSignInAccount> accountTask) {
         try {
             GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
-            messageListener.showInternetError("Sign In Successfully");
-            if (signInAccount != null) firebaseGoogleAuth(signInAccount);
+            messageListener.showText("Sign In Successfully");
+            if (signInAccount != null)
+                firebaseGoogleAuth(signInAccount);
         } catch (ApiException e) {
-            messageListener.showInternetError("FAIL");
+            messageListener.showText("FAIL");
         }
     }
 
@@ -373,6 +373,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 updateUI(user);
+                settingsPresenter.checkSync();
             }
         });
     }

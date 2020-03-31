@@ -53,7 +53,7 @@ public class LibraryShowPlanningFragment extends MvpAppCompatFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryShowAdapter(postId -> planningPresenter.goToDetailedShowScreen(postId), this::showOptionMenu);
+        libraryAdapter = new LibraryShowAdapter(requireContext(), postId -> planningPresenter.goToDetailedShowScreen(postId), this::showOptionMenu);
     }
 
     @Override

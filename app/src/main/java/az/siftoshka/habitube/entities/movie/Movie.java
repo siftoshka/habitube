@@ -29,7 +29,7 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "original_title") @SerializedName("original_title") @Expose private String originalTitle;
     @ColumnInfo(name = "overview") @SerializedName("overview") @Expose private String overview;
     @ColumnInfo(name = "popularity") @SerializedName("popularity") @Expose private double popularity;
-    @Ignore @ColumnInfo(name = "poster_path") @SerializedName("poster_path") @Expose private String posterPath;
+    @ColumnInfo(name = "poster_path") @SerializedName("poster_path") @Expose private String posterPath;
     @ColumnInfo(name = "release_date") @SerializedName("release_date") @Expose private String releaseDate;
     @ColumnInfo(name = "runtime") @SerializedName("runtime") @Expose private int runtime;
     @ColumnInfo(name = "status") @SerializedName("status") @Expose private String status;
@@ -39,11 +39,10 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "budget") @SerializedName("budget") @Expose private long budget;
     @ColumnInfo(name = "revenue") @SerializedName("revenue") @Expose private long revenue;
     @ColumnInfo(name = "added_date") private Date addedDate;
-    @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
 
     public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
                  double popularity, String releaseDate, int runtime, String status, String title,
-                 double voteAverage, int voteCount, long budget, long revenue, Date addedDate, byte[] posterImage) {
+                 double voteAverage, int voteCount, long budget, long revenue, Date addedDate) {
         this.adult = adult;
         this.id = id;
         this.imdbId = imdbId;
@@ -59,7 +58,6 @@ public class Movie implements Parcelable {
         this.budget = budget;
         this.revenue = revenue;
         this.addedDate = addedDate;
-        this.posterImage = posterImage;
     }
 
     protected Movie(Parcel in) {
@@ -79,7 +77,6 @@ public class Movie implements Parcelable {
         voteCount = in.readInt();
         budget = in.readLong();
         revenue = in.readLong();
-        posterImage = in.createByteArray();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -222,14 +219,6 @@ public class Movie implements Parcelable {
         this.addedDate = addedDate;
     }
 
-    public byte[] getPosterImage() {
-        return posterImage;
-    }
-
-    public void setPosterImage(byte[] posterImage) {
-        this.posterImage = posterImage;
-    }
-
     public long getBudget() {
         return budget;
     }
@@ -267,8 +256,7 @@ public class Movie implements Parcelable {
                 Objects.equals(posterPath, movie.posterPath) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
                 Objects.equals(status, movie.status) &&
-                Objects.equals(title, movie.title) &&
-                Arrays.equals(posterImage, movie.posterImage);
+                Objects.equals(title, movie.title);
     }
 
     @Override
@@ -299,7 +287,6 @@ public class Movie implements Parcelable {
         parcel.writeInt(voteCount);
         parcel.writeLong(budget);
         parcel.writeLong(revenue);
-        parcel.writeByteArray(posterImage);
     }
 
 

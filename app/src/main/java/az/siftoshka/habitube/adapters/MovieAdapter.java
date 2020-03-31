@@ -60,7 +60,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onViewRecycled(@NonNull MovieHolder holder) {
-//        holder.posterTitle.setText(null);
         holder.posterRate.setText(null);
         holder.itemView.setOnClickListener(null);
     }

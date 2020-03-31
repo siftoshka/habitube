@@ -1,6 +1,8 @@
 package az.siftoshka.habitube.ui.library.dialogs;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -14,6 +16,10 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
@@ -81,25 +87,49 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
     @SuppressLint("SetTextI18n")
     private void setDialog(View view) {
         if (movieP != null) {
-            ImageLoader.loadLocally(view, movieP.getPosterImage(), image);
+            try {
+                File f = new File(requireContext().getFilesDir().getPath() + movieP.getPosterPath());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                image.setImageBitmap(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             title.setText(movieP.getTitle());
             removeWatchedButton.setVisibility(View.GONE);
             removePLanningButton.setVisibility(View.VISIBLE);
             removePLanningButton.setOnClickListener(view1 -> {planningPresenter.removeFromLocal(movieP, position);dismiss();});
         } else if (movieW != null) {
-            ImageLoader.loadLocally(view, movieW.getPosterImage(), image);
+            try {
+                File f = new File(requireContext().getFilesDir().getPath() + movieW.getPosterPath());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                image.setImageBitmap(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             title.setText(movieW.getTitle());
             removeWatchedButton.setVisibility(View.VISIBLE);
             removePLanningButton.setVisibility(View.GONE);
             removeWatchedButton.setOnClickListener(view1 -> {watchedPresenter.removeFromLocal(movieW, position);dismiss();});
         } else if (showP != null) {
-            ImageLoader.loadLocally(view, showP.getPosterImage(), image);
+            try {
+                File f = new File(requireContext().getFilesDir().getPath() + showP.getPosterPath());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                image.setImageBitmap(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             title.setText(showP.getName());
             removeWatchedButton.setVisibility(View.GONE);
             removePLanningButton.setVisibility(View.VISIBLE);
             removePLanningButton.setOnClickListener(view1 -> {planningPresenter.removeFromLocal(showP, position);dismiss();});
         } else if (showW != null) {
-            ImageLoader.loadLocally(view, showW.getPosterImage(), image);
+            try {
+                File f = new File(requireContext().getFilesDir().getPath() + showW.getPosterPath());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                image.setImageBitmap(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             title.setText(showW.getName());
             removeWatchedButton.setVisibility(View.VISIBLE);
             removePLanningButton.setVisibility(View.GONE);

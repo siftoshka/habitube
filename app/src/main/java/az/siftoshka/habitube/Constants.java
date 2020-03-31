@@ -9,6 +9,13 @@ public final class Constants {
         public static final String SHOW_TABLE = "shows";
     }
 
+    public static final class FIREBASE {
+        public static final String WATCHED_MOVIE = "movieWatched";
+        public static final String WATCHED_SHOW = "showWatched";
+        public static final String PLANNING_MOVIE = "moviePlanning";
+        public static final String PLANNING_SHOW = "showPlanning";
+    }
+
     public static final class SYSTEM {
         public static final String IMDB_WEBSITE = "https://www.imdb.com/title/";
         public static final String IMDB_PERSON = "https://www.imdb.com/name/";

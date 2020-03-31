@@ -46,6 +46,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     @InjectPresenter LibraryWatchedPresenter watchedPresenter;
 
     @BindView(R.id.recycler_view_watched) GridRecyclerView recyclerViewWatched;
+    @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.empty_screen) View emptyScreen;
     private LibraryAdapter libraryAdapter;
     private Unbinder unbinder;
@@ -59,7 +60,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        libraryAdapter = new LibraryAdapter(postId -> watchedPresenter.goToDetailedMovieScreen(postId), this::showOptionMenu);
+        libraryAdapter = new LibraryAdapter(requireContext(), postId -> watchedPresenter.goToDetailedMovieScreen(postId), this::showOptionMenu);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     }
 
     @Override
-    public void showWatchedMovies(List<Movie> movies) {
+    public void showWatchedMovies(List<Movie> movies) throws NullPointerException {
         SharedPreferences prefs = requireContext().getSharedPreferences("Radio-Sort", MODE_PRIVATE);
         int id = prefs.getInt("Radio", 0);
         switch (id) {
@@ -91,8 +92,8 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
             case 204: Collections.sort(movies, (o1, o2) -> o1.getReleaseDate().compareTo(o2.getReleaseDate()));break;
             case 205: Collections.sort(movies, (o1, o2) -> Double.compare(o2.getVoteAverage(), o1.getVoteAverage()));break;
         }
-        libraryAdapter.addAllMovies(movies);
-        watcher();
+        if (libraryAdapter.addAllMovies(movies))
+            watcher();
     }
 
     @Override
@@ -116,10 +117,10 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
     private void watcher() {
         if (libraryAdapter.getItemCount() != 0) {
             emptyScreen.setVisibility(View.GONE);
-            recyclerViewWatched.setVisibility(View.VISIBLE);
             int resId = R.anim.grid_layout_animation_from_bottom;
             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId);
             recyclerViewWatched.setLayoutAnimation(animation);
+            recyclerViewWatched.setVisibility(View.VISIBLE);
         } else {
             emptyScreen.setVisibility(View.VISIBLE);
             recyclerViewWatched.setVisibility(View.GONE);
@@ -133,6 +134,15 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
         bundle.putInt("position", position);
         menuDialog.setArguments(bundle);
         menuDialog.show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void showProgress(boolean loadingState) {
+        if (loadingState) {
+            loadingScreen.setVisibility(View.VISIBLE);
+        } else {
+            loadingScreen.setVisibility(View.GONE);
+        }
     }
 
     @Override

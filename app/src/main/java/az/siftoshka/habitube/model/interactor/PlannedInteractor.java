@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.model.interactor;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,8 +26,20 @@ public class PlannedInteractor {
         plannedRepository.addMovie(movie);
     }
 
+    public void addMovieFB(int id) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            plannedRepository.addMovieToPlanning(id, user);
+    }
+
     public void addShow(Show show) {
         plannedRepository.addShow(show);
+    }
+
+    public void addShowFB(int id) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            plannedRepository.addShowToPlanning(id, user);
     }
 
     public void updateMovie(Movie movie) {
@@ -61,17 +76,33 @@ public class PlannedInteractor {
 
     public void deleteMovie(Movie movie) {
         plannedRepository.deleteMovie(movie);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            plannedRepository.deleteMovieFromPlanning(movie, user);
+        }
     }
 
     public void deleteShow(Show show) {
         plannedRepository.deleteShow(show);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            plannedRepository.deleteShowFromPlanning(show, user);
+        }
     }
 
     public void deleteAllMovies() {
         plannedRepository.deleteAllMovies();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            plannedRepository.deleteAllMoviesFromPlanning(user);
+        }
     }
 
     public void deleteAllShows() {
         plannedRepository.deleteAllShows();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            plannedRepository.deleteAllShowsFromPlanning(user);
+        }
     }
 }

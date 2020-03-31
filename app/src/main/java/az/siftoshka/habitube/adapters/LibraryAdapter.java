@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.adapters;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.utils.ImageLoader;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {
 
@@ -27,12 +32,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
     }
 
     private List<Movie> movies;
+    private final Context context;
     private MovieItemClickListener clickListener;
     private OnItemLongClickListener longClickListener;
 
 
-    public LibraryAdapter(@NonNull MovieItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
+    public LibraryAdapter(Context context, @NonNull MovieItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
         this.movies = new ArrayList<>();
+        this.context = context;
         this.clickListener = clickListener;
         this.longClickListener = longClickListener;
     }
@@ -47,7 +54,13 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
     @Override
     public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
         final Movie movie = this.movies.get(position);
-        ImageLoader.loadLocally(holder.itemView, movie.getPosterImage(), holder.posterImage);
+        try {
+            File f = new File(context.getFilesDir().getPath() + movie.getPosterPath());
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            holder.posterImage.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         holder.posterRate.setText(String.valueOf(movie.getVoteAverage()));
         holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(movie.getId()));
         holder.posterImage.setOnLongClickListener(view -> {
@@ -68,10 +81,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
         return movies.size();
     }
 
-    public void addAllMovies(List<Movie> movies) {
+    public boolean addAllMovies(List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(0, movies);
         notifyDataSetChanged();
+        return true;
     }
 
     public void removedItem(int position) {

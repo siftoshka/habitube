@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.adapters;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +33,14 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
     }
 
     private List<Show> shows;
+    private final Context context;
     private ShowItemClickListener clickListener;
     private OnItemLongClickListener longClickListener;
 
 
-    public LibraryShowAdapter(@NonNull ShowItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
+    public LibraryShowAdapter(Context context, @NonNull ShowItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
         this.shows = new ArrayList<>();
+        this.context = context;
         this.clickListener = clickListener;
         this.longClickListener = longClickListener;
     }
@@ -47,7 +55,13 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
     @Override
     public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
         final Show show = this.shows.get(position);
-        ImageLoader.loadLocally(holder.itemView, show.getPosterImage(), holder.posterImage);
+        try {
+            File f = new File(context.getFilesDir().getPath() + show.getPosterPath());
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            holder.posterImage.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         holder.posterRate.setText(String.valueOf(show.getVoteAverage()));
         holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(show.getId()));
         holder.posterImage.setOnLongClickListener(view -> {

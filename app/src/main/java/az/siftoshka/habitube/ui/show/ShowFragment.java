@@ -267,14 +267,14 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         addMovieToWatched(show);
         deleteMovieFromPlanned(show);
         deleteMovieFromWatched(show);
-        showPresenter.isPlannedShowChanged(show.getId(), show, posterShow);
-        showPresenter.isWatchedShowChanged(show.getId(), show, posterShow);
+        showPresenter.isPlannedShowChanged(show.getId(), show);
+        showPresenter.isWatchedShowChanged(show.getId(), show);
     }
 
     private void addMovieToWatched(Show show) {
         watchedButton.setOnClickListener(v -> {
             show.setAddedDate(new Date());
-            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            ImageLoader.saveToInternalStorage(show.getPosterPath(), requireContext(), posterShow);
             showPresenter.addShowAsWatched(show);
         });
     }
@@ -282,7 +282,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private void addMovieToPlanned(Show show) {
         planningButton.setOnClickListener(v -> {
             show.setAddedDate(new Date());
-            show.setPosterImage(ImageLoader.imageView2Bitmap(posterShow));
+            ImageLoader.saveToInternalStorage(show.getPosterPath(), requireContext(), posterShow);
             showPresenter.addShowAsPlanned(show);
         });
     }

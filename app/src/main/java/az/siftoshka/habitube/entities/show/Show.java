@@ -39,12 +39,10 @@ public class Show implements Parcelable {
     @SerializedName("vote_average") @Expose private float voteAverage;
     @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
-    @ColumnInfo(name = "poster_image", typeAffinity = ColumnInfo.BLOB) private byte[] posterImage;
-
 
     public Show(String firstAirDate, int id, boolean inProduction, String lastAirDate, String name,
                 int numberOfEpisodes, int numberOfSeasons, String overview, double popularity,
-                String posterPath, String status, float voteAverage, int voteCount, Date addedDate, byte[] posterImage) {
+                String posterPath, String status, float voteAverage, int voteCount, Date addedDate) {
         this.firstAirDate = firstAirDate;
         this.id = id;
         this.inProduction = inProduction;
@@ -59,7 +57,6 @@ public class Show implements Parcelable {
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
         this.addedDate = addedDate;
-        this.posterImage = posterImage;
     }
 
     protected Show(Parcel in) {
@@ -78,7 +75,6 @@ public class Show implements Parcelable {
         status = in.readString();
         voteAverage = in.readFloat();
         voteCount = in.readInt();
-        posterImage = in.createByteArray();
     }
 
     public static final Creator<Show> CREATOR = new Creator<Show>() {
@@ -99,14 +95,6 @@ public class Show implements Parcelable {
 
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
-    }
-
-    public byte[] getPosterImage() {
-        return posterImage;
-    }
-
-    public void setPosterImage(byte[] posterImage) {
-        this.posterImage = posterImage;
     }
 
     public String getBackdropPath() {
@@ -266,8 +254,7 @@ public class Show implements Parcelable {
                 Objects.equals(overview, show.overview) &&
                 Objects.equals(posterPath, show.posterPath) &&
                 Objects.equals(seasons, show.seasons) &&
-                Objects.equals(status, show.status) &&
-                Arrays.equals(posterImage, show.posterImage);
+                Objects.equals(status, show.status);
     }
 
     @Override
@@ -297,6 +284,5 @@ public class Show implements Parcelable {
         parcel.writeString(status);
         parcel.writeFloat(voteAverage);
         parcel.writeInt(voteCount);
-        parcel.writeByteArray(posterImage);
     }
 }

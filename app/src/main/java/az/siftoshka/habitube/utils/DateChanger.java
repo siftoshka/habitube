@@ -2,6 +2,13 @@ package az.siftoshka.habitube.utils;
 
 import android.content.Context;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
@@ -21,7 +28,6 @@ public class DateChanger {
     public String changeDate(String date) {
         String monthInWords = null;
         try {
-
             String year = date.substring(0, 4);
             String month = date.substring(5, 7);
             String day = date.substring(8, 10);

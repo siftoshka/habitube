@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.model.system.KeyboardBehavior;
@@ -18,7 +20,6 @@ import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
-import ru.terrakok.cicerone.commands.Back;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
@@ -33,10 +34,7 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     private Navigator navigator = new SupportAppNavigator(this, R.id.fragment_container) {
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
-            if (command instanceof Forward) {
-                fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
-            }
-        }
+            if (command instanceof Forward) fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left); }
     };
 
     @Override
@@ -59,25 +57,19 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     }
 
     @Override
-    public void showText(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
+    public void showText(String message) { Toast.makeText(this, message, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        }
+        if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     @Override
     public void hideKeyboard() {
         final View view = findViewById(R.id.fragment_container);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override

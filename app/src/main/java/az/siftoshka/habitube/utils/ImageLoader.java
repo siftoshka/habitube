@@ -1,10 +1,12 @@
 package az.siftoshka.habitube.utils;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,6 +16,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import az.siftoshka.habitube.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,15 +60,6 @@ public class ImageLoader {
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
         }
-    }
-
-    public static void loadLocally(View view, byte[] image, ImageView into) {
-        Glide.with(view)
-                .load(image)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_missing)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(into);
     }
 
     public static void load(Context context, String url, ImageView into) {
@@ -123,7 +119,46 @@ public class ImageLoader {
         }
     }
 
-    public static byte[] imageView2Bitmap(ImageView view) {
+    public static void saveToInternalStorage(String imageDir, Context context, Drawable resource) {
+        Bitmap bitmapImage = ((BitmapDrawable) resource).getBitmap();
+        File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void saveToInternalStorage(String imageDir, Context context, ImageView imageView) {
+        Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static byte[] imageView2ByteArray(ImageView view) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
@@ -136,7 +171,7 @@ public class ImageLoader {
 
     public static void loadYoutube(View view, String key, ImageView image) {
         Glide.with(view)
-                .load("https://img.youtube.com/vi/"+key+"/hqdefault.jpg")
+                .load("https://img.youtube.com/vi/" + key + "/hqdefault.jpg")
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .centerCrop()

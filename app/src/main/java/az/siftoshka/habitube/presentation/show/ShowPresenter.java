@@ -97,18 +97,18 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
                         throwable -> getViewState().showErrorScreen()));
     }
 
-    private void updatePlannedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
+    private void updatePlannedShow(Show showFromLocal, Show showFromWeb) {
         if (!showFromLocal.equals(showFromWeb)) {
             showFromWeb.setAddedDate(showFromLocal.getAddedDate());
-            showFromWeb.setPosterImage(showFromLocal.getPosterImage());
+            showFromWeb.setPosterPath(showFromLocal.getPosterPath());
             plannedInteractor.updateShow(showFromWeb);
         }
     }
 
-    private void updateWatchedShow(Show showFromLocal, Show showFromWeb, ImageView image) {
+    private void updateWatchedShow(Show showFromLocal, Show showFromWeb) {
         if (!showFromLocal.equals(showFromWeb)) {
             showFromWeb.setAddedDate(showFromLocal.getAddedDate());
-            showFromWeb.setPosterImage(showFromLocal.getPosterImage());
+            showFromWeb.setPosterPath(showFromLocal.getPosterPath());
             watchedInteractor.updateShow(showFromWeb);
         }
     }
@@ -153,11 +153,13 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
 
     public void addShowAsWatched(Show show) {
         watchedInteractor.addShow(show);
+        watchedInteractor.addShowFB(show.getId());
         getViewState().setSaveButtonEnabled(true);
     }
 
     public void addShowAsPlanned(Show show) {
         plannedInteractor.addShow(show);
+        plannedInteractor.addShowFB(show.getId());
         getViewState().setPlanButtonEnabled(true);
     }
 
@@ -171,14 +173,14 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
         getViewState().setPlanButtonEnabled(false);
     }
 
-    public boolean isPlannedShowChanged(int id, Show showFromWeb, ImageView image) {
+    public boolean isPlannedShowChanged(int id, Show showFromWeb) {
         return compositeDisposable.add(plannedInteractor.getShow(id)
-                .subscribe(show -> updatePlannedShow(show, showFromWeb, image), Throwable::printStackTrace));
+                .subscribe(show -> updatePlannedShow(show, showFromWeb), Throwable::printStackTrace));
     }
 
-    public boolean isWatchedShowChanged(int id, Show showFromWeb, ImageView image) {
+    public boolean isWatchedShowChanged(int id, Show showFromWeb) {
         return compositeDisposable.add(watchedInteractor.getShow(id)
-                .subscribe(show -> updateWatchedShow(show, showFromWeb, image), Throwable::printStackTrace));
+                .subscribe(show -> updateWatchedShow(show, showFromWeb), Throwable::printStackTrace));
     }
 
     public void goToDetailedShowScreen(Integer id) {

@@ -1,6 +1,8 @@
 package az.siftoshka.habitube.ui.library.dialogs;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
@@ -62,15 +68,21 @@ public class OfflineCardDialog extends DialogFragment {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
-        setDialog(view);
+        setDialog();
 
         closeButton.setOnClickListener(view1 -> dismiss());
         return view;
     }
 
     @SuppressLint("SetTextI18n")
-    private void setDialog(View view) {
-        ImageLoader.loadLocally(view, movie.getPosterImage(), posterMain);
+    private void setDialog() {
+        try {
+            File f = new File(requireContext().getFilesDir().getPath() + movie.getPosterPath());
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+           posterMain.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));

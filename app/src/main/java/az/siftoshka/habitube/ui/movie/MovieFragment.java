@@ -253,8 +253,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         addMovieToPlanned(movie);
         deleteMovieFromWatched(movie);
         deleteMovieFromPlanned(movie);
-        moviePresenter.isPlannedMovieChanged(movie.getId(), movie, posterMain);
-        moviePresenter.isWatchedMovieChanged(movie.getId(), movie, posterMain);
+        moviePresenter.isPlannedMovieChanged(movie.getId(), movie);
+        moviePresenter.isWatchedMovieChanged(movie.getId(), movie);
     }
 
     private void addGenres(Movie movie) {
@@ -271,7 +271,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private void addMovieToWatched(Movie movie) {
         watchedButton.setOnClickListener(v -> {
             movie.setAddedDate(new Date());
-            movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
+            ImageLoader.saveToInternalStorage(movie.getPosterPath(), requireContext(), posterMain);
             moviePresenter.addMovieAsWatched(movie);
         });
     }
@@ -279,7 +279,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private void addMovieToPlanned(Movie movie) {
         planningButton.setOnClickListener(v -> {
             movie.setAddedDate(new Date());
-            movie.setPosterImage(ImageLoader.imageView2Bitmap(posterMain));
+            ImageLoader.saveToInternalStorage(movie.getPosterPath(), requireContext(), posterMain);
             moviePresenter.addMovieAsPlanned(movie);
         });
     }

@@ -1,9 +1,14 @@
 package az.siftoshka.habitube.model.repository;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.entities.firebase.Media;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.data.PlannedRoomRepository;
@@ -11,9 +16,13 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import static az.siftoshka.habitube.Constants.FIREBASE.PLANNING_MOVIE;
+import static az.siftoshka.habitube.Constants.FIREBASE.PLANNING_SHOW;
+
 public class PlannedRepository {
 
     private final PlannedRoomRepository plannedRepository;
+    private DatabaseReference databaseReference;
 
     @Inject
     public PlannedRepository(PlannedRoomRepository plannedRepository) {
@@ -24,6 +33,7 @@ public class PlannedRepository {
         plannedRepository.movieDAO().addMovie(movie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace)
                 .subscribe();
     }
 
@@ -31,6 +41,7 @@ public class PlannedRepository {
         plannedRepository.showDAO().addShow(show)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace)
                 .subscribe();
     }
 
@@ -79,6 +90,7 @@ public class PlannedRepository {
     public Single<Boolean> isMovieExists(int movieId) {
         return Single.just(plannedRepository.movieDAO().getMovieCount(movieId))
                 .map(integer -> integer > 0)
+                .doOnError(Throwable::printStackTrace)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -86,6 +98,7 @@ public class PlannedRepository {
     public Single<Boolean> isShowExists(int shiwId) {
         return Single.just(plannedRepository.showDAO().getShowCount(shiwId))
                 .map(integer -> integer > 0)
+                .doOnError(Throwable::printStackTrace)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -116,5 +129,55 @@ public class PlannedRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
+    }
+
+    public void addMovieToPlanning(int id, FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_MOVIE)
+                .child(user.getUid());
+        databaseReference.child(String.valueOf(id))
+                .setValue(new Media(id));
+    }
+
+    public void addShowToPlanning(int id, FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_SHOW)
+                .child(user.getUid());
+        databaseReference.child(String.valueOf(id))
+                .setValue(new Media(id));
+    }
+
+    public void deleteMovieFromPlanning(Movie movie, FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_MOVIE)
+                .child(user.getUid());
+        databaseReference.child(String.valueOf(movie.getId())).removeValue();
+    }
+
+    public void deleteShowFromPlanning(Show show, FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_SHOW)
+                .child(user.getUid());
+        databaseReference.child(String.valueOf(show.getId())).removeValue();
+    }
+
+    public void deleteAllMoviesFromPlanning(FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_MOVIE)
+                .child(user.getUid());
+        databaseReference.removeValue();
+    }
+
+    public void deleteAllShowsFromPlanning(FirebaseUser user) {
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(PLANNING_SHOW)
+                .child(user.getUid());
+        databaseReference.removeValue();
     }
 }

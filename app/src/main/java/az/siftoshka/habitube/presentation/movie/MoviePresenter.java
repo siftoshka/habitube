@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.di.qualifiers.MediaType;
@@ -25,7 +24,6 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
-import az.siftoshka.habitube.utils.ImageLoader;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -136,18 +134,18 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
                         Throwable::printStackTrace));
     }
 
-    private void updatePlannedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
+    private void updatePlannedMovie(Movie movieFromLocal, Movie movieFromWeb) {
         if (!movieFromLocal.equals(movieFromWeb)) {
             movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
-            movieFromWeb.setPosterImage(movieFromLocal.getPosterImage());
+            movieFromWeb.setPosterPath(movieFromLocal.getPosterPath());
             plannedInteractor.updateMovie(movieFromWeb);
         }
     }
 
-    private void updateWatchedMovie(Movie movieFromLocal, Movie movieFromWeb, ImageView image) {
+    private void updateWatchedMovie(Movie movieFromLocal, Movie movieFromWeb) {
         if (!movieFromLocal.equals(movieFromWeb)) {
             movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
-            movieFromWeb.setPosterImage(movieFromLocal.getPosterImage());
+            movieFromWeb.setPosterPath(movieFromLocal.getPosterPath());
             watchedInteractor.updateMovie(movieFromWeb);
         }
     }
@@ -185,6 +183,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     public void addMovieAsWatched(Movie movie) {
         watchedInteractor.addMovie(movie);
+        watchedInteractor.addMovieFB(movie.getId());
         getViewState().setSaveButtonEnabled(true);
     }
 
@@ -195,6 +194,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     public void addMovieAsPlanned(Movie movie) {
         plannedInteractor.addMovie(movie);
+        plannedInteractor.addMovieFB(movie.getId());
         getViewState().setPlanButtonEnabled(true);
     }
 
@@ -204,15 +204,15 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     }
 
     @Nullable
-    public boolean isPlannedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
+    public boolean isPlannedMovieChanged(int id, Movie movieFromWeb) {
         return compositeDisposable.add(plannedInteractor.getMovie(id)
-                .subscribe(movie -> updatePlannedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
+                .subscribe(movie -> updatePlannedMovie(movie, movieFromWeb), Throwable::printStackTrace));
     }
 
     @Nullable
-    public boolean isWatchedMovieChanged(int id, Movie movieFromWeb, ImageView image) {
+    public boolean isWatchedMovieChanged(int id, Movie movieFromWeb) {
         return compositeDisposable.add(watchedInteractor.getMovie(id)
-                .subscribe(movie -> updateWatchedMovie(movie, movieFromWeb, image), Throwable::printStackTrace));
+                .subscribe(movie -> updateWatchedMovie(movie, movieFromWeb), Throwable::printStackTrace));
     }
 
     public void goToDetailedMovieScreen(Integer id) {
