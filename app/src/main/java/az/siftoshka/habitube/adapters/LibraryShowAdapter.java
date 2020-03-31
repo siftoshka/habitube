@@ -12,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -55,13 +58,10 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
     @Override
     public void onBindViewHolder(@NonNull LibraryHolder holder, final int position) {
         final Show show = this.shows.get(position);
-        try {
-            File f = new File(context.getFilesDir().getPath() + show.getPosterPath());
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            holder.posterImage.setImageBitmap(b);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Glide.with(holder.itemView)
+                .load(new File(context.getFilesDir().getPath()) + show.getPosterPath())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(holder.posterImage);
         holder.posterRate.setText(String.valueOf(show.getVoteAverage()));
         holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(show.getId()));
         holder.posterImage.setOnLongClickListener(view -> {

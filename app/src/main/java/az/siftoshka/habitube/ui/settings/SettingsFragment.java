@@ -83,7 +83,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.radio_year_alt) RadioButton radioYearAlt;
     @BindView(R.id.radio_rate) RadioButton radioRate;
     @BindView(R.id.google_auth) MaterialButton googleAuthButton;
-    @Nullable @BindView(R.id.sign_out_layout) LinearLayout userLayout;
+    @BindView(R.id.sign_out_layout) LinearLayout userLayout;
     @BindView(R.id.user_text) TextView userText;
     @BindView(R.id.warning_text) TextView warningText;
     @BindView(R.id.sign_out) ImageView signOutButton;
@@ -380,7 +380,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @SuppressLint("SetTextI18n")
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
+        if (user != null && userLayout != null) {
             userLayout.setVisibility(View.VISIBLE);
             googleAuthButton.setVisibility(View.GONE);
             warningText.setVisibility(View.GONE);

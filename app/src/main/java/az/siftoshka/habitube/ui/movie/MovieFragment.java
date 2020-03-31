@@ -225,10 +225,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         showProgress(false);
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
-                        plannedImage.setImageResource(R.drawable.ic_watch);
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
+                        if (watchedImage != null) {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                        }
                         return false;
                     }
                 })
@@ -399,9 +401,9 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if (loadingState) {
+        if (loadingState && loadingScreen != null) {
             loadingScreen.setVisibility(View.VISIBLE);
-        } else {
+        } else if (loadingScreen != null) {
             loadingScreen.setVisibility(View.GONE);
         }
     }
