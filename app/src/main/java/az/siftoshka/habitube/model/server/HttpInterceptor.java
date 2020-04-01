@@ -10,7 +10,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static az.siftoshka.habitube.Constants.SYSTEM.API_KEY;
+import static az.siftoshka.habitube.model.server.Api.API_KEY;
 
 public class HttpInterceptor implements Interceptor {
 
