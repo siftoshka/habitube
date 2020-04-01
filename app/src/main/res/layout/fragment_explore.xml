@@ -39,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/bold"
                 android:gravity="center_vertical"
                 android:paddingEnd="152dp"
-                android:fontFamily="@font/bold"
                 android:text="@string/app_name"
                 android:textColor="@color/white_is_white"
                 android:textSize="20sp"
@@ -95,33 +95,33 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_movies"
-                    style="@style/Widget.MaterialComponents.Button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:backgroundTint="#32a6a8"
                     android:fontFamily="@font/bold"
                     android:text="@string/movies"
-                    android:textColor="@color/white_is_white"
+                    android:textColor="@color/secondColor"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_episodes"
                     app:iconSize="20dp"
-                    app:iconTint="@color/white_is_white" />
+                    app:iconTint="@color/secondColor"
+                    app:strokeColor="@color/secondColor" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_shows"
-                    style="@style/Widget.MaterialComponents.Button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:backgroundTint="#ff5f4a"
                     android:fontFamily="@font/bold"
                     android:text="@string/tv_shows"
-                    android:textColor="@color/white_is_white"
+                    android:textColor="@color/secondColor"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_episodes"
                     app:iconSize="20dp"
-                    app:iconTint="@color/white_is_white" />
+                    app:iconTint="@color/secondColor"
+                    app:strokeColor="@color/secondColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -139,7 +139,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/dark_800"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_upcoming_movies"
@@ -165,7 +165,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/trending_movies"
                     android:textColor="@color/dark_800"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_movies"
@@ -200,9 +200,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
+                    android:layout_gravity="center"
                     android:gravity="end"
-                    android:text="Enjoy The Most Trending TV Shows on Netflix"
-                    android:textColor="@color/dark_800"
+                    android:text="@string/enjoy_netflix"
+                    android:textColor="@color/dark_600"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -221,7 +222,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/dark_800"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_tv_shows"
@@ -247,7 +248,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/air_today"
                     android:textColor="@color/dark_800"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_airtoday_tv_shows"

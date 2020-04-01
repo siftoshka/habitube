@@ -3,12 +3,9 @@ package az.siftoshka.habitube;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.MemoryCategory;
 import com.google.firebase.database.FirebaseDatabase;
 
 import az.siftoshka.habitube.di.modules.AppModule;

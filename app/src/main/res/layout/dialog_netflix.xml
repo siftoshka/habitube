@@ -24,7 +24,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/bold"
-        android:text="The Most Popular Now"
+        android:text="@string/netflix_popular_now"
         android:textColor="@color/white_is_white"
         app:cornerRadius="10dp" />
 
@@ -36,7 +36,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/bold"
-        android:text="The Best Rating"
+        android:text="@string/netflix_best_rating"
         android:textColor="@color/white_is_white"
         app:cornerRadius="10dp" />
 
@@ -48,7 +48,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/bold"
-        android:text="New Shows"
+        android:text="@string/netflix_new_shows"
         android:textColor="@color/white_is_white"
         app:cornerRadius="10dp" />
 

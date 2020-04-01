@@ -359,11 +359,11 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     private void handlingSignInResult(Task<GoogleSignInAccount> accountTask) {
         try {
             GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
-            messageListener.showText("Sign In Successfully");
+            //messageListener.showText("Sign In Successfully");
             if (signInAccount != null)
                 firebaseGoogleAuth(signInAccount);
         } catch (ApiException e) {
-            messageListener.showText("FAIL");
+            //messageListener.showText("FAIL");
         }
     }
 

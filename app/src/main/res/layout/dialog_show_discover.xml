@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bold"
-            android:text="First Air Date"
+            android:text="@string/first_air_date"
             android:textColor="@color/dark_800"
             android:textSize="18sp"
             android:textStyle="normal" />
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:padding="1dp"
-        android:text="from current to lower"
+        android:text="@string/from_current_to_lower"
         android:textColor="@color/dark_600"
         android:textSize="14sp"
         android:textStyle="normal" />
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bold"
-            android:text="Vote Average"
+            android:text="@string/vote_average"
             android:textColor="@color/dark_800"
             android:textSize="18sp"
             android:textStyle="normal" />
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:padding="1dp"
-        android:text="from current to higher"
+        android:text="@string/from_current_to_higher"
         android:textColor="@color/dark_600"
         android:textSize="14sp"
         android:textStyle="normal" />
@@ -133,7 +133,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/regular"
-        android:text="Discover TV SHOWS"
+        android:text="@string/discover_tv_shows"
         android:textColor="@color/white_is_white"
         app:cornerRadius="10dp" />
 

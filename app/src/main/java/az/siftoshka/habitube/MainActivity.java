@@ -1,11 +1,14 @@
 package az.siftoshka.habitube;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -24,6 +27,8 @@ import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
 
+import static android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class MainActivity extends MvpAppCompatActivity implements MessageListener, KeyboardBehavior {
@@ -43,6 +48,13 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
         setContentView(R.layout.activity_main);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
         router.newRootScreen(new Screens.NavbarScreen());
+        SharedPreferences prefs = getSharedPreferences("Dark-Mode", MODE_PRIVATE);
+        int idTheme = prefs.getInt("Dark", 0);
+        if (idTheme == 100) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.mainBackground));
+            }
+        }
     }
 
     @Override

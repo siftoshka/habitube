@@ -11,7 +11,7 @@
     <string name="similar_movies">Похожие Фильмы</string>
     <string name="similar_tv_shows">Похожие Сериалы</string>
 
-    <string name="contact_us_menu">Контакты</string>
+    <string name="contact_us_menu">Мои Контакты</string>
     <string name="about_menu">О Приложении</string>
     <string name="search_movies_menu">Поиск…</string>
     <string name="error_text_title">Простите!</string>
@@ -60,7 +60,7 @@
     <string name="air_today">Сегодня вышло</string>
     <string name="nothing_found">Ничего не найдено...</string>
     <string name="dark_mode">Темная тема</string>
-    <string name="dark_mode_text">Переходи на темную сторону</string>
+    <string name="dark_mode_text">Переход на темную сторону</string>
     <string name="sorting">Сортировка по</string>
     <string name="radio_year">Году выпуска ↓</string>
     <string name="radio_recent">Недавно добавленным</string>
@@ -94,5 +94,21 @@
     <string name="delete_all_watched_movies">Удалить все просмотренные фильмы</string>
     <string name="delete_all_planning_movies">Удалить все запланированные фильмф</string>
     <string name="clear_cache">Очистить кэш</string>
+    <string name="search_hint">Что-то ищешь? Просто напиши это в поиск</string>
+    <string name="enjoy_netflix">Наслаждайся лучшими сериалами от Нетфликс</string>
+    <string name="discover_movies">Искать Фильмы</string>
+    <string name="from_current_to_higher">от нынещнего наверх</string>
+    <string name="vote_average">Средняя оценка</string>
+    <string name="release_date">Дата Выхода</string>
+    <string name="popularity">Популярность</string>
+    <string name="netflix_popular_now">Популярное Сейчас</string>
+    <string name="netflix_best_rating">Лучший Рейтинг</string>
+    <string name="netflix_new_shows">Новые Сериалы</string>
+    <string name="remove_from_watched">Убрать из Просмотренных</string>
+    <string name="remove_from_planning">Убрать из Запланированных</string>
+    <string name="first_air_date">Дата Выхода в Эфир</string>
+    <string name="from_current_to_lower">от нынещнего вниз</string>
+    <string name="discover_tv_shows">Искать Сериалы</string>
+    <string name="google_warning">Google аккаунт будет использоваться только в целях хранения id ваших фильмов и сериалов для дальнейшей синхронизации между вашими устройствами. Все ваши данные остаются приватными для вас.</string>
 
 </resources>

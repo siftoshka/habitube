@@ -245,8 +245,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
         posterViews.setText("(" + movie.getVoteCount() + ")");
         posterDuration.setText(movie.getRuntime() + " " + getResources().getString(R.string.minutes));
-        posterBudget.setText("$" + CurrencyFormatter.format(movie.getBudget()));
-        posterRevenue.setText("$" + CurrencyFormatter.format(movie.getRevenue()));
+        posterBudget.setText(": $" + CurrencyFormatter.format(movie.getBudget()));
+        posterRevenue.setText(": $" + CurrencyFormatter.format(movie.getRevenue()));
         addGenres(movie);
         checkDescription(movie);
         posterDesc.setText(movie.getOverview());

@@ -121,6 +121,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_star, container, false);
         unbinder = ButterKnife.bind(this, view);
+        posterPersonName.setSelected(true);
         return view;
     }
 

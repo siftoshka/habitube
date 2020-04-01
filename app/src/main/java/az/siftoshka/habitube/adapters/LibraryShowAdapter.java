@@ -94,13 +94,6 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
         notifyItemRangeChanged(position, this.shows.size());
     }
 
-    public Show getShowAt(int position) {
-        Show show = this.shows.get(position);
-        this.shows.remove(position);
-        notifyItemRemoved(position);
-        return show;
-    }
-
     static class LibraryHolder extends RecyclerView.ViewHolder {
 
         ImageView posterImage;

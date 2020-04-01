@@ -78,8 +78,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="3dp"
-                        android:fontFamily="@font/bold"
-                        android:maxLines="2"
+                        android:ellipsize="marquee"
+                        android:fontFamily="@font/regular"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
                         android:textColor="@color/dark_800"
                         android:textSize="22sp"
                         tools:text="PERSON" />

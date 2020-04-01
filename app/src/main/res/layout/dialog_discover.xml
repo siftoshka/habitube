@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Popularity"
+            android:text="@string/popularity"
             android:fontFamily="@font/semibold"
             android:textColor="@color/dark_800"
             app:strokeColor="@color/colorPrimary" />
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Revenue"
+            android:text="@string/revenue"
             android:fontFamily="@font/semibold"
             android:textColor="@color/dark_800"
             app:strokeColor="@color/colorPrimary" />
@@ -67,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Release Date"
+            android:text="@string/release_date"
             android:fontFamily="@font/bold"
             android:textColor="@color/dark_800"
             android:textSize="18sp" />
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:text="from current to lower"
+        android:text="@string/from_current_to_lower"
         android:textColor="@color/dark_600"
         android:padding="1dp"
         android:textSize="14sp" />
@@ -119,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Vote Average"
+            android:text="@string/vote_average"
             android:fontFamily="@font/bold"
             android:textColor="@color/dark_800"
             android:textSize="18sp"
@@ -140,7 +140,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="from current to higher"
+        android:text="@string/from_current_to_higher"
         android:fontFamily="@font/regular"
         android:textColor="@color/dark_600"
         android:padding="1dp"
@@ -170,7 +170,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/bold"
-        android:text="Discover Movies"
+        android:text="@string/discover_movies"
         android:textColor="@color/white_is_white"
         app:cornerRadius="10dp"/>
 
