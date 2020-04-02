@@ -37,17 +37,15 @@
             style="@style/ToolbarTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/mainBackground"
+            android:background="@null"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back"
-            app:titleTextColor="@color/dark_900" />
+            app:navigationIcon="@drawable/ic_back_w" />
 
         <ImageView
             android:id="@+id/show_poster_background"
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="?attr/actionBarSize"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher" />
@@ -185,28 +183,13 @@
                         tools:text="DURATION" />
                 </LinearLayout>
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/show_genres"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/show_genres"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:fontFamily="@font/regular"
-                            app:singleLine="true" />
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -442,7 +425,7 @@
                             android:fontFamily="@font/bold"
                             android:text="@string/videos"
                             android:textColor="@color/dark_800"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -480,7 +463,7 @@
                             android:fontFamily="@font/bold"
                             android:text="@string/description_card"
                             android:textColor="@color/dark_800"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <androidx.core.widget.NestedScrollView
@@ -550,7 +533,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -586,7 +569,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 

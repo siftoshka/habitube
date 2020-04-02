@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="az.siftoshka.habitube.ui.library.LibraryWatchedFragment">
 
     <!--Loading Screen-->
@@ -25,11 +25,12 @@
 
     <az.siftoshka.habitube.utils.GridRecyclerView
         android:id="@+id/recycler_view_watched"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:clipToPadding="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:clipToPadding="true"
         android:layoutAnimation="@anim/grid_layout_animation_from_bottom"/>
 
 </LinearLayout>

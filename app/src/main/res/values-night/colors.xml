@@ -13,6 +13,7 @@
     <color name="colorPrimaryLight">#bdb5c9</color>
     <color name="mainBackground">#111111</color>
     <color name="background">#212121</color>
+    <color name="genreBackground">#111111</color>
     <color name="dialog">#181818</color>
     <color name="cardview">#272727</color>
 

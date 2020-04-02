@@ -35,9 +35,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +44,7 @@ import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.CastAdapter;
 import az.siftoshka.habitube.adapters.CrewAdapter;
+import az.siftoshka.habitube.adapters.GenreAdapter;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
@@ -54,7 +52,6 @@ import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.credits.Cast;
 import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.model.system.MessageListener;
@@ -86,6 +83,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
     @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
     @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
+    @BindView(R.id.movie_genres) RecyclerView recyclerViewGenres;
     @BindView(R.id.main_screen) RelativeLayout mainScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
@@ -106,7 +104,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.poster_budget) TextView posterBudget;
     @BindView(R.id.poster_revenue) TextView posterRevenue;
     @BindView(R.id.poster_desc) TextView posterDesc;
-    @BindView(R.id.movie_genres) ChipGroup movieGenresChip;
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
     @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
     @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
@@ -126,6 +123,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private VideoAdapter videoAdapter;
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
+    private GenreAdapter genreAdapter;
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
 
@@ -162,6 +160,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         videoAdapter = new VideoAdapter(this::showVideo);
         castAdapter = new CastAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
+        genreAdapter = new GenreAdapter();
     }
 
     @Override
@@ -184,6 +183,11 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         planningButton.setEnabled(false);
         planningButtonAlt.setVisibility(View.GONE);
 
+        LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewGenres.setLayoutManager(layoutManagerGenres);
+        recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewGenres.setHasFixedSize(true);
+        recyclerViewGenres.setAdapter(genreAdapter);
         LinearLayoutManager layoutManagerSimilarMovies = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarMovies.setLayoutManager(layoutManagerSimilarMovies);
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
@@ -209,8 +213,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showMovie(Movie movie) {
-        toolbar.setTitle(movie.getTitle());
-
         Glide.with(requireContext())
                 .load(IMAGE_URL + movie.getPosterPath())
                 .listener(new RequestListener<Drawable>() {
@@ -247,7 +249,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         posterDuration.setText(movie.getRuntime() + " " + getResources().getString(R.string.minutes));
         posterBudget.setText(": $" + CurrencyFormatter.format(movie.getBudget()));
         posterRevenue.setText(": $" + CurrencyFormatter.format(movie.getRevenue()));
-        addGenres(movie);
+        genreAdapter.addAllGenres(movie.getMovieGenres());
         checkDescription(movie);
         posterDesc.setText(movie.getOverview());
         showImdbWeb(movie.getImdbId());
@@ -257,17 +259,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         deleteMovieFromPlanned(movie);
         moviePresenter.isPlannedMovieChanged(movie.getId(), movie);
         moviePresenter.isWatchedMovieChanged(movie.getId(), movie);
-    }
-
-    private void addGenres(Movie movie) {
-        for (MovieGenre mGenres : movie.getMovieGenres()) {
-            Chip chip = new Chip(requireContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(requireContext(),
-                    null, 0, R.style.Widget_MaterialComponents_Chip_Action);
-            chip.setChipDrawable(chipDrawable);
-            chip.setText(mGenres.getName());
-            movieGenresChip.addView(chip);
-        }
     }
 
     private void addMovieToWatched(Movie movie) {

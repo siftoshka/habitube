@@ -52,7 +52,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/about_menu"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -64,7 +64,7 @@
                     android:fontFamily="@font/regular"
                     android:text="@string/app_desc"
                     android:textColor="@color/dark_600"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/backup_amp_sync"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
@@ -208,7 +208,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/sorting"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -313,7 +313,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/navbar_settings"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -398,7 +398,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/storage"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -515,7 +515,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/contact_us_menu"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -587,7 +587,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/credits"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView

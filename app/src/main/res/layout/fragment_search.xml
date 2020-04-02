@@ -186,15 +186,14 @@
             android:textSize="22sp" />
     </LinearLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_search"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:clipToPadding="true"
-        android:paddingBottom="24dp"
         android:visibility="gone" />
 
 </LinearLayout>

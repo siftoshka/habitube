@@ -293,7 +293,7 @@
                             android:fontFamily="@font/bold"
                             android:text="@string/biography_card"
                             android:textColor="@color/dark_800"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <androidx.core.widget.NestedScrollView
@@ -341,7 +341,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -376,7 +376,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -425,7 +425,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -460,7 +460,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 

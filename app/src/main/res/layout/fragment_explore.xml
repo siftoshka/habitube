@@ -11,15 +11,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:paddingStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:paddingEnd="20dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="16dp"
@@ -139,7 +139,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/upcoming_movies"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_upcoming_movies"
@@ -165,7 +165,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/trending_movies"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_movies"
@@ -222,7 +222,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/trending_tv_shows"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_tv_shows"
@@ -248,7 +248,7 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/air_today"
                     android:textColor="@color/dark_800"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_airtoday_tv_shows"

@@ -35,9 +35,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +43,7 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.CastAdapter;
 import az.siftoshka.habitube.adapters.CrewAdapter;
+import az.siftoshka.habitube.adapters.GenreShowAdapter;
 import az.siftoshka.habitube.adapters.SeasonAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
@@ -55,7 +53,6 @@ import az.siftoshka.habitube.entities.credits.Cast;
 import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.entities.show.Show;
-import az.siftoshka.habitube.entities.show.ShowGenre;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.show.ShowPresenter;
@@ -105,7 +102,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.poster_show_views) TextView posterShowViews;
     @BindView(R.id.poster_show_duration) TextView posterShowDuration;
     @BindView(R.id.poster_show_desc) TextView posterShowDesc;
-    @BindView(R.id.show_genres) ChipGroup showGenresChip;
+    @BindView(R.id.show_genres) RecyclerView recyclerViewGenres;
     @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
     @BindView(R.id.seasons_card_layout) LinearLayout seasonsCard;
     @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
@@ -128,6 +125,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private SeasonAdapter seasonAdapter;
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
+    private GenreShowAdapter genreAdapter;
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
@@ -163,6 +161,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
         castAdapter = new CastAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
+        genreAdapter = new GenreShowAdapter();
     }
 
     @Override
@@ -179,25 +178,27 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         initialTab();
         initTabs();
 
+        LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewGenres.setLayoutManager(layoutManagerGenres);
+        recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewGenres.setHasFixedSize(true);
+        recyclerViewGenres.setAdapter(genreAdapter);
         GridLayoutManager layoutManagerSimilarShows = new GridLayoutManager(getContext(), 3);
         recyclerViewSimilarShows.setLayoutManager(layoutManagerSimilarShows);
         recyclerViewSimilarShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarShows.setHasFixedSize(true);
         recyclerViewSimilarShows.setAdapter(similarShowsAdapter);
-
         GridLayoutManager layoutManagerSeasons = new GridLayoutManager(getContext(), 3);
         recyclerViewSeasons.setLayoutManager(layoutManagerSeasons);
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeasons.setHasFixedSize(true);
         recyclerViewSeasons.setAdapter(seasonAdapter);
-
         LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
-
         LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         recyclerViewCast.setLayoutManager(layoutManagerCasts);
@@ -215,7 +216,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showTVShow(Show show) {
-        toolbar.setTitle(show.getName());
         Glide.with(requireContext())
                 .load(IMAGE_URL + show.getPosterPath())
                 .listener(new RequestListener<Drawable>() {
@@ -249,19 +249,9 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         posterShowRate.setText(String.valueOf(show.getVoteAverage()));
         posterShowViews.setText("(" + show.getVoteCount() + ")");
         episodeRuntime(show.getEpisodeRunTime().toString());
-
-        for(ShowGenre sGenres: show.getShowGenres()) {
-            Chip chip = new Chip(requireContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(requireContext(),
-                    null, 0, R.style.Widget_MaterialComponents_Chip_Action);
-            chip.setChipDrawable(chipDrawable);
-            chip.setText(sGenres.getName());
-            showGenresChip.addView(chip);
-        }
-
         checkDescription(show);
-
         posterShowDesc.setText(show.getOverview());
+        genreAdapter.addAllGenres(show.getShowGenres());
         seasonAdapter.addAllMovies(show.getSeasons());
         addMovieToPlanned(show);
         addMovieToWatched(show);
