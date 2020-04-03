@@ -18,8 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:fontFamily="@font/regular"
         android:background="@color/mainBackground"
+        android:fontFamily="@font/regular"
+        app:itemIconSize="22dp"
         app:itemIconTint="@drawable/selector_nav"
         app:itemTextColor="@drawable/selector_nav"
         app:menu="@menu/nav_menu" />

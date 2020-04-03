@@ -46,11 +46,20 @@ public class CrewPersonBottomDialog extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            crew = bundle.getParcelableArrayList("CREW");
+            crew = bundle.getParcelableArrayList("MCREW");
+            if (crew != null) {
+                crewAdapter = new CrewPersonAdapter(id -> {
+                    dismiss();
+                    router.navigateTo(new Screens.PostMovieScreen(id));
+                });
+            } else {
+                crew = bundle.getParcelableArrayList("SCREW");
+                crewAdapter = new CrewPersonAdapter(id -> {
+                    dismiss();
+                    router.navigateTo(new Screens.PostShowScreen(id));
+                });
+            }
         }
-        crewAdapter = new CrewPersonAdapter(id -> {
-            dismiss();
-            router.navigateTo(new Screens.SearchItemScreen(id, 3));});
     }
 
     @Override

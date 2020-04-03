@@ -3,6 +3,7 @@ package az.siftoshka.habitube.ui.movie;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -71,6 +72,7 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
@@ -174,7 +176,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> moviePresenter.goBack());
-        initialTab();
+        checkTabs();
         initTabs();
         watchedButton.setVisibility(View.VISIBLE);
         watchedButton.setEnabled(false);
@@ -307,7 +309,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         startActivity(intent);
     }
 
-    private void initialTab() {
+    private void initTabInfo() {
         tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
         tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
         tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
@@ -316,23 +318,39 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         similarMoviesCard.setVisibility(View.GONE);
     }
 
+    private void initTabCredits() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.GONE);
+        tabCreditsCard.setVisibility(View.VISIBLE);
+        similarMoviesCard.setVisibility(View.GONE);
+    }
+
+    private void initTabSimilar() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabInfoCard.setVisibility(View.GONE);
+        tabCreditsCard.setVisibility(View.GONE);
+        similarMoviesCard.setVisibility(View.VISIBLE);
+    }
+
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> initialTab());
+        tabInfo.setOnClickListener(view -> {
+            initTabInfo();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 100).apply();
+        });
         tabCredits.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
-            tabInfoCard.setVisibility(View.GONE);
-            tabCreditsCard.setVisibility(View.VISIBLE);
-            similarMoviesCard.setVisibility(View.GONE);
+            initTabCredits();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 101).apply();
         });
         tabSimilar.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
-            tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabInfoCard.setVisibility(View.GONE);
-            tabCreditsCard.setVisibility(View.GONE);
-            similarMoviesCard.setVisibility(View.VISIBLE);
+            initTabSimilar();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 102).apply();
         });
     }
 
@@ -340,6 +358,16 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(Constants.SYSTEM.IMDB_WEBSITE + imdbId));
         imdbButton.setOnClickListener(v -> startActivity(intent));
+    }
+
+    private void checkTabs() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE);
+        int idTheme = prefs.getInt("Tab", 0);
+        switch (idTheme) {
+            case 100: initTabInfo(); break;
+            case 101: initTabCredits(); break;
+            case 102: initTabSimilar(); break;
+        }
     }
 
     @Override

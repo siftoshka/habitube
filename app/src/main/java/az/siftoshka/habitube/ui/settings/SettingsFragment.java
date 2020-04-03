@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -141,7 +142,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         deleteWatchedShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-W"));
         signOutButton.setOnClickListener(view1 -> {
             firebaseAuth.signOut();
-            signInClient.signOut().addOnCompleteListener(runnable -> showGoogleSignIn()); });
+            signInClient.signOut().addOnCompleteListener(runnable -> showGoogleSignIn());
+            deleteAllContentDialog();});
 
         spannableCreditOktay();
         spannableCreditFreepik();
@@ -359,11 +361,10 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     private void handlingSignInResult(Task<GoogleSignInAccount> accountTask) {
         try {
             GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
-            //messageListener.showText("Sign In Successfully");
             if (signInAccount != null)
                 firebaseGoogleAuth(signInAccount);
         } catch (ApiException e) {
-            //messageListener.showText("FAIL");
+            e.printStackTrace();
         }
     }
 
@@ -376,6 +377,19 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
                 settingsPresenter.checkSync();
             }
         });
+    }
+
+    private void deleteAllContentDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_files))
+                    .setMessage(getResources().getString(R.string.are_you_sure_files))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {
+                        settingsPresenter.deleteMedia("M-P");
+                        settingsPresenter.deleteMedia("S-P");
+                        settingsPresenter.deleteMedia("M-W");
+                        settingsPresenter.deleteMedia("S-W");
+                    })
+                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 
     @SuppressLint("SetTextI18n")

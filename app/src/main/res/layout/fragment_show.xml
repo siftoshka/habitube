@@ -232,8 +232,8 @@
 
                         <ImageView
                             android:id="@+id/watched_image"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_favorite_disactive" />
 
                         <TextView
@@ -243,7 +243,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/add_to_watched"
-                            android:textColor="@color/dark_600" />
+                            android:textColor="@color/dark_600"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -258,8 +259,8 @@
                         android:visibility="gone">
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_favorite_filled" />
 
                         <TextView
@@ -269,7 +270,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/already_added"
-                            android:textColor="@color/dark_800" />
+                            android:textColor="@color/dark_800"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -284,8 +286,8 @@
 
                         <ImageView
                             android:id="@+id/planned_image"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_watch_disactive" />
 
                         <TextView
@@ -295,7 +297,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/watch_later"
-                            android:textColor="@color/dark_600" />
+                            android:textColor="@color/dark_600"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -309,8 +312,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_watch_filled" />
 
                         <TextView
@@ -320,7 +323,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/planned"
-                            android:textColor="@color/dark_800" />
+                            android:textColor="@color/dark_800"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -597,8 +601,9 @@
 
                 <LinearLayout
                     android:id="@+id/similar_shows_card_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"

@@ -3,6 +3,7 @@ package az.siftoshka.habitube.ui.show;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -70,6 +71,7 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
@@ -175,7 +177,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> showPresenter.goBack());
-        initialTab();
+        checkTabs();
         initTabs();
 
         LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -312,7 +314,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         if (show.getOverview().equals("")) descShowCard.setVisibility(View.GONE);
     }
 
-    private void initialTab() {
+    private void initTabInfo() {
         tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
         tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
         tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
@@ -321,41 +323,68 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         tabCreditsCard.setVisibility(View.GONE);
         seasonsCard.setVisibility(View.GONE);
         similarShowsCard.setVisibility(View.GONE);
-
     }
 
-    private void initTabs() {
-        tabInfo.setOnClickListener(view -> initialTab());
+    private void initTabCredits() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.GONE);
+        tabCreditsCard.setVisibility(View.VISIBLE);
+        seasonsCard.setVisibility(View.GONE);
+        similarShowsCard.setVisibility(View.GONE);
+    }
+
+    private void initTabSeasons() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSeasons.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.GONE);
+        tabCreditsCard.setVisibility(View.GONE);
+        seasonsCard.setVisibility(View.VISIBLE);
+        similarShowsCard.setVisibility(View.GONE);
+    }
+
+    private void initTabSimilar() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
+        tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabInfoCard.setVisibility(View.GONE);
+        tabCreditsCard.setVisibility(View.GONE);
+        seasonsCard.setVisibility(View.GONE);
+        similarShowsCard.setVisibility(View.VISIBLE);
+    }
+
+        private void initTabs() {
+        tabInfo.setOnClickListener(view -> {
+            initTabInfo();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
+            editor.putInt("STab", 100).apply();
+        });
         tabCredits.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabCredits.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
-            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
-            tabInfoCard.setVisibility(View.GONE);
-            tabCreditsCard.setVisibility(View.VISIBLE);
-            seasonsCard.setVisibility(View.GONE);
-            similarShowsCard.setVisibility(View.GONE);
+            initTabCredits();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
+            editor.putInt("STab", 101).apply();
         });
-        tabSeasons.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
-            tabSeasons.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabSimilar.setTextColor(getResources().getColor(R.color.dark_800));
-            tabInfoCard.setVisibility(View.GONE);
-            tabCreditsCard.setVisibility(View.GONE);
-            seasonsCard.setVisibility(View.VISIBLE);
-            similarShowsCard.setVisibility(View.GONE);
-        });
+        tabSeasons.setOnClickListener(view -> initTabSeasons());
         tabSimilar.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
-            tabSeasons.setTextColor(getResources().getColor(R.color.dark_800));
-            tabSimilar.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabInfoCard.setVisibility(View.GONE);
-            tabCreditsCard.setVisibility(View.GONE);
-            seasonsCard.setVisibility(View.GONE);
-            similarShowsCard.setVisibility(View.VISIBLE);
+            initTabSimilar();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
+            editor.putInt("STab", 102).apply();
         });
+    }
+
+    private void checkTabs() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE);
+        int idTheme = prefs.getInt("STab", 0);
+        switch (idTheme) {
+            case 100: initTabInfo(); break;
+            case 101: initTabCredits(); break;
+            case 102: initTabSimilar(); break;
+        }
     }
 
     @Override
@@ -381,11 +410,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if(loadingState){
-            loadingScreen.setVisibility(View.VISIBLE);
-        } else {
-            loadingScreen.setVisibility(View.GONE);
-        }
+        if (loadingState) loadingScreen.setVisibility(View.VISIBLE);
+        else loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

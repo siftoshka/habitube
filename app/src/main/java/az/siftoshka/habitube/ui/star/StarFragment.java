@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.star;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -49,6 +50,7 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
 
@@ -128,7 +130,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> starPresenter.goBack());
-        initialTab();
+        checkTabs();
         initTabs();
         LinearLayoutManager linearLayoutMovieCast = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewMovieCast.setLayoutManager(linearLayoutMovieCast);
@@ -165,7 +167,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         checkImdbAvailability(person);
     }
 
-    private void initialTab() {
+    private void initTabInfo() {
         tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
         tabMovies.setTextColor(getResources().getColor(R.color.dark_800));
         tabShows.setTextColor(getResources().getColor(R.color.dark_800));
@@ -174,24 +176,50 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         tabShowCreditsCard.setVisibility(View.GONE);
     }
 
+    private void initTabMovies() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabMovies.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabShows.setTextColor(getResources().getColor(R.color.dark_800));
+        tabInfoCard.setVisibility(View.GONE);
+        tabMovieCreditsCard.setVisibility(View.VISIBLE);
+        tabShowCreditsCard.setVisibility(View.GONE);
+    }
+
+    private void initTabShows() {
+        tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
+        tabMovies.setTextColor(getResources().getColor(R.color.dark_800));
+        tabShows.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tabInfoCard.setVisibility(View.GONE);
+        tabMovieCreditsCard.setVisibility(View.GONE);
+        tabShowCreditsCard.setVisibility(View.VISIBLE);
+    }
+
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> initialTab());
+        tabInfo.setOnClickListener(view -> {
+            initTabInfo();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
+            editor.putInt("StarTab", 100).apply();
+        });
         tabMovies.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabMovies.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabShows.setTextColor(getResources().getColor(R.color.dark_800));
-            tabInfoCard.setVisibility(View.GONE);
-            tabMovieCreditsCard.setVisibility(View.VISIBLE);
-            tabShowCreditsCard.setVisibility(View.GONE);
+            initTabMovies();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
+            editor.putInt("StarTab", 101).apply();
         });
         tabShows.setOnClickListener(view -> {
-            tabInfo.setTextColor(getResources().getColor(R.color.dark_800));
-            tabMovies.setTextColor(getResources().getColor(R.color.dark_800));
-            tabShows.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tabInfoCard.setVisibility(View.GONE);
-            tabMovieCreditsCard.setVisibility(View.GONE);
-            tabShowCreditsCard.setVisibility(View.VISIBLE);
+           initTabShows();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
+            editor.putInt("StarTab", 102).apply();
         });
+    }
+
+    private void checkTabs() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE);
+        int idTheme = prefs.getInt("StarTab", 0);
+        switch (idTheme) {
+            case 100: initTabInfo(); break;
+            case 101: initTabMovies(); break;
+            case 102: initTabShows(); break;
+        }
     }
 
     @Override
@@ -228,7 +256,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         castMovieButton.setOnClickListener(view -> {
             CastPersonBottomDialog castBottomDialog = new CastPersonBottomDialog(starPresenter.getRouter());
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            bundle.putParcelableArrayList("MCAST", (ArrayList<? extends Parcelable>) casts);
             castBottomDialog.setArguments(bundle);
             castBottomDialog.show(getChildFragmentManager(), null);
         });
@@ -240,7 +268,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         castShowButton.setOnClickListener(view -> {
             CastPersonBottomDialog castBottomDialog = new CastPersonBottomDialog(starPresenter.getRouter());
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("CAST", (ArrayList<? extends Parcelable>) casts);
+            bundle.putParcelableArrayList("SCAST", (ArrayList<? extends Parcelable>) casts);
             castBottomDialog.setArguments(bundle);
             castBottomDialog.show(getChildFragmentManager(), null);
         });
@@ -252,7 +280,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         crewMovieButton.setOnClickListener(view -> {
             CrewPersonBottomDialog crewBottomDialog = new CrewPersonBottomDialog(starPresenter.getRouter());
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            bundle.putParcelableArrayList("MCREW", (ArrayList<? extends Parcelable>) crews);
             crewBottomDialog.setArguments(bundle);
             crewBottomDialog.show(getChildFragmentManager(), null);
         });
@@ -264,7 +292,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         crewShowButton.setOnClickListener(view -> {
             CrewPersonBottomDialog crewBottomDialog = new CrewPersonBottomDialog(starPresenter.getRouter());
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("CREW", (ArrayList<? extends Parcelable>) crews);
+            bundle.putParcelableArrayList("SCREW", (ArrayList<? extends Parcelable>) crews);
             crewBottomDialog.setArguments(bundle);
             crewBottomDialog.show(getChildFragmentManager(), null);
         });
@@ -289,11 +317,8 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if(loadingState){
-            loadingScreen.setVisibility(View.VISIBLE);
-        } else {
-            loadingScreen.setVisibility(View.GONE);
-        }
+        if (loadingState) loadingScreen.setVisibility(View.VISIBLE);
+        else loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

@@ -35,9 +35,11 @@
     <string name="watch_later">Watch Later</string>
     <string name="already_added">Already added</string>
     <string name="are_you_sure">Are you sure to delete this movie from your library?</string>
+    <string name="are_you_sure_files">Do you want to delete all movies and shows from local library?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete_movie">Delete Movie</string>
+    <string name="delete_files">Delete Local Library</string>
     <string name="version_name_text">App Version:</string>
     <string name="credits">Credits</string>
 

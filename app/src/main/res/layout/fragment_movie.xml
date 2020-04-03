@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:background="@color/mainBackground"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/movie_toolbar"
@@ -40,7 +40,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@null"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back_w"/>
+            app:navigationIcon="@drawable/ic_back_w" />
 
         <ImageView
             android:id="@+id/poster_background"
@@ -189,6 +189,7 @@
                             android:textSize="18sp"
                             tools:text="DURATION" />
                     </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/movie_genres"
                         android:layout_width="match_parent"
@@ -237,8 +238,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_imdb" />
 
                         <TextView
@@ -248,7 +249,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/search_in_imdb"
-                            android:textColor="@color/dark_600" />
+                            android:textColor="@color/dark_600"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -264,8 +266,8 @@
 
                         <ImageView
                             android:id="@+id/watched_image"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_favorite_disactive" />
 
                         <TextView
@@ -275,7 +277,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/add_to_watched"
-                            android:textColor="@color/dark_600" />
+                            android:textColor="@color/dark_600"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -290,8 +293,8 @@
                         android:visibility="gone">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_favorite_filled" />
 
                         <TextView
@@ -301,7 +304,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/already_added"
-                            android:textColor="@color/dark_800" />
+                            android:textColor="@color/dark_800"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -316,8 +320,8 @@
 
                         <ImageView
                             android:id="@+id/planned_image"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_watch_disactive" />
 
                         <TextView
@@ -327,7 +331,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/watch_later"
-                            android:textColor="@color/dark_600" />
+                            android:textColor="@color/dark_600"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -342,8 +347,8 @@
                         android:visibility="gone">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_watch_filled" />
 
                         <TextView
@@ -353,7 +358,8 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:text="@string/planned"
-                            android:textColor="@color/dark_800" />
+                            android:textColor="@color/dark_800"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -678,8 +684,9 @@
 
                 <LinearLayout
                     android:id="@+id/similar_movies_card_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"

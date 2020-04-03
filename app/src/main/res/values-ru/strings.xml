@@ -77,7 +77,7 @@
     <string name="budget">Бюджет:</string>
     <string name="details">Детали</string>
     <string name="revenue">Прибыль:</string>
-    <string name="tab_credits_alt">Благодарность</string>
+    <string name="tab_credits_alt">Люди</string>
     <string name="tab_similar_alt">Похожие</string>
     <string name="backup_amp_sync">Резервное копирование</string>
     <string name="sign_in_with_google">Войти через Google</string>
@@ -110,5 +110,7 @@
     <string name="from_current_to_lower">от нынещнего вниз</string>
     <string name="discover_tv_shows">Искать Сериалы</string>
     <string name="google_warning">Google аккаунт будет использоваться только в целях хранения id ваших фильмов и сериалов для дальнейшей синхронизации между вашими устройствами. Все ваши данные остаются приватными для вас.</string>
+    <string name="are_you_sure_files">Вы хотите удалить все фильмы и сериалы из локальной библеотеки?</string>
+    <string name="delete_files">Удалить Локальную библеотеку</string>
 
 </resources>

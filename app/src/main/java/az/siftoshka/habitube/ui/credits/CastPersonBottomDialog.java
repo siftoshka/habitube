@@ -28,8 +28,10 @@ import ru.terrakok.cicerone.Router;
 
 public class CastPersonBottomDialog extends BottomSheetDialogFragment {
 
-    @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
-    @BindView(R.id.recycler_view_credits) RecyclerView recyclerViewCast;
+    @BindView(R.id.bottom_dialog_layout)
+    LinearLayout linearLayout;
+    @BindView(R.id.recycler_view_credits)
+    RecyclerView recyclerViewCast;
 
     private final Router router;
     private List<Cast> cast;
@@ -46,11 +48,20 @@ public class CastPersonBottomDialog extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            cast = bundle.getParcelableArrayList("CAST");
+            cast = bundle.getParcelableArrayList("MCAST");
+            if (cast != null) {
+                castAdapter = new CastPersonAdapter(id -> {
+                    dismiss();
+                    router.navigateTo(new Screens.PostMovieScreen(id));
+                });
+            } else {
+                cast = bundle.getParcelableArrayList("SCAST");
+                castAdapter = new CastPersonAdapter(id -> {
+                    dismiss();
+                    router.navigateTo(new Screens.PostShowScreen(id));
+                });
+            }
         }
-        castAdapter = new CastPersonAdapter(id -> {
-            dismiss();
-            router.navigateTo(new Screens.SearchItemScreen(id, 3));});
     }
 
     @Override
