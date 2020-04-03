@@ -17,6 +17,7 @@ public interface ShowView extends MvpView {
     void showTVShow(Show show);
 
     void showSimilarTVShowList(List<MovieLite> similarShows);
+    void showMoreSimilarShows(List<MovieLite> shows);
     void showVideos(List<Video> videos);
     void showBottomSeasonDialog(int position);
     void showCrew(List<Crew> crews);

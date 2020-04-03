@@ -19,6 +19,7 @@ public interface MovieView extends MvpView {
     void showMovie(Movie movie);
 
     void showSimilarMovieList(List<MovieLite> similarMovies);
+    void showMoreSimilarMovies(List<MovieLite> movies);
     void showVideos(List<Video> videos);
     void showCrew(List<Crew> crews);
     void showCast(List<Cast> casts);

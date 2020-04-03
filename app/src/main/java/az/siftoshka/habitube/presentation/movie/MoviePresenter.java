@@ -129,8 +129,14 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     }
 
     private void getSimilarMovies(int id, String language) {
-        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id, language)
+        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id, 1, language)
                 .subscribe(movieResponses -> getViewState().showSimilarMovieList(movieResponses.getResults()),
+                        Throwable::printStackTrace));
+    }
+
+    public void getMoreSimilarMovies(int id, int page) {
+        compositeDisposable.add(remotePostInteractor.getSimilarMovies(id, page, context.getResources().getString(R.string.language))
+                .subscribe(movieResponses -> getViewState().showMoreSimilarMovies(movieResponses.getResults()),
                         Throwable::printStackTrace));
     }
 

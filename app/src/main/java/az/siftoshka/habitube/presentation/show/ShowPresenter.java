@@ -114,8 +114,14 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     }
 
     private void getSimilarTVShows(int id, String language) {
-        compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, language)
+        compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, 1, language)
                 .subscribe(movieResponses -> getViewState().showSimilarTVShowList(movieResponses.getResults()),
+                        Throwable::printStackTrace));
+    }
+
+    public void getMoreSimilarShows(int id, int page) {
+        compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, page, context.getResources().getString(R.string.language))
+                .subscribe(movieResponses -> getViewState().showMoreSimilarShows(movieResponses.getResults()),
                         Throwable::printStackTrace));
     }
 

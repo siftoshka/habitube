@@ -41,8 +41,8 @@ public class RemotePostRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getSimilarMovies(int id, String language) {
-        return movieDBApi.getSimilarMovies(id, language)
+    public Single<MovieResponse> getSimilarMovies(int id, int page, String language) {
+        return movieDBApi.getSimilarMovies(id, page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -59,8 +59,8 @@ public class RemotePostRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getSimilarTVShows(int id, String language) {
-        return movieDBApi.getSimilarTVShow(id, language)
+    public Single<MovieResponse> getSimilarTVShows(int id, int page, String language) {
+        return movieDBApi.getSimilarTVShow(id, page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

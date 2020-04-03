@@ -32,8 +32,8 @@ public class RemotePostInteractor {
         return repository.getStar(personId, language);
     }
 
-    public Single<MovieResponse> getSimilarMovies(int id, String language) {
-        return repository.getSimilarMovies(id, language);
+    public Single<MovieResponse> getSimilarMovies(int id, int page, String language) {
+        return repository.getSimilarMovies(id, page, language);
     }
 
     public Single<VideoResponse> getMovieVideos(int id, String language) {
@@ -44,8 +44,8 @@ public class RemotePostInteractor {
         return repository.getTVShowVideos(id, language);
     }
 
-    public Single<MovieResponse> getSimilarTVShows(int id, String language) {
-        return repository.getSimilarTVShows(id, language);
+    public Single<MovieResponse> getSimilarTVShows(int id, int page, String language) {
+        return repository.getSimilarTVShows(id, page, language);
     }
 
     public Single<Credits> getCredits(int id) {

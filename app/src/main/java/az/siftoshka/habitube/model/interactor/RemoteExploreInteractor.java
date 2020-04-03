@@ -19,26 +19,26 @@ public class RemoteExploreInteractor {
         this.repository = repository;
     }
 
-    public Single<MovieResponse> getUpcomingMovies(String language) {
-        return repository.getUpcomingMovies(language)
+    public Single<MovieResponse> getUpcomingMovies(int page, String language) {
+        return repository.getUpcomingMovies(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getMovies(String language) {
-        return repository.getMovies(language)
+    public Single<MovieResponse> getMovies(int page, String language) {
+        return repository.getMovies(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getTVShows(String language) {
-        return repository.getTVShows(language)
+    public Single<MovieResponse> getTVShows(int page, String language) {
+        return repository.getTVShows(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getAirTodayShows(String language) {
-        return repository.getAirTodayShows(language)
+    public Single<MovieResponse> getAirTodayShows(int page, String language) {
+        return repository.getAirTodayShows(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

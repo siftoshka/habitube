@@ -107,24 +107,25 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUpcoming.setHasFixedSize(true);
         recyclerViewUpcoming.setAdapter(upcomingAdapter);
-
+        paginateUpcoming();
         LinearLayoutManager layoutManagerMovies = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewMovies.setLayoutManager(layoutManagerMovies);
         recyclerViewMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMovies.setHasFixedSize(true);
         recyclerViewMovies.setAdapter(movieAdapter);
-
+        paginateTrendingMovies();
         LinearLayoutManager layoutManagerTVShows = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTVShows.setLayoutManager(layoutManagerTVShows);
         recyclerViewTVShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTVShows.setHasFixedSize(true);
         recyclerViewTVShows.setAdapter(showAdapter);
-
+        paginateTVShows();
         LinearLayoutManager layoutManagerAirToday = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewAirToday.setLayoutManager(layoutManagerAirToday);
         recyclerViewAirToday.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAirToday.setHasFixedSize(true);
         recyclerViewAirToday.setAdapter(airTodayAdapter);
+        paginateAirToday();
     }
 
     private void showDiscoverMovieDialog() {
@@ -155,6 +156,62 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         TransitionManager.beginDelayedTransition((ViewGroup) Objects.requireNonNull(getView()).getParent(), transition);
     }
 
+    private void paginateUpcoming() {
+        recyclerViewUpcoming.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewUpcoming.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    explorePresenter.addMoreUpcoming(page);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateTrendingMovies() {
+        recyclerViewMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewMovies.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    explorePresenter.addMoreMovies(page);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateTVShows() {
+        recyclerViewTVShows.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewTVShows.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    explorePresenter.addMoreShows(page);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateAirToday() {
+        recyclerViewAirToday.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewAirToday.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    explorePresenter.addMoreAirToday(page);
+                    page++;
+                }
+            }
+        });
+    }
+
     @Override
     public void showUpcomingMovieList(List<MovieLite> upcomingList) {
         upcomingAdapter.addAllMovies(upcomingList);
@@ -162,6 +219,11 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         errorScreen.setVisibility(View.GONE);
         toggle(upcomingMovieScreen);
         upcomingMovieScreen.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMoreUpcoming(List<MovieLite> upcomingList) {
+        upcomingAdapter.showMoreMovies(upcomingList);
     }
 
     @Override
@@ -174,8 +236,13 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
+    public void showMoreTrending(List<MovieLite> trendingList) {
+        movieAdapter.showMoreMovies(trendingList);
+    }
+
+    @Override
     public void showTVShowList(List<MovieLite> tvShows) {
-        showAdapter.addAllMovies(tvShows);
+        showAdapter.addAllShows(tvShows);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(trendingShowScreen);
@@ -183,12 +250,22 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
+    public void showMoreTrendingShows(List<MovieLite> trendingListShows) {
+        showAdapter.showMoreShows(trendingListShows);
+    }
+
+    @Override
     public void showAirTodayShows(List<MovieLite> tvShows) {
-        airTodayAdapter.addAllMovies(tvShows);
+        airTodayAdapter.addAllShows(tvShows);
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(airTodayShowScreen);
         airTodayShowScreen.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showmMoreAirToday(List<MovieLite> airTodayList) {
+        airTodayAdapter.showMoreShows(airTodayList);
     }
 
     @Override

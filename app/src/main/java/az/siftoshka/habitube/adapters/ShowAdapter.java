@@ -3,9 +3,7 @@ package az.siftoshka.habitube.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,13 +27,13 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
         void showPostName(String postName);
     }
 
-    private List<MovieLite> movies;
+    private List<MovieLite> shows;
     private ShowItemClickListener clickListener;
     private OnItemLongClickListener longClickListener;
 
 
     public ShowAdapter(@NonNull ShowItemClickListener clickListener, @NonNull OnItemLongClickListener longClickListener) {
-        this.movies = new ArrayList<>();
+        this.shows = new ArrayList<>();
         this.clickListener = clickListener;
         this.longClickListener = longClickListener;
     }
@@ -49,12 +47,12 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ShowHolder holder, final int position) {
-        final MovieLite movie = this.movies.get(position);
-        ImageLoader.load(holder.itemView, movie.getMovieImage(), holder.posterImage);
-        holder.posterRate.setText(String.valueOf(movie.getVoteAverage()));
-        holder.itemView.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
+        final MovieLite shows = this.shows.get(position);
+        ImageLoader.load(holder.itemView, shows.getMovieImage(), holder.posterImage);
+        holder.posterRate.setText(String.valueOf(shows.getVoteAverage()));
+        holder.itemView.setOnClickListener(v -> clickListener.onPostClicked(shows.getMovieId()));
         holder.itemView.setOnLongClickListener(view -> {
-            longClickListener.showPostName(movie.getShowTitle());
+            longClickListener.showPostName(shows.getShowTitle());
             return true;
         });
     }
@@ -68,13 +66,19 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ShowHolder> {
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return shows.size();
     }
 
-    public void addAllMovies(List<MovieLite> movies) {
-        this.movies.clear();
-        this.movies.addAll(movies);
+    public void addAllShows(List<MovieLite> shows) {
+        this.shows.clear();
+        this.shows.addAll(shows);
         notifyDataSetChanged();
+    }
+
+    public void showMoreShows(List<MovieLite> shows) {
+        int position = this.shows.size();
+        this.shows.addAll(shows);
+        notifyItemRangeInserted(position, shows.size());
     }
 
     static class ShowHolder extends RecyclerView.ViewHolder {

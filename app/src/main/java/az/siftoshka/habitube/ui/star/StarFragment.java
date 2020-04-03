@@ -317,8 +317,8 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if (loadingState) loadingScreen.setVisibility(View.VISIBLE);
-        else loadingScreen.setVisibility(View.GONE);
+        if (loadingState && loadingScreen != null) loadingScreen.setVisibility(View.VISIBLE);
+        else if (loadingScreen != null) loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

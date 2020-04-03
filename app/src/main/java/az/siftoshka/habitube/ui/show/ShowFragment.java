@@ -131,6 +131,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
+    private int showID;
 
     @ProvidePresenter
     ShowPresenter showPresenter() {
@@ -190,6 +191,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewSimilarShows.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarShows.setHasFixedSize(true);
         recyclerViewSimilarShows.setAdapter(similarShowsAdapter);
+        paginateSimilarShows();
         GridLayoutManager layoutManagerSeasons = new GridLayoutManager(getContext(), 3);
         recyclerViewSeasons.setLayoutManager(layoutManagerSeasons);
         recyclerViewSeasons.setItemAnimator(new DefaultItemAnimator());
@@ -218,6 +220,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showTVShow(Show show) {
+        showID = show.getId();
         Glide.with(requireContext())
                 .load(IMAGE_URL + show.getPosterPath())
                 .listener(new RequestListener<Drawable>() {
@@ -314,6 +317,20 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         if (show.getOverview().equals("")) descShowCard.setVisibility(View.GONE);
     }
 
+    private void paginateSimilarShows() {
+        recyclerViewSimilarShows.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    showPresenter.getMoreSimilarShows(showID, page);
+                    page++;
+                }
+            }
+        });
+    }
+
     private void initTabInfo() {
         tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
         tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
@@ -390,7 +407,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
         if(similarShows.isEmpty()) similarShowsCard.setVisibility(View.GONE);
-        similarShowsAdapter.addAllMovies(similarShows);
+        similarShowsAdapter.addAllShows(similarShows);
+    }
+
+    @Override
+    public void showMoreSimilarShows(List<MovieLite> shows) {
+        similarShowsAdapter.showMoreShows(shows);
     }
 
     @Override
@@ -410,8 +432,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if (loadingState) loadingScreen.setVisibility(View.VISIBLE);
-        else loadingScreen.setVisibility(View.GONE);
+        if (loadingState && loadingScreen != null) loadingScreen.setVisibility(View.VISIBLE);
+        else if (loadingScreen != null) loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

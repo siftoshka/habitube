@@ -75,6 +75,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         notifyDataSetChanged();
     }
 
+    public void showMoreMovies(List<MovieLite> movies) {
+        int position = this.movies.size();
+        this.movies.addAll(movies);
+        notifyItemRangeInserted(position, movies.size());
+    }
+
     static class MovieHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout posterLayout;

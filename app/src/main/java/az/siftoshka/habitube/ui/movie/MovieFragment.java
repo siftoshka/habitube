@@ -128,6 +128,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private GenreAdapter genreAdapter;
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
+    private int movieID;
 
     private Unbinder unbinder;
 
@@ -195,6 +196,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         recyclerViewSimilarMovies.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSimilarMovies.setHasFixedSize(true);
         recyclerViewSimilarMovies.setAdapter(similarMoviesAdapter);
+        paginateSimilarMovies();
         LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
@@ -215,6 +217,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showMovie(Movie movie) {
+        movieID = movie.getId();
         Glide.with(requireContext())
                 .load(IMAGE_URL + movie.getPosterPath())
                 .listener(new RequestListener<Drawable>() {
@@ -309,6 +312,20 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         startActivity(intent);
     }
 
+    private void paginateSimilarMovies() {
+        recyclerViewSimilarMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    moviePresenter.getMoreSimilarMovies(movieID, page);
+                    page++;
+                }
+            }
+        });
+    }
+
     private void initTabInfo() {
         tabInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
         tabCredits.setTextColor(getResources().getColor(R.color.dark_800));
@@ -377,6 +394,11 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     @Override
+    public void showMoreSimilarMovies(List<MovieLite> movies) {
+        similarMoviesAdapter.showMoreMovies(movies);
+    }
+
+    @Override
     public void showVideos(List<Video> videos) {
         if (videos.isEmpty()) videosCard.setVisibility(View.GONE);
         videoAdapter.addAllVideos(videos);
@@ -420,11 +442,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showProgress(boolean loadingState) {
-        if (loadingState && loadingScreen != null) {
-            loadingScreen.setVisibility(View.VISIBLE);
-        } else if (loadingScreen != null) {
-            loadingScreen.setVisibility(View.GONE);
-        }
+        if (loadingState && loadingScreen != null) loadingScreen.setVisibility(View.VISIBLE);
+        else if (loadingScreen != null) loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

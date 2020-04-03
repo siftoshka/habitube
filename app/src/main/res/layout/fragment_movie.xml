@@ -439,7 +439,7 @@
                         android:elevation="5dp"
                         android:orientation="vertical"
                         android:paddingStart="10dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp">
 
@@ -447,7 +447,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/bold"
                             android:text="@string/videos"
@@ -476,7 +475,7 @@
                         android:elevation="5dp"
                         android:orientation="vertical"
                         android:paddingStart="10dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp">
 
@@ -484,7 +483,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/bold"
                             android:text="@string/description_card"
@@ -524,7 +522,7 @@
                         android:elevation="5dp"
                         android:orientation="vertical"
                         android:paddingStart="10dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="15dp">
 
@@ -532,7 +530,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/bold"
                             android:text="@string/details"

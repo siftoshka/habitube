@@ -19,26 +19,26 @@ public class RemoteExploreRepository {
         this.movieDBApi = movieDBApi;
     }
 
-    public Single<MovieResponse> getUpcomingMovies(String language) {
-        return movieDBApi.getUpcomingMovies(language)
+    public Single<MovieResponse> getUpcomingMovies(int page, String language) {
+        return movieDBApi.getUpcomingMovies(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getMovies(String language) {
-        return movieDBApi.getTrendingMovies(language)
+    public Single<MovieResponse> getMovies(int page, String language) {
+        return movieDBApi.getTrendingMovies(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getTVShows(String language) {
-        return movieDBApi.getTrendingTVShows(language)
+    public Single<MovieResponse> getTVShows(int page, String language) {
+        return movieDBApi.getTrendingTVShows(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<MovieResponse> getAirTodayShows(String language) {
-        return movieDBApi.getAirTodayShows(language)
+    public Single<MovieResponse> getAirTodayShows(int page, String language) {
+        return movieDBApi.getAirTodayShows(page, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

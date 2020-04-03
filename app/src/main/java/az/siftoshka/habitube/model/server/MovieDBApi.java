@@ -16,21 +16,25 @@ public interface MovieDBApi {
 
     @GET("movie/upcoming")
     Single<MovieResponse> getUpcomingMovies(
+            @Query("page") int page,
             @Query("language") String language
     );
 
     @GET("trending/movie/day")
     Single<MovieResponse> getTrendingMovies(
+            @Query("page") int page,
             @Query("language") String language
     );
 
     @GET("trending/tv/day")
     Single<MovieResponse> getTrendingTVShows(
+            @Query("page") int page,
             @Query("language") String language
     );
 
     @GET("tv/airing_today")
     Single<MovieResponse> getAirTodayShows(
+            @Query("page") int page,
             @Query("language") String language
     );
 
@@ -43,6 +47,7 @@ public interface MovieDBApi {
     @GET("movie/{movie_id}/similar")
     Single<MovieResponse> getSimilarMovies(
             @Path("movie_id") int movieId,
+            @Query("page") int page,
             @Query("language") String language
 
     );
@@ -63,6 +68,7 @@ public interface MovieDBApi {
     @GET("tv/{tv_id}/similar")
     Single<MovieResponse> getSimilarTVShow(
             @Path("tv_id") int showId,
+            @Query("page") int page,
             @Query("language") String language
 
     );
