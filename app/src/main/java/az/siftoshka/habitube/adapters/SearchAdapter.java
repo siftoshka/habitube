@@ -90,6 +90,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         notifyDataSetChanged();
     }
 
+    public void addMoreMedia(List<MovieLite> searchResult) {
+        int position = this.searchMedia.size();
+        this.searchMedia.addAll(searchResult);
+        notifyItemRangeInserted(position, searchResult.size());
+    }
+
     public void clean() {
         this.searchMedia.clear();
         notifyDataSetChanged();

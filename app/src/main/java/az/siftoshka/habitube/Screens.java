@@ -5,13 +5,12 @@ import android.os.Parcelable;
 
 import androidx.fragment.app.Fragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.ui.explore.DiscoverDialog;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
+import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
 import az.siftoshka.habitube.ui.settings.SettingsFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
@@ -131,17 +130,38 @@ public final class Screens {
     }
 
     public static final class DiscoverShowScreen extends SupportAppScreen {
-        private List<MovieLite> movies;
+        private List<MovieLite> shows;
 
         public DiscoverShowScreen(List<MovieLite> movies) {
-            this.movies = movies;
+            this.shows = movies;
         }
 
         @Override
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverFragment discoverFragment = new DiscoverFragment();
-            bundle.putParcelableArrayList("Discover-S", (ArrayList<? extends Parcelable>) movies);
+            bundle.putParcelableArrayList("Discover-S", (ArrayList<? extends Parcelable>) shows);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
+        }
+    }
+
+    public static final class NetflixDiscoverScreen extends SupportAppScreen {
+        private List<MovieLite> shows;
+        private int index;
+
+        public NetflixDiscoverScreen(List<MovieLite> shows, int index) {
+            this.shows = shows;
+            this.index = index;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final DiscoverNetflixFragment discoverFragment = new DiscoverNetflixFragment();
+            if (index == 0) bundle.putParcelableArrayList("Discover-N0", (ArrayList<? extends Parcelable>) shows);
+            if (index == 1) bundle.putParcelableArrayList("Discover-N1", (ArrayList<? extends Parcelable>) shows);
+            if (index == 2) bundle.putParcelableArrayList("Discover-N2", (ArrayList<? extends Parcelable>) shows);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }

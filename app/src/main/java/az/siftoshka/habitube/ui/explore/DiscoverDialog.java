@@ -14,8 +14,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.xw.repo.BubbleSeekBar;
 
+import java.util.List;
+
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
 import az.siftoshka.habitube.presentation.explore.DiscoverView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
@@ -67,12 +70,8 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = null;
-        if (index == 0) {
-            view = inflater.inflate(R.layout.dialog_discover, container, false);
-        } else if (index == 1) {
-            view = inflater.inflate(R.layout.dialog_show_discover, container, false);
-        }
-        assert view != null;
+        if (index == 0) view = inflater.inflate(R.layout.dialog_discover, container, false);
+        else if (index == 1) view = inflater.inflate(R.layout.dialog_show_discover, container, false);
         unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
         return view;
@@ -87,7 +86,7 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
         if (index == 0) {
             defaultSorting();
             sortPopularity.addOnCheckedChangeListener((button, isChecked) -> {
-                if(isChecked) {
+                if (isChecked) {
                     button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     button.setTextColor(getResources().getColor(R.color.white_is_white));
                     sortRevenue.setBackgroundColor(getResources().getColor(R.color.background));
@@ -96,7 +95,7 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 }
             });
             sortRevenue.addOnCheckedChangeListener((button, isChecked) -> {
-                if(isChecked) {
+                if (isChecked) {
                     button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     button.setTextColor(getResources().getColor(R.color.white_is_white));
                     sortPopularity.setBackgroundColor(getResources().getColor(R.color.background));
@@ -115,7 +114,8 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
 
                 @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }
+            });
             sliderVote.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
                 @Override
                 public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
@@ -127,9 +127,10 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
 
                 @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }
+            });
 
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(sortSelection, yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(1, sortSelection, yearIndex + "-01-01", voteIndex));
         }
         if (index == 1) {
             defaultShowSorting();
@@ -141,10 +142,13 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 }
 
                 @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
+                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+                }
 
                 @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                }
+            });
             sliderVote.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
                 @Override
                 public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
@@ -153,12 +157,15 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 }
 
                 @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
+                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+                }
 
                 @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }});
+                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                }
+            });
 
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(1,yearIndex + "-01-01", voteIndex));
         }
     }
 

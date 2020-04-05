@@ -14,8 +14,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.xw.repo.BubbleSeekBar;
 
+import java.util.List;
+
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
 import az.siftoshka.habitube.presentation.explore.DiscoverView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
@@ -62,9 +65,9 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Disco
     }
 
     private void setDialog() {
-        popularButton.setOnClickListener(view -> discoverPresenter.showNetflixPopular());
-        bestButton.setOnClickListener(view -> discoverPresenter.showNetflixBest());
-        newButton.setOnClickListener(view -> discoverPresenter.showNetflixNew());
+        popularButton.setOnClickListener(view -> discoverPresenter.showNetflixPopular(1));
+        bestButton.setOnClickListener(view -> discoverPresenter.showNetflixBest(1));
+        newButton.setOnClickListener(view -> discoverPresenter.showNetflixNew(1));
     }
 
     @Override

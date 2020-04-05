@@ -43,38 +43,38 @@ public class RemoteExploreRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getSearchResults(String queryName, String language, boolean isAdult) {
-        return movieDBApi.getSearchResults(language, queryName, 1, isAdult)
+    public Observable<MovieResponse> getSearchResults(String queryName, int page,  String language, boolean isAdult) {
+        return movieDBApi.getSearchResults(language, queryName, page, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getMovieSearchResults(String queryName, String language, boolean isAdult) {
-        return movieDBApi.getMovieSearchResults(language, queryName, 1, isAdult)
+    public Observable<MovieResponse> getMovieSearchResults(String queryName, int page, String language, boolean isAdult) {
+        return movieDBApi.getMovieSearchResults(language, queryName, page, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getShowSearchResults(String queryName, String language, boolean isAdult) {
-        return movieDBApi.getShowSearchResults(language, queryName, 1, isAdult)
+    public Observable<MovieResponse> getShowSearchResults(String queryName, int page, String language, boolean isAdult) {
+        return movieDBApi.getShowSearchResults(language, queryName, page, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getPersonSearchResults(String queryName, String language, boolean isAdult) {
-        return movieDBApi.getPersonSearchResults(language, queryName, 1, isAdult)
+    public Observable<MovieResponse> getPersonSearchResults(String queryName, int page, String language, boolean isAdult) {
+        return movieDBApi.getPersonSearchResults(language, queryName, page, isAdult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getDiscoveredMovies(String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
-        return movieDBApi.getDiscoverMovies(language, sortSelection, 1, isAdult, yearIndex, voteIndex, 10)
+    public Observable<MovieResponse> getDiscoveredMovies(int page, String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
+        return movieDBApi.getDiscoverMovies(language, sortSelection, page, isAdult, yearIndex, voteIndex, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getDiscoveredShows(String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
-        return movieDBApi.getDiscoverShows(language, sortSelection, 1, isAdult, network,  yearIndex, voteIndex, voteCount)
+    public Observable<MovieResponse> getDiscoveredShows(int page, String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
+        return movieDBApi.getDiscoverShows(language, sortSelection, page, isAdult, network,  yearIndex, voteIndex, voteCount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

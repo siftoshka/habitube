@@ -27,41 +27,68 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
     }
 
     public void multiSearch(String queryName, String language, boolean isAdult) {
-        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName, language, isAdult)
+        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName,1, language, isAdult)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe(movieResponse -> getViewState().showSearchedMediaList(movieResponse.getResults()),
                 throwable -> getViewState().unsuccessfulQueryError()));
     }
 
+    public void moreMultiSearch(String queryName, int page, String language, boolean isAdult) {
+        compositeDisposable.add(remoteExploreInteractor.getSearchResults(queryName,page, language, isAdult)
+                .distinctUntilChanged()
+                .subscribe(movieResponse -> getViewState().showMoreSearchResults(movieResponse.getResults()),
+                        throwable -> getViewState().unsuccessfulQueryError()));
+    }
+
     public void movieSearch(String queryName, String language, boolean isAdult) {
-        compositeDisposable.add(remoteExploreInteractor.getMovieSearchResults(queryName, language, isAdult)
+        compositeDisposable.add(remoteExploreInteractor.getMovieSearchResults(queryName,1, language, isAdult)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe(movieResponse -> {getViewState().showSearchedMediaList(movieResponse.getResults()); addMediaType(movieResponse, "movie");},
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
+    public void moreMovieSearch(String queryName, int page, String language, boolean isAdult) {
+        compositeDisposable.add(remoteExploreInteractor.getMovieSearchResults(queryName,page, language, isAdult)
+                .distinctUntilChanged()
+                .subscribe(movieResponse -> getViewState().showMoreSearchResults(movieResponse.getResults()),
+                        throwable -> getViewState().unsuccessfulQueryError()));
+    }
+
     public void showSearch(String queryName, String language, boolean isAdult) {
-        compositeDisposable.add(remoteExploreInteractor.getShowSearchResults(queryName, language, isAdult)
+        compositeDisposable.add(remoteExploreInteractor.getShowSearchResults(queryName,1, language, isAdult)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe(movieResponse -> {getViewState().showSearchedMediaList(movieResponse.getResults()); addMediaType(movieResponse, "tv");},
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
+    public void moreTVShowSearch(String queryName, int page, String language, boolean isAdult) {
+        compositeDisposable.add(remoteExploreInteractor.getShowSearchResults(queryName,page, language, isAdult)
+                .distinctUntilChanged()
+                .subscribe(movieResponse -> getViewState().showMoreSearchResults(movieResponse.getResults()),
+                        throwable -> getViewState().unsuccessfulQueryError()));
+    }
+
     public void personSearch(String queryName, String language, boolean isAdult) {
-        compositeDisposable.add(remoteExploreInteractor.getPersonSearchResults(queryName, language, isAdult)
+        compositeDisposable.add(remoteExploreInteractor.getPersonSearchResults(queryName,1, language, isAdult)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe(movieResponse -> {getViewState().showSearchedMediaList(movieResponse.getResults()); addMediaType(movieResponse, "person");},
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 
+    public void morePersonSearch(String queryName, int page, String language, boolean isAdult) {
+        compositeDisposable.add(remoteExploreInteractor.getPersonSearchResults(queryName,page, language, isAdult)
+                .distinctUntilChanged()
+                .subscribe(movieResponse -> getViewState().showMoreSearchResults(movieResponse.getResults()),
+                        throwable -> getViewState().unsuccessfulQueryError()));
+    }
+
     private void addMediaType(MovieResponse movieResponse, String mediaType) {
-        for(int i = 0; i < movieResponse.getResults().size(); i++) {
+        for(int i = 0; i < movieResponse.getResults().size(); i++)
             movieResponse.getResults().get(i).setMediaType(mediaType);
-        }
     }
 
     public void goToDetailedScreen(Integer id, int mediaType) {

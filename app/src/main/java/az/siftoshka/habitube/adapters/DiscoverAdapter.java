@@ -66,6 +66,13 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
         notifyDataSetChanged();
     }
 
+    public void addMoreContent(List<MovieLite> media) {
+        int position = this.movies.size();
+        this.movies.addAll(media);
+        notifyItemRangeInserted(position, media.size());
+    }
+
+
     static class DiscoverHolder extends RecyclerView.ViewHolder {
         ImageView posterImage;
         TextView posterTitle;

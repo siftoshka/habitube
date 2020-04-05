@@ -313,22 +313,16 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
         int idTheme = prefs.getInt("Dark", 0);
 
-        if (idTheme == 101) {
-            themeSwither.setChecked(true);
-        } else {
-            themeSwither.setChecked(false);
-        }
+        if (idTheme == 101) themeSwither.setChecked(true);
+        else themeSwither.setChecked(false);
     }
 
     private void checkAdult() {
         SharedPreferences prefs = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
 
-        if (idAdult == 301) {
-            adultSwitcher.setChecked(true);
-        } else {
-            adultSwitcher.setChecked(false);
-        }
+        if (idAdult == 301) adultSwitcher.setChecked(true);
+        else adultSwitcher.setChecked(false);
     }
 
     private void checkSort() {

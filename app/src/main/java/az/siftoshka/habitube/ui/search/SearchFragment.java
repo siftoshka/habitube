@@ -128,10 +128,22 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             @Override
             public boolean onQueryTextChange(final String newText) {
                 if (!TextUtils.isEmpty(newText)) {
-                    if(radioMulti.isChecked()) searchPresenter.multiSearch(newText, getResources().getString(R.string.language), adult);
-                    if(radioMovie.isChecked()) searchPresenter.movieSearch(newText, getResources().getString(R.string.language), adult);
-                    if(radioShow.isChecked()) searchPresenter.showSearch(newText, getResources().getString(R.string.language), adult);
-                    if(radioPeople.isChecked()) searchPresenter.personSearch(newText, getResources().getString(R.string.language), adult);
+                    if (radioMulti.isChecked()) {
+                        searchPresenter.multiSearch(newText, getResources().getString(R.string.language), adult);
+                        paginateMultiSearch(newText, getResources().getString(R.string.language), adult);
+                    }
+                    if (radioMovie.isChecked()) {
+                        searchPresenter.movieSearch(newText, getResources().getString(R.string.language), adult);
+                        paginateMovieSearch(newText, getResources().getString(R.string.language), adult);
+                    }
+                    if (radioShow.isChecked()) {
+                        searchPresenter.showSearch(newText, getResources().getString(R.string.language), adult);
+                        paginateShowSearch(newText, getResources().getString(R.string.language), adult);
+                    }
+                    if (radioPeople.isChecked()) {
+                        searchPresenter.personSearch(newText, getResources().getString(R.string.language), adult);
+                        paginatePersonSearch(newText, getResources().getString(R.string.language), adult);
+                    }
                 }
                 return true;
             }
@@ -162,6 +174,62 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         });
     }
 
+    private void paginateMultiSearch(String text, String language, boolean adult) {
+        recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSearch.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    searchPresenter.moreMultiSearch(text, page, language, adult);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateMovieSearch(String text, String language, boolean adult) {
+        recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSearch.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    searchPresenter.moreMovieSearch(text, page, language, adult);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateShowSearch(String text, String language, boolean adult) {
+        recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSearch.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    searchPresenter.moreTVShowSearch(text, page, language, adult);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginatePersonSearch(String text, String language, boolean adult) {
+        recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerViewSearch.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    searchPresenter.morePersonSearch(text, page, language, adult);
+                    page++;
+                }
+            }
+        });
+    }
+
     @Override
     public void showSearchedMediaList(List<MovieLite> searchResult) {
         if (searchResult.size() == 0) {
@@ -174,6 +242,11 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
             searchIcon.setVisibility(View.GONE);
             recyclerViewSearch.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void showMoreSearchResults(List<MovieLite> searchResult) {
+        searchAdapter.addMoreMedia(searchResult);
     }
 
     private void radioListener() {
