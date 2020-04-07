@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -92,7 +93,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.imdb_button) LinearLayout imdbButton;
     @BindView(R.id.watched_button) LinearLayout watchedButton;
     @BindView(R.id.watched_image) ImageView watchedImage;
-    @BindView(R.id.watched_button_alt) LinearLayout watchedButtonAlt;
+    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
     @BindView(R.id.planning_button) LinearLayout planningButton;
     @BindView(R.id.planned_image) ImageView plannedImage;
     @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
@@ -106,6 +107,9 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.poster_budget) TextView posterBudget;
     @BindView(R.id.poster_revenue) TextView posterRevenue;
     @BindView(R.id.poster_desc) TextView posterDesc;
+    @BindView(R.id.watched_rating) TextView ratingText;
+    @BindView(R.id.rating) RatingBar posterRating;
+    @BindView(R.id.rating_layout) LinearLayout ratingCard;
     @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
     @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
     @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
@@ -264,6 +268,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         deleteMovieFromPlanned(movie);
         moviePresenter.isPlannedMovieChanged(movie.getId(), movie);
         moviePresenter.isWatchedMovieChanged(movie.getId(), movie);
+        moviePresenter.getSavedWMovieId(movie.getId());
     }
 
     private void addMovieToWatched(Movie movie) {
@@ -271,6 +276,11 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             movie.setAddedDate(new Date());
             ImageLoader.saveToInternalStorage(movie.getPosterPath(), requireContext(), posterMain);
             moviePresenter.addMovieAsWatched(movie);
+            ratingCard.setVisibility(View.VISIBLE);
+            posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                ratingText.setText(String.valueOf((int) ratingBar.getRating()));
+                moviePresenter.updateRating(movie, ratingBar.getRating());
+            });
         });
     }
 
@@ -408,6 +418,23 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     public void showCast(List<Cast> casts) {
         if (casts == null || casts.size() == 0) castText.setVisibility(View.GONE);
         castAdapter.addAllPersons(casts);
+    }
+
+    @Override
+    public void showRating(Movie movie, float myRating) {
+        if (watchedButtonAlt != null) {
+            ratingText.setText(String.valueOf((int) myRating));
+            if (myRating == 0.0) ratingText.setText(null);
+            watchedButtonAlt.setOnLongClickListener(view -> {
+                posterRating.setRating(myRating);
+                ratingCard.setVisibility(View.VISIBLE);
+                posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                    ratingText.setText(String.valueOf((int) ratingBar.getRating()));
+                    moviePresenter.updateRating(movie, ratingBar.getRating());
+                });
+                return true;
+            });
+        }
     }
 
     @Override

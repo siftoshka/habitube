@@ -22,6 +22,8 @@ public class PlannedDBProvider implements Provider<PlannedRoomRepository> {
 
     @Override
     public PlannedRoomRepository get() {
-        return Room.databaseBuilder(context, PlannedRoomRepository.class, PLANNED).allowMainThreadQueries().build();
+        return Room.databaseBuilder(context, PlannedRoomRepository.class, PLANNED)
+                .allowMainThreadQueries()
+                .build();
     }
 }

@@ -32,4 +32,7 @@ public interface ShowView extends MvpView {
 
     void setSaveButtonEnabled(boolean enabled);
     void setPlanButtonEnabled(boolean enabled);
+
+    void showRating(Show show, float myRating);
+
 }

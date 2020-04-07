@@ -9,9 +9,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.entities.firebase.Media;
+import az.siftoshka.habitube.entities.firebase.ShowMedia;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.data.WatchedRoomRepository;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -103,18 +105,17 @@ public class WatchedRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Movie> getMovie(int postId) {
+    public Maybe<Movie> getMovie(int postId) {
         return watchedRepository.movieDAO().getMovieById(postId)
+                .doOnError(Throwable::printStackTrace)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(Throwable::printStackTrace);
-    }
+                .observeOn(AndroidSchedulers.mainThread());}
 
-    public Single<Show> getShow(int postId) {
+    public Maybe<Show> getShow(int postId) {
         return watchedRepository.showDAO().getShowById(postId)
+                .doOnError(Throwable::printStackTrace)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(Throwable::printStackTrace);
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void deleteAllMovies() {
@@ -131,22 +132,22 @@ public class WatchedRepository {
                 .subscribe();
     }
 
-    public void addMovieToWatched(int id, FirebaseUser user) {
+    public void addMovieToWatched(Movie movie, FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(WATCHED_MOVIE)
                 .child(user.getUid());
-        databaseReference.child(String.valueOf(id))
-                .setValue(new Media(id));
+        databaseReference.child(String.valueOf(movie.getId()))
+                .setValue(new Media(movie.getId(), movie.getMyRating()));
     }
 
-    public void addShowToWatched(int id, FirebaseUser user) {
+    public void addShowToWatched(Show show, FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(WATCHED_SHOW)
                 .child(user.getUid());
-        databaseReference.child(String.valueOf(id))
-                .setValue(new Media(id));
+        databaseReference.child(String.valueOf(show.getId()))
+                .setValue(new ShowMedia(show.getId(), show.getMyRating(), null));
     }
 
     public void deleteMovieFromWatched(Movie movie, FirebaseUser user) {

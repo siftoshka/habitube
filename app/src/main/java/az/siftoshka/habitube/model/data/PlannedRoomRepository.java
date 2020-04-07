@@ -5,7 +5,6 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.utils.DateConverter;
 

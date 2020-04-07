@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -92,7 +93,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.error_screen) View errorScreen;
     @BindView(R.id.watched_button) LinearLayout watchedButton;
     @BindView(R.id.watched_image) ImageView watchedImage;
-    @BindView(R.id.watched_button_alt) LinearLayout watchedButtonAlt;
+    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
     @BindView(R.id.planning_button) LinearLayout planningButton;
     @BindView(R.id.planned_image) ImageView plannedImage;
     @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
@@ -104,6 +105,9 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.poster_show_views) TextView posterShowViews;
     @BindView(R.id.poster_show_duration) TextView posterShowDuration;
     @BindView(R.id.poster_show_desc) TextView posterShowDesc;
+    @BindView(R.id.watched_rating) TextView ratingText;
+    @BindView(R.id.rating) RatingBar posterRating;
+    @BindView(R.id.rating_layout) LinearLayout ratingCard;
     @BindView(R.id.show_genres) RecyclerView recyclerViewGenres;
     @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
     @BindView(R.id.seasons_card_layout) LinearLayout seasonsCard;
@@ -264,6 +268,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         deleteMovieFromWatched(show);
         showPresenter.isPlannedShowChanged(show.getId(), show);
         showPresenter.isWatchedShowChanged(show.getId(), show);
+        showPresenter.getSavedWShowId(show.getId());
     }
 
     private void addMovieToWatched(Show show) {
@@ -271,6 +276,11 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             show.setAddedDate(new Date());
             ImageLoader.saveToInternalStorage(show.getPosterPath(), requireContext(), posterShow);
             showPresenter.addShowAsWatched(show);
+            ratingCard.setVisibility(View.VISIBLE);
+            posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                ratingText.setText(String.valueOf((int) ratingBar.getRating()));
+                showPresenter.updateRating(show, ratingBar.getRating());
+            });
         });
     }
 
@@ -428,6 +438,23 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showVideos(List<Video> videos) {
         if (videos.isEmpty()) videosCard.setVisibility(View.GONE);
         videoAdapter.addAllVideos(videos);
+    }
+
+    @Override
+    public void showRating(Show show, float myRating) {
+        if (watchedButtonAlt != null) {
+            ratingText.setText(String.valueOf((int) myRating));
+            if (myRating == 0.0) ratingText.setText(null);
+            watchedButtonAlt.setOnLongClickListener(view -> {
+                posterRating.setRating(myRating);
+                ratingCard.setVisibility(View.VISIBLE);
+                posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                    ratingText.setText(String.valueOf((int) ratingBar.getRating()));
+                    showPresenter.updateRating(show, ratingBar.getRating());
+                });
+                return true;
+            });
+        }
     }
 
     @Override

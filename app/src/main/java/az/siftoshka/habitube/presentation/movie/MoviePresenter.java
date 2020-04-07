@@ -2,7 +2,6 @@ package az.siftoshka.habitube.presentation.movie;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
@@ -26,6 +25,7 @@ import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
@@ -151,9 +151,23 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
     private void updateWatchedMovie(Movie movieFromLocal, Movie movieFromWeb) {
         if (!movieFromLocal.equals(movieFromWeb)) {
             movieFromWeb.setAddedDate(movieFromLocal.getAddedDate());
+            movieFromWeb.setMyRating(movieFromLocal.getMyRating());
             movieFromWeb.setPosterPath(movieFromLocal.getPosterPath());
             watchedInteractor.updateMovie(movieFromWeb);
         }
+    }
+
+    public void updateRating(Movie movie, float rating) {
+        movie.setMyRating(rating);
+        watchedInteractor.updateMovie(movie);
+        watchedInteractor.addMovieFB(movie);
+    }
+
+    public void getSavedWMovieId(int id) {
+      compositeDisposable.add(watchedInteractor.getMovie(id)
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(movie -> getViewState().showRating(movie, movie.getMyRating())));
     }
 
     private void getVideos(int id, String language) {
@@ -189,7 +203,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     public void addMovieAsWatched(Movie movie) {
         watchedInteractor.addMovie(movie);
-        watchedInteractor.addMovieFB(movie.getId());
+        watchedInteractor.addMovieFB(movie);
         getViewState().setSaveButtonEnabled(true);
     }
 
@@ -200,7 +214,7 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
 
     public void addMovieAsPlanned(Movie movie) {
         plannedInteractor.addMovie(movie);
-        plannedInteractor.addMovieFB(movie.getId());
+        plannedInteractor.addMovieFB(movie);
         getViewState().setPlanButtonEnabled(true);
     }
 

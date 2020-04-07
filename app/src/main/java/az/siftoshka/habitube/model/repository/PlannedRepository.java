@@ -9,9 +9,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.entities.firebase.Media;
+import az.siftoshka.habitube.entities.firebase.ShowMedia;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.data.PlannedRoomRepository;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -103,14 +105,14 @@ public class PlannedRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Movie> getMovie(int movieId) {
+    public Maybe<Movie> getMovie(int movieId) {
         return plannedRepository.movieDAO().getMovieById(movieId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(Throwable::printStackTrace);
     }
 
-    public Single<Show> getShow(int showId) {
+    public Maybe<Show> getShow(int showId) {
         return plannedRepository.showDAO().getShowById(showId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -131,22 +133,22 @@ public class PlannedRepository {
                 .subscribe();
     }
 
-    public void addMovieToPlanning(int id, FirebaseUser user) {
+    public void addMovieToPlanning(Movie movie, FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(PLANNING_MOVIE)
                 .child(user.getUid());
-        databaseReference.child(String.valueOf(id))
-                .setValue(new Media(id));
+        databaseReference.child(String.valueOf(movie.getId()))
+                .setValue(new Media(movie.getId(), movie.getMyRating()));
     }
 
-    public void addShowToPlanning(int id, FirebaseUser user) {
+    public void addShowToPlanning(Show show, FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(PLANNING_SHOW)
                 .child(user.getUid());
-        databaseReference.child(String.valueOf(id))
-                .setValue(new Media(id));
+        databaseReference.child(String.valueOf(show.getId()))
+                .setValue(new ShowMedia(show.getId(), show.getMyRating() , null));
     }
 
     public void deleteMovieFromPlanning(Movie movie, FirebaseUser user) {

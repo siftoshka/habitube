@@ -22,7 +22,7 @@ public interface ShowDAO {
     @Update Completable updateShow(Show show);
     @Transaction @Query("SELECT * FROM shows") Single<List<Show>> getShows();
     @Transaction @Query("SELECT count(*) FROM shows WHERE id = :showId") int getShowCount(int showId);
-    @Transaction @Query("SELECT * FROM shows WHERE id = :showId") Single<Show> getShowById(int showId);
+    @Transaction @Query("SELECT * FROM shows WHERE id = :showId") Maybe<Show> getShowById(int showId);
     @Delete Completable deleteShow(Show show);
     @Transaction @Query("DELETE FROM shows") Completable deleteAllShows();
 }

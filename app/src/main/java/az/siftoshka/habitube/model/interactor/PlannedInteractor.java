@@ -11,6 +11,7 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.repository.PlannedRepository;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 public class PlannedInteractor {
@@ -26,20 +27,20 @@ public class PlannedInteractor {
         plannedRepository.addMovie(movie);
     }
 
-    public void addMovieFB(int id) {
+    public void addMovieFB(Movie movie) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
-            plannedRepository.addMovieToPlanning(id, user);
+            plannedRepository.addMovieToPlanning(movie, user);
     }
 
     public void addShow(Show show) {
         plannedRepository.addShow(show);
     }
 
-    public void addShowFB(int id) {
+    public void addShowFB(Show show) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
-            plannedRepository.addShowToPlanning(id, user);
+            plannedRepository.addShowToPlanning(show, user);
     }
 
     public void updateMovie(Movie movie) {
@@ -66,11 +67,11 @@ public class PlannedInteractor {
         return plannedRepository.isShowExists(showId);
     }
 
-    public Single<Movie> getMovie(int movieId) {
+    public Maybe<Movie> getMovie(int movieId) {
         return plannedRepository.getMovie(movieId);
     }
 
-    public Single<Show> getShow(int showId) {
+    public Maybe<Show> getShow(int showId) {
         return plannedRepository.getShow(showId);
     }
 

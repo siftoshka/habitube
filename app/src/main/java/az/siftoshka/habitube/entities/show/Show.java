@@ -39,10 +39,11 @@ public class Show implements Parcelable {
     @SerializedName("vote_average") @Expose private float voteAverage;
     @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
+    @ColumnInfo(name = "my_rating") private float myRating;
 
     public Show(String firstAirDate, int id, boolean inProduction, String lastAirDate, String name,
                 int numberOfEpisodes, int numberOfSeasons, String overview, double popularity,
-                String posterPath, String status, float voteAverage, int voteCount, Date addedDate) {
+                String posterPath, String status, float voteAverage, int voteCount, Date addedDate, float myRating) {
         this.firstAirDate = firstAirDate;
         this.id = id;
         this.inProduction = inProduction;
@@ -57,6 +58,7 @@ public class Show implements Parcelable {
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
         this.addedDate = addedDate;
+        this.myRating = myRating;
     }
 
     protected Show(Parcel in) {
@@ -75,6 +77,32 @@ public class Show implements Parcelable {
         status = in.readString();
         voteAverage = in.readFloat();
         voteCount = in.readInt();
+        myRating = in.readFloat();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(backdropPath);
+        dest.writeString(firstAirDate);
+        dest.writeInt(id);
+        dest.writeByte((byte) (inProduction ? 1 : 0));
+        dest.writeString(lastAirDate);
+        dest.writeString(name);
+        dest.writeInt(numberOfEpisodes);
+        dest.writeInt(numberOfSeasons);
+        dest.writeString(overview);
+        dest.writeDouble(popularity);
+        dest.writeString(posterPath);
+        dest.writeTypedList(seasons);
+        dest.writeString(status);
+        dest.writeFloat(voteAverage);
+        dest.writeInt(voteCount);
+        dest.writeFloat(myRating);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Show> CREATOR = new Creator<Show>() {
@@ -233,6 +261,14 @@ public class Show implements Parcelable {
         this.voteCount = voteCount;
     }
 
+    public float getMyRating() {
+        return myRating;
+    }
+
+    public void setMyRating(float myRating) {
+        this.myRating = myRating;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -245,6 +281,7 @@ public class Show implements Parcelable {
                 Double.compare(show.popularity, popularity) == 0 &&
                 Float.compare(show.voteAverage, voteAverage) == 0 &&
                 voteCount == show.voteCount &&
+                Float.compare(show.myRating, myRating) == 0 &&
                 Objects.equals(backdropPath, show.backdropPath) &&
                 Objects.equals(episodeRunTime, show.episodeRunTime) &&
                 Objects.equals(firstAirDate, show.firstAirDate) &&
@@ -254,35 +291,12 @@ public class Show implements Parcelable {
                 Objects.equals(overview, show.overview) &&
                 Objects.equals(posterPath, show.posterPath) &&
                 Objects.equals(seasons, show.seasons) &&
-                Objects.equals(status, show.status);
+                Objects.equals(status, show.status) &&
+                Objects.equals(addedDate, show.addedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(backdropPath);
-        parcel.writeString(firstAirDate);
-        parcel.writeInt(id);
-        parcel.writeByte((byte) (inProduction ? 1 : 0));
-        parcel.writeString(lastAirDate);
-        parcel.writeString(name);
-        parcel.writeInt(numberOfEpisodes);
-        parcel.writeInt(numberOfSeasons);
-        parcel.writeString(overview);
-        parcel.writeDouble(popularity);
-        parcel.writeString(posterPath);
-        parcel.writeTypedList(seasons);
-        parcel.writeString(status);
-        parcel.writeFloat(voteAverage);
-        parcel.writeInt(voteCount);
+        return Objects.hash(backdropPath, episodeRunTime, firstAirDate, showGenres, id, inProduction, lastAirDate, name, numberOfEpisodes, numberOfSeasons, overview, popularity, posterPath, seasons, status, voteAverage, voteCount, addedDate, myRating);
     }
 }

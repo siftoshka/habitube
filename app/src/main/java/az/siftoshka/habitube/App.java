@@ -23,6 +23,7 @@ public class App extends Application {
         initDarkMode();
         initToothPick();
         initSorting();
+        initLibraryTabs();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
@@ -42,6 +43,11 @@ public class App extends Application {
             if (id == 101) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    private void initLibraryTabs() {
+        SharedPreferences.Editor editor = getSharedPreferences("Library-Tab", MODE_PRIVATE).edit();
+        editor.putInt("Tab", 100).apply();
     }
 
     private void initSorting() {

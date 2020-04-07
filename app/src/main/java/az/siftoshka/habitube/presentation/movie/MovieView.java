@@ -34,4 +34,6 @@ public interface MovieView extends MvpView {
 
     void setSaveButtonEnabled(boolean enabled);
     void setPlanButtonEnabled(boolean enabled);
+
+    void showRating(Movie movie, float myRating);
 }

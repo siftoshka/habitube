@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.entities.firebase.Media;
+import az.siftoshka.habitube.entities.firebase.ShowMedia;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
@@ -86,6 +87,10 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
 
     public void getShows() {
         compositeDisposable.add(watchedInteractor.getAllShows()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> getViewState().showProgress(true))
+                .doAfterSuccess(movie -> getViewState().showProgress(false))
                 .subscribe((shows, throwable) -> getViewState().showWatchedShows(shows)));
     }
 
@@ -118,7 +123,10 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                     context.getResources().getString(R.string.language))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(movie -> movie.setAddedDate(new Date()))
+                    .doOnSuccess(movie -> {
+                        movie.setAddedDate(new Date());
+                        movie.setMyRating(mediaFromFirebase.getRate());
+                    })
                     .subscribe((movie) -> Glide.with(context)
                             .load(IMAGE_URL + movie.getPosterPath())
                             .error(R.drawable.ic_missing)
@@ -146,10 +154,10 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        compositeDisposable.add(watchedInteractor.isShowExists(postSnapshot.getValue(Media.class).getId())
+                        compositeDisposable.add(watchedInteractor.isShowExists(postSnapshot.getValue(ShowMedia.class).getId())
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe((existInLocal) -> syncShows(postSnapshot.getValue(Media.class), existInLocal), Throwable::printStackTrace));
+                                .subscribe((existInLocal) -> syncShows(postSnapshot.getValue(ShowMedia.class), existInLocal), Throwable::printStackTrace));
                     }
                 }
 
@@ -158,13 +166,16 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
         }
     }
 
-    private void syncShows(Media mediaFromFirebase, Boolean existsInLocal) {
+    private void syncShows(ShowMedia mediaFromFirebase, Boolean existsInLocal) {
         if (!existsInLocal) {
             compositeDisposable.add(postInteractor.getTVShow(mediaFromFirebase.getId(),
                     context.getResources().getString(R.string.language))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(show -> show.setAddedDate(new Date()))
+                    .doOnSuccess(show -> {
+                        show.setAddedDate(new Date());
+                        show.setMyRating(mediaFromFirebase.getRate());
+                    })
                     .subscribe((show) -> Glide.with(context)
                             .load(IMAGE_URL + show.getPosterPath())
                             .error(R.drawable.ic_missing)
@@ -187,7 +198,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> {
                     for (Movie movie: movies)
-                        watchedInteractor.addMovieFB(movie.getId());
+                        watchedInteractor.addMovieFB(movie);
                 }));
     }
 
@@ -197,7 +208,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(shows -> {
                     for (Show show: shows)
-                        watchedInteractor.addShowFB(show.getId());
+                        watchedInteractor.addShowFB(show);
                 }));
     }
 
@@ -214,13 +225,13 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
     public void goToDetailedMovieScreen(int postId) {
         if (haveNetworkConnection()) router.navigateTo(new Screens.PostMovieScreen(postId));
         else compositeDisposable.add(watchedInteractor.getMovie(postId)
-                .subscribe((movie, throwable) -> getViewState().showOfflineCard(movie)));
+                .subscribe(movie -> getViewState().showOfflineCard(movie)));
     }
 
     public void goToDetailedShowScreen(int postId) {
         if (haveNetworkConnection()) router.navigateTo(new Screens.PostShowScreen(postId));
         else compositeDisposable.add(watchedInteractor.getShow(postId)
-                    .subscribe((show, throwable) -> getViewState().showOfflineCard(show)));
+                    .subscribe(show -> getViewState().showOfflineCard(show)));
     }
 
     private boolean haveNetworkConnection() {

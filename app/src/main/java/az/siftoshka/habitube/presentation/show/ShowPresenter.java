@@ -1,7 +1,6 @@
 package az.siftoshka.habitube.presentation.show;
 
 import android.content.Context;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
-import az.siftoshka.habitube.utils.ImageLoader;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -108,10 +106,25 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
     private void updateWatchedShow(Show showFromLocal, Show showFromWeb) {
         if (!showFromLocal.equals(showFromWeb)) {
             showFromWeb.setAddedDate(showFromLocal.getAddedDate());
+            showFromWeb.setMyRating(showFromLocal.getMyRating());
             showFromWeb.setPosterPath(showFromLocal.getPosterPath());
             watchedInteractor.updateShow(showFromWeb);
         }
     }
+
+    public void updateRating(Show show, float rating) {
+        show.setMyRating(rating);
+        watchedInteractor.updateShow(show);
+        watchedInteractor.addShowFB(show);
+    }
+
+    public void getSavedWShowId(int id) {
+        compositeDisposable.add(watchedInteractor.getShow(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(show -> getViewState().showRating(show, show.getMyRating())));
+    }
+
 
     private void getSimilarTVShows(int id, String language) {
         compositeDisposable.add(remotePostInteractor.getSimilarTVShows(id, 1, language)
@@ -159,13 +172,13 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
 
     public void addShowAsWatched(Show show) {
         watchedInteractor.addShow(show);
-        watchedInteractor.addShowFB(show.getId());
+        watchedInteractor.addShowFB(show);
         getViewState().setSaveButtonEnabled(true);
     }
 
     public void addShowAsPlanned(Show show) {
         plannedInteractor.addShow(show);
-        plannedInteractor.addShowFB(show.getId());
+        plannedInteractor.addShowFB(show);
         getViewState().setPlanButtonEnabled(true);
     }
 

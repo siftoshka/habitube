@@ -26,20 +26,20 @@ public class WatchedInteractor {
         watchedRepository.addMovie(movie);
     }
 
-    public void addMovieFB(int id) {
+    public void addMovieFB(Movie movie) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
-            watchedRepository.addMovieToWatched(id, user);
+            watchedRepository.addMovieToWatched(movie, user);
     }
 
     public void addShow(Show show) {
         watchedRepository.addShow(show);
     }
 
-    public void addShowFB(int id) {
+    public void addShowFB(Show show) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
-            watchedRepository.addShowToWatched(id, user);
+            watchedRepository.addShowToWatched(show, user);
     }
 
     public void updateMovie(Movie movie) {
@@ -80,11 +80,11 @@ public class WatchedInteractor {
             watchedRepository.deleteShowFromWatched(show, user);
     }
 
-    public Single<Movie> getMovie(int postId) {
+    public Maybe<Movie> getMovie(int postId) {
         return watchedRepository.getMovie(postId);
     }
 
-    public Single<Show> getShow(int postId) {
+    public Maybe<Show> getShow(int postId) {
         return watchedRepository.getShow(postId);
     }
 

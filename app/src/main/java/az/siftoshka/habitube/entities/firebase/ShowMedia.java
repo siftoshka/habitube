@@ -1,16 +1,19 @@
 package az.siftoshka.habitube.entities.firebase;
 
-public class Media {
+import java.util.List;
 
+public class ShowMedia {
     private int id;
     private float rate;
+    private List<Integer> episodes;
 
-    public Media() {
+    public ShowMedia() {
     }
 
-    public Media(int id, float rate) {
+    public ShowMedia(int id, float rate, List<Integer> episodes) {
         this.id = id;
         this.rate = rate;
+        this.episodes = episodes;
     }
 
     public int getId() {
@@ -27,5 +30,13 @@ public class Media {
 
     public void setRate(float rate) {
         this.rate = rate;
+    }
+
+    public List<Integer> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Integer> episodes) {
+        this.episodes = episodes;
     }
 }

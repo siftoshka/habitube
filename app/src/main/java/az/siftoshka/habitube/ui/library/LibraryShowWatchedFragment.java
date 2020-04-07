@@ -87,7 +87,7 @@ public class LibraryShowWatchedFragment extends MvpAppCompatFragment implements 
             case 202: Collections.sort(shows, (o1, o2) -> o2.getFirstAirDate().compareTo(o1.getFirstAirDate()));break;
             case 203: Collections.sort(shows, (o1, o2) -> o1.getAddedDate().compareTo(o2.getAddedDate()));break;
             case 204: Collections.sort(shows, (o1, o2) -> o1.getFirstAirDate().compareTo(o2.getFirstAirDate()));break;
-            case 205: Collections.sort(shows, (o1, o2) -> Double.compare(o2.getVoteAverage(), o1.getVoteAverage()));break;
+            case 205: Collections.sort(shows, (o1, o2) -> Double.compare(o2.getMyRating(), o1.getMyRating()));break;
         }
         libraryAdapter.addAllShows(shows);
         watcher();

@@ -247,7 +247,7 @@
                             android:textSize="12sp" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/watched_button_alt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -259,20 +259,22 @@
                         android:visibility="gone">
 
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerInParent="true"
                             android:src="@drawable/ic_favorite_filled" />
 
                         <TextView
+                            android:id="@+id/watched_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/regular"
                             android:gravity="center"
-                            android:text="@string/already_added"
-                            android:textColor="@color/dark_800"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:layout_centerInParent="true"
+                            android:textSize="16sp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#ffffffff"
+                            tools:text="10" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/planning_button"
@@ -309,7 +311,8 @@
                         android:background="@drawable/ripple_effect"
                         android:backgroundTint="@color/background"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="25dp"
@@ -326,6 +329,40 @@
                             android:textColor="@color/dark_800"
                             android:textSize="12sp" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rating_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RatingBar
+                        android:id="@+id/rating"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/mainBackground"
+                        android:isIndicator="false"
+                        android:numStars="10"
+                        android:saveEnabled="true"
+                        android:stepSize="1"
+                        android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/regular"
+                        android:gravity="center"
+                        android:text="@string/rating_hint"
+                        android:textColor="@color/grey_is_grey"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout

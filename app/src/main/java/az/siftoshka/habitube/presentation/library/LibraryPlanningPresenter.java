@@ -184,7 +184,7 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> {
                     for (Movie movie: movies)
-                        plannedInteractor.addMovieFB(movie.getId());
+                        plannedInteractor.addMovieFB(movie);
                 }));
     }
 
@@ -194,7 +194,7 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(shows -> {
                     for (Show show: shows)
-                        plannedInteractor.addShowFB(show.getId());
+                        plannedInteractor.addShowFB(show);
                 }));
     }
 
@@ -213,7 +213,7 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
             router.navigateTo(new Screens.PostMovieScreen(postId));
         } else {
             compositeDisposable.add(plannedInteractor.getMovie(postId)
-                    .subscribe((movie, throwable) -> getViewState().showOfflineCard(movie)));
+                    .subscribe(movie -> getViewState().showOfflineCard(movie)));
         }
     }
 
@@ -222,7 +222,7 @@ public class LibraryPlanningPresenter extends MvpPresenter<LibraryPlanningView> 
             router.navigateTo(new Screens.PostShowScreen(postId));
         } else {
             compositeDisposable.add(plannedInteractor.getShow(postId)
-                    .subscribe((show, throwable) -> getViewState().showOfflineCard(show)));
+                    .subscribe(show -> getViewState().showOfflineCard(show)));
         }
     }
 

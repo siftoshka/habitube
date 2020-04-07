@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.library;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
+import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class LibraryFragment extends MvpAppCompatFragment implements LibraryView {
@@ -69,14 +71,25 @@ public class LibraryFragment extends MvpAppCompatFragment implements LibraryView
         viewShowPager.setAdapter(pagerAdapterShow);
         tabLayout.setupWithViewPager(viewPager);
         tabShowLayout.setupWithViewPager(viewShowPager);
-        prefMovies();
+        SharedPreferences prefs = requireContext().getSharedPreferences("Library-Tab", MODE_PRIVATE);
+        int idTheme = prefs.getInt("Tab", 0);
+        if (idTheme == 100) prefMovies();
+        else prefShows();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        moviesPref.setOnClickListener(view1 -> prefMovies());
-        showsPref.setOnClickListener(view1 -> prefShows());
+        moviesPref.setOnClickListener(view1 -> {
+            prefMovies();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Library-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 100).apply();
+        });
+        showsPref.setOnClickListener(view1 -> {
+            prefShows();
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Library-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 101).apply();
+        });
     }
 
     private void prefMovies() {

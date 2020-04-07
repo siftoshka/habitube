@@ -39,10 +39,11 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "budget") @SerializedName("budget") @Expose private long budget;
     @ColumnInfo(name = "revenue") @SerializedName("revenue") @Expose private long revenue;
     @ColumnInfo(name = "added_date") private Date addedDate;
+    @ColumnInfo(name = "my_rating") private float myRating;
 
     public Movie(boolean adult, int id, String imdbId, String originalTitle, String overview,
                  double popularity, String releaseDate, int runtime, String status, String title,
-                 double voteAverage, int voteCount, long budget, long revenue, Date addedDate) {
+                 double voteAverage, int voteCount, long budget, long revenue, Date addedDate, float myRating) {
         this.adult = adult;
         this.id = id;
         this.imdbId = imdbId;
@@ -58,6 +59,7 @@ public class Movie implements Parcelable {
         this.budget = budget;
         this.revenue = revenue;
         this.addedDate = addedDate;
+        this.myRating = myRating;
     }
 
     protected Movie(Parcel in) {
@@ -77,6 +79,7 @@ public class Movie implements Parcelable {
         voteCount = in.readInt();
         budget = in.readLong();
         revenue = in.readLong();
+        myRating = in.readFloat();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -235,6 +238,14 @@ public class Movie implements Parcelable {
         this.revenue = revenue;
     }
 
+    public float getMyRating() {
+        return myRating;
+    }
+
+    public void setMyRating(float myRating) {
+        this.myRating = myRating;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -248,6 +259,7 @@ public class Movie implements Parcelable {
                 voteCount == movie.voteCount &&
                 budget == movie.budget &&
                 revenue == movie.revenue &&
+                Float.compare(movie.myRating, myRating) == 0 &&
                 Objects.equals(backdropPath, movie.backdropPath) &&
                 Objects.equals(movieGenres, movie.movieGenres) &&
                 Objects.equals(imdbId, movie.imdbId) &&
@@ -256,12 +268,13 @@ public class Movie implements Parcelable {
                 Objects.equals(posterPath, movie.posterPath) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
                 Objects.equals(status, movie.status) &&
-                Objects.equals(title, movie.title);
+                Objects.equals(title, movie.title) &&
+                Objects.equals(addedDate, movie.addedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(adult, backdropPath, movieGenres, id, imdbId, originalTitle, overview, popularity, posterPath, releaseDate, runtime, status, title, voteAverage, voteCount, budget, revenue, addedDate, myRating);
     }
 
     @Override
@@ -287,7 +300,6 @@ public class Movie implements Parcelable {
         parcel.writeInt(voteCount);
         parcel.writeLong(budget);
         parcel.writeLong(revenue);
+        parcel.writeFloat(myRating);
     }
-
-
 }
