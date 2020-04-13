@@ -3,10 +3,13 @@ package az.siftoshka.habitube.presentation.explore;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
+import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.model.interactor.RemoteExploreInteractor;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -18,7 +21,7 @@ import ru.terrakok.cicerone.Router;
 import static android.content.Context.MODE_PRIVATE;
 
 @InjectViewState
-public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
+public class NetflixPresenter extends MvpPresenter<NetflixView> {
 
     private final Router router;
     private final Context context;
@@ -26,58 +29,77 @@ public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public DiscoverPresenter(Router router, Context context, RemoteExploreInteractor remoteExploreInteractor) {
+    public NetflixPresenter(Router router, Context context, RemoteExploreInteractor remoteExploreInteractor) {
         this.router = router;
         this.context = context;
         this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
-    public void discoverMovies(int page, String sortSelection, String yearIndex, int voteIndex) {
+    public void showNetflixPopular(int page) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndex, voteIndex)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, "213", null, 0, 100)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void discoverShows(int page, String yearIndex, int voteIndex) {
+    public void showNetflixBest(int page) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndex, voteIndex, 10)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "vote_average.desc", isAdult, "213", null, 0, 300)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void getMoreMovies(int page, String sortSelection, String yearIndex, int voteIndex) {
+    public void showNetflixNew(int page) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndex, voteIndex)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "first_air_date.desc", isAdult, "213", null, 0, 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
+    }
+
+
+    public void showMoreNetflixPopular(int page) {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, "213", null, 0, 100)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));
     }
 
-    public void getMoreShows(int page, String yearIndex, int voteIndex) {
+    public void showMoreNetflixBest(int page) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndex, voteIndex, 10)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "vote_average.desc", isAdult, "213", null, 0, 300)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));
     }
 
-    public void goToMovieScreen(int id) {
-        router.navigateTo(new Screens.PostMovieScreen(id));
+    public void showMoreNetflixNew(int page) {
+        String language = context.getResources().getString(R.string.language);
+        SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
+        int idAdult = prefs.getInt("Adult", 0);
+        boolean isAdult = idAdult == 1;
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "first_air_date.desc", isAdult, "213", null, 0, 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));
     }
 
     public void goToShowScreen(int id) {

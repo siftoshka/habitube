@@ -138,11 +138,8 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
 
     @Override
     public void showProgress(boolean loadingState) {
-        if (loadingState) {
-            loadingScreen.setVisibility(View.VISIBLE);
-        } else {
-            loadingScreen.setVisibility(View.GONE);
-        }
+        if (loadingState) loadingScreen.setVisibility(View.VISIBLE);
+        else loadingScreen.setVisibility(View.GONE);
     }
 
     @Override

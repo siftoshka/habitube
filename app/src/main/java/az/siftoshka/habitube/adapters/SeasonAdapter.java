@@ -15,6 +15,7 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.show.Season;
+import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.utils.ImageLoader;
 
 public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHolder> {
@@ -25,6 +26,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHold
 
     private List<Season> seasons;
     private ShowItemClickListener clickListener;
+
 
     public SeasonAdapter(@NonNull ShowItemClickListener clickListener) {
         this.seasons = new ArrayList<>();
@@ -59,7 +61,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHold
         return seasons.size();
     }
 
-    public void addAllMovies(List<Season> seasons) {
+    public void addAllShows(List<Season> seasons) {
         this.seasons.clear();
         this.seasons.addAll(seasons);
         notifyDataSetChanged();

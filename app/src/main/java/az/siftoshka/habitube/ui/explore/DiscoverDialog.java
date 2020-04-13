@@ -14,13 +14,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.xw.repo.BubbleSeekBar;
 
-import java.util.List;
-
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
-import az.siftoshka.habitube.presentation.explore.DiscoverView;
+import az.siftoshka.habitube.presentation.explore.DiscoverDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.DiscoverDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +26,9 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class DiscoverDialog extends MvpBottomSheetDialogFragment implements DiscoverView {
+public class DiscoverDialog extends MvpBottomSheetDialogFragment implements DiscoverDialogView {
 
-    @InjectPresenter DiscoverPresenter discoverPresenter;
+    @InjectPresenter DiscoverDialogPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @Nullable @BindView(R.id.sort_buttons) MaterialButtonToggleGroup toggleGroup;
@@ -50,8 +47,8 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     private String sortSelection;
 
     @ProvidePresenter
-    DiscoverPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DiscoverPresenter.class);
+    DiscoverDialogPresenter discoverPresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DiscoverDialogPresenter.class);
     }
 
     @Override
@@ -130,7 +127,7 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }
             });
 
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(1, sortSelection, yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(sortSelection, yearIndex + "-01-01", voteIndex));
         }
         if (index == 1) {
             defaultShowSorting();
@@ -165,7 +162,7 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                 }
             });
 
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(1,yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(yearIndex + "-01-01", voteIndex));
         }
     }
 

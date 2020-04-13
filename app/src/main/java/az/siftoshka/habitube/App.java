@@ -46,8 +46,12 @@ public class App extends Application {
     }
 
     private void initLibraryTabs() {
-        SharedPreferences.Editor editor = getSharedPreferences("Library-Tab", MODE_PRIVATE).edit();
-        editor.putInt("Tab", 100).apply();
+        SharedPreferences prefs = getSharedPreferences("Library-Tab", MODE_PRIVATE);
+        int id = prefs.getInt("Tab", 0);
+        if (id != 101) {
+            SharedPreferences.Editor editor = getSharedPreferences("Library-Tab", MODE_PRIVATE).edit();
+            editor.putInt("Tab", 100).apply();
+        }
     }
 
     private void initSorting() {

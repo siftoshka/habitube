@@ -60,10 +60,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
         return movies.size();
     }
 
-    public void addAllMovies(List<MovieLite> movies) {
+    public void addAllMedia(List<MovieLite> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         notifyDataSetChanged();
+    }
+
+    public void showMoreMedia(List<MovieLite> movies) {
+        int position = this.movies.size();
+        this.movies.addAll(movies);
+        notifyItemRangeInserted(position, movies.size());
     }
 
     static class DiscoverHolder extends RecyclerView.ViewHolder {

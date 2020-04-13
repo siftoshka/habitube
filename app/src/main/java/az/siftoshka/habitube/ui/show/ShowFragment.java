@@ -54,6 +54,7 @@ import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.credits.Cast;
 import az.siftoshka.habitube.entities.credits.Crew;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
+import az.siftoshka.habitube.entities.show.Season;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.video.Video;
 import az.siftoshka.habitube.model.system.MessageListener;
@@ -125,7 +126,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
     @BindView(R.id.refresh) ImageView refreshButton;
 
-
     private ShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
     private SeasonAdapter seasonAdapter;
@@ -135,6 +135,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
+    private Show globalShow;
     private int showID;
 
     @ProvidePresenter
@@ -224,6 +225,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showTVShow(Show show) {
+        globalShow = show;
         showID = show.getId();
         Glide.with(requireContext())
                 .load(IMAGE_URL + show.getPosterPath())
@@ -261,7 +263,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         checkDescription(show);
         posterShowDesc.setText(show.getOverview());
         genreAdapter.addAllGenres(show.getShowGenres());
-        seasonAdapter.addAllMovies(show.getSeasons());
         addMovieToPlanned(show);
         addMovieToWatched(show);
         deleteMovieFromPlanned(show);
@@ -423,6 +424,11 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void showMoreSimilarShows(List<MovieLite> shows) {
         similarShowsAdapter.showMoreShows(shows);
+    }
+
+    @Override
+    public void showSeasons(Show show) {
+        seasonAdapter.addAllShows(show.getSeasons());
     }
 
     @Override

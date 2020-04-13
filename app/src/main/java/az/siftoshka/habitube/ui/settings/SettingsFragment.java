@@ -93,6 +93,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.delete_watched_shows) MaterialButton deleteWatchedShows;
     @BindView(R.id.delete_planning_movies) MaterialButton deletePlanningMovies;
     @BindView(R.id.delete_planning_shows) MaterialButton deletePlanningShows;
+    @BindView(R.id.privacy_policy) TextView privacyPolicy;
+    @BindView(R.id.terms_of_service) TextView termsOfService;
 
     private Unbinder unbinder;
     private MessageListener messageListener;
@@ -140,6 +142,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         deletePlanningShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-P"));
         deleteWatchedMovies.setOnClickListener(view1 -> settingsPresenter.deleteMedia("M-W"));
         deleteWatchedShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-W"));
+        privacyPolicy.setOnClickListener(view1 -> settingsPresenter.goToPrivacyPolicyScreen());
+        termsOfService.setOnClickListener(view1 -> settingsPresenter.goToTermsOfServiceScreen());
         signOutButton.setOnClickListener(view1 -> {
             firebaseAuth.signOut();
             signInClient.signOut().addOnCompleteListener(runnable -> showGoogleSignIn());

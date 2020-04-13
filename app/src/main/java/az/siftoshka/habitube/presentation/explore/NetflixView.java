@@ -8,7 +8,7 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
-public interface DiscoverView extends MvpView {
+public interface NetflixView extends MvpView {
 
     void showMedia(List<MovieLite> media);
     void showMoreMedia(List<MovieLite> media);

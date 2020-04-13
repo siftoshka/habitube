@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.WatchedInteractor;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningPresenter;
@@ -16,10 +17,12 @@ import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class SettingsPresenter extends MvpPresenter<SettingsView> {
 
+    private final Router router;
     private final Context context;
     private final PlannedInteractor plannedInteractor;
     private final WatchedInteractor watchedInteractor;
@@ -29,10 +32,11 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
 
 
     @Inject
-    public SettingsPresenter(Context context, PlannedInteractor plannedInteractor,
+    public SettingsPresenter(Router router, Context context, PlannedInteractor plannedInteractor,
                              WatchedInteractor watchedInteractor,
                              LibraryPlanningPresenter planningPresenter,
                              LibraryWatchedPresenter watchedPresenter) {
+        this.router = router;
         this.context = context;
         this.plannedInteractor = plannedInteractor;
         this.watchedInteractor = watchedInteractor;
@@ -44,11 +48,8 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     public void onFirstViewAttach() {
         super.onFirstViewAttach();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            getViewState().showUser(user);
-        } else {
-            getViewState().showGoogleSignIn();
-        }
+        if (user != null) getViewState().showUser(user);
+        else getViewState().showGoogleSignIn();
     }
 
     public void checkSync() {
@@ -88,6 +89,14 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
             case "S-P": plannedInteractor.deleteAllShows();break;
             case "S-W": watchedInteractor.deleteAllShows();break;
         }
+    }
+
+    public void goToPrivacyPolicyScreen() {
+        router.navigateTo(new Screens.WebFragmentScreen(0));
+    }
+
+    public void goToTermsOfServiceScreen() {
+        router.navigateTo(new Screens.WebFragmentScreen(1));
     }
 
     @Override

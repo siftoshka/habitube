@@ -5,22 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.xw.repo.BubbleSeekBar;
-
-import java.util.List;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
-import az.siftoshka.habitube.presentation.explore.DiscoverView;
+import az.siftoshka.habitube.presentation.explore.NetflixDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.NetflixDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +23,9 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class NetflixDialog extends MvpBottomSheetDialogFragment implements DiscoverView {
+public class NetflixDialog extends MvpBottomSheetDialogFragment implements NetflixDialogView {
 
-    @InjectPresenter DiscoverPresenter discoverPresenter;
+    @InjectPresenter NetflixDialogPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @BindView(R.id.popular) MaterialButton popularButton;
@@ -41,8 +35,8 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Disco
     private Unbinder unbinder;
 
     @ProvidePresenter
-    DiscoverPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DiscoverPresenter.class);
+    NetflixDialogPresenter discoverPresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(NetflixDialogPresenter.class);
     }
 
     @Override
@@ -65,9 +59,9 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Disco
     }
 
     private void setDialog() {
-        popularButton.setOnClickListener(view -> discoverPresenter.showNetflixPopular(1));
-        bestButton.setOnClickListener(view -> discoverPresenter.showNetflixBest(1));
-        newButton.setOnClickListener(view -> discoverPresenter.showNetflixNew(1));
+        popularButton.setOnClickListener(view -> discoverPresenter.showNetflixPopular());
+        bestButton.setOnClickListener(view -> discoverPresenter.showNetflixBest());
+        newButton.setOnClickListener(view -> discoverPresenter.showNetflixNew());
     }
 
     @Override

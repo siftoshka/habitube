@@ -7,16 +7,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import az.siftoshka.habitube.Constants;
+import az.siftoshka.habitube.utils.IntegerConverter;
 
 @Entity(tableName = Constants.DB.SHOW_TABLE)
 public class Show implements Parcelable {
@@ -34,16 +35,18 @@ public class Show implements Parcelable {
     @SerializedName("overview") @Expose private String overview;
     @SerializedName("popularity") @Expose private double popularity;
     @SerializedName("poster_path") @Expose private String posterPath;
-    @Ignore @SerializedName("seasons") @Expose private List<Season> seasons = null;
+    @Ignore @SerializedName("seasons") @Expose private List<Season> seasons;
     @SerializedName("status") @Expose private String status;
     @SerializedName("vote_average") @Expose private float voteAverage;
     @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "my_rating") private float myRating;
+    @TypeConverters(IntegerConverter.class) @ColumnInfo(name = "watched_seasons") private List<Integer> watchedSeasons = null;
 
     public Show(String firstAirDate, int id, boolean inProduction, String lastAirDate, String name,
                 int numberOfEpisodes, int numberOfSeasons, String overview, double popularity,
-                String posterPath, String status, float voteAverage, int voteCount, Date addedDate, float myRating) {
+                String posterPath, String status, float voteAverage, int voteCount,
+                Date addedDate, float myRating, List<Integer> watchedSeasons) {
         this.firstAirDate = firstAirDate;
         this.id = id;
         this.inProduction = inProduction;
@@ -59,6 +62,7 @@ public class Show implements Parcelable {
         this.voteCount = voteCount;
         this.addedDate = addedDate;
         this.myRating = myRating;
+        this.watchedSeasons = watchedSeasons;
     }
 
     protected Show(Parcel in) {
@@ -233,8 +237,8 @@ public class Show implements Parcelable {
         return seasons;
     }
 
-    public void setSeasons(List<Season> seasons) {
-        this.seasons = seasons;
+    public void setSeasons(Season season) {
+        this.seasons.add(season);
     }
 
     public String getStatus() {
@@ -269,6 +273,14 @@ public class Show implements Parcelable {
         this.myRating = myRating;
     }
 
+    public List<Integer> getWatchedSeasons() {
+        return watchedSeasons;
+    }
+
+    public void setWatchedSeasons(Integer watchedSeason) {
+        this.watchedSeasons.add(watchedSeason);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -292,11 +304,12 @@ public class Show implements Parcelable {
                 Objects.equals(posterPath, show.posterPath) &&
                 Objects.equals(seasons, show.seasons) &&
                 Objects.equals(status, show.status) &&
-                Objects.equals(addedDate, show.addedDate);
+                Objects.equals(addedDate, show.addedDate) &&
+                Objects.equals(watchedSeasons, show.watchedSeasons);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(backdropPath, episodeRunTime, firstAirDate, showGenres, id, inProduction, lastAirDate, name, numberOfEpisodes, numberOfSeasons, overview, popularity, posterPath, seasons, status, voteAverage, voteCount, addedDate, myRating);
+        return Objects.hash(backdropPath, episodeRunTime, firstAirDate, showGenres, id, inProduction, lastAirDate, name, numberOfEpisodes, numberOfSeasons, overview, popularity, posterPath, seasons, status, voteAverage, voteCount, addedDate, myRating, watchedSeasons);
     }
 }

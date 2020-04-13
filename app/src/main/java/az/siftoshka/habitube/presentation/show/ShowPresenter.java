@@ -3,6 +3,7 @@ package az.siftoshka.habitube.presentation.show;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import az.siftoshka.habitube.di.qualifiers.ShowPosition;
 import az.siftoshka.habitube.entities.credits.Cast;
 import az.siftoshka.habitube.entities.credits.Credits;
 import az.siftoshka.habitube.entities.credits.Crew;
+import az.siftoshka.habitube.entities.show.Season;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.interactor.PlannedInteractor;
 import az.siftoshka.habitube.model.interactor.RemotePostInteractor;
@@ -91,7 +93,8 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
         compositeDisposable.add(remotePostInteractor.getTVShow(id, language)
                 .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterSuccess(show -> getViewState().showTVShowScreen())
-                .subscribe(show -> getViewState().showTVShow(show),
+                .subscribe(show -> { getViewState().showTVShow(show);
+                                    getViewState().showSeasons(show); },
                         throwable -> getViewState().showErrorScreen()));
     }
 
@@ -114,6 +117,13 @@ public class ShowPresenter extends MvpPresenter<ShowView> {
 
     public void updateRating(Show show, float rating) {
         show.setMyRating(rating);
+        watchedInteractor.updateShow(show);
+        watchedInteractor.addShowFB(show);
+    }
+
+    public void updateSeasons(Show show, Season season) {
+        show.setSeasons(season);
+        show.setWatchedSeasons(season.getId());
         watchedInteractor.updateShow(show);
         watchedInteractor.addShowFB(show);
     }

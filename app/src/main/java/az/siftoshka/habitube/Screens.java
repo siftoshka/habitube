@@ -11,6 +11,7 @@ import java.util.List;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
+import az.siftoshka.habitube.ui.settings.HtmlFragment;
 import az.siftoshka.habitube.ui.settings.SettingsFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
@@ -19,6 +20,7 @@ import az.siftoshka.habitube.ui.navbar.NavbarFragment;
 import az.siftoshka.habitube.ui.search.SearchFragment;
 import az.siftoshka.habitube.ui.show.ShowFragment;
 import az.siftoshka.habitube.ui.star.StarFragment;
+import ru.terrakok.cicerone.Screen;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {
@@ -113,45 +115,51 @@ public final class Screens {
     }
 
     public static final class DiscoverScreen extends SupportAppScreen {
-        private List<MovieLite> movies;
+        private String sortSelection, yearIndex;
+        private int voteIndex;
 
-        public DiscoverScreen(List<MovieLite> movies) {
-            this.movies = movies;
+        public DiscoverScreen(String sortSelection, String yearIndex, int voteIndex) {
+            this.sortSelection = sortSelection;
+            this.yearIndex = yearIndex;
+            this.voteIndex = voteIndex;
         }
 
         @Override
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverFragment discoverFragment = new DiscoverFragment();
-            bundle.putParcelableArrayList("Discover-M", (ArrayList<? extends Parcelable>) movies);
+            bundle.putString("Discover-Ms", sortSelection);
+            bundle.putString("Discover-My", yearIndex);
+            bundle.putInt("Discover-Mv", voteIndex);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }
     }
 
     public static final class DiscoverShowScreen extends SupportAppScreen {
-        private List<MovieLite> shows;
+        private String yearIndex;
+        private int voteIndex;
 
-        public DiscoverShowScreen(List<MovieLite> movies) {
-            this.shows = movies;
+        public DiscoverShowScreen(String yearIndex, int voteIndex) {
+            this.yearIndex = yearIndex;
+            this.voteIndex = voteIndex;
         }
 
         @Override
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverFragment discoverFragment = new DiscoverFragment();
-            bundle.putParcelableArrayList("Discover-S", (ArrayList<? extends Parcelable>) shows);
+            bundle.putString("Discover-Sy", yearIndex);
+            bundle.putInt("Discover-Sv", voteIndex);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }
     }
 
     public static final class NetflixDiscoverScreen extends SupportAppScreen {
-        private List<MovieLite> shows;
         private int index;
 
-        public NetflixDiscoverScreen(List<MovieLite> shows, int index) {
-            this.shows = shows;
+        public NetflixDiscoverScreen(int index) {
             this.index = index;
         }
 
@@ -159,9 +167,9 @@ public final class Screens {
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverNetflixFragment discoverFragment = new DiscoverNetflixFragment();
-            if (index == 0) bundle.putParcelableArrayList("Discover-N0", (ArrayList<? extends Parcelable>) shows);
-            if (index == 1) bundle.putParcelableArrayList("Discover-N1", (ArrayList<? extends Parcelable>) shows);
-            if (index == 2) bundle.putParcelableArrayList("Discover-N2", (ArrayList<? extends Parcelable>) shows);
+            if (index == 0) bundle.putInt("Discover-N0", 0);
+            if (index == 1) bundle.putInt("Discover-N1", 1);
+            if (index == 2) bundle.putInt("Discover-N2", 2);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }
@@ -195,6 +203,24 @@ public final class Screens {
         @Override
         public Fragment getFragment() {
             return new NavbarFragment();
+        }
+    }
+
+    public static class WebFragmentScreen extends SupportAppScreen {
+        private int index;
+
+        public WebFragmentScreen(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final HtmlFragment htmlFragment = new HtmlFragment();
+            if (index == 0) bundle.putInt("Web", 0);
+            if (index == 1) bundle.putInt("Web", 1);
+            htmlFragment.setArguments(bundle);
+            return htmlFragment;
         }
     }
 }

@@ -40,7 +40,8 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
 
     private Unbinder unbinder;
     private DiscoverAdapter discoverAdapter;
-    private List<MovieLite> movies;
+    private String sortSelection, yearIndex;
+    private int voteIndex;
 
     @ProvidePresenter
     DiscoverPresenter discoverPresenter() {
@@ -52,11 +53,16 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            movies = bundle.getParcelableArrayList("Discover-M");
-            if (movies != null) {
+            sortSelection = bundle.getString("Discover-Ms");
+            if (sortSelection != null) {
+                yearIndex = bundle.getString("Discover-My");
+                voteIndex = bundle.getInt("Discover-Mv");
+                discoverPresenter.discoverMovies(1, sortSelection, yearIndex, voteIndex);
                 discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToMovieScreen(id));
             } else {
-                movies = bundle.getParcelableArrayList("Discover-S");
+                yearIndex = bundle.getString("Discover-Sy");
+                voteIndex = bundle.getInt("Discover_Sv");
+                discoverPresenter.discoverShows(1, yearIndex, voteIndex);
                 discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToShowScreen(id));
             }
         }
@@ -71,7 +77,6 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        showMovies(movies);
         toolbar.setNavigationOnClickListener(v -> discoverPresenter.goBack());
         cToolbar.setExpandedTitleTextAppearance(R.style.CollapsingExpanded);
         cToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingCollapsed);
@@ -80,10 +85,46 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(discoverAdapter);
+        if (sortSelection != null) paginateMovies();
+        else paginateShows();
     }
 
-    private void showMovies(List<MovieLite> movies) {
-        discoverAdapter.addAllMovies(movies);
+    private void paginateMovies() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    discoverPresenter.getMoreMovies(page, sortSelection, yearIndex, voteIndex);
+                    page++;
+                }
+            }
+        });
+    }
+
+    private void paginateShows() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int page = 2;
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    discoverPresenter.getMoreShows(page, yearIndex, voteIndex);
+                    page++;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showMedia(List<MovieLite> media) {
+        discoverAdapter.addAllMedia(media);
+    }
+
+    @Override
+    public void showMoreMedia(List<MovieLite> media) {
+        discoverAdapter.showMoreMedia(media);
     }
 
     @Override

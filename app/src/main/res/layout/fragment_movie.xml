@@ -396,7 +396,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="center"
                         android:text="@string/rating_hint"
-                        android:textColor="@color/grey_is_grey"
+                        android:textColor="@color/hint_text"
                         android:textSize="12sp" />
                 </LinearLayout>
 
