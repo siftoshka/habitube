@@ -85,7 +85,7 @@ public class ExplorePresenter extends MvpPresenter<ExploreView> {
 
     public void addMoreAirToday(int page) {
         compositeDisposable.add(remoteExploreInteractor.getAirTodayShows(page, context.getResources().getString(R.string.language))
-                .subscribe(movieResponse -> getViewState().showmMoreAirToday(movieResponse.getResults()),
+                .subscribe(movieResponse -> getViewState().showMoreAirToday(movieResponse.getResults()),
                         throwable -> getViewState().unsuccessfulQueryError()));
     }
 

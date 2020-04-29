@@ -24,5 +24,4 @@
         app:itemIconTint="@drawable/selector_nav"
         app:itemTextColor="@drawable/selector_nav"
         app:menu="@menu/nav_menu" />
-
 </LinearLayout>

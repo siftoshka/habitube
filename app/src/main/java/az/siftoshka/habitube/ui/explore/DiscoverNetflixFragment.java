@@ -52,16 +52,10 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            index = bundle.getInt("Discover-N0");
-            discoverPresenter.showNetflixPopular(1);
-            if (index != 0) {
-                index = bundle.getInt("Discover-N1");
-                discoverPresenter.showNetflixBest(1);
-                if (index != 1) {
-                    index = bundle.getInt("Discover-N2");
-                    discoverPresenter.showNetflixNew(1);
-                }
-            }
+            index = bundle.getInt("Discover-N");
+            if (index == 0) discoverPresenter.showNetflixPopular(1);
+            if (index == 1) discoverPresenter.showNetflixBest(1);
+            if (index == 2) discoverPresenter.showNetflixNew(1);
         }
     }
 

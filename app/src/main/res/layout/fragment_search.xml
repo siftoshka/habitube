@@ -56,7 +56,7 @@
     <LinearLayout
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -80,7 +80,7 @@
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:text="@string/multi"
-                android:textColor="@color/dark_800" />
+                android:textColor="@color/dark_900" />
 
             <RadioButton
                 android:id="@+id/radio_movie"

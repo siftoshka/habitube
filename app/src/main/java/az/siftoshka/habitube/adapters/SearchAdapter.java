@@ -49,9 +49,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         final MovieLite post = this.searchMedia.get(position);
 
         if (post.getMovieImage() == null) {
-            ImageLoader.load(holder.itemView, post.getStarImage(), holder.posterImage);
+            ImageLoader.loadOffline(holder.itemView, post.getStarImage(), holder.posterImage);
         } else {
-            ImageLoader.load(holder.itemView, post.getMovieImage(), holder.posterImage);
+            ImageLoader.loadOffline(holder.itemView, post.getMovieImage(), holder.posterImage);
         }
         holder.posterRate.setText(String.valueOf(post.getVoteAverage()));
         holder.posterImage.setOnClickListener(v -> {

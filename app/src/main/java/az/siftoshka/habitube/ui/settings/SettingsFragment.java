@@ -60,6 +60,7 @@ import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_FREEPIK;
 import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_OKTAY;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_GITHUB;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_INSTAGRAM;
+import static az.siftoshka.habitube.Constants.SYSTEM.DEV_SUPPORT;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.FLATICON;
 
@@ -95,6 +96,9 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.delete_planning_shows) MaterialButton deletePlanningShows;
     @BindView(R.id.privacy_policy) TextView privacyPolicy;
     @BindView(R.id.terms_of_service) TextView termsOfService;
+    @BindView(R.id.license) TextView licenses;
+    @BindView(R.id.rate_app) MaterialButton rateApp;
+    @BindView(R.id.support_dev) MaterialButton supportDev;
 
     private Unbinder unbinder;
     private MessageListener messageListener;
@@ -137,6 +141,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());
         googleAuthButton.setOnClickListener(view1 -> signIn());
+        rateApp.setOnClickListener(view1 -> showGooglePlay());
+        supportDev.setOnClickListener(view1 -> supportDeveloper());
         clearCache.setOnClickListener(view1 -> settingsPresenter.clearCache());
         deletePlanningMovies.setOnClickListener(view1 -> settingsPresenter.deleteMedia("M-P"));
         deletePlanningShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-P"));
@@ -144,6 +150,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         deleteWatchedShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-W"));
         privacyPolicy.setOnClickListener(view1 -> settingsPresenter.goToPrivacyPolicyScreen());
         termsOfService.setOnClickListener(view1 -> settingsPresenter.goToTermsOfServiceScreen());
+        licenses.setOnClickListener(view1 -> settingsPresenter.goToLicenses());
         signOutButton.setOnClickListener(view1 -> {
             firebaseAuth.signOut();
             signInClient.signOut().addOnCompleteListener(runnable -> showGoogleSignIn());
@@ -243,6 +250,21 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(DEV_INSTAGRAM));
         startActivity(intent);
+    }
+
+    private void supportDeveloper() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(DEV_SUPPORT));
+        startActivity(intent);
+    }
+
+    private void showGooglePlay() {
+        final String appPackageName = requireContext().getPackageName();
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 
     private void spannableCreditOktay() {

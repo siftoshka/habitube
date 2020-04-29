@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Habitube</string>
     <string name="app_version">App Version</string>
-    <string name="app_desc">Habitude - is an open-source project with the purpose of help people to find movies &amp; tv shows and store them in a personal offline library</string>
+    <string name="app_desc">Habitube - is an open-source project. Ad-Free.  The main point is to save your watched movies and tv shows with your own special rating. You can also add movies and tv shows to your planning list and explore trendings.</string>
     <string name="user_id_text" translatable="false">User ID</string>
     <string name="post_text">Post</string>
     <string name="post_id_text">Post ID</string>
@@ -119,4 +119,6 @@
     <string name="from_current_to_lower">from current to lower</string>
     <string name="discover_tv_shows">Discover TV SHOWS</string>
     <string name="rating_hint">You can change it whenever you want by long tap to the star</string>
+    <string name="rate_app">Rate App</string>
+    <string name="support_developer">Support developer</string>
 </resources>

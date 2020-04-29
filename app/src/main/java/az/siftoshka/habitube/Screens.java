@@ -167,9 +167,9 @@ public final class Screens {
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverNetflixFragment discoverFragment = new DiscoverNetflixFragment();
-            if (index == 0) bundle.putInt("Discover-N0", 0);
-            if (index == 1) bundle.putInt("Discover-N1", 1);
-            if (index == 2) bundle.putInt("Discover-N2", 2);
+            if (index == 0) bundle.putInt("Discover-N", 0);
+            if (index == 1) bundle.putInt("Discover-N", 1);
+            if (index == 2) bundle.putInt("Discover-N", 2);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }
@@ -219,6 +219,7 @@ public final class Screens {
             final HtmlFragment htmlFragment = new HtmlFragment();
             if (index == 0) bundle.putInt("Web", 0);
             if (index == 1) bundle.putInt("Web", 1);
+            if (index == 2) bundle.putInt("Web", 2);
             htmlFragment.setArguments(bundle);
             return htmlFragment;
         }

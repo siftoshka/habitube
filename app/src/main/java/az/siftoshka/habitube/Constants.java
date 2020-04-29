@@ -22,6 +22,7 @@ public final class Constants {
         public static final String DEV_TELEGRAM = "https://t.me/siftoshka";
         public static final String DEV_GITHUB = "https://github.com/siftoshka";
         public static final String DEV_INSTAGRAM = "https://www.instagram.com/siftoshka";
+        public static final String DEV_SUPPORT = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=333QUYEPDG9NC&source=url";
         public static final String DESIGNER_FREEPIK = "https://www.freepik.com/";
         public static final String DESIGNER_OKTAY = "https://www.instagram.com/ok__die";
         public static final String FLATICON = "https://www.flaticon.com";

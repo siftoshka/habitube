@@ -45,6 +45,23 @@ public class ImageLoader {
         }
     }
 
+    public static void loadOffline(View view, String url, ImageView into) {
+        if (url != null) {
+            Glide.with(view)
+                    .load(IMAGE_URL + url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .error(R.drawable.ic_missing)
+                    .into(into);
+        } else {
+            Glide.with(view)
+                    .load(R.drawable.ic_missing)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .into(into);
+        }
+    }
+
     public static void loadPersons(View view, String url, CircleImageView into) {
         if (url != null) {
             Glide.with(view)

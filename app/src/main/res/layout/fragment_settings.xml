@@ -65,6 +65,37 @@
                     android:textColor="@color/dark_600"
                     android:textSize="14sp" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/rate_app"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/rate_app"
+                    android:textSize="14sp"
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_favorite"
+                    app:iconGravity="textStart"
+                    app:iconSize="20dp"
+                    app:strokeColor="@color/colorPrimary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/support_dev"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/support_developer"
+                    android:textSize="14sp"
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_support"
+                    app:iconGravity="textStart"
+                    app:iconSize="20dp"
+                    app:strokeColor="@color/colorPrimary" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -633,6 +664,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/bold"
                     android:text="@string/tab_info"
                     android:textColor="@color/dark_800"
@@ -671,6 +703,21 @@
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/semibold"
+                    android:maxLines="1"
+                    android:text="Open Source Licenses"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

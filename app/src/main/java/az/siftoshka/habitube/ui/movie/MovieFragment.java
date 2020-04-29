@@ -48,6 +48,7 @@ import az.siftoshka.habitube.adapters.CastAdapter;
 import az.siftoshka.habitube.adapters.CrewAdapter;
 import az.siftoshka.habitube.adapters.GenreAdapter;
 import az.siftoshka.habitube.adapters.MovieAdapter;
+import az.siftoshka.habitube.adapters.SimilarMovieAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
@@ -125,7 +126,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.refresh) ImageView refreshButton;
 
 
-    private MovieAdapter similarMoviesAdapter;
+    private SimilarMovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;
     private CastAdapter castAdapter;
     private CrewAdapter crewAdapter;
@@ -163,7 +164,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(Constants.DI.APP_SCOPE));
-        similarMoviesAdapter = new MovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId), postName -> messageListener.showText(postName));
+        similarMoviesAdapter = new SimilarMovieAdapter(postId -> moviePresenter.goToDetailedMovieScreen(postId), postName -> messageListener.showText(postName));
         videoAdapter = new VideoAdapter(this::showVideo);
         castAdapter = new CastAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
@@ -328,7 +329,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 5) {
                     moviePresenter.getMoreSimilarMovies(movieID, page);
                     page++;
                 }

@@ -48,6 +48,7 @@ import az.siftoshka.habitube.adapters.CrewAdapter;
 import az.siftoshka.habitube.adapters.GenreShowAdapter;
 import az.siftoshka.habitube.adapters.SeasonAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
+import az.siftoshka.habitube.adapters.SimilarShowAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;
 import az.siftoshka.habitube.di.modules.SearchModule;
@@ -126,7 +127,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
     @BindView(R.id.refresh) ImageView refreshButton;
 
-    private ShowAdapter similarShowsAdapter;
+    private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
     private SeasonAdapter seasonAdapter;
     private CastAdapter castAdapter;
@@ -135,7 +136,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private MessageListener messageListener;
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
-    private Show globalShow;
     private int showID;
 
     @ProvidePresenter
@@ -164,7 +164,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(APP_SCOPE));
-        similarShowsAdapter = new ShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
+        similarShowsAdapter = new SimilarShowAdapter(showId -> showPresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
         videoAdapter = new VideoAdapter(this::showVideo);
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
         castAdapter = new CastAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
@@ -225,7 +225,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @SuppressLint("SetTextI18n")
     @Override
     public void showTVShow(Show show) {
-        globalShow = show;
         showID = show.getId();
         Glide.with(requireContext())
                 .load(IMAGE_URL + show.getPosterPath())
@@ -334,7 +333,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 5) {
                     showPresenter.getMoreSimilarShows(showID, page);
                     page++;
                 }

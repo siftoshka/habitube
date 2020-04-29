@@ -46,9 +46,10 @@ public class HtmlFragment extends Fragment {
         if (bundle != null) {
             if (bundle.getInt("Web") == 0) {
                 index = 0;
-            }
-            else if (bundle.getInt("Web") == 1) {
+            } else if (bundle.getInt("Web") == 1) {
                 index = 1;
+            } else if (bundle.getInt("Web") == 2) {
+                index = 2;
             }
         }
     }
@@ -70,6 +71,8 @@ public class HtmlFragment extends Fragment {
             webView.loadUrl("file:///android_asset/privacy_policy.html");
         else if (index == 1)
             webView.loadUrl("file:///android_asset/terms_of_service.html");
+        else if (index == 2)
+            webView.loadUrl("file:///android_asset/licenses_output.html");
     }
 
     @Override

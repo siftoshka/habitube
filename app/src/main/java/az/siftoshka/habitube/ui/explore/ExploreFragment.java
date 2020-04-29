@@ -264,7 +264,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     }
 
     @Override
-    public void showmMoreAirToday(List<MovieLite> airTodayList) {
+    public void showMoreAirToday(List<MovieLite> airTodayList) {
         airTodayAdapter.showMoreShows(airTodayList);
     }
 

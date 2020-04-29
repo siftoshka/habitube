@@ -99,6 +99,10 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
         router.navigateTo(new Screens.WebFragmentScreen(1));
     }
 
+    public void goToLicenses() {
+        router.navigateTo(new Screens.WebFragmentScreen(2));
+    }
+
     @Override
     public void onDestroy() {
         compositeDisposable.dispose();

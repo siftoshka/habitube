@@ -18,7 +18,7 @@ public interface ExploreView extends MvpView {
     void showTVShowList(List<MovieLite> tvShows);
     void showMoreTrendingShows(List<MovieLite> trendingListShows);
     void showAirTodayShows(List<MovieLite> tvShows);
-    void showmMoreAirToday(List<MovieLite> airTodayList);
+    void showMoreAirToday(List<MovieLite> airTodayList);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void unsuccessfulQueryError();
