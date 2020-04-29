@@ -19,6 +19,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:background="@drawable/ripple_effect"
         tools:contentDescription="Poster of the movie"
         tools:ignore="ContentDescription" />
