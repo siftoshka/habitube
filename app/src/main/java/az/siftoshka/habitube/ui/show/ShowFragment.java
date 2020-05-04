@@ -231,20 +231,24 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
-                        plannedImage.setImageResource(R.drawable.ic_watch);
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
+                        if (watchedImage != null) {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                        }
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         showProgress(false);
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
-                        plannedImage.setImageResource(R.drawable.ic_watch);
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
+                        if (watchedImage != null) {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                        }
                         return false;
                     }
                 })

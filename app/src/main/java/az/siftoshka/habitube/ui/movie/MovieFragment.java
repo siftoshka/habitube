@@ -227,10 +227,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        watchedImage.setImageResource(R.drawable.ic_favorite);
-                        plannedImage.setImageResource(R.drawable.ic_watch);
-                        watchedButton.setEnabled(true);
-                        planningButton.setEnabled(true);
+                        if (watchedImage != null) {
+                            watchedImage.setImageResource(R.drawable.ic_favorite);
+                            plannedImage.setImageResource(R.drawable.ic_watch);
+                            watchedButton.setEnabled(true);
+                            planningButton.setEnabled(true);
+                        }
                         return false;
                     }
                     @Override

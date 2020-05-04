@@ -136,30 +136,30 @@ public class ImageLoader {
     }
 
     public static void saveToInternalStorage(String imageDir, Context context, Drawable resource) {
-        Bitmap bitmapImage = ((BitmapDrawable) resource).getBitmap();
-        File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
-
         FileOutputStream fos = null;
         try {
+            Bitmap bitmapImage = ((BitmapDrawable) resource).getBitmap();
+            File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
             fos = new FileOutputStream(mypath);
             bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
+                assert fos != null;
                 fos.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     public static void saveToInternalStorage(String imageDir, Context context, ImageView imageView) {
-        Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
-
         FileOutputStream fos = null;
         try {
+            Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            File mypath = new File(context.getFilesDir().getPath() + File.separator + imageDir);
+
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -167,8 +167,9 @@ public class ImageLoader {
             e.printStackTrace();
         } finally {
             try {
+                assert fos != null;
                 fos.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
