@@ -31,6 +31,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -80,6 +82,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.radio_old) RadioButton radioOld;
     @BindView(R.id.radio_year_alt) RadioButton radioYearAlt;
     @BindView(R.id.radio_rate) RadioButton radioRate;
+    @BindView(R.id.auth_card) LinearLayout authCard;
     @BindView(R.id.google_auth) MaterialButton googleAuthButton;
     @BindView(R.id.sign_out_layout) LinearLayout userLayout;
     @BindView(R.id.user_text) TextView userText;
@@ -119,6 +122,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         checkTheme();
         checkAdult();
         checkSort();
+        googleAuth();
 
         firebaseAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -244,6 +248,11 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(DEV_INSTAGRAM));
         startActivity(intent);
+    }
+
+    private void googleAuth() {
+        if (checkPlayServices()) authCard.setVisibility(View.VISIBLE);
+        else authCard.setVisibility(View.GONE);
     }
 
     private void showGooglePlay() {
@@ -415,6 +424,12 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         userLayout.setVisibility(View.GONE);
         googleAuthButton.setVisibility(View.VISIBLE);
         warningText.setVisibility(View.VISIBLE);
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability gApi = GoogleApiAvailability.getInstance();
+        int resultCode = gApi.isGooglePlayServicesAvailable(requireContext());
+        return resultCode == ConnectionResult.SUCCESS;
     }
 
     @Override
