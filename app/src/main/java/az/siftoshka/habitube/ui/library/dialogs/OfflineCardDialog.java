@@ -27,7 +27,6 @@ import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.utils.CurrencyFormatter;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

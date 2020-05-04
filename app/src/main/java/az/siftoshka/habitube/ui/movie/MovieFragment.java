@@ -47,7 +47,6 @@ import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.CastAdapter;
 import az.siftoshka.habitube.adapters.CrewAdapter;
 import az.siftoshka.habitube.adapters.GenreAdapter;
-import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.SimilarMovieAdapter;
 import az.siftoshka.habitube.adapters.VideoAdapter;
 import az.siftoshka.habitube.di.modules.MovieModule;

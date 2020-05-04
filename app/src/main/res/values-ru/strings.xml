@@ -114,6 +114,4 @@
     <string name="delete_files">Удалить Локальную библеотеку</string>
     <string name="rating_hint">Вы можете менять оценку длинным тапом по звезде</string>
     <string name="rate_app">Оцените приложение</string>
-    <string name="support_developer">Поддержать</string>
-
 </resources>

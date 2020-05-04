@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 public class MovieLite implements Parcelable {
 
     @SerializedName("id") @Expose private int movieId;

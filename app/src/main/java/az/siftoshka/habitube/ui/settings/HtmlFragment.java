@@ -8,29 +8,12 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-
-import java.util.List;
-
-import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.adapters.DiscoverAdapter;
-import az.siftoshka.habitube.entities.movielite.MovieLite;
-import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
-import az.siftoshka.habitube.presentation.explore.DiscoverView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import moxy.MvpAppCompatFragment;
-import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
-import toothpick.Toothpick;
 
 public class HtmlFragment extends Fragment {
 

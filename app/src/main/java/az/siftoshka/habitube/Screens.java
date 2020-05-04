@@ -1,26 +1,20 @@
 package az.siftoshka.habitube;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
-import az.siftoshka.habitube.ui.settings.HtmlFragment;
-import az.siftoshka.habitube.ui.settings.SettingsFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
 import az.siftoshka.habitube.ui.movie.MovieFragment;
 import az.siftoshka.habitube.ui.navbar.NavbarFragment;
 import az.siftoshka.habitube.ui.search.SearchFragment;
+import az.siftoshka.habitube.ui.settings.HtmlFragment;
+import az.siftoshka.habitube.ui.settings.SettingsFragment;
 import az.siftoshka.habitube.ui.show.ShowFragment;
 import az.siftoshka.habitube.ui.star.StarFragment;
-import ru.terrakok.cicerone.Screen;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public final class Screens {

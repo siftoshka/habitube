@@ -1,7 +1,6 @@
 package az.siftoshka.habitube.utils;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;

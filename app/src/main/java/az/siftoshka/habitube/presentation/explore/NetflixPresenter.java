@@ -3,13 +3,10 @@ package az.siftoshka.habitube.presentation.explore;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
-import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.model.interactor.RemoteExploreInteractor;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

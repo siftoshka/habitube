@@ -3,7 +3,6 @@ package az.siftoshka.habitube.presentation.show;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;

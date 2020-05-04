@@ -8,7 +8,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.entities.movie.Movie;
-import az.siftoshka.habitube.entities.movie.MovieGenre;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.model.repository.PlannedRepository;
 import io.reactivex.Maybe;

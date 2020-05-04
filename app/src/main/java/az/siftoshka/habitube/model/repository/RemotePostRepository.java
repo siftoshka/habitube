@@ -9,7 +9,6 @@ import az.siftoshka.habitube.entities.person.Person;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.entities.video.VideoResponse;
 import az.siftoshka.habitube.model.server.MovieDBApi;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

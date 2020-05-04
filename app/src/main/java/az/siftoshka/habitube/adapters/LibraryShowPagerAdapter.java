@@ -8,10 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.ui.library.LibraryPlanningFragment;
 import az.siftoshka.habitube.ui.library.LibraryShowPlanningFragment;
 import az.siftoshka.habitube.ui.library.LibraryShowWatchedFragment;
-import az.siftoshka.habitube.ui.library.LibraryWatchedFragment;
 
 public class LibraryShowPagerAdapter extends FragmentPagerAdapter {
 

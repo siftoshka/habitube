@@ -16,16 +16,10 @@ import az.siftoshka.habitube.entities.show.ShowGenre;
 
 public class GenreShowAdapter extends RecyclerView.Adapter<GenreShowAdapter.GenresHolder> {
 
-//    public interface VideoItemClickListener {
-//        void onPostClicked(String videoKey);
-//    }
-
     private List<ShowGenre> genres;
-    //private VideoItemClickListener clickListener;
 
     public GenreShowAdapter() {
         this.genres = new ArrayList<>();
-        //this.clickListener = clickListener;
     }
 
     @NonNull
@@ -39,7 +33,6 @@ public class GenreShowAdapter extends RecyclerView.Adapter<GenreShowAdapter.Genr
     public void onBindViewHolder(@NonNull GenresHolder holder, final int position) {
         final ShowGenre showGenre = this.genres.get(position);
         holder.posterTitle.setText(showGenre.getName());
-//        holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(movieGenre.getKey()));
     }
 
     @Override

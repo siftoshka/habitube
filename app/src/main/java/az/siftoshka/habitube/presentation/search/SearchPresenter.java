@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.Screens;
-import az.siftoshka.habitube.di.qualifiers.MediaType;
 import az.siftoshka.habitube.entities.movielite.MovieResponse;
 import az.siftoshka.habitube.model.interactor.RemoteExploreInteractor;
 import io.reactivex.disposables.CompositeDisposable;

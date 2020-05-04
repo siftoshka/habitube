@@ -11,7 +11,6 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;

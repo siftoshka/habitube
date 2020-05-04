@@ -15,7 +15,6 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.show.Season;
-import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.utils.ImageLoader;
 
 public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonHolder> {

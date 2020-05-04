@@ -18,7 +18,6 @@ import java.util.List;
 
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
-import az.siftoshka.habitube.adapters.CastAdapter;
 import az.siftoshka.habitube.adapters.CastPersonAdapter;
 import az.siftoshka.habitube.entities.personcredits.Cast;
 import butterknife.BindView;

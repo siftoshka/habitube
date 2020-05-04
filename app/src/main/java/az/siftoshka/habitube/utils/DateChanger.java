@@ -2,13 +2,6 @@ package az.siftoshka.habitube.utils;
 
 import android.content.Context;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.R;

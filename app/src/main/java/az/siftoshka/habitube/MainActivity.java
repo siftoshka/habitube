@@ -8,18 +8,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;
 
 import az.siftoshka.habitube.model.system.KeyboardBehavior;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
-import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.library.LibraryPlanningFragment;
 import az.siftoshka.habitube.ui.library.LibraryWatchedFragment;
 import az.siftoshka.habitube.ui.movie.MovieFragment;
@@ -36,8 +32,6 @@ import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
 
-import static android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 
 public class MainActivity extends MvpAppCompatActivity implements MessageListener, KeyboardBehavior {

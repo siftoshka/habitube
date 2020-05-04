@@ -39,11 +39,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import javax.inject.Inject;
-
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.settings.SettingsPresenter;
 import az.siftoshka.habitube.presentation.settings.SettingsView;
 import butterknife.BindView;
@@ -60,7 +57,6 @@ import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_FREEPIK;
 import static az.siftoshka.habitube.Constants.SYSTEM.DESIGNER_OKTAY;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_GITHUB;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_INSTAGRAM;
-import static az.siftoshka.habitube.Constants.SYSTEM.DEV_SUPPORT;
 import static az.siftoshka.habitube.Constants.SYSTEM.DEV_TELEGRAM;
 import static az.siftoshka.habitube.Constants.SYSTEM.FLATICON;
 
@@ -98,7 +94,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.terms_of_service) TextView termsOfService;
     @BindView(R.id.license) TextView licenses;
     @BindView(R.id.rate_app) MaterialButton rateApp;
-    @BindView(R.id.support_dev) MaterialButton supportDev;
 
     private Unbinder unbinder;
     private MessageListener messageListener;
@@ -142,7 +137,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         instagramButton.setOnClickListener(v -> showInstagramPage());
         googleAuthButton.setOnClickListener(view1 -> signIn());
         rateApp.setOnClickListener(view1 -> showGooglePlay());
-        supportDev.setOnClickListener(view1 -> supportDeveloper());
         clearCache.setOnClickListener(view1 -> settingsPresenter.clearCache());
         deletePlanningMovies.setOnClickListener(view1 -> settingsPresenter.deleteMedia("M-P"));
         deletePlanningShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-P"));
@@ -249,12 +243,6 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     private void showInstagramPage() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(DEV_INSTAGRAM));
-        startActivity(intent);
-    }
-
-    private void supportDeveloper() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(DEV_SUPPORT));
         startActivity(intent);
     }
 
