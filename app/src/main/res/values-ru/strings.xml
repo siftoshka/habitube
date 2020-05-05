@@ -58,7 +58,7 @@
     <string name="tv_shows">Сериалы</string>
     <string name="movies">Фильмы</string>
     <string name="air_today">Сегодня вышло</string>
-    <string name="nothing_found">Ничего не найдено...</string>
+    <string name="nothing_found">Ничего не найдено…</string>
     <string name="dark_mode">Темная тема</string>
     <string name="dark_mode_text">Переход на темную сторону</string>
     <string name="sorting">Сортировка по</string>
@@ -112,6 +112,9 @@
     <string name="google_warning">Google аккаунт будет использоваться только в целях хранения id ваших фильмов и сериалов для дальнейшей синхронизации между вашими устройствами. Все ваши данные остаются приватными для вас.</string>
     <string name="are_you_sure_files">Вы хотите удалить все фильмы и сериалы из локальной библеотеки?</string>
     <string name="delete_files">Удалить Локальную библеотеку</string>
-    <string name="rating_hint">Вы можете менять оценку длинным тапом по звезде</string>
+    <string name="rating_hint">Вы можете менять оценку долгим нажатием по звезде</string>
     <string name="rate_app">Оцените приложение</string>
+    <string name="new_update">Новое обновление</string>
+    <string name="new_update_extended">Новое обновление уже в маркете</string>
+    <string name="open">Открыть</string>
 </resources>

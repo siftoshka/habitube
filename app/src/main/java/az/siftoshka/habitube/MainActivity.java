@@ -1,15 +1,25 @@
 package az.siftoshka.habitube;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 
 import javax.inject.Inject;
 
@@ -42,12 +52,13 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     private Navigator navigator = new SupportAppNavigator(this, R.id.fragment_container) {
         @Override
         protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
-            if (command instanceof Forward) fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
+            if (command instanceof Forward)
+                fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
             if (currentFragment instanceof NavbarFragment && nextFragment instanceof MovieFragment
-            || currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment
-            || currentFragment instanceof LibraryWatchedFragment && nextFragment instanceof MovieFragment
-            || currentFragment instanceof LibraryPlanningFragment && nextFragment instanceof MovieFragment
-            || currentFragment instanceof DiscoverFragment && nextFragment instanceof MovieFragment) {
+                    || currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment
+                    || currentFragment instanceof LibraryWatchedFragment && nextFragment instanceof MovieFragment
+                    || currentFragment instanceof LibraryPlanningFragment && nextFragment instanceof MovieFragment
+                    || currentFragment instanceof DiscoverFragment && nextFragment instanceof MovieFragment) {
                 SharedPreferences.Editor editor = getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
                 editor.putInt("Tab", 100).apply();
             }
@@ -77,9 +88,40 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
         SharedPreferences prefs = getSharedPreferences("Dark-Mode", MODE_PRIVATE);
         int idTheme = prefs.getInt("Dark", 0);
         if (idTheme == 100) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.mainBackground));
-            }
+        }
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
+        try {
+            AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
+            Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+            appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    showUpdateDialog();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showUpdateDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.new_update))
+                .setMessage(getResources().getString(R.string.new_update_extended))
+                .setPositiveButton(getResources().getString(R.string.open), (arg0, arg1) -> showGooglePlay()).show();
+    }
+
+    private void showGooglePlay() {
+        final String appPackageName = getPackageName();
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
     }
 
@@ -95,7 +137,9 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     }
 
     @Override
-    public void showText(String message) { Toast.makeText(this, message, Toast.LENGTH_SHORT).show(); }
+    public void showText(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void showKeyboard() {

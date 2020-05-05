@@ -404,6 +404,12 @@
   copyrightHolder: Google Inc.
   license: Android Software Development Kit License
   licenseUrl: https://developer.android.com/studio/terms.html
+- artifact: com.google.android.play:core:+
+  name: core
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/studio/terms.html
 - artifact: com.google.android.material:material:+
   name: material
   copyrightHolder: Google Inc.
