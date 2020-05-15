@@ -123,4 +123,6 @@
     <string name="new_update">New Update</string>
     <string name="new_update_extended">Hey! New update is on Google Play :)</string>
     <string name="open">Open</string>
+    <string name="copied">IMDb link copied</string>
+    <string name="open_in_netflix">Open in Netflix</string>
 </resources>

@@ -19,7 +19,7 @@
     <string name="description_card">Описание</string>
     <string name="biography_card">Биография</string>
 
-    <string name="navbar_library">Библеотека</string>
+    <string name="navbar_library">Библиотека</string>
     <string name="navbar_explore">Исследуй</string>
     <string name="navbar_settings">Настройки</string>
     <string name="seasons">Сезоны</string>
@@ -117,4 +117,6 @@
     <string name="new_update">Новое обновление</string>
     <string name="new_update_extended">Новое обновление уже в маркете</string>
     <string name="open">Открыть</string>
+    <string name="copied">Ссылка скопирована</string>
+    <string name="open_in_netflix">Открыть Нетфликс</string>
 </resources>

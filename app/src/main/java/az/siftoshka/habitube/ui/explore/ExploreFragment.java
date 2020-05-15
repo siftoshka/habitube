@@ -162,7 +162,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewUpcoming.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerViewUpcoming.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     explorePresenter.addMoreUpcoming(page);
                     page++;
                 }
@@ -176,7 +176,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewMovies.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerViewMovies.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     explorePresenter.addMoreMovies(page);
                     page++;
                 }

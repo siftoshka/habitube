@@ -41,6 +41,7 @@ public class Show implements Parcelable {
     @SerializedName("vote_count") @Expose private int voteCount;
     @ColumnInfo(name = "added_date") private Date addedDate;
     @ColumnInfo(name = "my_rating") private float myRating;
+    @Ignore @SerializedName("homepage") @Expose private String homepage;
     @TypeConverters(IntegerConverter.class) @ColumnInfo(name = "watched_seasons") private List<Integer> watchedSeasons = null;
 
     public Show(String firstAirDate, int id, boolean inProduction, String lastAirDate, String name,
@@ -82,6 +83,7 @@ public class Show implements Parcelable {
         voteAverage = in.readFloat();
         voteCount = in.readInt();
         myRating = in.readFloat();
+        homepage = in.readString();
     }
 
     @Override
@@ -102,6 +104,7 @@ public class Show implements Parcelable {
         dest.writeFloat(voteAverage);
         dest.writeInt(voteCount);
         dest.writeFloat(myRating);
+        dest.writeString(homepage);
     }
 
     @Override
@@ -273,6 +276,14 @@ public class Show implements Parcelable {
         this.myRating = myRating;
     }
 
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
+    }
+
     public List<Integer> getWatchedSeasons() {
         return watchedSeasons;
     }
@@ -305,11 +316,12 @@ public class Show implements Parcelable {
                 Objects.equals(seasons, show.seasons) &&
                 Objects.equals(status, show.status) &&
                 Objects.equals(addedDate, show.addedDate) &&
+                Objects.equals(homepage, show.homepage) &&
                 Objects.equals(watchedSeasons, show.watchedSeasons);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(backdropPath, episodeRunTime, firstAirDate, showGenres, id, inProduction, lastAirDate, name, numberOfEpisodes, numberOfSeasons, overview, popularity, posterPath, seasons, status, voteAverage, voteCount, addedDate, myRating, watchedSeasons);
+        return Objects.hash(backdropPath, episodeRunTime, firstAirDate, showGenres, id, inProduction, lastAirDate, name, numberOfEpisodes, numberOfSeasons, overview, popularity, posterPath, seasons, status, voteAverage, voteCount, addedDate, myRating, homepage, watchedSeasons);
     }
 }

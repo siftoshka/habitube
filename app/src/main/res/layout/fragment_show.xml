@@ -39,7 +39,31 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@null"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back_w" />
+            app:navigationIcon="@drawable/ic_back_w">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="end">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/show_netflix"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:animateLayoutChanges="true"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="@string/open_in_netflix"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_is_white"
+                    android:visibility="gone"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/white_is_white" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <ImageView
             android:id="@+id/show_poster_background"
@@ -268,11 +292,11 @@
                             android:id="@+id/watched_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_centerInParent="true"
-                            android:textSize="16sp"
+                            android:gravity="center"
                             android:paddingBottom="5dp"
                             android:textColor="#ffffffff"
+                            android:textSize="16sp"
                             tools:text="10" />
                     </RelativeLayout>
 

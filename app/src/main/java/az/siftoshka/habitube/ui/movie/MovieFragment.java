@@ -1,6 +1,8 @@
 package az.siftoshka.habitube.ui.movie;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -330,7 +332,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 5) {
+                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     moviePresenter.getMoreSimilarMovies(movieID, page);
                     page++;
                 }
@@ -387,6 +389,15 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(Constants.SYSTEM.IMDB_WEBSITE + imdbId));
         imdbButton.setOnClickListener(v -> startActivity(intent));
+        imdbButton.setOnLongClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(getString(R.string.copied), Constants.SYSTEM.IMDB_WEBSITE + imdbId);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                messageListener.showText(getString(R.string.copied));
+            }
+            return true;
+        });
     }
 
     private void checkTabs() {

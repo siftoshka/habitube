@@ -95,7 +95,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     discoverPresenter.getMoreMovies(page, sortSelection, yearIndex, voteIndex);
                     page++;
                 }
@@ -109,7 +109,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     discoverPresenter.getMoreShows(page, yearIndex, voteIndex);
                     page++;
                 }

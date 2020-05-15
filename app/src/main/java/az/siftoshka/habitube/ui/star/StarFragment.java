@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.ui.star;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -33,6 +36,7 @@ import az.siftoshka.habitube.di.modules.SearchModule;
 import az.siftoshka.habitube.entities.person.Person;
 import az.siftoshka.habitube.entities.personcredits.Cast;
 import az.siftoshka.habitube.entities.personcredits.Crew;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.star.StarPresenter;
 import az.siftoshka.habitube.presentation.star.StarView;
 import az.siftoshka.habitube.ui.credits.CastPersonBottomDialog;
@@ -92,6 +96,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     private DateChanger dateChanger = new DateChanger();
     private Unbinder unbinder;
+    private MessageListener messageListener;
     private CastPersonAdapter movieCastAdapter, showCastAdapter;
     private CrewPersonAdapter movieCrewAdapter, showCrewAdapter;
 
@@ -105,6 +110,12 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         final StarPresenter starPresenter = temporaryPostScope.getInstance(StarPresenter.class);
         Toothpick.closeScope(POST_SCOPE);
         return starPresenter;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
     }
 
     @Override
@@ -311,6 +322,15 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(Constants.SYSTEM.IMDB_PERSON + imdbId));
         imdbButton.setOnClickListener(v -> startActivity(intent));
+        imdbButton.setOnLongClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(getString(R.string.copied), Constants.SYSTEM.IMDB_PERSON + imdbId);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                messageListener.showText(getString(R.string.copied));
+            }
+            return true;
+        });
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,6 +127,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
     @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
     @BindView(R.id.refresh) ImageView refreshButton;
+    @BindView(R.id.show_netflix) MaterialButton showNetflix;
 
     private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
@@ -185,7 +187,6 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         toolbar.setNavigationOnClickListener(v -> showPresenter.goBack());
         checkTabs();
         initTabs();
-
         LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewGenres.setLayoutManager(layoutManagerGenres);
         recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
@@ -273,6 +274,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         showPresenter.isPlannedShowChanged(show.getId(), show);
         showPresenter.isWatchedShowChanged(show.getId(), show);
         showPresenter.getSavedWShowId(show.getId());
+        showNetflixPage(show.getHomepage());
     }
 
     private void addMovieToWatched(Show show) {
@@ -337,12 +339,28 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 5) {
+                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     showPresenter.getMoreSimilarShows(showID, page);
                     page++;
                 }
             }
         });
+    }
+
+    private void showNetflixPage(String homepage) {
+        if (homepage.contains("netflix")) {
+            new Handler().postDelayed(() -> {
+                showNetflix.setVisibility(View.VISIBLE);
+                showNetflix.setAlpha(0.0f);
+                showNetflix.animate().translationY(showNetflix.getHeight()).alpha(1.0f).setListener(null);
+                showNetflix.setOnClickListener(view -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(homepage));
+                    startActivity(intent);
+                });
+            }, 500);
+        } else
+            showNetflix.setVisibility(View.GONE);
     }
 
     private void initTabInfo() {

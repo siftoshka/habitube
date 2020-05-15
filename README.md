@@ -2,12 +2,12 @@
 Habitube - is an open-source project. Absolutely Ad-Free.
 The main point of Habitube is to save your watched movies and tv shows with your own special rating.
 You can also add movies and tv shows to your planning list, which will help you to find what you wanted to watch.
-
+#
 ### How to compile?
 
-- Use your own api key from themoviedb.com. It is absolutely free.
+- Use your own api key from themoviedb.org It is absolutely free.
 - Use your own google-services.json file
-
+#
 ### License
 ```
 MIT License
