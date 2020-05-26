@@ -48,20 +48,23 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_netflix"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:animateLayoutChanges="true"
+                    android:backgroundTint="@color/white_is_white"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:text="@string/open_in_netflix"
                     android:textAllCaps="false"
-                    android:textColor="@color/white_is_white"
+                    android:textColor="@color/just_grey"
                     android:visibility="gone"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@color/white_is_white" />
+                    app:icon="@drawable/ic_netflix"
+                    app:iconSize="18sp"
+                    app:iconTint="#E50914" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

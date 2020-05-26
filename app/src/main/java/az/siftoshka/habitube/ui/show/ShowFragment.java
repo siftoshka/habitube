@@ -352,7 +352,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             new Handler().postDelayed(() -> {
                 showNetflix.setVisibility(View.VISIBLE);
                 showNetflix.setAlpha(0.0f);
-                showNetflix.animate().translationY(showNetflix.getHeight()).alpha(1.0f).setListener(null);
+                showNetflix.animate().translationX(showNetflix.getHeight()).alpha(1.0f).setListener(null);
                 showNetflix.setOnClickListener(view -> {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(homepage));
@@ -438,7 +438,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
-        if(similarShows.isEmpty()) similarShowsCard.setVisibility(View.GONE);
+        if(similarShows.isEmpty()) tabSimilar.setVisibility(View.GONE);
         similarShowsAdapter.addAllShows(similarShows);
     }
 
@@ -541,23 +541,21 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void setSaveButtonEnabled(boolean enabled) {
+        watchedButton.setVisibility(View.VISIBLE);
+        watchedButtonAlt.setVisibility(View.GONE);
         if (enabled) {
             watchedButton.setVisibility(View.GONE);
             watchedButtonAlt.setVisibility(View.VISIBLE);
-        } else {
-            watchedButton.setVisibility(View.VISIBLE);
-            watchedButtonAlt.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void setPlanButtonEnabled(boolean enabled) {
+        planningButton.setVisibility(View.VISIBLE);
+        planningButtonAlt.setVisibility(View.GONE);
         if (enabled) {
             planningButton.setVisibility(View.GONE);
             planningButtonAlt.setVisibility(View.VISIBLE);
-        } else {
-            planningButton.setVisibility(View.VISIBLE);
-            planningButtonAlt.setVisibility(View.GONE);
         }
     }
 

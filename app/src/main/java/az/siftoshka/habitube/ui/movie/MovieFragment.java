@@ -412,7 +412,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void showSimilarMovieList(List<MovieLite> similarMovies) {
-        if (similarMovies.isEmpty()) similarMoviesCard.setVisibility(View.GONE);
+        if (similarMovies.isEmpty()) tabSimilar.setVisibility(View.GONE);
         similarMoviesAdapter.addAllMovies(similarMovies);
     }
 
@@ -488,23 +488,21 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
     @Override
     public void setSaveButtonEnabled(boolean enabled) {
+        watchedButton.setVisibility(View.VISIBLE);
+        watchedButtonAlt.setVisibility(View.GONE);
         if (enabled) {
             watchedButton.setVisibility(View.GONE);
             watchedButtonAlt.setVisibility(View.VISIBLE);
-        } else {
-            watchedButton.setVisibility(View.VISIBLE);
-            watchedButtonAlt.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void setPlanButtonEnabled(boolean enabled) {
+        planningButton.setVisibility(View.VISIBLE);
+        planningButtonAlt.setVisibility(View.GONE);
         if (enabled) {
             planningButton.setVisibility(View.GONE);
             planningButtonAlt.setVisibility(View.VISIBLE);
-        } else {
-            planningButton.setVisibility(View.VISIBLE);
-            planningButtonAlt.setVisibility(View.GONE);
         }
     }
 

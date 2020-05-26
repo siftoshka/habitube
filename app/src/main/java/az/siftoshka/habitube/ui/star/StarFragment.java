@@ -233,29 +233,25 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
 
     @Override
     public void showMovieCast(List<Cast> casts) {
-        if (casts == null || casts.size() == 0)
-            castMovieText.setVisibility(View.GONE);
+        if (casts == null || casts.size() == 0) castMovieText.setVisibility(View.GONE);
         movieCastAdapter.addAllPersons(casts);
     }
 
     @Override
     public void showTVShowCast(List<Cast> casts) {
-        if (casts == null || casts.size() == 0)
-            castShowText.setVisibility(View.GONE);
+        if (casts == null || casts.size() == 0) castShowText.setVisibility(View.GONE);
         showCastAdapter.addAllPersons(casts);
     }
 
     @Override
     public void showMovieCrew(List<Crew> crews) {
-        if (crews == null || crews.size() == 0)
-            crewMovieText.setVisibility(View.GONE);
+        if (crews == null || crews.size() == 0) crewMovieText.setVisibility(View.GONE);
         movieCrewAdapter.addAllPersons(crews);
     }
 
     @Override
     public void showTVShowCrew(List<Crew> crews) {
-        if (crews == null || crews.size() == 0)
-            crewShowText.setVisibility(View.GONE);
+        if (crews == null || crews.size() == 0) crewShowText.setVisibility(View.GONE);
         showCrewAdapter.addAllPersons(crews);
     }
 

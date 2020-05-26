@@ -302,11 +302,11 @@
                             android:id="@+id/watched_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_centerInParent="true"
-                            android:textSize="16sp"
+                            android:gravity="center"
                             android:paddingBottom="5dp"
                             android:textColor="#ffffffff"
+                            android:textSize="16sp"
                             tools:text="10" />
 
                     </RelativeLayout>
