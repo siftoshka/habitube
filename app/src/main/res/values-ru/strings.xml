@@ -1,10 +1,9 @@
 <resources>
     <string name="app_version">Версия приложения</string>
-    <string name="app_desc">Habitube - это проект с открытым исходным кодом, целью которого является помогать людям находить фильмы и сериалы и хранить их в личном оффлайн библеотеке</string>
-    <string name="post_text">Пост</string>
+    <string name="app_desc">Habitube - это проект с открытым исходным кодом, целью которого является помогать людям находить фильмы и сериалы и хранить их в личном оффлайн библиотеке</string>
     <string name="post_id_text">Post ID</string>
 
-    <string name="upcoming_movies">Грядущие фильмы</string>
+    <string name="upcoming_movies">Грядущие Фильмы</string>
     <string name="trending_movies">Популярные Фильмы</string>
     <string name="trending_tv_shows">Популярные Сериалы</string>
 
@@ -27,7 +26,7 @@
     <string name="watched_tab">Просмотренные</string>
     <string name="planning_tab">На Будущее</string>
     <string name="search_in_imdb">Поиск в IMDb</string>
-    <string name="add_to_watched">В Избраные</string>
+    <string name="add_to_watched">В Избранные</string>
     <string name="watch_later">На Будущее</string>
     <string name="already_added">Добавлен</string>
     <string name="no">Нет</string>
@@ -92,12 +91,12 @@
     <string name="delete_all_watched_shows">Удалить все просмотренные сериалы</string>
     <string name="delete_all_planning_shows">Удалить все запланированные сериалы</string>
     <string name="delete_all_watched_movies">Удалить все просмотренные фильмы</string>
-    <string name="delete_all_planning_movies">Удалить все запланированные фильмф</string>
+    <string name="delete_all_planning_movies">Удалить все запланированные фильмы</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="search_hint">Что-то ищешь? Просто напиши это в поиск</string>
-    <string name="enjoy_netflix">Наслаждайся лучшими сериалами от Нетфликс</string>
+    <string name="enjoy_netflix">Наслаждайся сериалами от Нетфликс</string>
     <string name="discover_movies">Искать Фильмы</string>
-    <string name="from_current_to_higher">от нынещнего наверх</string>
+    <string name="from_current_to_higher">от нынешнего наверх</string>
     <string name="vote_average">Средняя оценка</string>
     <string name="release_date">Дата Выхода</string>
     <string name="popularity">Популярность</string>
@@ -107,10 +106,10 @@
     <string name="remove_from_watched">Убрать из Просмотренных</string>
     <string name="remove_from_planning">Убрать из Запланированных</string>
     <string name="first_air_date">Дата Выхода в Эфир</string>
-    <string name="from_current_to_lower">от нынещнего вниз</string>
+    <string name="from_current_to_lower">от нынешнего вниз</string>
     <string name="discover_tv_shows">Искать Сериалы</string>
     <string name="google_warning">Google аккаунт будет использоваться только в целях хранения id ваших фильмов и сериалов для дальнейшей синхронизации между вашими устройствами. Все ваши данные остаются приватными для вас.</string>
-    <string name="are_you_sure_files">Вы хотите удалить все фильмы и сериалы из локальной библеотеки?</string>
+    <string name="are_you_sure_files">Вы хотите удалить все фильмы и сериалы из локальной библиотеки?</string>
     <string name="delete_files">Удалить Локальную библеотеку</string>
     <string name="rating_hint">Вы можете менять оценку долгим нажатием по звезде</string>
     <string name="rate_app">Оцените приложение</string>
@@ -119,4 +118,5 @@
     <string name="open">Открыть</string>
     <string name="copied">Ссылка скопирована</string>
     <string name="open_in_netflix">Открыть Нетфликс</string>
+    <string name="discover">Открытия</string>
 </resources>

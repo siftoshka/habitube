@@ -45,7 +45,7 @@
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_back"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Discover" />
+                app:title="@string/discover" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

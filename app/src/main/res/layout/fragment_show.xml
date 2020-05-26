@@ -411,8 +411,10 @@
                         android:background="@color/background"
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:text="@string/tab_info"
                         android:textColor="@color/colorPrimary"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                     <com.google.android.material.button.MaterialButton
@@ -424,8 +426,10 @@
                         android:background="@color/background"
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:text="@string/tab_credits_alt"
                         android:textColor="@color/dark_800"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                     <com.google.android.material.button.MaterialButton
@@ -437,8 +441,10 @@
                         android:background="@color/background"
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:text="@string/seasons"
                         android:textColor="@color/dark_800"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                     <com.google.android.material.button.MaterialButton
@@ -450,8 +456,10 @@
                         android:background="@color/background"
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:text="@string/tab_similar_alt"
                         android:textColor="@color/dark_800"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                 </LinearLayout>

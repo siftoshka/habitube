@@ -116,7 +116,7 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
                     discoverPresenter.showMoreNetflixNew(page);
                     page++;
                 }

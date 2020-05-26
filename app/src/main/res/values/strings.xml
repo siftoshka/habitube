@@ -3,7 +3,6 @@
     <string name="app_version">App Version</string>
     <string name="app_desc">Habitube - is an open-source project. Ad-Free.  The main point is to save your watched movies and tv shows with your own special rating. You can also add movies and tv shows to your planning list and explore trendings.</string>
     <string name="user_id_text" translatable="false">User ID</string>
-    <string name="post_text">Post</string>
     <string name="post_id_text">Post ID</string>
     <string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
@@ -104,7 +103,7 @@
     <string name="delete_all_watched_movies">Delete all Watched Movies</string>
     <string name="delete_all_planning_movies">Delete all Planning Movies</string>
     <string name="clear_cache">Clear Cache</string>
-    <string name="enjoy_netflix">Enjoy The Most Popular TV Shows on Netflix!</string>
+    <string name="enjoy_netflix">Enjoy Popular TV Shows on Netflix!</string>
     <string name="discover_movies">Discover Movies</string>
     <string name="from_current_to_higher">from current to higher</string>
     <string name="vote_average">Vote Average</string>
@@ -125,4 +124,5 @@
     <string name="open">Open</string>
     <string name="copied">IMDb link copied</string>
     <string name="open_in_netflix">Open in Netflix</string>
+    <string name="discover">Discover</string>
 </resources>

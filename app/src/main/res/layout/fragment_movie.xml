@@ -421,6 +421,7 @@
                         android:gravity="center"
                         android:text="@string/tab_info"
                         android:textColor="@color/colorPrimary"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                     <com.google.android.material.button.MaterialButton
@@ -434,6 +435,7 @@
                         android:gravity="center"
                         android:text="@string/tab_credits"
                         android:textColor="@color/dark_800"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                     <com.google.android.material.button.MaterialButton
@@ -447,6 +449,7 @@
                         android:gravity="center"
                         android:text="@string/tab_similar"
                         android:textColor="@color/dark_800"
+                        android:textSize="13sp"
                         app:rippleColor="@android:color/transparent" />
 
                 </LinearLayout>
