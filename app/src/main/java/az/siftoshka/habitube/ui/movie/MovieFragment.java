@@ -305,7 +305,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
             alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
                     .setMessage(getResources().getString(R.string.are_you_sure))
-                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> moviePresenter.deleteMovieFromWatched(movie))
+                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {moviePresenter.deleteMovieFromWatched(movie);
+                                                                ratingCard.setVisibility(View.GONE);})
                     .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }

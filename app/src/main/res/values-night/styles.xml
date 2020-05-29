@@ -23,7 +23,7 @@
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/round_button</item>
+        <item name="android:windowBackground">@drawable/round_button_alt</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/dark_600</item>
