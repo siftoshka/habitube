@@ -62,4 +62,12 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="RangeBar" parent="Widget.MaterialComponents.Slider">
+        <item name="tickColorActive">@color/colorPrimary</item>
+        <item name="thumbColor">@color/colorPrimary</item>
+        <item name="trackColorActive">@color/colorPrimary</item>
+        <item name="tickColorInactive">@color/colorPrimaryShadow</item>
+        <item name="trackColorInactive">@color/colorPrimaryShadow</item>
+    </style>
+
 </resources>

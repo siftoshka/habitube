@@ -351,14 +351,16 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private void showNetflixPage(String homepage) {
         if (homepage.contains("netflix")) {
             new Handler().postDelayed(() -> {
-                showNetflix.setVisibility(View.VISIBLE);
-                showNetflix.setAlpha(0.0f);
-                showNetflix.animate().translationX(showNetflix.getHeight()).alpha(1.0f).setListener(null);
-                showNetflix.setOnClickListener(view -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(homepage));
-                    startActivity(intent);
-                });
+                if (showNetflix != null) {
+                    showNetflix.setVisibility(View.VISIBLE);
+                    showNetflix.setAlpha(0.0f);
+                    showNetflix.animate().translationX(showNetflix.getHeight()).alpha(1.0f).setListener(null);
+                    showNetflix.setOnClickListener(view -> {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(homepage));
+                        startActivity(intent);
+                    });
+                }
             }, 500);
         } else
             showNetflix.setVisibility(View.GONE);

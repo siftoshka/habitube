@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.slider.RangeSlider;
 import com.xw.repo.BubbleSeekBar;
 
 import az.siftoshka.habitube.Constants;
@@ -34,16 +35,16 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     @Nullable @BindView(R.id.sort_buttons) MaterialButtonToggleGroup toggleGroup;
     @Nullable @BindView(R.id.popularity) MaterialButton sortPopularity;
     @Nullable @BindView(R.id.revenue) MaterialButton sortRevenue;
-    @BindView(R.id.slider_year) BubbleSeekBar sliderYear;
-    @BindView(R.id.slider_vote) BubbleSeekBar sliderVote;
+    @BindView(R.id.slider_vote) RangeSlider sliderVote;
+    @BindView(R.id.slider_year) RangeSlider sliderYear;
     @BindView(R.id.text_year) TextView textYear;
     @BindView(R.id.text_vote) TextView textVote;
     @BindView(R.id.discover) MaterialButton discoverButton;
 
     private Unbinder unbinder;
     private short index;
-    private int voteIndex;
-    private String yearIndex;
+    private int voteIndexUp, voteIndexDown;
+    private String yearIndexUp, yearIndexDown;
     private String sortSelection;
 
     @ProvidePresenter
@@ -100,89 +101,57 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
                     sortSelection = "revenue.desc";
                 }
             });
-            sliderYear.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-                @Override
-                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                    textYear.setText(String.valueOf(progress));
-                    yearIndex = String.valueOf(progress);
-                }
-
-                @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
-
-                @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }
+            sliderYear.addOnChangeListener((slider1, value, fromUser) -> {
+                yearIndexUp = slider1.getValues().get(0).toString();
+                yearIndexUp = yearIndexUp.substring(0, yearIndexUp.length() - 2);
+                yearIndexDown = slider1.getValues().get(1).toString();
+                yearIndexDown = yearIndexDown.substring(0, yearIndexDown.length() - 2);
+                textYear.setText(yearIndexUp + " - " + yearIndexDown);
             });
-            sliderVote.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-                @Override
-                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                    textVote.setText(String.valueOf(progress));
-                    voteIndex = progress;
-                }
-
-                @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) { }
-
-                @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) { }
+            sliderVote.addOnChangeListener((slider1, value, fromUser) -> {
+                voteIndexUp = slider1.getValues().get(0).intValue();
+                voteIndexDown = slider1.getValues().get(1).intValue();
+                textVote.setText(voteIndexUp + " - " + voteIndexDown);
             });
-
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(sortSelection, yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverMovies(sortSelection,
+                    yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown));
         }
         if (index == 1) {
             defaultShowSorting();
-            sliderYear.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-                @Override
-                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                    textYear.setText(String.valueOf(progress));
-                    yearIndex = String.valueOf(progress);
-                }
-
-                @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
-                }
-
-                @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                }
+            sliderYear.addOnChangeListener((slider1, value, fromUser) -> {
+                yearIndexUp = slider1.getValues().get(0).toString();
+                yearIndexUp = yearIndexUp.substring(0, yearIndexUp.length() - 2);
+                yearIndexDown = slider1.getValues().get(1).toString();
+                yearIndexDown = yearIndexDown.substring(0, yearIndexDown.length() - 2);
+                textYear.setText(yearIndexUp + " - " + yearIndexDown);
             });
-            sliderVote.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-                @Override
-                public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                    textVote.setText(String.valueOf(progress));
-                    voteIndex = progress;
-                }
-
-                @Override
-                public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
-                }
-
-                @Override
-                public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                }
+            sliderVote.addOnChangeListener((slider1, value, fromUser) -> {
+                voteIndexUp = slider1.getValues().get(0).intValue();
+                voteIndexDown = slider1.getValues().get(1).intValue();
+                textVote.setText(voteIndexUp + " - " + voteIndexDown);
             });
-
-            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(yearIndex + "-01-01", voteIndex));
+            discoverButton.setOnClickListener(view -> discoverPresenter.discoverShows(yearIndexUp + "-01-01",
+                    yearIndexDown + "-01-01", voteIndexUp, voteIndexDown));
         }
     }
 
     private void defaultSorting() {
+        sliderYear.setValues(2010.0f,2020.0f);
+        sliderVote.setValues(4.0f, 10.0f);
         sortPopularity.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         sortPopularity.setTextColor(getResources().getColor(R.color.white_is_white));
         sortRevenue.setBackgroundColor(getResources().getColor(R.color.background));
         sortRevenue.setTextColor(getResources().getColor(R.color.dark_800));
         sortSelection = "popularity.desc";
-        textYear.setText(String.valueOf(sliderYear.getProgress()));
-        textVote.setText(String.valueOf(sliderVote.getProgress()));
-        yearIndex = String.valueOf(sliderYear.getProgress());
-        voteIndex = sliderVote.getProgress();
+        textVote.setText(sliderVote.getValues().get(0).intValue() + " - " + sliderVote.getValues().get(1).intValue());
+        textYear.setText(sliderYear.getValues().get(0).intValue() + " - " + sliderYear.getValues().get(1).intValue());
     }
 
     private void defaultShowSorting() {
-        textYear.setText(String.valueOf(sliderYear.getProgress()));
-        textVote.setText(String.valueOf(sliderVote.getProgress()));
-        yearIndex = String.valueOf(sliderYear.getProgress());
-        voteIndex = sliderVote.getProgress();
+        sliderYear.setValues(2010.0f,2020.0f);
+        sliderVote.setValues(4.0f, 10.0f);
+        textVote.setText(sliderVote.getValues().get(0).intValue() + " - " + sliderVote.getValues().get(1).intValue());
+        textYear.setText(sliderYear.getValues().get(0).intValue() + " - " + sliderYear.getValues().get(1).intValue());
     }
 
     @Override

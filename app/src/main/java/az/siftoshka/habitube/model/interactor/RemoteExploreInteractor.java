@@ -66,11 +66,11 @@ public class RemoteExploreInteractor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> discoverMovies(int page, String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
-        return repository.getDiscoveredMovies(page, language, sortSelection, isAdult, yearIndex, voteIndex);
+    public Observable<MovieResponse> discoverMovies(int page, String language, String sortSelection, boolean isAdult, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        return repository.getDiscoveredMovies(page, language, sortSelection, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
     }
 
-    public Observable<MovieResponse> discoverShows(int page, String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
-        return repository.getDiscoveredShows(page, language, sortSelection, isAdult, network, yearIndex, voteIndex, voteCount);
+    public Observable<MovieResponse> discoverShows(int page, String language, String sortSelection, boolean isAdult, String network, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, int voteCount) {
+        return repository.getDiscoveredShows(page, language, sortSelection, isAdult, network, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, voteCount);
     }
 }

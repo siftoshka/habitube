@@ -105,7 +105,6 @@
     <string name="clear_cache">Clear Cache</string>
     <string name="enjoy_netflix">Enjoy Popular TV Shows on Netflix!</string>
     <string name="discover_movies">Discover Movies</string>
-    <string name="from_current_to_higher">from current to higher</string>
     <string name="vote_average">Vote Average</string>
     <string name="release_date">Release Date</string>
     <string name="popularity">Popularity</string>
@@ -115,7 +114,6 @@
     <string name="remove_from_watched">Remove from Watched</string>
     <string name="remove_from_planning">Remove from Planning</string>
     <string name="first_air_date">First Air Date</string>
-    <string name="from_current_to_lower">from current to lower</string>
     <string name="discover_tv_shows">Discover TV SHOWS</string>
     <string name="rating_hint">You can change it whenever you want by long tap to the star</string>
     <string name="rate_app">Rate App</string>

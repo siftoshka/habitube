@@ -146,8 +146,10 @@ public interface MovieDBApi {
         @Query("sort_by") String sort,
         @Query("page") int page,
         @Query("include_adult") boolean isAdult,
-        @Query("primary_release_date.lte") String releaseDate,
-        @Query("vote_average.gte") int rating,
+        @Query("primary_release_date.gte") String releaseDateUp,
+        @Query("primary_release_date.lte") String releaseDateDown,
+        @Query("vote_average.gte") int ratingUp,
+        @Query("vote_average.lte") int ratingDown,
         @Query("vote_count.gte") int voteCount
     );
 
@@ -158,8 +160,10 @@ public interface MovieDBApi {
             @Query("page") int page,
             @Query("include_adult") boolean isAdult,
             @Query("with_networks") String network,
-            @Query("first_air_date.lte") String releaseDate,
-            @Query("vote_average.gte") int rating,
+            @Query("first_air_date.gte") String releaseDateUp,
+            @Query("first_air_date.lte") String releaseDateDown,
+            @Query("vote_average.gte") int ratingUp,
+            @Query("vote_average.lte") int ratingDown,
             @Query("vote_count.gte") int voteCount
     );
 }

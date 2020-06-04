@@ -32,45 +32,45 @@ public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
         this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
-    public void discoverMovies(int page, String sortSelection, String yearIndex, int voteIndex) {
+    public void discoverMovies(int page, String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndex, voteIndex)
+        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void discoverShows(int page, String yearIndex, int voteIndex) {
+    public void discoverShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndex, voteIndex, 10)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void getMoreMovies(int page, String sortSelection, String yearIndex, int voteIndex) {
+    public void getMoreMovies(int page, String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndex, voteIndex)
+        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));
     }
 
-    public void getMoreShows(int page, String yearIndex, int voteIndex) {
+    public void getMoreShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndex, voteIndex, 10)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));

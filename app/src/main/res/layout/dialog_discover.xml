@@ -39,8 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/popularity"
             android:fontFamily="@font/semibold"
+            android:text="@string/popularity"
             android:textColor="@color/dark_800"
             app:strokeColor="@color/colorPrimary" />
 
@@ -50,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/revenue"
             android:fontFamily="@font/semibold"
+            android:text="@string/revenue"
             android:textColor="@color/dark_800"
             app:strokeColor="@color/colorPrimary" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -67,8 +67,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/release_date"
             android:fontFamily="@font/bold"
+            android:text="@string/release_date"
             android:textColor="@color/dark_800"
             android:textSize="18sp" />
 
@@ -77,37 +77,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:gravity="end"
             android:fontFamily="@font/regular"
+            android:gravity="end"
             android:textColor="@color/dark_800"
             android:textSize="16sp"
             android:textStyle="normal"
             tools:text="YEAR" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/regular"
-        android:text="@string/from_current_to_lower"
-        android:textColor="@color/dark_600"
-        android:padding="1dp"
-        android:textSize="14sp" />
-
-    <com.xw.repo.BubbleSeekBar
+    <com.google.android.material.slider.RangeSlider
         android:id="@+id/slider_year"
+        style="@style/RangeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bsb_hide_bubble="true"
-        app:bsb_max="2020"
-        app:bsb_min="1900"
-        app:bsb_progress="2010"
-        app:bsb_second_track_color="@color/colorPrimary"
-        app:bsb_section_text_position="bottom_sides"
-        app:bsb_show_section_mark="true"
-        app:bsb_show_section_text="true"
-        app:bsb_touch_to_seek="true" />
-
+        android:layout_gravity="center"
+        android:stepSize="1"
+        android:valueFrom="1900"
+        android:valueTo="2020" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,8 +105,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/vote_average"
             android:fontFamily="@font/bold"
+            android:text="@string/vote_average"
             android:textColor="@color/dark_800"
             android:textSize="18sp"
             android:textStyle="normal" />
@@ -130,49 +116,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:gravity="end"
             android:fontFamily="@font/regular"
+            android:gravity="end"
             android:textColor="@color/dark_800"
             android:textSize="16sp"
             android:textStyle="normal"
             tools:text="YEAR" />
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/from_current_to_higher"
-        android:fontFamily="@font/regular"
-        android:textColor="@color/dark_600"
-        android:padding="1dp"
-        android:textSize="14sp"
-        android:textStyle="normal" />
 
-    <com.xw.repo.BubbleSeekBar
+    <com.google.android.material.slider.RangeSlider
         android:id="@+id/slider_vote"
+        style="@style/RangeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bsb_auto_adjust_section_mark="true"
-        app:bsb_hide_bubble="true"
-        app:bsb_max="9"
-        app:bsb_min="4"
-        app:bsb_progress="6"
-        app:bsb_second_track_color="@color/colorPrimary"
-        app:bsb_section_text_position="bottom_sides"
-        app:bsb_show_section_mark="true"
-        app:bsb_show_section_text="true"
-        app:bsb_touch_to_seek="true" />
+        android:layout_gravity="center"
+        android:stepSize="1"
+        android:valueFrom="4"
+        android:valueTo="10" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/discover"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
         android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/bold"
         android:text="@string/discover_movies"
         android:textColor="@color/white_is_white"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp" />
 
 
 </LinearLayout>

@@ -151,7 +151,6 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
                 keyboardBehavior.hideKeyboard();
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -217,15 +216,14 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
     @Override
     public void showSearchedMediaList(List<MovieLite> searchResult) {
+        searchAdapter.addAllMedia(searchResult);
+        nothingIcon.setVisibility(View.GONE);
+        searchIcon.setVisibility(View.GONE);
+        recyclerViewSearch.setVisibility(View.VISIBLE);
         if (searchResult.size() == 0) {
             searchIcon.setVisibility(View.GONE);
             recyclerViewSearch.setVisibility(View.GONE);
             nothingIcon.setVisibility(View.VISIBLE);
-        } else {
-            searchAdapter.addAllMedia(searchResult);
-            nothingIcon.setVisibility(View.GONE);
-            searchIcon.setVisibility(View.GONE);
-            recyclerViewSearch.setVisibility(View.VISIBLE);
         }
     }
 
@@ -250,12 +248,11 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     }
 
     private void pageCheck() {
+        radioLayout.setVisibility(View.GONE);
+        pageDown.setImageResource(R.drawable.ic_down_arrow);
         if (pageDown.getDrawable().getConstantState() == pageDown.getResources().getDrawable(R.drawable.ic_down_arrow).getConstantState()) {
             radioLayout.setVisibility(View.VISIBLE); radioListener();
             pageDown.setImageResource(R.drawable.ic_up_arrow);
-        } else {
-            radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);
         }
     }
 

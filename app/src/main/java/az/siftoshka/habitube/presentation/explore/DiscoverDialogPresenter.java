@@ -17,20 +17,20 @@ public class DiscoverDialogPresenter extends MvpPresenter<DiscoverDialogView> {
         this.router = router;
     }
 
-    public void discoverMovies(String sortSelection, String yearIndex, int voteIndex) {
-        goToDiscoverScreen(sortSelection, yearIndex, voteIndex);
+    public void discoverMovies(String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        goToDiscoverScreen(sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
     }
 
-    public void discoverShows(String yearIndex, int voteIndex) {
-        goToDiscoverShowScreen(yearIndex, voteIndex);
+    public void discoverShows(String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        goToDiscoverShowScreen(yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
     }
 
-    private void goToDiscoverScreen(String sortSelection, String yearIndex, int voteIndex) {
-        router.navigateTo(new Screens.DiscoverScreen(sortSelection, yearIndex, voteIndex));
+    private void goToDiscoverScreen(String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        router.navigateTo(new Screens.DiscoverScreen(sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown));
     }
 
-    private void goToDiscoverShowScreen(String yearIndex, int voteIndex) {
-        router.navigateTo(new Screens.DiscoverShowScreen(yearIndex, voteIndex));
+    private void goToDiscoverShowScreen(String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        router.navigateTo(new Screens.DiscoverShowScreen(yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown));
     }
 
     public void goBack() {

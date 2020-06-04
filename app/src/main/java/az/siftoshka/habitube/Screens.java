@@ -109,13 +109,15 @@ public final class Screens {
     }
 
     public static final class DiscoverScreen extends SupportAppScreen {
-        private String sortSelection, yearIndex;
-        private int voteIndex;
+        private String sortSelection, yearIndexUp, yearIndexDown;
+        private int voteIndexUp, voteIndexDown;
 
-        public DiscoverScreen(String sortSelection, String yearIndex, int voteIndex) {
+        public DiscoverScreen(String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
             this.sortSelection = sortSelection;
-            this.yearIndex = yearIndex;
-            this.voteIndex = voteIndex;
+            this.yearIndexUp = yearIndexUp;
+            this.yearIndexDown = yearIndexDown;
+            this.voteIndexDown = voteIndexDown;
+            this.voteIndexUp = voteIndexUp;
         }
 
         @Override
@@ -123,28 +125,34 @@ public final class Screens {
             final Bundle bundle = new Bundle();
             final DiscoverFragment discoverFragment = new DiscoverFragment();
             bundle.putString("Discover-Ms", sortSelection);
-            bundle.putString("Discover-My", yearIndex);
-            bundle.putInt("Discover-Mv", voteIndex);
+            bundle.putString("Discover-MyUp", yearIndexUp);
+            bundle.putString("Discover-MyDown", yearIndexDown);
+            bundle.putInt("Discover-MvUp", voteIndexUp);
+            bundle.putInt("Discover-MvDown", voteIndexDown);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }
     }
 
     public static final class DiscoverShowScreen extends SupportAppScreen {
-        private String yearIndex;
-        private int voteIndex;
+        private String yearIndexUp, yearIndexDown;
+        private int voteIndexUp, voteIndexDown;
 
-        public DiscoverShowScreen(String yearIndex, int voteIndex) {
-            this.yearIndex = yearIndex;
-            this.voteIndex = voteIndex;
+        public DiscoverShowScreen(String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+            this.yearIndexUp = yearIndexUp;
+            this.yearIndexDown = yearIndexDown;
+            this.voteIndexDown = voteIndexDown;
+            this.voteIndexUp = voteIndexUp;
         }
 
         @Override
         public Fragment getFragment() {
             final Bundle bundle = new Bundle();
             final DiscoverFragment discoverFragment = new DiscoverFragment();
-            bundle.putString("Discover-Sy", yearIndex);
-            bundle.putInt("Discover-Sv", voteIndex);
+            bundle.putString("Discover-SyUp", yearIndexUp);
+            bundle.putString("Discover-SyDown", yearIndexDown);
+            bundle.putInt("Discover-SvUp", voteIndexUp);
+            bundle.putInt("Discover-SvDown", voteIndexDown);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }

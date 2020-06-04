@@ -97,7 +97,6 @@
     <string name="search_hint">Bir şey axtarırsınız? \n Yalnız axtarışda yazın</string>
     <string name="enjoy_netflix">Netflix-in TV Şoularınnan həzz alın</string>
     <string name="discover_movies">Filmləri axtarın</string>
-    <string name="from_current_to_higher">indiki qədərdən</string>
     <string name="vote_average">Orta Reytinq</string>
     <string name="release_date">Buraxılış Tarixi</string>
     <string name="popularity">Populyarlıq</string>
@@ -107,7 +106,6 @@
     <string name="remove_from_watched">Görünəndən silin</string>
     <string name="remove_from_planning">Planlaşdırılandan çıxarın</string>
     <string name="first_air_date">Buraxılış tarixi</string>
-    <string name="from_current_to_lower">indidən aşağıya</string>
     <string name="discover_tv_shows">TV Şoularını axtarın</string>
     <string name="google_warning">Google hesabı yalnız cihazlarınız arasında gələcək sinxronizasiya üçün filmlərinizin və TV şoularınızın id nömrəsini saxlamaq üçün istifadə ediləcəkdir. Bütün məlumatlar sizin üçün gizli qalır.</string>
     <string name="are_you_sure_files">Bütün filmləri və serialları yerli kitabxanadan silmək istəyirsiniz?</string>

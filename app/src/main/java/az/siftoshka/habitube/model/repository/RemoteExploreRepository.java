@@ -66,14 +66,14 @@ public class RemoteExploreRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getDiscoveredMovies(int page, String language, String sortSelection, boolean isAdult, String yearIndex, int voteIndex) {
-        return movieDBApi.getDiscoverMovies(language, sortSelection, page, isAdult, yearIndex, voteIndex, 10)
+    public Observable<MovieResponse> getDiscoveredMovies(int page, String language, String sortSelection, boolean isAdult, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+        return movieDBApi.getDiscoverMovies(language, sortSelection, page, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<MovieResponse> getDiscoveredShows(int page, String language, String sortSelection, boolean isAdult, String network, String yearIndex, int voteIndex, int voteCount) {
-        return movieDBApi.getDiscoverShows(language, sortSelection, page, isAdult, network,  yearIndex, voteIndex, voteCount)
+    public Observable<MovieResponse> getDiscoveredShows(int page, String language, String sortSelection, boolean isAdult, String network, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, int voteCount) {
+        return movieDBApi.getDiscoverShows(language, sortSelection, page, isAdult, network,  yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, voteCount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

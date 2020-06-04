@@ -40,8 +40,8 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
 
     private Unbinder unbinder;
     private DiscoverAdapter discoverAdapter;
-    private String sortSelection, yearIndex;
-    private int voteIndex;
+    private String sortSelection, yearIndexUp, yearIndexDown;
+    private int voteIndexUp ,voteIndexDown;
 
     @ProvidePresenter
     DiscoverPresenter discoverPresenter() {
@@ -55,14 +55,18 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         if (bundle != null) {
             sortSelection = bundle.getString("Discover-Ms");
             if (sortSelection != null) {
-                yearIndex = bundle.getString("Discover-My");
-                voteIndex = bundle.getInt("Discover-Mv");
-                discoverPresenter.discoverMovies(1, sortSelection, yearIndex, voteIndex);
+                yearIndexUp = bundle.getString("Discover-MyUp");
+                yearIndexDown = bundle.getString("Discover-MyDown");
+                voteIndexUp = bundle.getInt("Discover-MvUp");
+                voteIndexDown = bundle.getInt("Discover-MvDown");
+                discoverPresenter.discoverMovies(1, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
                 discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToMovieScreen(id));
             } else {
-                yearIndex = bundle.getString("Discover-Sy");
-                voteIndex = bundle.getInt("Discover_Sv");
-                discoverPresenter.discoverShows(1, yearIndex, voteIndex);
+                yearIndexUp = bundle.getString("Discover-SyUp");
+                yearIndexDown = bundle.getString("Discover-SyDown");
+                voteIndexUp = bundle.getInt("Discover-SvUp");
+                voteIndexDown = bundle.getInt("Discover-SvDown");
+                discoverPresenter.discoverShows(1, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
                 discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToShowScreen(id));
             }
         }
@@ -96,7 +100,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.getMoreMovies(page, sortSelection, yearIndex, voteIndex);
+                    discoverPresenter.getMoreMovies(page, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
                     page++;
                 }
             }
@@ -110,7 +114,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.getMoreShows(page, yearIndex, voteIndex);
+                    discoverPresenter.getMoreShows(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
                     page++;
                 }
             }
