@@ -117,4 +117,5 @@
     <string name="copied">Ссылка скопирована</string>
     <string name="open_in_netflix">Открыть Нетфликс</string>
     <string name="discover">Открытия</string>
+    <string name="are_you_sure_directory">Вы уверены?</string>
 </resources>

@@ -87,11 +87,12 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.showMoreNetflixPopular(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        discoverPresenter.showMoreNetflixPopular(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -101,11 +102,12 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.showMoreNetflixBest(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        discoverPresenter.showMoreNetflixBest(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -115,11 +117,12 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.showMoreNetflixNew(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        discoverPresenter.showMoreNetflixNew(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }

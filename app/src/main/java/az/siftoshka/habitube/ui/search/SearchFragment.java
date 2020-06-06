@@ -99,10 +99,16 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         pageDown.setOnClickListener(view1 -> pageCheck());
         toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
 
+        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+        EditText searchText = searchView.findViewById(R.id.search_src_text);
+        searchText.setText(null);
+
         init();
         SharedPreferences prefs = requireContext().getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean adult = idAdult == 1;
+        SharedPreferences prefsSearch = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE);
+        int search = prefsSearch.getInt("Search", 0);
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -112,20 +118,23 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
 
             @Override
             public boolean onQueryTextChange(final String newText) {
+                System.out.println(newText);
                 if (!TextUtils.isEmpty(newText)) {
-                    if (radioMulti.isChecked()) {
+                    if (search == 100 && radioMulti.isChecked()) {
+                        System.out.println("MULTI");
                         searchPresenter.multiSearch(newText, getResources().getString(R.string.language), adult);
                         paginateMultiSearch(newText, getResources().getString(R.string.language), adult);
                     }
-                    if (radioMovie.isChecked()) {
+                    if (search == 101 || radioMovie.isChecked()) {
                         searchPresenter.movieSearch(newText, getResources().getString(R.string.language), adult);
                         paginateMovieSearch(newText, getResources().getString(R.string.language), adult);
                     }
-                    if (radioShow.isChecked()) {
+                    if (search == 102 || radioShow.isChecked()) {
                         searchPresenter.showSearch(newText, getResources().getString(R.string.language), adult);
                         paginateShowSearch(newText, getResources().getString(R.string.language), adult);
                     }
-                    if (radioPeople.isChecked()) {
+                    if (search == 103 || radioPeople.isChecked()) {
+                        System.out.println("PERSON");
                         searchPresenter.personSearch(newText, getResources().getString(R.string.language), adult);
                         paginatePersonSearch(newText, getResources().getString(R.string.language), adult);
                     }
@@ -133,16 +142,14 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
                 return true;
             }
         });
-        
-        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+
         closeButton.setOnClickListener(view1 -> {
             searchAdapter.clean();
             searchIcon.setVisibility(View.VISIBLE);
             recyclerViewSearch.setVisibility(View.GONE);
             nothingIcon.setVisibility(View.GONE);
             keyboardBehavior.hideKeyboard();
-            EditText et = searchView.findViewById(R.id.search_src_text);
-            et.setText(null);
+            searchText.setText(null);
         });
 
         recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -235,16 +242,32 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     private void radioListener() {
         radioMulti.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
+            editor.putInt("Search", 100);
+            editor.apply();
+        });
         radioMovie.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
+            editor.putInt("Search", 101);
+            editor.apply();
+        });
         radioShow.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);});
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
+            editor.putInt("Search", 102);
+            editor.apply();
+        });
         radioPeople.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow); });
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
+            editor.putInt("Search", 103);
+            editor.apply();
+        });
     }
 
     private void pageCheck() {

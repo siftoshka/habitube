@@ -98,11 +98,12 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.getMoreMovies(page, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
-                    page++;
-                }
+                try {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        discoverPresenter.getMoreMovies(page, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -112,11 +113,12 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    discoverPresenter.getMoreShows(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
-                    page++;
-                }
+                try {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        discoverPresenter.getMoreShows(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }

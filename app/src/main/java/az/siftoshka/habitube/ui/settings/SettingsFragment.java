@@ -143,10 +143,10 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         googleAuthButton.setOnClickListener(view1 -> signIn());
         rateApp.setOnClickListener(view1 -> showGooglePlay());
         clearCache.setOnClickListener(view1 -> settingsPresenter.clearCache());
-        deletePlanningMovies.setOnClickListener(view1 -> settingsPresenter.deleteMedia("M-P"));
-        deletePlanningShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-P"));
-        deleteWatchedMovies.setOnClickListener(view1 -> settingsPresenter.deleteMedia("M-W"));
-        deleteWatchedShows.setOnClickListener(view1 -> settingsPresenter.deleteMedia("S-W"));
+        deletePlanningMovies.setOnClickListener(view1 -> showDeletePlanningMovies());
+        deletePlanningShows.setOnClickListener(view1 -> showDeletePlanningShows());
+        deleteWatchedMovies.setOnClickListener(view1 -> showDeleteWatchedMovies());
+        deleteWatchedShows.setOnClickListener(view1 -> showDeleteWatchedShows());
         privacyPolicy.setOnClickListener(view1 -> settingsPresenter.goToPrivacyPolicyScreen());
         termsOfService.setOnClickListener(view1 -> settingsPresenter.goToTermsOfServiceScreen());
         licenses.setOnClickListener(view1 -> settingsPresenter.goToLicenses());
@@ -410,6 +410,38 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
                         settingsPresenter.deleteMedia("S-W");
                     })
                     .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+    }
+
+    private void showDeleteWatchedMovies() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_files))
+                .setMessage(getResources().getString(R.string.are_you_sure_directory))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> settingsPresenter.deleteMedia("M-W"))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+    }
+
+    private void showDeleteWatchedShows() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_files))
+                .setMessage(getResources().getString(R.string.are_you_sure_directory))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> settingsPresenter.deleteMedia("S-W"))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+    }
+
+    private void showDeletePlanningMovies() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_files))
+                .setMessage(getResources().getString(R.string.are_you_sure_directory))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> settingsPresenter.deleteMedia("M-P"))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+    }
+
+    private void showDeletePlanningShows() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_files))
+                .setMessage(getResources().getString(R.string.are_you_sure_directory))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> settingsPresenter.deleteMedia("S-P"))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 
     @SuppressLint("SetTextI18n")

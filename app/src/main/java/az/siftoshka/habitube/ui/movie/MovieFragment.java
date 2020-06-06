@@ -254,7 +254,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                 .error(R.drawable.ic_missing)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterMain);
-        ImageLoader.loadBackground(getContext(), movie.getBackdropPath(), posterBackground);
+        ImageLoader.loadBackground(requireContext(), movie.getBackdropPath(), posterBackground);
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
         posterRate.setText(String.valueOf(movie.getVoteAverage()));
@@ -332,11 +332,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    moviePresenter.getMoreSimilarMovies(movieID, page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewSimilarMovies.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        moviePresenter.getMoreSimilarMovies(movieID, page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }

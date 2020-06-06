@@ -258,7 +258,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
                 .error(R.drawable.ic_missing)
                 .transform(new CenterCrop(), new RoundedCorners(16))
                 .into(posterShow);
-        ImageLoader.loadBackground(getContext(), show.getBackdropPath(), posterShowBackground);
+        ImageLoader.loadBackground(requireContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
         posterShowDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
         posterShowRate.setText(String.valueOf(show.getVoteAverage()));
@@ -339,11 +339,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    showPresenter.getMoreSimilarShows(showID, page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewSimilarShows.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        showPresenter.getMoreSimilarShows(showID, page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }

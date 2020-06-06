@@ -55,10 +55,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         }
         holder.posterRate.setText(String.valueOf(post.getVoteAverage()));
         holder.posterImage.setOnClickListener(v -> {
-            switch (post.getMediaType()) {
-                case "movie": mediaState = 1;break;
-                case "tv": mediaState = 2;break;
-                case "person": mediaState = 3;break;
+            if (post.getMediaType() != null) {
+                switch (post.getMediaType()) {
+                    case "movie": mediaState = 1;break;
+                    case "tv": mediaState = 2;break;
+                    case "person": mediaState = 3;break;
+                    default: mediaState = 1;
+                }
             }
             clickListener.onPostClicked(post.getMovieId(), mediaState);
         });

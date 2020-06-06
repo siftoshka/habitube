@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.explore;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,8 @@ import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ExploreFragment extends MvpAppCompatFragment implements ExploreView {
 
@@ -126,6 +129,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewAirToday.setHasFixedSize(true);
         recyclerViewAirToday.setAdapter(airTodayAdapter);
         paginateAirToday();
+
+        initSearchDefault();
     }
 
     private void showDiscoverMovieDialog() {
@@ -161,11 +166,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewUpcoming.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    explorePresenter.addMoreUpcoming(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewUpcoming.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        explorePresenter.addMoreUpcoming(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -175,11 +181,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewMovies.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
-                    explorePresenter.addMoreMovies(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewMovies.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                        explorePresenter.addMoreMovies(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -189,11 +196,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewTVShows.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    explorePresenter.addMoreShows(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewTVShows.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        explorePresenter.addMoreShows(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -203,11 +211,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
             int page = 2;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerViewAirToday.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    explorePresenter.addMoreAirToday(page);
-                    page++;
-                }
+                try {
+                    if (!recyclerViewAirToday.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        explorePresenter.addMoreAirToday(page);
+                        page++;
+                    }
+                } catch (Exception ignored) {}
             }
         });
     }
@@ -273,6 +282,12 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         errorScreen.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         refreshButton.setOnClickListener(view -> explorePresenter.addContent());
+    }
+
+    private void initSearchDefault() {
+        SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
+        editor.putInt("Search", 100);
+        editor.apply();
     }
 
     @Override
