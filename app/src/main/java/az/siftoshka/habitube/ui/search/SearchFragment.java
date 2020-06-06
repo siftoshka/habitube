@@ -248,11 +248,12 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     }
 
     private void pageCheck() {
-        radioLayout.setVisibility(View.GONE);
-        pageDown.setImageResource(R.drawable.ic_down_arrow);
         if (pageDown.getDrawable().getConstantState() == pageDown.getResources().getDrawable(R.drawable.ic_down_arrow).getConstantState()) {
             radioLayout.setVisibility(View.VISIBLE); radioListener();
             pageDown.setImageResource(R.drawable.ic_up_arrow);
+        } else {
+            radioLayout.setVisibility(View.GONE);
+            pageDown.setImageResource(R.drawable.ic_down_arrow);
         }
     }
 

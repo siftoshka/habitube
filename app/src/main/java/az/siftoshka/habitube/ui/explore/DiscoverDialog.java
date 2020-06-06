@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.slider.RangeSlider;
-import com.xw.repo.BubbleSeekBar;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;

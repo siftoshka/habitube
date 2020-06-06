@@ -45,7 +45,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
         } else {
             holder.posterTitle.setText(movie.getShowTitle());
         }
-        ImageLoader.loadBackground(holder.itemView, movie.getBackdropPath(), holder.posterImage);
+        ImageLoader.loadDiscover(holder.itemView, movie.getBackdropPath(), holder.posterImage);
         holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(movie.getMovieId()));
     }
 

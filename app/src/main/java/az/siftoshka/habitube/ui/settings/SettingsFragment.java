@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,7 +72,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     @BindView(R.id.instagram_contact) ImageView instagramButton;
     @BindView(R.id.credits_oktay) TextView creditsOktay;
     @BindView(R.id.credits_freepik) TextView creditsFreepik;
-    @BindView(R.id.theme_switcher) SwitchCompat themeSwither;
+    @BindView(R.id.theme_switcher) SwitchCompat themeSwitcher;
     @BindView(R.id.adult_switcher) SwitchCompat adultSwitcher;
     @BindView(R.id.dark_mode_layout) LinearLayout darkModeCard;
     @BindView(R.id.group_left) RadioGroup leftGroup;
@@ -159,7 +160,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
         checkDarkModeVisibility();
         radioListener();
 
-        themeSwither.setOnCheckedChangeListener((compoundButton, b) -> {
+        themeSwitcher.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 SharedPreferences.Editor editor = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE).edit();
@@ -325,19 +326,21 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     }
 
     private void checkDarkModeVisibility() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
             darkModeCard.setVisibility(View.GONE);
-        } else {
+        else
             darkModeCard.setVisibility(View.VISIBLE);
-        }
     }
 
     private void checkTheme() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("Dark-Mode", MODE_PRIVATE);
-        int idTheme = prefs.getInt("Dark", 0);
-
-        if (idTheme == 101) themeSwither.setChecked(true);
-        else themeSwither.setChecked(false);
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                themeSwitcher.setChecked(true);
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                themeSwitcher.setChecked(false);
+                break;
+        }
     }
 
     private void checkAdult() {

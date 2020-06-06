@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.utils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,20 +28,41 @@ import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 public class ImageLoader {
 
     public static void load(View view, String url, ImageView into) {
-        if (url != null) {
-            Glide.with(view)
-                    .load(IMAGE_URL + url)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_missing)
-                    .transform(new CenterCrop(), new RoundedCorners(16))
-                    .into(into);
-        } else {
-            Glide.with(view)
-                    .load(R.drawable.ic_missing)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .into(into);
+        switch (view.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                if (url != null) {
+                    Glide.with(view)
+                            .load(IMAGE_URL + url)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .placeholder(R.color.dark_900)
+                            .error(R.drawable.ic_missing)
+                            .transform(new CenterCrop(), new RoundedCorners(16))
+                            .into(into);
+                } else {
+                    Glide.with(view)
+                            .load(R.drawable.ic_missing)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .placeholder(R.color.dark_900)
+                            .into(into);
+                }
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                if (url != null) {
+                    Glide.with(view)
+                            .load(IMAGE_URL + url)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .placeholder(R.color.dark_300)
+                            .error(R.drawable.ic_missing)
+                            .transform(new CenterCrop(), new RoundedCorners(16))
+                            .into(into);
+                } else {
+                    Glide.with(view)
+                            .load(R.drawable.ic_missing)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .placeholder(R.color.dark_300)
+                            .into(into);
+                }
+                break;
         }
     }
 
@@ -99,38 +121,59 @@ public class ImageLoader {
     }
 
     public static void loadBackground(Context context, String url, ImageView into) {
-        if (url != null) {
-            Glide.with(context)
-                    .load(IMAGE_URL + url)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .error(R.drawable.ic_missing)
-                    .into(into);
-        } else {
-            Glide.with(context)
-                    .load(R.drawable.ic_missing)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
-                    .into(into);
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                if (url != null) {
+                    Glide.with(context)
+                            .load(IMAGE_URL + url)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .placeholder(R.color.dark_grey)
+                            .error(R.drawable.ic_missing)
+                            .into(into);
+                } else {
+                    Glide.with(context)
+                            .load(R.drawable.ic_missing)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .placeholder(R.color.dark_grey)
+                            .into(into);
+                }
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                if (url != null) {
+                    Glide.with(context)
+                            .load(IMAGE_URL + url)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .placeholder(R.color.white_is_white)
+                            .error(R.drawable.ic_missing)
+                            .into(into);
+                } else {
+                    Glide.with(context)
+                            .load(R.drawable.ic_missing)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .placeholder(R.color.white_is_white)
+                            .into(into);
+                }
+                break;
         }
     }
 
-    public static void loadBackground(View view, String url, ImageView into) {
+    public static void loadDiscover(View view, String url, ImageView into) {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .centerCrop()
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .placeholder(R.color.mainBackground)
                     .error(R.drawable.ic_missing)
                     .into(into);
         } else {
             Glide.with(view)
                     .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(new ColorDrawable(Color.LTGRAY))
+                    .placeholder(R.color.mainBackground)
                     .into(into);
         }
     }
@@ -173,17 +216,6 @@ public class ImageLoader {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static byte[] imageView2ByteArray(ImageView view) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return baos.toByteArray();
     }
 
     public static void loadYoutube(View view, String key, ImageView image) {
