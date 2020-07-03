@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
+import az.siftoshka.habitube.ui.explore.GenreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
 import az.siftoshka.habitube.ui.movie.MovieFragment;
 import az.siftoshka.habitube.ui.navbar.NavbarFragment;
@@ -134,6 +135,33 @@ public final class Screens {
         }
     }
 
+    public static final class GenreScreen extends SupportAppScreen {
+        private String yearIndexUp, yearIndexDown, genreId;
+        private int voteIndexUp, voteIndexDown;
+
+        public GenreScreen(String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
+            this.yearIndexUp = yearIndexUp;
+            this.yearIndexDown = yearIndexDown;
+            this.voteIndexDown = voteIndexDown;
+            this.voteIndexUp = voteIndexUp;
+            this.genreId = genreId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final GenreFragment genreFragment = new GenreFragment();
+            bundle.putString("Selection", "M");
+            bundle.putString("Discover-Mg", genreId);
+            bundle.putString("Discover-MyUp", yearIndexUp);
+            bundle.putString("Discover-MyDown", yearIndexDown);
+            bundle.putInt("Discover-MvUp", voteIndexUp);
+            bundle.putInt("Discover-MvDown", voteIndexDown);
+            genreFragment.setArguments(bundle);
+            return genreFragment;
+        }
+    }
+
     public static final class DiscoverShowScreen extends SupportAppScreen {
         private String yearIndexUp, yearIndexDown;
         private int voteIndexUp, voteIndexDown;
@@ -155,6 +183,32 @@ public final class Screens {
             bundle.putInt("Discover-SvDown", voteIndexDown);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
+        }
+    }
+
+    public static final class GenreShowScreen extends SupportAppScreen {
+        private String yearIndexUp, yearIndexDown, genreId;
+        private int voteIndexUp, voteIndexDown;
+
+        public GenreShowScreen(String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
+            this.yearIndexUp = yearIndexUp;
+            this.yearIndexDown = yearIndexDown;
+            this.voteIndexDown = voteIndexDown;
+            this.voteIndexUp = voteIndexUp;
+            this.genreId = genreId;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final GenreFragment genreFragment = new GenreFragment();
+            bundle.putString("Discover-Sg", genreId);
+            bundle.putString("Discover-SyUp", yearIndexUp);
+            bundle.putString("Discover-SyDown", yearIndexDown);
+            bundle.putInt("Discover-SvUp", voteIndexUp);
+            bundle.putInt("Discover-SvDown", voteIndexDown);
+            genreFragment.setArguments(bundle);
+            return genreFragment;
         }
     }
 

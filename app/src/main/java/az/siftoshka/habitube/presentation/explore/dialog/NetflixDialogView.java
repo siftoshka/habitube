@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.presentation.explore;
+package az.siftoshka.habitube.presentation.explore.dialog;
 
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;

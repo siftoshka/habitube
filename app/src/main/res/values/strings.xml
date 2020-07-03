@@ -124,4 +124,33 @@
     <string name="copied">IMDb link copied</string>
     <string name="open_in_netflix">Open in Netflix</string>
     <string name="discover">Discover</string>
+    
+    
+    <string name="action">Action</string>
+    <string name="adventure">Adventure</string>
+    <string name="action_adventure">Action &amp; Adventure</string>
+    <string name="animation">Animation</string>
+    <string name="comedy">Comedy</string>
+    <string name="crime">Crime</string>
+    <string name="documentary">Documentary</string>
+    <string name="drama">Drama</string>
+    <string name="family">Family</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="history">History</string>
+    <string name="horror">Horror</string>
+    <string name="music">Music</string>
+    <string name="mystery">Mystery</string>
+    <string name="romance">Romance</string>
+    <string name="scifi">Sci-Fi</string>
+    <string name="scifi_fantasy">Sci-Fi &amp; Fantasy</string>
+    <string name="tv_movie">TV Movie</string>
+    <string name="thriller">Thriller</string>
+    <string name="war">War</string>
+    <string name="war_politics">War &amp; Politics</string>
+    <string name="western">Western</string>
+    <string name="kids">Kids</string>
+    <string name="news">News</string>
+    <string name="reality">Reality</string>
+    <string name="soap">Soap</string>
+    <string name="talk">Talk</string>
 </resources>

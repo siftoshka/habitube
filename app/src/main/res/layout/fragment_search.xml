@@ -51,7 +51,7 @@
             android:background="@drawable/round_button"
             android:backgroundTint="@color/colorPrimary"
             android:padding="15dp"
-            android:src="@drawable/ic_down_arrow" />
+            android:src="@drawable/ic_down_arrow_alt" />
     </LinearLayout>
 
     <LinearLayout

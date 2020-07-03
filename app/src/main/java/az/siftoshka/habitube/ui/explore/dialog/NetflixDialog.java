@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.ui.explore;
+package az.siftoshka.habitube.ui.explore.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import com.google.android.material.button.MaterialButton;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
-import az.siftoshka.habitube.presentation.explore.NetflixDialogPresenter;
-import az.siftoshka.habitube.presentation.explore.NetflixDialogView;
+import az.siftoshka.habitube.presentation.explore.dialog.NetflixDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.dialog.NetflixDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;

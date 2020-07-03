@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -91,40 +92,7 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.mainBackground));
         }
-   //     checkUpdate();
     }
-
-    /** Updater - Not Shown (Will change in the next version) **/
-//    private void checkUpdate() {
-//        try {
-//            AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
-//            Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-//            appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-//                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-//                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-//                    showUpdateDialog();
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void showUpdateDialog() {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
-//        alertDialogBuilder.setTitle(getResources().getString(R.string.new_update))
-//                .setMessage(getResources().getString(R.string.new_update_extended))
-//                .setPositiveButton(getResources().getString(R.string.open), (arg0, arg1) -> showGooglePlay()).show();
-//    }
-//
-//    private void showGooglePlay() {
-//        final String appPackageName = getPackageName();
-//        try {
-//            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-//        } catch (android.content.ActivityNotFoundException anfe) {
-//            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-//        }
-//    }
 
     @Override
     protected void onResumeFragments() {

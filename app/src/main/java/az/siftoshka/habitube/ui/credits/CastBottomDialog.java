@@ -63,7 +63,7 @@ public class CastBottomDialog extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        GridLayoutManager layoutManagerCasts = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager layoutManagerCasts = new GridLayoutManager(requireContext(), 2);
         recyclerViewCast.setLayoutManager(layoutManagerCasts);
         recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCast.setHasFixedSize(true);

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,8 +34,9 @@ public class ImageLoader {
                 if (url != null) {
                     Glide.with(view)
                             .load(IMAGE_URL + url)
+                            .apply(new RequestOptions().override(200, 300))
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                            .placeholder(R.color.dark_900)
+                            .placeholder(R.color.just_grey)
                             .error(R.drawable.ic_missing)
                             .transform(new CenterCrop(), new RoundedCorners(16))
                             .into(into);
@@ -42,7 +44,7 @@ public class ImageLoader {
                     Glide.with(view)
                             .load(R.drawable.ic_missing)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .placeholder(R.color.dark_900)
+                            .placeholder(R.color.just_grey)
                             .into(into);
                 }
                 break;
@@ -50,6 +52,7 @@ public class ImageLoader {
                 if (url != null) {
                     Glide.with(view)
                             .load(IMAGE_URL + url)
+                            .apply(new RequestOptions().override(200, 300))
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .placeholder(R.color.dark_300)
                             .error(R.drawable.ic_missing)
@@ -70,6 +73,7 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .error(R.drawable.ic_missing)
@@ -77,6 +81,7 @@ public class ImageLoader {
         } else {
             Glide.with(view)
                     .load(R.drawable.ic_missing)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -87,6 +92,7 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .error(R.drawable.ic_missing)
@@ -94,6 +100,7 @@ public class ImageLoader {
         } else {
             Glide.with(view)
                     .load(R.drawable.ic_missing)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
                     .into(into);
@@ -104,6 +111,7 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(context)
                     .load(IMAGE_URL + url)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
@@ -113,6 +121,7 @@ public class ImageLoader {
         } else {
             Glide.with(context)
                     .load(R.drawable.ic_missing)
+                    .apply(new RequestOptions().override(200, 300))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(new ColorDrawable(Color.LTGRAY))
@@ -126,6 +135,7 @@ public class ImageLoader {
                 if (url != null) {
                     Glide.with(context)
                             .load(IMAGE_URL + url)
+                            .apply(new RequestOptions().override(720, 405))
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true)
                             .placeholder(R.color.dark_grey)
@@ -143,6 +153,7 @@ public class ImageLoader {
                 if (url != null) {
                     Glide.with(context)
                             .load(IMAGE_URL + url)
+                            .apply(new RequestOptions().override(720, 405))
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true)
                             .placeholder(R.color.white_is_white)
@@ -163,6 +174,7 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)
+                    .apply(new RequestOptions().override(720, 260))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .centerCrop()
@@ -173,6 +185,7 @@ public class ImageLoader {
             Glide.with(view)
                     .load(R.drawable.ic_missing)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .placeholder(R.color.mainBackground)
                     .into(into);
         }

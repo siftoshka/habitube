@@ -36,6 +36,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
 
@@ -229,6 +230,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         showID = show.getId();
         Glide.with(requireContext())
                 .load(IMAGE_URL + show.getPosterPath())
+                .apply(new RequestOptions().override(200, 300))
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

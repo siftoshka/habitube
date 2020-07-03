@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -129,6 +130,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                     })
                     .subscribe((movie) -> Glide.with(context)
                             .load(IMAGE_URL + movie.getPosterPath())
+                            .apply(new RequestOptions().override(200, 300))
                             .error(R.drawable.ic_missing)
                             .listener(new RequestListener<Drawable>() {
                                 @Override
@@ -178,6 +180,7 @@ public class LibraryWatchedPresenter extends MvpPresenter<LibraryWatchedView> {
                     })
                     .subscribe((show) -> Glide.with(context)
                             .load(IMAGE_URL + show.getPosterPath())
+                            .apply(new RequestOptions().override(200, 300))
                             .error(R.drawable.ic_missing)
                             .listener(new RequestListener<Drawable>() {
                                 @Override

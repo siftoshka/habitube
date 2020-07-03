@@ -150,7 +150,8 @@ public interface MovieDBApi {
         @Query("primary_release_date.lte") String releaseDateDown,
         @Query("vote_average.gte") int ratingUp,
         @Query("vote_average.lte") int ratingDown,
-        @Query("vote_count.gte") int voteCount
+        @Query("vote_count.gte") int voteCount,
+        @Query("with_genres") String genre
     );
 
     @GET("discover/tv")
@@ -164,6 +165,7 @@ public interface MovieDBApi {
             @Query("first_air_date.lte") String releaseDateDown,
             @Query("vote_average.gte") int ratingUp,
             @Query("vote_average.lte") int ratingDown,
-            @Query("vote_count.gte") int voteCount
+            @Query("vote_count.gte") int voteCount,
+            @Query("with_genres") String genre
     );
 }

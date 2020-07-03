@@ -88,7 +88,7 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
-                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                         discoverPresenter.showMoreNetflixPopular(page);
                         page++;
                     }
@@ -103,7 +103,7 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
-                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                         discoverPresenter.showMoreNetflixBest(page);
                         page++;
                     }
@@ -118,7 +118,7 @@ public class DiscoverNetflixFragment extends MvpAppCompatFragment implements Net
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
-                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && page <= 3) {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                         discoverPresenter.showMoreNetflixNew(page);
                         page++;
                     }

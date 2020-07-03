@@ -1,6 +1,7 @@
 package az.siftoshka.habitube.ui.explore;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import az.siftoshka.habitube.adapters.DiscoverAdapter;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.presentation.explore.DiscoverPresenter;
 import az.siftoshka.habitube.presentation.explore.DiscoverView;
+import az.siftoshka.habitube.presentation.explore.GenrePresenter;
+import az.siftoshka.habitube.presentation.explore.GenreView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,9 +33,9 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverView {
+public class GenreFragment extends MvpAppCompatFragment implements GenreView {
 
-    @InjectPresenter DiscoverPresenter discoverPresenter;
+    @InjectPresenter GenrePresenter genrePresenter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
@@ -40,12 +43,12 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
 
     private Unbinder unbinder;
     private DiscoverAdapter discoverAdapter;
-    private String sortSelection, yearIndexUp, yearIndexDown;
-    private int voteIndexUp ,voteIndexDown;
+    private String genreId, yearIndexUp, yearIndexDown, selection;
+    private int voteIndexUp, voteIndexDown;
 
     @ProvidePresenter
-    DiscoverPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DiscoverPresenter.class);
+    GenrePresenter genrePresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(GenrePresenter.class);
     }
 
     @Override
@@ -53,21 +56,24 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            sortSelection = bundle.getString("Discover-Ms");
-            if (sortSelection != null) {
+            selection = bundle.getString("Selection");
+            if (selection != null) {
+                Log.e("ERROR", String.valueOf(selection));
+                genreId = bundle.getString("Discover-Mg");
                 yearIndexUp = bundle.getString("Discover-MyUp");
                 yearIndexDown = bundle.getString("Discover-MyDown");
                 voteIndexUp = bundle.getInt("Discover-MvUp");
                 voteIndexDown = bundle.getInt("Discover-MvDown");
-                discoverPresenter.discoverMovies(1, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
-                discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToMovieScreen(id));
+                genrePresenter.discoverMovies(1, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId);
+                discoverAdapter = new DiscoverAdapter(id -> genrePresenter.goToMovieScreen(id));
             } else {
+                genreId = bundle.getString("Discover-Sg");
                 yearIndexUp = bundle.getString("Discover-SyUp");
                 yearIndexDown = bundle.getString("Discover-SyDown");
                 voteIndexUp = bundle.getInt("Discover-SvUp");
                 voteIndexDown = bundle.getInt("Discover-SvDown");
-                discoverPresenter.discoverShows(1, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
-                discoverAdapter = new DiscoverAdapter(id -> discoverPresenter.goToShowScreen(id));
+                genrePresenter.discoverShows(1, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId);
+                discoverAdapter = new DiscoverAdapter(id -> genrePresenter.goToShowScreen(id));
             }
         }
     }
@@ -81,7 +87,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar.setNavigationOnClickListener(v -> discoverPresenter.goBack());
+        toolbar.setNavigationOnClickListener(v -> genrePresenter.goBack());
         cToolbar.setExpandedTitleTextAppearance(R.style.CollapsingExpanded);
         cToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingCollapsed);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -89,7 +95,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(discoverAdapter);
-        if (sortSelection != null) paginateMovies();
+        if (selection != null) paginateMovies();
         else paginateShows();
     }
 
@@ -100,7 +106,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
                     if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        discoverPresenter.getMoreMovies(page, sortSelection, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
+                        genrePresenter.getMoreMovies(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId);
                         page++;
                     }
                 } catch (Exception ignored) {}
@@ -115,7 +121,7 @@ public class DiscoverFragment extends MvpAppCompatFragment implements DiscoverVi
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
                     if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        discoverPresenter.getMoreShows(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown);
+                        genrePresenter.getMoreShows(page, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId);
                         page++;
                     }
                 } catch (Exception ignored) {}

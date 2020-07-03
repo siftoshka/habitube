@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.Screens;
 import az.siftoshka.habitube.model.interactor.RemoteExploreInteractor;
+import az.siftoshka.habitube.presentation.explore.DiscoverView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -18,7 +19,7 @@ import ru.terrakok.cicerone.Router;
 import static android.content.Context.MODE_PRIVATE;
 
 @InjectViewState
-public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
+public class GenrePresenter extends MvpPresenter<GenreView> {
 
     private final Router router;
     private final Context context;
@@ -26,51 +27,51 @@ public class DiscoverPresenter extends MvpPresenter<DiscoverView> {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public DiscoverPresenter(Router router, Context context, RemoteExploreInteractor remoteExploreInteractor) {
+    public GenrePresenter(Router router, Context context, RemoteExploreInteractor remoteExploreInteractor) {
         this.router = router;
         this.context = context;
         this.remoteExploreInteractor = remoteExploreInteractor;
     }
 
-    public void discoverMovies(int page, String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+    public void discoverMovies(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, null)
+        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, null, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void discoverShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+    public void discoverShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10, null)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10, genreId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMedia(movieResponse.getResults())));
     }
 
-    public void getMoreMovies(int page, String sortSelection, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+    public void getMoreMovies(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, sortSelection, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, null)
+        compositeDisposable.add(remoteExploreInteractor.discoverMovies(page, language, null, isAdult, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, genreId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));
     }
 
-    public void getMoreShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown) {
+    public void getMoreShows(int page, String yearIndexUp, String yearIndexDown, int voteIndexUp, int voteIndexDown, String genreId) {
         String language = context.getResources().getString(R.string.language);
         SharedPreferences prefs = context.getSharedPreferences("Adult-Mode", MODE_PRIVATE);
         int idAdult = prefs.getInt("Adult", 0);
         boolean isAdult = idAdult == 1;
-        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10, null)
+        compositeDisposable.add(remoteExploreInteractor.discoverShows(page, language, "popularity.desc", isAdult, null, yearIndexUp, yearIndexDown, voteIndexUp, voteIndexDown, 10, genreId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> getViewState().showMoreMedia(movieResponse.getResults())));

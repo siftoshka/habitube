@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Fade;
@@ -22,20 +23,27 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.adapters.GenreButtonAdapter;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
+import az.siftoshka.habitube.entities.genres.Genres;
 import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
+import az.siftoshka.habitube.ui.explore.dialog.DiscoverDialog;
+import az.siftoshka.habitube.ui.explore.dialog.GenresDialog;
+import az.siftoshka.habitube.ui.explore.dialog.NetflixDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.ghyeok.stickyswitch.widget.StickySwitch;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -63,11 +71,20 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.explore_movies) MaterialButton discoverMovies;
     @BindView(R.id.explore_shows) MaterialButton discoverShows;
     @BindView(R.id.explore_netflix) LinearLayout discoverNetflix;
+    @BindView(R.id.recycler_view_genres) RecyclerView recyclerViewGenres;
+    @BindView(R.id.genres_list) LinearLayout genresList;
+    @BindView(R.id.genres_icon) ImageView genresButton;
+    @BindView(R.id.genres_view) LinearLayout genresView;
+    @BindView(R.id.sticky_switch) StickySwitch stickySwitch;
+
 
     private MovieAdapter movieAdapter, upcomingAdapter;
     private ShowAdapter showAdapter, airTodayAdapter;
+    private GenreButtonAdapter genreAdapter;
     private MessageListener messageListener;
+    private ArrayList<Genres> genres, genresShow;
     private Unbinder unbinder;
+    private int index;
 
     @ProvidePresenter
     ExplorePresenter explorePresenter() {
@@ -88,6 +105,9 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         movieAdapter = new MovieAdapter(postId -> explorePresenter.goToDetailedMovieScreen(postId), postName -> messageListener.showText(postName));
         showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
         airTodayAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
+        genreAdapter = new GenreButtonAdapter(this::showGenresDialog, requireContext());
+        initGenres();
+        initShowGenres();
     }
 
     @Override
@@ -129,8 +149,24 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewAirToday.setHasFixedSize(true);
         recyclerViewAirToday.setAdapter(airTodayAdapter);
         paginateAirToday();
+        GridLayoutManager layoutManagerGenres = new GridLayoutManager(getContext(), 2);
+        recyclerViewGenres.setLayoutManager(layoutManagerGenres);
+        recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewGenres.setHasFixedSize(true);
+        recyclerViewGenres.setAdapter(genreAdapter);
 
         initSearchDefault();
+        initGenresButtons();
+    }
+
+
+    private void showGenresDialog(String id) {
+        GenresDialog genresDialog = new GenresDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt("DISCOVER-ID", index);
+        bundle.putString("DISCOVER", id);
+        genresDialog.setArguments(bundle);
+        genresDialog.show(getChildFragmentManager(), null);
     }
 
     private void showDiscoverMovieDialog() {
@@ -288,6 +324,75 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
         editor.putInt("Search", 100);
         editor.apply();
+    }
+
+    private void initGenres() {
+        genres = new ArrayList<>();
+        genres.add(new Genres("28", R.string.action, R.drawable.ic_calendar_end));
+        genres.add(new Genres("12", R.string.adventure, R.drawable.ic_calendar_end));
+        genres.add(new Genres("16", R.string.animation, R.drawable.ic_calendar_end));
+        genres.add(new Genres("35", R.string.comedy, R.drawable.ic_calendar_end));
+        genres.add(new Genres("80", R.string.crime, R.drawable.ic_calendar_end));
+        genres.add(new Genres("99", R.string.documentary, R.drawable.ic_calendar_end));
+        genres.add(new Genres("18", R.string.drama, R.drawable.ic_calendar_end));
+        genres.add(new Genres("10751", R.string.family, R.drawable.ic_calendar_end));
+        genres.add(new Genres("14", R.string.fantasy, R.drawable.ic_calendar_end));
+        genres.add(new Genres("36", R.string.history, R.drawable.ic_calendar_end));
+        genres.add(new Genres("27", R.string.horror, R.drawable.ic_calendar_end));
+        genres.add(new Genres("10402", R.string.music, R.drawable.ic_calendar_end));
+        genres.add(new Genres("9648", R.string.mystery, R.drawable.ic_calendar_end));
+        genres.add(new Genres("10749", R.string.romance, R.drawable.ic_calendar_end));
+        genres.add(new Genres("878", R.string.scifi, R.drawable.ic_calendar_end));
+        genres.add(new Genres("10770", R.string.tv_movie, R.drawable.ic_calendar_end));
+        genres.add(new Genres("53", R.string.thriller, R.drawable.ic_calendar_end));
+        genres.add(new Genres("10752", R.string.war, R.drawable.ic_calendar_end));
+        genres.add(new Genres("37", R.string.western, R.drawable.ic_calendar_end));
+    }
+
+    private void initShowGenres() {
+        genresShow = new ArrayList<>();
+        genresShow.add(new Genres("10759", R.string.action_adventure, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("16", R.string.animation, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("35", R.string.comedy, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("80", R.string.crime, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("99", R.string.documentary, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("18", R.string.drama, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10751", R.string.family, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10762", R.string.kids, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("9648", R.string.mystery, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10763", R.string.news, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10764", R.string.reality, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10765", R.string.scifi_fantasy, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10766", R.string.soap, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10767", R.string.talk, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10768", R.string.war_politics, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("37", R.string.western, R.drawable.ic_calendar_end));
+    }
+
+    private void initGenresButtons() {
+        genresView.setOnClickListener(view -> {
+            if (genresList.getVisibility() == View.GONE) {
+                genreAdapter.addGenres(genres);
+                index = 0;
+                genresButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_up_arrow));
+                genresList.setVisibility(View.VISIBLE);
+                stickySwitch.setOnSelectedChangeListener((direction, s) -> selectedGenres(direction));
+            } else {
+                genresButton.setImageDrawable(requireContext().getDrawable(R.drawable.ic_down_arrow));
+                genresList.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void selectedGenres(StickySwitch.Direction direction) {
+        if (direction == StickySwitch.Direction.LEFT) {
+            genreAdapter.addGenres(genres);
+            index = 0;
+        }
+        else {
+            genreAdapter.addGenres(genresShow);
+            index = 1;
+        }
     }
 
     @Override

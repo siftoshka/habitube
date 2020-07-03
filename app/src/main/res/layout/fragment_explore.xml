@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -87,7 +87,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
@@ -102,12 +101,13 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/bold"
                     android:text="@string/movies"
-                    android:textColor="@color/secondColor"
+                    android:textAllCaps="false"
+                    android:textColor="@color/pinkColor"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_episodes"
                     app:iconSize="20dp"
-                    app:iconTint="@color/secondColor"
-                    app:strokeColor="@color/secondColor" />
+                    app:iconTint="@color/pinkColor"
+                    app:strokeColor="@color/pinkColor" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/explore_shows"
@@ -118,12 +118,80 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/bold"
                     android:text="@string/tv_shows"
-                    android:textColor="@color/secondColor"
+                    android:textAllCaps="false"
+                    android:textColor="@color/pinkColor"
                     app:cornerRadius="10dp"
-                    app:icon="@drawable/ic_episodes"
+                    app:icon="@drawable/ic_tv"
                     app:iconSize="20dp"
-                    app:iconTint="@color/secondColor"
-                    app:strokeColor="@color/secondColor" />
+                    app:iconTint="@color/pinkColor"
+                    app:strokeColor="@color/pinkColor" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/genres_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Movies by genres..."
+                    android:textSize="18sp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/dark_800"
+                    android:layout_weight="1"
+                    android:gravity="start"/>
+
+                <ImageView
+                    android:id="@+id/genres_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_down_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/genres_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:animateLayoutChanges="true"
+                android:background="@color/expandBackground"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <io.ghyeok.stickyswitch.widget.StickySwitch
+                    android:id="@+id/sticky_switch"
+                    android:layout_width="130dp"
+                    android:layout_height="65dp"
+                    app:ss_animationDuration="450"
+                    app:ss_iconPadding="16dp"
+                    app:ss_iconSize="16dp"
+                    app:ss_leftIcon="@drawable/ic_episodes"
+                    app:ss_leftText="@string/movies"
+                    app:ss_rightIcon="@drawable/ic_tv"
+                    app:ss_rightText="@string/tv_shows"
+                    app:ss_selectedTextSize="10sp"
+                    app:ss_sliderBackgroundColor="@color/genreBackground"
+                    app:ss_switchColor="@color/colorPrimary"
+                    app:ss_textColor="@color/dark_800"
+                    app:ss_textSize="10sp"
+                    app:ss_animationType="line"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_genres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
@@ -190,10 +258,10 @@
                 android:backgroundTint="@color/background"
                 android:elevation="1dp"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingStart="20dp"
-                android:paddingEnd="20dp">
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:layout_width="120dp"
