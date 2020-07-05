@@ -87,69 +87,58 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:background="@color/expandBackground"
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/explore_movies"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/movies"
-                    android:textAllCaps="false"
-                    android:textColor="@color/pinkColor"
-                    app:cornerRadius="10dp"
-                    app:icon="@drawable/ic_episodes"
-                    app:iconSize="20dp"
-                    app:iconTint="@color/pinkColor"
-                    app:strokeColor="@color/pinkColor" />
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/explore_shows"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/tv_shows"
-                    android:textAllCaps="false"
-                    android:textColor="@color/pinkColor"
-                    app:cornerRadius="10dp"
-                    app:icon="@drawable/ic_tv"
-                    app:iconSize="20dp"
-                    app:iconTint="@color/pinkColor"
-                    app:strokeColor="@color/pinkColor" />
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/explore_movies"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/movies"
+                        android:textAllCaps="false"
+                        android:textColor="@color/pinkColor"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_episodes"
+                        app:iconSize="20dp"
+                        app:iconTint="@color/pinkColor"
+                        app:strokeColor="@color/pinkColor" />
 
-            <LinearLayout
-                android:id="@+id/genres_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Movies by genres..."
-                    android:textSize="18sp"
-                    android:fontFamily="@font/bold"
-                    android:textColor="@color/dark_800"
-                    android:layout_weight="1"
-                    android:gravity="start"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/explore_shows"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/tv_shows"
+                        android:textAllCaps="false"
+                        android:textColor="@color/pinkColor"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_tv"
+                        app:iconSize="20dp"
+                        app:iconTint="@color/pinkColor"
+                        app:strokeColor="@color/pinkColor" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/genres_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:padding="5dp"
                     android:src="@drawable/ic_down_arrow" />
             </LinearLayout>
@@ -171,6 +160,7 @@
                     android:layout_width="130dp"
                     android:layout_height="65dp"
                     app:ss_animationDuration="450"
+                    app:ss_animationType="line"
                     app:ss_iconPadding="16dp"
                     app:ss_iconSize="16dp"
                     app:ss_leftIcon="@drawable/ic_episodes"
@@ -181,15 +171,16 @@
                     app:ss_sliderBackgroundColor="@color/genreBackground"
                     app:ss_switchColor="@color/colorPrimary"
                     app:ss_textColor="@color/dark_800"
-                    app:ss_textSize="10sp"
-                    app:ss_animationType="line"/>
+                    app:ss_textSize="10sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_genres"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:clipToPadding="false"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:clipToPadding="true"
                     android:overScrollMode="never"
                     tools:ignore="RtlSymmetry" />
             </LinearLayout>
@@ -198,6 +189,7 @@
                 android:id="@+id/upcoming_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:visibility="gone">

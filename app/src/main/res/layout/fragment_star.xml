@@ -136,35 +136,10 @@
                         android:fontFamily="@font/regular"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:singleLine="true"
+                        android:maxLines="2"
                         android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="LOCATION" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:padding="3dp"
-                        android:src="@drawable/ic_rate" />
-
-                    <TextView
-                        android:id="@+id/poster_person_popularity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_600"
-                        android:textSize="18sp"
-                        tools:text="POPULARITY" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,8 +47,8 @@ public class GenreButtonAdapter extends RecyclerView.Adapter<GenreButtonAdapter.
     @Override
     public void onBindViewHolder(@NonNull GenreButtonHolder holder, final int position) {
         final Genres genres = this.genres.get(position);
-        holder.button.setText(genres.getName());
-        holder.button.setIcon(context.getDrawable(genres.getImage()));
+        holder.text.setText(genres.getName());
+        holder.image.setImageDrawable(context.getDrawable(genres.getImage()));
         holder.button.setOnClickListener(view -> clickListener.onClickListener(genres.getId()));
     }
 
@@ -69,11 +70,15 @@ public class GenreButtonAdapter extends RecyclerView.Adapter<GenreButtonAdapter.
 
     static class GenreButtonHolder extends RecyclerView.ViewHolder {
 
-        MaterialButton button;
+        RelativeLayout button;
+        TextView text;
+        ImageView image;
 
         GenreButtonHolder(@NonNull View itemView) {
             super(itemView);
             this.button = itemView.findViewById(R.id.genres);
+            this.text = itemView.findViewById(R.id.genres_text);
+            this.image = itemView.findViewById(R.id.genres_image);
         }
     }
 }

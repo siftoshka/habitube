@@ -74,7 +74,6 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.recycler_view_genres) RecyclerView recyclerViewGenres;
     @BindView(R.id.genres_list) LinearLayout genresList;
     @BindView(R.id.genres_icon) ImageView genresButton;
-    @BindView(R.id.genres_view) LinearLayout genresView;
     @BindView(R.id.sticky_switch) StickySwitch stickySwitch;
 
 
@@ -328,49 +327,49 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
 
     private void initGenres() {
         genres = new ArrayList<>();
-        genres.add(new Genres("28", R.string.action, R.drawable.ic_calendar_end));
-        genres.add(new Genres("12", R.string.adventure, R.drawable.ic_calendar_end));
-        genres.add(new Genres("16", R.string.animation, R.drawable.ic_calendar_end));
-        genres.add(new Genres("35", R.string.comedy, R.drawable.ic_calendar_end));
-        genres.add(new Genres("80", R.string.crime, R.drawable.ic_calendar_end));
-        genres.add(new Genres("99", R.string.documentary, R.drawable.ic_calendar_end));
-        genres.add(new Genres("18", R.string.drama, R.drawable.ic_calendar_end));
-        genres.add(new Genres("10751", R.string.family, R.drawable.ic_calendar_end));
-        genres.add(new Genres("14", R.string.fantasy, R.drawable.ic_calendar_end));
-        genres.add(new Genres("36", R.string.history, R.drawable.ic_calendar_end));
-        genres.add(new Genres("27", R.string.horror, R.drawable.ic_calendar_end));
-        genres.add(new Genres("10402", R.string.music, R.drawable.ic_calendar_end));
-        genres.add(new Genres("9648", R.string.mystery, R.drawable.ic_calendar_end));
-        genres.add(new Genres("10749", R.string.romance, R.drawable.ic_calendar_end));
-        genres.add(new Genres("878", R.string.scifi, R.drawable.ic_calendar_end));
-        genres.add(new Genres("10770", R.string.tv_movie, R.drawable.ic_calendar_end));
-        genres.add(new Genres("53", R.string.thriller, R.drawable.ic_calendar_end));
-        genres.add(new Genres("10752", R.string.war, R.drawable.ic_calendar_end));
-        genres.add(new Genres("37", R.string.western, R.drawable.ic_calendar_end));
+        genres.add(new Genres("28", R.string.action, R.drawable.ic_genre_action));
+        genres.add(new Genres("12", R.string.adventure, R.drawable.ic_genre_adventure));
+        genres.add(new Genres("16", R.string.animation, R.drawable.ic_genre_animation));
+        genres.add(new Genres("35", R.string.comedy, R.drawable.ic_genre_comedy));
+        genres.add(new Genres("80", R.string.crime, R.drawable.ic_genre_crime));
+        genres.add(new Genres("99", R.string.documentary, R.drawable.ic_genre_documentary));
+        genres.add(new Genres("18", R.string.drama, R.drawable.ic_genre_drama));
+        genres.add(new Genres("10751", R.string.family, R.drawable.ic_genre_family));
+        genres.add(new Genres("14", R.string.fantasy, R.drawable.ic_genre_fantasy));
+        genres.add(new Genres("36", R.string.history, R.drawable.ic_genre_history));
+        genres.add(new Genres("27", R.string.horror, R.drawable.ic_genre_horror));
+        genres.add(new Genres("10402", R.string.music, R.drawable.ic_genre_music));
+        genres.add(new Genres("9648", R.string.mystery, R.drawable.ic_genre_mystery));
+        genres.add(new Genres("10749", R.string.romance, R.drawable.ic_genre_romance));
+        genres.add(new Genres("878", R.string.scifi, R.drawable.ic_genre_scifi));
+        genres.add(new Genres("10770", R.string.tv_movie, R.drawable.ic_genre_tvmovie));
+        genres.add(new Genres("53", R.string.thriller, R.drawable.ic_genre_thriller));
+        genres.add(new Genres("10752", R.string.war, R.drawable.ic_genre_war));
+        genres.add(new Genres("37", R.string.western, R.drawable.ic_genre_western));
     }
 
     private void initShowGenres() {
         genresShow = new ArrayList<>();
-        genresShow.add(new Genres("10759", R.string.action_adventure, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("16", R.string.animation, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("35", R.string.comedy, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("80", R.string.crime, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("99", R.string.documentary, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("18", R.string.drama, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10751", R.string.family, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10762", R.string.kids, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("9648", R.string.mystery, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10763", R.string.news, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10764", R.string.reality, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10765", R.string.scifi_fantasy, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10766", R.string.soap, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10767", R.string.talk, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("10768", R.string.war_politics, R.drawable.ic_calendar_end));
-        genresShow.add(new Genres("37", R.string.western, R.drawable.ic_calendar_end));
+        genresShow.add(new Genres("10759", R.string.action_adventure, R.drawable.ic_genre_adventure));
+        genresShow.add(new Genres("16", R.string.animation, R.drawable.ic_genre_animation));
+        genresShow.add(new Genres("35", R.string.comedy, R.drawable.ic_genre_comedy));
+        genresShow.add(new Genres("80", R.string.crime, R.drawable.ic_genre_crime));
+        genresShow.add(new Genres("99", R.string.documentary, R.drawable.ic_genre_documentary));
+        genresShow.add(new Genres("18", R.string.drama, R.drawable.ic_genre_drama));
+        genresShow.add(new Genres("10751", R.string.family, R.drawable.ic_genre_family));
+        genresShow.add(new Genres("10762", R.string.kids, R.drawable.ic_genre_kids));
+        genresShow.add(new Genres("9648", R.string.mystery, R.drawable.ic_genre_mystery));
+        genresShow.add(new Genres("10763", R.string.news, R.drawable.ic_genre_news));
+        genresShow.add(new Genres("10764", R.string.reality, R.drawable.ic_genre_reality));
+        genresShow.add(new Genres("10765", R.string.scifi_fantasy, R.drawable.ic_genre_scifi));
+        genresShow.add(new Genres("10766", R.string.soap, R.drawable.ic_genre_soap));
+        genresShow.add(new Genres("10767", R.string.talk, R.drawable.ic_genre_talk));
+        genresShow.add(new Genres("10768", R.string.war_politics, R.drawable.ic_genre_war));
+        genresShow.add(new Genres("37", R.string.western, R.drawable.ic_genre_western));
     }
 
     private void initGenresButtons() {
-        genresView.setOnClickListener(view -> {
+        genresButton.setOnClickListener(view -> {
             if (genresList.getVisibility() == View.GONE) {
                 genreAdapter.addGenres(genres);
                 index = 0;

@@ -25,6 +25,8 @@ import az.siftoshka.habitube.entities.movie.Movie;
 import az.siftoshka.habitube.entities.show.Show;
 import az.siftoshka.habitube.presentation.library.LibraryPlanningPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
+import az.siftoshka.habitube.utils.CurrencyFormatter;
+import az.siftoshka.habitube.utils.DateChanger;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,8 +34,12 @@ import butterknife.Unbinder;
 public class OptionMenuDialog extends BottomSheetDialogFragment {
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
-    @BindView(R.id.poster_post) ImageView image;
-    @BindView(R.id.poster_title) TextView title;
+    @BindView(R.id.poster_movie_post) ImageView posterMain;
+    @BindView(R.id.poster_title) TextView posterTitle;
+    @BindView(R.id.poster_date) TextView posterDate;
+    @BindView(R.id.poster_rate) TextView posterRate;
+    @BindView(R.id.poster_views) TextView posterViews;
+    @BindView(R.id.poster_duration) TextView posterDuration;
     @BindView(R.id.remove_watched_button) MaterialButton removeWatchedButton;
     @BindView(R.id.remove_planning_button) MaterialButton removePLanningButton;
 
@@ -43,6 +49,7 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
     private Unbinder unbinder;
     private LibraryPlanningPresenter planningPresenter;
     private LibraryWatchedPresenter watchedPresenter;
+    private DateChanger dateChanger = new DateChanger();
 
     public OptionMenuDialog(LibraryPlanningPresenter planningPresenter, LibraryWatchedPresenter watchedPresenter) {
         this.planningPresenter = planningPresenter;
@@ -86,11 +93,15 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
             try {
                 File f = new File(requireContext().getFilesDir().getPath() + movieP.getPosterPath());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                image.setImageBitmap(b);
+                posterMain.setImageBitmap(b);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            title.setText(movieP.getTitle());
+            posterTitle.setText(movieP.getTitle());
+            posterDate.setText(dateChanger.changeDate(movieP.getReleaseDate()));
+            posterRate.setText(String.valueOf(movieP.getVoteAverage()));
+            posterViews.setText("(" + movieP.getVoteCount() + ")");
+            posterDuration.setText(movieP.getRuntime() + " " + getResources().getString(R.string.minutes));
             removeWatchedButton.setVisibility(View.GONE);
             removePLanningButton.setVisibility(View.VISIBLE);
             removePLanningButton.setOnClickListener(view1 -> {planningPresenter.removeFromLocal(movieP, position);dismiss();});
@@ -98,11 +109,15 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
             try {
                 File f = new File(requireContext().getFilesDir().getPath() + movieW.getPosterPath());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                image.setImageBitmap(b);
+                posterMain.setImageBitmap(b);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            title.setText(movieW.getTitle());
+            posterTitle.setText(movieW.getTitle());
+            posterDate.setText(dateChanger.changeDate(movieW.getReleaseDate()));
+            posterRate.setText(String.valueOf(movieW.getVoteAverage()));
+            posterViews.setText("(" + movieW.getVoteCount() + ")");
+            posterDuration.setText(movieW.getRuntime() + " " + getResources().getString(R.string.minutes));
             removeWatchedButton.setVisibility(View.VISIBLE);
             removePLanningButton.setVisibility(View.GONE);
             removeWatchedButton.setOnClickListener(view1 -> {watchedPresenter.removeFromLocal(movieW, position);dismiss();});
@@ -110,11 +125,15 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
             try {
                 File f = new File(requireContext().getFilesDir().getPath() + showP.getPosterPath());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                image.setImageBitmap(b);
+                posterMain.setImageBitmap(b);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            title.setText(showP.getName());
+            posterTitle.setText(showP.getName());
+            posterDate.setText(dateChanger.changeDate(showP.getFirstAirDate()));
+            posterRate.setText(String.valueOf(showP.getVoteAverage()));
+            posterViews.setText("(" + showP.getVoteCount() + ")");
+            posterDuration.setText(showP.getNumberOfEpisodes() + " " + getResources().getString(R.string.episodes));
             removeWatchedButton.setVisibility(View.GONE);
             removePLanningButton.setVisibility(View.VISIBLE);
             removePLanningButton.setOnClickListener(view1 -> {planningPresenter.removeFromLocal(showP, position);dismiss();});
@@ -122,11 +141,15 @@ public class OptionMenuDialog extends BottomSheetDialogFragment {
             try {
                 File f = new File(requireContext().getFilesDir().getPath() + showW.getPosterPath());
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                image.setImageBitmap(b);
+                posterMain.setImageBitmap(b);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            title.setText(showW.getName());
+            posterTitle.setText(showW.getName());
+            posterDate.setText(dateChanger.changeDate(showW.getFirstAirDate()));
+            posterRate.setText(String.valueOf(showW.getVoteAverage()));
+            posterViews.setText("(" + showW.getVoteCount() + ")");
+            posterDuration.setText(showW.getNumberOfEpisodes() + " " + getResources().getString(R.string.episodes));
             removeWatchedButton.setVisibility(View.VISIBLE);
             removePLanningButton.setVisibility(View.GONE);
             removeWatchedButton.setOnClickListener(view1 -> {watchedPresenter.removeFromLocal(showW, position);dismiss();});

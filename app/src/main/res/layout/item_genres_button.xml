@@ -1,19 +1,33 @@
-<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:test="http://schemas.android.com/tools"
     android:id="@+id/genres"
-    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-    android:layout_width="180dp"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/bold"
-    android:textAllCaps="false"
+    android:layout_width="185dp"
+    android:layout_height="60dp"
+    android:background="@drawable/round_button_genres"
+    android:backgroundTint="@color/just_grey"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginEnd="3dp"
+    android:gravity="center_horizontal"
     android:layout_gravity="center_horizontal"
-    android:textColor="@color/pinkColor"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    app:cornerRadius="10dp"
-    app:iconSize="20dp"
-    app:iconTint="@color/pinkColor"
-    app:strokeColor="@color/pinkColor"
-    test:icon="@drawable/ic_episodes"
-    test:text="@string/movies" />
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/genres_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:layout_marginEnd="50dp"
+        android:textSize="18sp"
+        test:text="Adventure"
+        android:textColor="@color/white_is_white"/>
+
+    <ImageView
+        android:id="@+id/genres_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        test:src="@drawable/ic_tv" />
+</RelativeLayout>

@@ -68,7 +68,6 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.poster_person_title) TextView posterPersonName;
     @BindView(R.id.poster_person_birthdate) TextView posterPersonBirthDate;
     @BindView(R.id.poster_person_location) TextView posterPersonLocation;
-    @BindView(R.id.poster_person_popularity) TextView posterPersonPopularity;
     @BindView(R.id.poster_person_bio) TextView posterPersonBio;
     @BindView(R.id.bio_person_card_layout) LinearLayout personBioCard;
     @BindView(R.id.imdb_button) MaterialButton imdbButton;
@@ -170,7 +169,6 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonName.setText(person.getName());
         posterPersonBirthDate.setText(dateChanger.changeDate(person.getBirthday()));
         posterPersonLocation.setText(person.getPlaceOfBirth());
-        posterPersonPopularity.setText(String.valueOf(person.getPopularity()));
         posterPersonBio.setText(person.getBiography());
         checkDescription(person);
         checkImdbAvailability(person);
