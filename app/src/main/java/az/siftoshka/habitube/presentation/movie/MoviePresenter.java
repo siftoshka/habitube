@@ -242,6 +242,10 @@ public class MoviePresenter extends MvpPresenter<MovieView> {
         router.navigateTo(new Screens.SearchItemScreen(id, 3));
     }
 
+    public void goToGenreScreen(String id) {
+        router.navigateTo(new Screens.GenreScreen(null, null, 0, 10, id));
+    }
+
     public Router getRouter() {
         return router;
     }

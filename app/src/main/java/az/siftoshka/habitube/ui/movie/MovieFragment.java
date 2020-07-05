@@ -170,7 +170,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         videoAdapter = new VideoAdapter(this::showVideo);
         castAdapter = new CastAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> moviePresenter.goToDetailedPersonScreen(id));
-        genreAdapter = new GenreAdapter();
+        genreAdapter = new GenreAdapter(id -> moviePresenter.goToGenreScreen(id));
     }
 
     @Override

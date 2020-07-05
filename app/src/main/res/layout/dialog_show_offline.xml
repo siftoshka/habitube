@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="3dp"
-                    android:fontFamily="@font/bold"
+                    android:fontFamily="@font/regular"
                     android:singleLine="true"
                     android:textColor="@color/dark_800"
                     android:textSize="22sp"

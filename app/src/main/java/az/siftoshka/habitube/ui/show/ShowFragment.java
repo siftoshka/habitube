@@ -172,7 +172,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         seasonAdapter = new SeasonAdapter(this::showBottomSeasonDialog);
         castAdapter = new CastAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
         crewAdapter = new CrewAdapter(id -> showPresenter.goToDetailedPersonScreen(id));
-        genreAdapter = new GenreShowAdapter();
+        genreAdapter = new GenreShowAdapter(id -> showPresenter.goToGenreScreen(id));
     }
 
     @Override
