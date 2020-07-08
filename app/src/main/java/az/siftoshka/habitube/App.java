@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
 
+import androidx.annotation.Keep;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.database.FirebaseDatabase;

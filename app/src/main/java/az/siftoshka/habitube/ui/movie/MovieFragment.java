@@ -78,6 +78,7 @@ import toothpick.Toothpick;
 
 import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
+import static az.siftoshka.habitube.Constants.SYSTEM.MOVIE_THEMOVIEDB;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class MovieFragment extends MvpAppCompatFragment implements MovieView {
@@ -126,7 +127,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @BindView(R.id.cast_text) TextView castText;
     @BindView(R.id.crew_text) TextView crewText;
     @BindView(R.id.refresh) ImageView refreshButton;
-
+    @BindView(R.id.share_button) ImageView shareButton;
 
     private SimilarMovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;
@@ -275,6 +276,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         moviePresenter.isPlannedMovieChanged(movie.getId(), movie);
         moviePresenter.isWatchedMovieChanged(movie.getId(), movie);
         moviePresenter.getSavedWMovieId(movie.getId());
+        showShareButton(movie.getId());
     }
 
     private void addMovieToWatched(Movie movie) {
@@ -412,6 +414,16 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             case 101: initTabCredits(); break;
             case 102: initTabSimilar(); break;
         }
+    }
+
+    private void showShareButton(int movieId) {
+        shareButton.setOnClickListener(view -> {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Sent via Habitube App");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, MOVIE_THEMOVIEDB + movieId);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        });
     }
 
     @Override

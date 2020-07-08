@@ -1,5 +1,8 @@
 package az.siftoshka.habitube.ui.explore.dialog;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.dialog.NetflixDialogPresenter;
 import az.siftoshka.habitube.presentation.explore.dialog.NetflixDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
@@ -33,6 +37,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     @BindView(R.id.date) MaterialButton newButton;
 
     private Unbinder unbinder;
+    private MessageListener messageListener;
 
     @ProvidePresenter
     NetflixDialogPresenter discoverPresenter() {
@@ -43,6 +48,12 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetTheme);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
     }
 
     @Override
@@ -59,9 +70,39 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     }
 
     private void setDialog() {
-        popularButton.setOnClickListener(view -> discoverPresenter.showNetflixPopular());
-        bestButton.setOnClickListener(view -> discoverPresenter.showNetflixBest());
-        newButton.setOnClickListener(view -> discoverPresenter.showNetflixNew());
+        popularButton.setOnClickListener(view -> showNetflixPopular());
+        bestButton.setOnClickListener(view -> showNetflixBest());
+        newButton.setOnClickListener(view -> showNetflixNew());
+    }
+
+    private void showNetflixPopular() {
+        if (haveNetworkConnection()) discoverPresenter.showNetflixPopular();
+        else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
+    }
+
+    private void showNetflixBest() {
+        if (haveNetworkConnection()) discoverPresenter.showNetflixBest();
+        else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
+    }
+
+    private void showNetflixNew() {
+        if (haveNetworkConnection()) discoverPresenter.showNetflixNew();
+        else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm != null ? cm.getAllNetworkInfo() : new NetworkInfo[0];
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected()) haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected()) haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 
     @Override

@@ -40,7 +40,22 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@null"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back_w" />
+            app:navigationIcon="@drawable/ic_back_w">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/share_button"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentEnd="true"
+                    android:cropToPadding="true"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_share" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <ImageView
             android:id="@+id/poster_background"

@@ -1,6 +1,9 @@
 package az.siftoshka.habitube.ui.explore.dialog;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.google.android.material.slider.RangeSlider;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
+import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.dialog.DiscoverDialogPresenter;
 import az.siftoshka.habitube.presentation.explore.dialog.DiscoverDialogView;
 import az.siftoshka.habitube.presentation.explore.dialog.GenresDialogPresenter;
@@ -44,6 +48,7 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
     private short index;
     private int voteIndexUp, voteIndexDown;
     private String yearIndexUp, yearIndexDown, genreId;
+    private MessageListener messageListener;
 
     @ProvidePresenter
     GenresDialogPresenter genresDialogPresenter() {
@@ -60,6 +65,12 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
             if (bundle.getInt("DISCOVER-ID") == 0) index = 0;
             else if (bundle.getInt("DISCOVER-ID") == 1) index = 1;
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MessageListener) this.messageListener = (MessageListener) context;
     }
 
     @Override
@@ -92,7 +103,7 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
                 voteIndexDown = slider1.getValues().get(1).intValue();
                 textVote.setText(voteIndexUp + " - " + voteIndexDown);
             });
-            discoverButton.setOnClickListener(view -> genresDialogPresenter.goToDiscoverScreen(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId));
+            discoverButton.setOnClickListener(view -> discoverMovies());
         }
 
         if (index == 1) {
@@ -109,8 +120,7 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
                 voteIndexDown = slider1.getValues().get(1).intValue();
                 textVote.setText(voteIndexUp + " - " + voteIndexDown);
             });
-            discoverButton.setOnClickListener(view -> genresDialogPresenter.goToDiscoverShowScreen(yearIndexUp + "-01-01",
-                    yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId));
+            discoverButton.setOnClickListener(view -> discoverShows());
         }
     }
 
@@ -136,6 +146,35 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
         voteIndexDown = sliderVote.getValues().get(1).intValue();
         textVote.setText(sliderVote.getValues().get(0).intValue() + " - " + sliderVote.getValues().get(1).intValue());
         textYear.setText(sliderYear.getValues().get(0).intValue() + " - " + sliderYear.getValues().get(1).intValue());
+    }
+
+    private void discoverMovies() {
+        if (haveNetworkConnection())
+            genresDialogPresenter.goToDiscoverScreen(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId);
+        else
+            messageListener.showInternetError(getResources().getString(R.string.error_text_body));
+    }
+
+    private void discoverShows() {
+        if (haveNetworkConnection())
+            genresDialogPresenter.goToDiscoverShowScreen(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId);
+        else
+            messageListener.showInternetError(getResources().getString(R.string.error_text_body));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm != null ? cm.getAllNetworkInfo() : new NetworkInfo[0];
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected()) haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected()) haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 
     @Override

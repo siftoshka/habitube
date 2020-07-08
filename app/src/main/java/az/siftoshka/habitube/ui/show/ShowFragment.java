@@ -80,6 +80,8 @@ import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.DI.APP_SCOPE;
 import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
+import static az.siftoshka.habitube.Constants.SYSTEM.MOVIE_THEMOVIEDB;
+import static az.siftoshka.habitube.Constants.SYSTEM.TV_THEMOVIEDB;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
@@ -129,6 +131,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.show_netflix) MaterialButton showNetflix;
+    @BindView(R.id.share_button) ImageView shareButton;
 
     private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
@@ -277,6 +280,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         showPresenter.isWatchedShowChanged(show.getId(), show);
         showPresenter.getSavedWShowId(show.getId());
         showNetflixPage(show.getHomepage());
+        showShareButton(show.getId());
     }
 
     private void addMovieToWatched(Show show) {
@@ -440,6 +444,16 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             case 101: initTabCredits(); break;
             case 102: initTabSimilar(); break;
         }
+    }
+
+    private void showShareButton(int movieId) {
+        shareButton.setOnClickListener(view -> {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Sent via Habitube App");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, TV_THEMOVIEDB + movieId);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        });
     }
 
     @Override
