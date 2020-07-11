@@ -64,6 +64,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @BindView(R.id.person_screen) RelativeLayout personScreen;
     @BindView(R.id.loading_screen) View loadingScreen;
     @BindView(R.id.error_screen) View errorScreen;
+    @BindView(R.id.empty_screen) View emptyScreen;
     @BindView(R.id.poster_person_post) ImageView posterPerson;
     @BindView(R.id.poster_person_title) TextView posterPersonName;
     @BindView(R.id.poster_person_birthdate) TextView posterPersonBirthDate;
@@ -170,7 +171,6 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonBirthDate.setText(dateChanger.changeDate(person.getBirthday()));
         posterPersonLocation.setText(person.getPlaceOfBirth());
         posterPersonBio.setText(person.getBiography());
-        checkDescription(person);
         checkImdbAvailability(person);
     }
 
@@ -181,6 +181,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         tabInfoCard.setVisibility(View.VISIBLE);
         tabMovieCreditsCard.setVisibility(View.GONE);
         tabShowCreditsCard.setVisibility(View.GONE);
+        checkDescription();
     }
 
     private void initTabMovies() {
@@ -190,6 +191,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         tabInfoCard.setVisibility(View.GONE);
         tabMovieCreditsCard.setVisibility(View.VISIBLE);
         tabShowCreditsCard.setVisibility(View.GONE);
+        checkMoviesExist();
     }
 
     private void initTabShows() {
@@ -199,6 +201,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         tabInfoCard.setVisibility(View.GONE);
         tabMovieCreditsCard.setVisibility(View.GONE);
         tabShowCreditsCard.setVisibility(View.VISIBLE);
+        checkShowsExist();
     }
 
     private void initTabs() {
@@ -227,6 +230,47 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
             case 101: initTabMovies(); break;
             case 102: initTabShows(); break;
         }
+    }
+
+    private void checkMoviesExist() {
+        if (movieCastAdapter.getItemCount() == 0 && movieCrewAdapter.getItemCount() == 0)
+            emptyScreen.setVisibility(View.VISIBLE);
+        else emptyScreen.setVisibility(View.GONE);
+    }
+
+    private void checkShowsExist() {
+        if (showCastAdapter.getItemCount() == 0 && showCrewAdapter.getItemCount() == 0)
+            emptyScreen.setVisibility(View.VISIBLE);
+        else emptyScreen.setVisibility(View.GONE);
+    }
+
+    private void checkDescription() {
+        if (posterPersonBio.getText().toString().equals("")) {
+            personBioCard.setVisibility(View.GONE);
+            emptyScreen.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkImdbAvailability(Person person) {
+        if (!person.getImdbId().equals("")) {
+            socialLayout.setVisibility(View.VISIBLE);
+            showImdbWeb(person.getImdbId());
+        }
+    }
+
+    private void showImdbWeb(String imdbId) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(Constants.SYSTEM.IMDB_PERSON + imdbId));
+        imdbButton.setOnClickListener(v -> startActivity(intent));
+        imdbButton.setOnLongClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(getString(R.string.copied), Constants.SYSTEM.IMDB_PERSON + imdbId);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                messageListener.showText(getString(R.string.copied));
+            }
+            return true;
+        });
     }
 
     @Override
@@ -298,32 +342,6 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
             bundle.putParcelableArrayList("SCREW", (ArrayList<? extends Parcelable>) crews);
             crewBottomDialog.setArguments(bundle);
             crewBottomDialog.show(getChildFragmentManager(), null);
-        });
-    }
-
-    private void checkDescription(Person person) {
-        if (person.getBiography().equals("")) personBioCard.setVisibility(View.GONE);
-    }
-
-    private void checkImdbAvailability(Person person) {
-        if (!person.getImdbId().equals("")) {
-            socialLayout.setVisibility(View.VISIBLE);
-            showImdbWeb(person.getImdbId());
-        }
-    }
-
-    private void showImdbWeb(String imdbId) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(Constants.SYSTEM.IMDB_PERSON + imdbId));
-        imdbButton.setOnClickListener(v -> startActivity(intent));
-        imdbButton.setOnLongClickListener(view -> {
-            ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText(getString(R.string.copied), Constants.SYSTEM.IMDB_PERSON + imdbId);
-            if (clipboard != null) {
-                clipboard.setPrimaryClip(clip);
-                messageListener.showText(getString(R.string.copied));
-            }
-            return true;
         });
     }
 

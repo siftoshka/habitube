@@ -82,6 +82,7 @@ import static az.siftoshka.habitube.Constants.DI.POST_SCOPE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.MOVIE_THEMOVIEDB;
 import static az.siftoshka.habitube.Constants.SYSTEM.TV_THEMOVIEDB;
+import static az.siftoshka.habitube.Constants.SYSTEM.VIMEO_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
@@ -325,10 +326,16 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         });
     }
 
-    private void showVideo(String videoKey) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
-        startActivity(intent);
+    private void showVideo(String site, String videoKey) {
+        if (site.equals("Youtube")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+            startActivity(intent);
+        } else if (site.equals("Vimeo")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(VIMEO_URL + videoKey));
+            startActivity(intent);
+        }
     }
 
     private void episodeRuntime(String episodeRuntime) {

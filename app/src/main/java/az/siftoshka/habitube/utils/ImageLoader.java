@@ -241,4 +241,15 @@ public class ImageLoader {
                 .error(R.drawable.ic_missing)
                 .into(image);
     }
+
+    public static void loadVimeo(View view, String key, ImageView image) {
+        Glide.with(view)
+                .load("https://vumbnail.com/" + key + ".jpg")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .centerCrop()
+                .placeholder(new ColorDrawable(Color.LTGRAY))
+                .error(R.drawable.ic_missing)
+                .into(image);
+    }
 }

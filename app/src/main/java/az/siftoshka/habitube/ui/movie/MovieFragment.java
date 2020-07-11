@@ -79,6 +79,7 @@ import toothpick.Toothpick;
 import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.MOVIE_THEMOVIEDB;
+import static az.siftoshka.habitube.Constants.SYSTEM.VIMEO_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class MovieFragment extends MvpAppCompatFragment implements MovieView {
@@ -325,10 +326,16 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         });
     }
 
-    private void showVideo(String videoKey) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
-        startActivity(intent);
+    private void showVideo(String site, String videoKey) {
+        if (site.equals("Youtube")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(YOUTUBE_URL + videoKey));
+            startActivity(intent);
+        } else if (site.equals("Vimeo")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(VIMEO_URL + videoKey));
+            startActivity(intent);
+        }
     }
 
     private void paginateSimilarMovies() {

@@ -19,7 +19,7 @@ import az.siftoshka.habitube.utils.ImageLoader;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder> {
 
     public interface VideoItemClickListener {
-        void onPostClicked(String videoKey);
+        void onPostClicked(String site, String videoKey);
     }
 
     private List<Video> videos;
@@ -40,10 +40,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     @Override
     public void onBindViewHolder(@NonNull VideoHolder holder, final int position) {
         final Video video = this.videos.get(position);
+        holder.posterTitle.setText(video.getName());
         if (video.getSite().contains("YouTube")) {
-            holder.posterTitle.setText(video.getName());
             ImageLoader.loadYoutube(holder.itemView, video.getKey(), holder.posterImage);
-            holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(video.getKey()));
+            holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked("Youtube", video.getKey()));
+        } else if (video.getSite().contains("Vimeo")){
+            ImageLoader.loadVimeo(holder.itemView, video.getKey(), holder.posterImage);
+            holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked("Vimeo", video.getKey()));
         }
     }
 

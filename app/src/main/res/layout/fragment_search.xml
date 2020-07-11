@@ -57,15 +57,16 @@
     <LinearLayout
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:orientation="horizontal"
+        android:paddingBottom="5dp"
         android:visibility="gone">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:overScrollMode="never">
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <RadioGroup
                 android:layout_width="wrap_content"

@@ -242,28 +242,28 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     private void radioListener() {
         radioMulti.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            pageDown.setImageResource(R.drawable.ic_down_arrow_alt);
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
             editor.putInt("Search", 100);
             editor.apply();
         });
         radioMovie.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            pageDown.setImageResource(R.drawable.ic_down_arrow_alt);
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
             editor.putInt("Search", 101);
             editor.apply();
         });
         radioShow.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            pageDown.setImageResource(R.drawable.ic_down_arrow_alt);
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
             editor.putInt("Search", 102);
             editor.apply();
         });
         radioPeople.setOnClickListener(view -> {
             radioLayout.setVisibility(View.GONE);
-            pageDown.setImageResource(R.drawable.ic_down_arrow);
+            pageDown.setImageResource(R.drawable.ic_down_arrow_alt);
             SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
             editor.putInt("Search", 103);
             editor.apply();

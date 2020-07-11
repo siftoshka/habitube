@@ -674,7 +674,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -709,7 +709,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 

@@ -135,8 +135,8 @@
                         android:ellipsize="marquee"
                         android:fontFamily="@font/regular"
                         android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
                         android:maxLines="2"
+                        android:scrollHorizontally="true"
                         android:textColor="@color/dark_600"
                         android:textSize="18sp"
                         tools:text="LOCATION" />
@@ -235,6 +235,13 @@
                     android:layout_height="2dp"
                     android:background="@color/colorPrimary" />
 
+                <include
+                    android:id="@+id/empty_screen"
+                    layout="@layout/include_empty_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/tab_info_layout"
                     android:layout_width="match_parent"
@@ -316,7 +323,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -351,7 +358,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -400,7 +407,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/cast"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -435,7 +442,7 @@
                         android:fontFamily="@font/bold"
                         android:text="@string/crew"
                         android:textColor="@color/dark_800"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 

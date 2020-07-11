@@ -450,7 +450,7 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
             userLayout.setVisibility(View.VISIBLE);
             googleAuthButton.setVisibility(View.GONE);
             warningText.setVisibility(View.GONE);
-            userText.setText(user.getDisplayName() + " (" + user.getEmail() + ")");
+            userText.setText(user.getDisplayName() + "\n" + user.getEmail());
         }
     }
 
