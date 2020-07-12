@@ -10,13 +10,13 @@ android {
         applicationId "az.siftoshka.habitube"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 16
+        versionCode 17
         versionName "1.1"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
-        variant.resValue "string", "version_name", variant.versionName
+        variant.resValue "string", "version_name", variant.versionName + " (Build " + variant.versionCode + ")"
     }
     buildTypes {
         release {

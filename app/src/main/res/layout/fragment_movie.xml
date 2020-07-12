@@ -752,7 +752,8 @@
                         android:id="@+id/recycler_view_similar_movies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="true" />
+                        android:clipToPadding="false"
+                        android:overScrollMode="never" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

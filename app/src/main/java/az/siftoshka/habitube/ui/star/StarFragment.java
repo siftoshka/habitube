@@ -139,8 +139,6 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationOnClickListener(v -> starPresenter.goBack());
-        checkTabs();
-        initTabs();
         LinearLayoutManager linearLayoutMovieCast = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewMovieCast.setLayoutManager(linearLayoutMovieCast);
         recyclerViewMovieCast.setItemAnimator(new DefaultItemAnimator());
@@ -172,6 +170,8 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonLocation.setText(person.getPlaceOfBirth());
         posterPersonBio.setText(person.getBiography());
         checkImdbAvailability(person);
+        checkTabs();
+        initTabs();
     }
 
     private void initTabInfo() {
@@ -245,9 +245,11 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     }
 
     private void checkDescription() {
+        System.out.println("TEXT: " + posterPersonBio.getText().toString());
         if (posterPersonBio.getText().toString().equals("")) {
             personBioCard.setVisibility(View.GONE);
             emptyScreen.setVisibility(View.VISIBLE);
+            System.out.println("VISIBLE");
         }
     }
 
