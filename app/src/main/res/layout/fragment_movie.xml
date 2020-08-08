@@ -38,21 +38,39 @@
             style="@style/ToolbarTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@null"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back_w">
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/circle_icon"
+                    android:cropToPadding="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_back_w" />
 
                 <ImageView
                     android:id="@+id/share_button"
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignParentEnd="true"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/circle_icon"
                     android:cropToPadding="true"
-                    android:padding="16dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_share" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -220,7 +238,8 @@
             android:id="@+id/scroll_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/post_movie_card_layout">
+            android:layout_below="@id/post_movie_card_layout"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -514,7 +533,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp" />
+                            android:layout_marginBottom="5dp"
+                            android:overScrollMode="never" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -681,7 +701,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_cast"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cast_button"
@@ -716,7 +737,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_crew"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/crew_button"

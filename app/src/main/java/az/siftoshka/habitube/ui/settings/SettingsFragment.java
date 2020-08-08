@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +37,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +69,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @InjectPresenter SettingsPresenter settingsPresenter;
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
     @BindView(R.id.telegram_contact) ImageView telegramButton;
     @BindView(R.id.github_contact) ImageView githubButton;
     @BindView(R.id.instagram_contact) ImageView instagramButton;
@@ -137,6 +141,8 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        cToolbar.setExpandedTitleTextAppearance(R.style.CollapsingExpanded);
+        cToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingCollapsed);
         telegramButton.setOnClickListener(v -> showTelegramPage());
         githubButton.setOnClickListener(v -> showGithubPage());
         instagramButton.setOnClickListener(v -> showInstagramPage());

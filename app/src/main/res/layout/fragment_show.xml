@@ -37,29 +37,45 @@
             style="@style/ToolbarTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@null"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
             android:elevation="14dp"
-            app:navigationIcon="@drawable/ic_back_w">
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/circle_icon"
+                    android:cropToPadding="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_back_w" />
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_netflix"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="?attr/actionBarSize"
                     android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/share_button"
                     android:animateLayoutChanges="true"
-                    android:backgroundTint="@color/white_is_white"
+                    android:backgroundTint="@color/light_grey"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:text="@string/open_in_netflix"
                     android:textAllCaps="false"
-                    android:textColor="@color/just_grey"
+                    android:textColor="@color/white_is_white"
                     android:visibility="gone"
                     app:cornerRadius="20dp"
                     app:icon="@drawable/ic_netflix"
@@ -70,10 +86,13 @@
                     android:id="@+id/share_button"
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/circle_icon"
                     android:cropToPadding="true"
-                    android:padding="16dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_share" />
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <ImageView
@@ -232,7 +251,8 @@
             android:id="@+id/scroll_show"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/post_show_card_layout">
+            android:layout_below="@id/post_show_card_layout"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -517,7 +537,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
-                            android:clipToPadding="false" />
+                            android:clipToPadding="false"
+                            android:overScrollMode="never" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -624,7 +645,8 @@
                         android:id="@+id/recycler_view_cast"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="false" />
+                        android:clipToPadding="false"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cast_button"
@@ -660,7 +682,8 @@
                         android:id="@+id/recycler_view_crew"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="false" />
+                        android:clipToPadding="false"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/crew_button"

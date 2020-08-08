@@ -15,8 +15,8 @@
     <LinearLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
         android:layout_height="140dp"
+        android:layout_gravity="center"
         android:background="@drawable/ripple_effect"
         android:backgroundTint="@color/cardview"
         android:orientation="vertical">
@@ -31,16 +31,19 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/splash"
                 tools:contentDescription="Poster of the movie"
                 tools:ignore="ContentDescription" />
+
             <TextView
                 android:id="@+id/poster_main_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/poster_image"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="3dp"
-                android:layout_alignBottom="@id/poster_image"
+                android:elevation="14dp"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/regular"
                 android:shadowColor="#666"
@@ -48,7 +51,6 @@
                 android:shadowDy="0"
                 android:shadowRadius="4"
                 android:singleLine="true"
-                android:elevation="14dp"
                 android:textColor="@color/white_is_white"
                 android:textSize="18sp"
                 tools:text="Movie Name" />

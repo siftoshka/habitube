@@ -133,6 +133,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.show_netflix) MaterialButton showNetflix;
     @BindView(R.id.share_button) ImageView shareButton;
+    @BindView(R.id.back_button) ImageView backButton;
 
     private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
@@ -189,7 +190,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar.setNavigationOnClickListener(v -> showPresenter.goBack());
+        backButton.setOnClickListener(view1 -> showPresenter.goBack());
         checkTabs();
         initTabs();
         LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

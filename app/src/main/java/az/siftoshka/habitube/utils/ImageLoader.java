@@ -172,7 +172,7 @@ public class ImageLoader {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)
-                    .apply(new RequestOptions().override(720, 260))
+                    .apply(new RequestOptions().override(720, 280))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .centerCrop()

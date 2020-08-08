@@ -173,7 +173,8 @@
             android:id="@+id/scroll_person"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/post_person_card_layout">
+            android:layout_below="@id/post_person_card_layout"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -331,7 +332,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_movie_cast"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cast_movie_button"
@@ -366,7 +368,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_movie_crew"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/crew_movie_button"
@@ -415,7 +418,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_show_cast"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cast_show_button"
@@ -450,7 +454,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_show_crew"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/crew_show_button"
