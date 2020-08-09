@@ -187,7 +187,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         backButton.setOnClickListener(view1 -> moviePresenter.goBack());
-        checkTabs();
+        initTabInfo();
         initTabs();
         watchedButton.setVisibility(View.VISIBLE);
         watchedButton.setEnabled(false);
@@ -382,21 +382,9 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     }
 
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> {
-            initTabInfo();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
-            editor.putInt("Tab", 100).apply();
-        });
-        tabCredits.setOnClickListener(view -> {
-            initTabCredits();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
-            editor.putInt("Tab", 101).apply();
-        });
-        tabSimilar.setOnClickListener(view -> {
-            initTabSimilar();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
-            editor.putInt("Tab", 102).apply();
-        });
+        tabInfo.setOnClickListener(view -> initTabInfo());
+        tabCredits.setOnClickListener(view -> initTabCredits());
+        tabSimilar.setOnClickListener(view -> initTabSimilar());
     }
 
     private void showImdbWeb(String imdbId) {
@@ -412,16 +400,6 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             }
             return true;
         });
-    }
-
-    private void checkTabs() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("Movie-Tab", MODE_PRIVATE);
-        int idTheme = prefs.getInt("Tab", 0);
-        switch (idTheme) {
-            case 100: initTabInfo(); break;
-            case 101: initTabCredits(); break;
-            case 102: initTabSimilar(); break;
-        }
     }
 
     private void showShareButton(int movieId) {

@@ -149,15 +149,19 @@ public class GenresDialog extends MvpBottomSheetDialogFragment implements Genres
     }
 
     private void discoverMovies() {
-        if (haveNetworkConnection())
+        if (haveNetworkConnection()) {
             genresDialogPresenter.goToDiscoverScreen(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId);
+            dismiss();
+        }
         else
             messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
     private void discoverShows() {
-        if (haveNetworkConnection())
+        if (haveNetworkConnection()) {
             genresDialogPresenter.goToDiscoverShowScreen(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown, genreId);
+            dismiss();
+        }
         else
             messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }

@@ -191,7 +191,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         backButton.setOnClickListener(view1 -> showPresenter.goBack());
-        checkTabs();
+        initTabInfo();
         initTabs();
         LinearLayoutManager layoutManagerGenres = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewGenres.setLayoutManager(layoutManagerGenres);
@@ -426,32 +426,10 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     }
 
         private void initTabs() {
-        tabInfo.setOnClickListener(view -> {
-            initTabInfo();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
-            editor.putInt("STab", 100).apply();
-        });
-        tabCredits.setOnClickListener(view -> {
-            initTabCredits();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
-            editor.putInt("STab", 101).apply();
-        });
+        tabInfo.setOnClickListener(view -> initTabInfo());
+        tabCredits.setOnClickListener(view -> initTabCredits());
         tabSeasons.setOnClickListener(view -> initTabSeasons());
-        tabSimilar.setOnClickListener(view -> {
-            initTabSimilar();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
-            editor.putInt("STab", 102).apply();
-        });
-    }
-
-    private void checkTabs() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("Show-Tab", MODE_PRIVATE);
-        int idTheme = prefs.getInt("STab", 0);
-        switch (idTheme) {
-            case 100: initTabInfo(); break;
-            case 101: initTabCredits(); break;
-            case 102: initTabSimilar(); break;
-        }
+        tabSimilar.setOnClickListener(view -> initTabSimilar());
     }
 
     private void showShareButton(int movieId) {

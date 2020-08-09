@@ -76,17 +76,26 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     }
 
     private void showNetflixPopular() {
-        if (haveNetworkConnection()) discoverPresenter.showNetflixPopular();
+        if (haveNetworkConnection()) {
+            discoverPresenter.showNetflixPopular();
+            dismiss();
+        }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
     private void showNetflixBest() {
-        if (haveNetworkConnection()) discoverPresenter.showNetflixBest();
+        if (haveNetworkConnection()) {
+            discoverPresenter.showNetflixBest();
+            dismiss();
+        }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
     private void showNetflixNew() {
-        if (haveNetworkConnection()) discoverPresenter.showNetflixNew();
+        if (haveNetworkConnection()) {
+            discoverPresenter.showNetflixNew();
+            dismiss();
+        }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 

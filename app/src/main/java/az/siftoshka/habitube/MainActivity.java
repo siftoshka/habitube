@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,6 +24,7 @@ import az.siftoshka.habitube.ui.navbar.NavbarFragment;
 import az.siftoshka.habitube.ui.search.SearchFragment;
 import az.siftoshka.habitube.ui.show.ShowFragment;
 import az.siftoshka.habitube.ui.star.StarFragment;
+import az.siftoshka.habitube.utils.navigation.SupremeNavigator;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -39,33 +41,12 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     @Inject NavigatorHolder navigatorHolder;
     @Inject Router router;
 
-    private Navigator navigator = new SupportAppNavigator(this, R.id.fragment_container) {
+    private Navigator navigator = new SupremeNavigator(this, R.id.fragment_container) {
         @Override
-        protected void setupFragmentTransaction(Command command, Fragment currentFragment, Fragment nextFragment, FragmentTransaction fragmentTransaction) {
+        protected void setupFragmentTransaction(@NonNull Command command, Fragment currentFragment,
+                                                Fragment nextFragment, @NonNull FragmentTransaction fragmentTransaction) {
             if (command instanceof Forward)
                 fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
-            if (currentFragment instanceof NavbarFragment && nextFragment instanceof MovieFragment
-                    || currentFragment instanceof SearchFragment && nextFragment instanceof MovieFragment
-                    || currentFragment instanceof LibraryWatchedFragment && nextFragment instanceof MovieFragment
-                    || currentFragment instanceof LibraryPlanningFragment && nextFragment instanceof MovieFragment
-                    || currentFragment instanceof DiscoverFragment && nextFragment instanceof MovieFragment) {
-                SharedPreferences.Editor editor = getSharedPreferences("Movie-Tab", MODE_PRIVATE).edit();
-                editor.putInt("Tab", 100).apply();
-            }
-            if (currentFragment instanceof NavbarFragment && nextFragment instanceof ShowFragment
-                    || currentFragment instanceof SearchFragment && nextFragment instanceof ShowFragment
-                    || currentFragment instanceof LibraryWatchedFragment && nextFragment instanceof ShowFragment
-                    || currentFragment instanceof LibraryPlanningFragment && nextFragment instanceof ShowFragment
-                    || currentFragment instanceof DiscoverFragment && nextFragment instanceof ShowFragment) {
-                SharedPreferences.Editor editor = getSharedPreferences("Show-Tab", MODE_PRIVATE).edit();
-                editor.putInt("STab", 100).apply();
-            }
-            if (currentFragment instanceof SearchFragment && nextFragment instanceof StarFragment
-                    || currentFragment instanceof MovieFragment && nextFragment instanceof StarFragment
-                    || currentFragment instanceof ShowFragment && nextFragment instanceof StarFragment) {
-                SharedPreferences.Editor editor = getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
-                editor.putInt("StarTab", 100).apply();
-            }
         }
     };
 

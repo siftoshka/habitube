@@ -174,15 +174,19 @@ public class DiscoverDialog extends MvpBottomSheetDialogFragment implements Disc
     }
 
     private void discoverMovies() {
-        if (haveNetworkConnection())
+        if (haveNetworkConnection()) {
             discoverPresenter.discoverMovies(sortSelection, yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown);
+            dismiss();
+        }
         else
             messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
     private void discoverShows() {
-        if (haveNetworkConnection())
+        if (haveNetworkConnection()) {
             discoverPresenter.discoverShows(yearIndexUp + "-01-01", yearIndexDown + "-01-01", voteIndexUp, voteIndexDown);
+            dismiss();
+        }
         else
             messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }

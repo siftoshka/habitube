@@ -170,7 +170,7 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
         posterPersonLocation.setText(person.getPlaceOfBirth());
         posterPersonBio.setText(person.getBiography());
         checkImdbAvailability(person);
-        checkTabs();
+        initTabInfo();
         initTabs();
     }
 
@@ -205,31 +205,9 @@ public class StarFragment extends MvpAppCompatFragment implements StarView {
     }
 
     private void initTabs() {
-        tabInfo.setOnClickListener(view -> {
-            initTabInfo();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
-            editor.putInt("StarTab", 100).apply();
-        });
-        tabMovies.setOnClickListener(view -> {
-            initTabMovies();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
-            editor.putInt("StarTab", 101).apply();
-        });
-        tabShows.setOnClickListener(view -> {
-           initTabShows();
-            SharedPreferences.Editor editor = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE).edit();
-            editor.putInt("StarTab", 102).apply();
-        });
-    }
-
-    private void checkTabs() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("Star-Tab", MODE_PRIVATE);
-        int idTheme = prefs.getInt("StarTab", 0);
-        switch (idTheme) {
-            case 100: initTabInfo(); break;
-            case 101: initTabMovies(); break;
-            case 102: initTabShows(); break;
-        }
+        tabInfo.setOnClickListener(view -> initTabInfo());
+        tabMovies.setOnClickListener(view -> initTabMovies());
+        tabShows.setOnClickListener(view -> initTabShows());
     }
 
     private void checkMoviesExist() {
