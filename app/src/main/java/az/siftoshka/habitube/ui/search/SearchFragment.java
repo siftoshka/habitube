@@ -97,7 +97,10 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
         recyclerViewSearch.setHasFixedSize(true);
         recyclerViewSearch.setAdapter(searchAdapter);
         pageDown.setOnClickListener(view1 -> pageCheck());
-        toolbar.setNavigationOnClickListener(v -> searchPresenter.goBack());
+        toolbar.setNavigationOnClickListener(v -> {
+            searchPresenter.goBack();
+            keyboardBehavior.hideKeyboard();
+        });
 
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
         EditText searchText = searchView.findViewById(R.id.search_src_text);
