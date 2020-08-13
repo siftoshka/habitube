@@ -87,53 +87,99 @@ import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
-    @InjectPresenter ShowPresenter showPresenter;
+    @InjectPresenter
+    ShowPresenter showPresenter;
 
-    @BindView(R.id.show_toolbar) Toolbar toolbar;
-    @BindView(R.id.recycler_view_similar_shows) RecyclerView recyclerViewSimilarShows;
-    @BindView(R.id.recycler_view_seasons) RecyclerView recyclerViewSeasons;
-    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
-    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
-    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
-    @BindView(R.id.show_screen) RelativeLayout showScreen;
-    @BindView(R.id.loading_screen) View loadingScreen;
-    @BindView(R.id.error_screen) View errorScreen;
-    @BindView(R.id.watched_button) LinearLayout watchedButton;
-    @BindView(R.id.watched_image) ImageView watchedImage;
-    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
-    @BindView(R.id.planning_button) LinearLayout planningButton;
-    @BindView(R.id.planned_image) ImageView plannedImage;
-    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
-    @BindView(R.id.poster_show_post) ImageView posterShow;
-    @BindView(R.id.show_poster_background) ImageView posterShowBackground;
-    @BindView(R.id.poster_show_title) TextView posterShowTitle;
-    @BindView(R.id.poster_show_date) TextView posterShowDate;
-    @BindView(R.id.poster_show_rate) TextView posterShowRate;
-    @BindView(R.id.poster_show_views) TextView posterShowViews;
-    @BindView(R.id.poster_show_duration) TextView posterShowDuration;
-    @BindView(R.id.poster_show_desc) TextView posterShowDesc;
-    @BindView(R.id.watched_rating) TextView ratingText;
-    @BindView(R.id.rating) RatingBar posterRating;
-    @BindView(R.id.rating_layout) LinearLayout ratingCard;
-    @BindView(R.id.show_genres) RecyclerView recyclerViewGenres;
-    @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
-    @BindView(R.id.seasons_card_layout) LinearLayout seasonsCard;
-    @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
-    @BindView(R.id.desc_show_card_layout) LinearLayout descShowCard;
-    @BindView(R.id.tab_info) MaterialButton tabInfo;
-    @BindView(R.id.tab_credits) MaterialButton tabCredits;
-    @BindView(R.id.tab_seasons) MaterialButton tabSeasons;
-    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
-    @BindView(R.id.cast_button) MaterialButton castButton;
-    @BindView(R.id.crew_button) MaterialButton crewButton;
-    @BindView(R.id.cast_text) TextView castText;
-    @BindView(R.id.crew_text) TextView crewText;
-    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
-    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
-    @BindView(R.id.refresh) ImageView refreshButton;
-    @BindView(R.id.show_netflix) MaterialButton showNetflix;
-    @BindView(R.id.share_button) ImageView shareButton;
-    @BindView(R.id.back_button) ImageView backButton;
+    @BindView(R.id.show_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_similar_shows)
+    RecyclerView recyclerViewSimilarShows;
+    @BindView(R.id.recycler_view_seasons)
+    RecyclerView recyclerViewSeasons;
+    @BindView(R.id.recycler_view_videos)
+    RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew)
+    RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast)
+    RecyclerView recyclerViewCast;
+    @BindView(R.id.show_screen)
+    RelativeLayout showScreen;
+    @BindView(R.id.loading_screen)
+    View loadingScreen;
+    @BindView(R.id.error_screen)
+    View errorScreen;
+    @BindView(R.id.watched_button)
+    LinearLayout watchedButton;
+    @BindView(R.id.watched_image)
+    ImageView watchedImage;
+    @BindView(R.id.watched_button_alt)
+    RelativeLayout watchedButtonAlt;
+    @BindView(R.id.planning_button)
+    LinearLayout planningButton;
+    @BindView(R.id.planned_image)
+    ImageView plannedImage;
+    @BindView(R.id.planning_button_alt)
+    LinearLayout planningButtonAlt;
+    @BindView(R.id.poster_show_post)
+    ImageView posterShow;
+    @BindView(R.id.show_poster_background)
+    ImageView posterShowBackground;
+    @BindView(R.id.poster_show_title)
+    TextView posterShowTitle;
+    @BindView(R.id.poster_show_date)
+    TextView posterShowDate;
+    @BindView(R.id.poster_show_rate)
+    TextView posterShowRate;
+    @BindView(R.id.poster_show_views)
+    TextView posterShowViews;
+    @BindView(R.id.poster_show_duration)
+    TextView posterShowDuration;
+    @BindView(R.id.poster_show_desc)
+    TextView posterShowDesc;
+    @BindView(R.id.watched_rating)
+    TextView ratingText;
+    @BindView(R.id.rating)
+    RatingBar posterRating;
+    @BindView(R.id.rating_layout)
+    LinearLayout ratingCard;
+    @BindView(R.id.show_genres)
+    RecyclerView recyclerViewGenres;
+    @BindView(R.id.videos_shows_card_layout)
+    LinearLayout videosCard;
+    @BindView(R.id.seasons_card_layout)
+    LinearLayout seasonsCard;
+    @BindView(R.id.similar_shows_card_layout)
+    LinearLayout similarShowsCard;
+    @BindView(R.id.desc_show_card_layout)
+    LinearLayout descShowCard;
+    @BindView(R.id.tab_info)
+    MaterialButton tabInfo;
+    @BindView(R.id.tab_credits)
+    MaterialButton tabCredits;
+    @BindView(R.id.tab_seasons)
+    MaterialButton tabSeasons;
+    @BindView(R.id.tab_similar)
+    MaterialButton tabSimilar;
+    @BindView(R.id.cast_button)
+    MaterialButton castButton;
+    @BindView(R.id.crew_button)
+    MaterialButton crewButton;
+    @BindView(R.id.cast_text)
+    TextView castText;
+    @BindView(R.id.crew_text)
+    TextView crewText;
+    @BindView(R.id.tab_info_layout)
+    LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout)
+    LinearLayout tabCreditsCard;
+    @BindView(R.id.refresh)
+    ImageView refreshButton;
+    @BindView(R.id.show_netflix)
+    MaterialButton showNetflix;
+    @BindView(R.id.share_button)
+    ImageView shareButton;
+    @BindView(R.id.back_button)
+    ImageView backButton;
 
     private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;
@@ -210,19 +256,19 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         recyclerViewSeasons.setHasFixedSize(true);
         recyclerViewSeasons.setAdapter(seasonAdapter);
         LinearLayoutManager layoutManagerVideos = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+            LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVideos.setLayoutManager(layoutManagerVideos);
         recyclerViewVideos.setItemAnimator(new DefaultItemAnimator());
         recyclerViewVideos.setHasFixedSize(true);
         recyclerViewVideos.setAdapter(videoAdapter);
         LinearLayoutManager layoutManagerCasts = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+            LinearLayoutManager.VERTICAL, false);
         recyclerViewCast.setLayoutManager(layoutManagerCasts);
         recyclerViewCast.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCast.setHasFixedSize(true);
         recyclerViewCast.setAdapter(castAdapter);
         LinearLayoutManager layoutManagerCrews = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
+            LinearLayoutManager.VERTICAL, false);
         recyclerViewCrew.setLayoutManager(layoutManagerCrews);
         recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCrew.setHasFixedSize(true);
@@ -234,37 +280,37 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     public void showTVShow(Show show) {
         showID = show.getId();
         Glide.with(requireContext())
-                .load(IMAGE_URL + show.getPosterPath())
-                .apply(new RequestOptions().override(200, 300))
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        if (watchedImage != null) {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                        }
-                        return false;
+            .load(IMAGE_URL + show.getPosterPath())
+            .apply(new RequestOptions().override(200, 300))
+            .listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    if (watchedImage != null) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                     }
+                    return false;
+                }
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        showProgress(false);
-                        if (watchedImage != null) {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                        }
-                        return false;
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    showProgress(false);
+                    if (watchedImage != null) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                     }
-                })
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_missing)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(posterShow);
+                    return false;
+                }
+            })
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .placeholder(new ColorDrawable(Color.LTGRAY))
+            .error(R.drawable.ic_missing)
+            .transform(new CenterCrop(), new RoundedCorners(16))
+            .into(posterShow);
         ImageLoader.loadBackground(requireContext(), show.getBackdropPath(), posterShowBackground);
         posterShowTitle.setText(show.getName());
         posterShowDate.setText(dateChanger.changeDate(show.getFirstAirDate()));
@@ -292,8 +338,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             showPresenter.addShowAsWatched(show);
             ratingCard.setVisibility(View.VISIBLE);
             posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
-                ratingText.setText(String.valueOf((int) ratingBar.getRating()));
-                showPresenter.updateRating(show, ratingBar.getRating());
+                ratingText.setText(String.valueOf(v1));
+                showPresenter.updateRating(show, v1);
             });
         });
     }
@@ -310,10 +356,12 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         watchedButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
             alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
-                    .setMessage(getResources().getString(R.string.are_you_sure))
-                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {showPresenter.deleteShowFromWatched(show);
-                                                                ratingCard.setVisibility(View.GONE);})
-                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+                .setMessage(getResources().getString(R.string.are_you_sure))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {
+                    showPresenter.deleteShowFromWatched(show);
+                    ratingCard.setVisibility(View.GONE);
+                })
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
@@ -321,9 +369,9 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         planningButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
             alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
-                    .setMessage(getResources().getString(R.string.are_you_sure))
-                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show))
-                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+                .setMessage(getResources().getString(R.string.are_you_sure))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> showPresenter.deleteShowFromPlanned(show))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
@@ -351,6 +399,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
     private void paginateSimilarShows() {
         recyclerViewSimilarShows.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int page = 2;
+
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
@@ -358,7 +407,8 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
                         showPresenter.getMoreSimilarShows(showID, page);
                         page++;
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         });
     }
@@ -425,7 +475,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
         similarShowsCard.setVisibility(View.VISIBLE);
     }
 
-        private void initTabs() {
+    private void initTabs() {
         tabInfo.setOnClickListener(view -> initTabInfo());
         tabCredits.setOnClickListener(view -> initTabCredits());
         tabSeasons.setOnClickListener(view -> initTabSeasons());
@@ -444,7 +494,7 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
     @Override
     public void showSimilarTVShowList(List<MovieLite> similarShows) {
-        if(similarShows.isEmpty()) tabSimilar.setVisibility(View.GONE);
+        if (similarShows.isEmpty()) tabSimilar.setVisibility(View.GONE);
         similarShowsAdapter.addAllShows(similarShows);
     }
 
@@ -479,12 +529,14 @@ public class ShowFragment extends MvpAppCompatFragment implements ShowView {
             ratingText.setText(String.valueOf((int) myRating));
             if (myRating == 0.0) ratingText.setText(null);
             watchedButtonAlt.setOnLongClickListener(view -> {
-                posterRating.setRating(myRating);
-                ratingCard.setVisibility(View.VISIBLE);
-                posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
-                    ratingText.setText(String.valueOf((int) ratingBar.getRating()));
-                    showPresenter.updateRating(show, ratingBar.getRating());
-                });
+                if (ratingCard.getVisibility() == View.GONE) {
+                    posterRating.setRating(myRating);
+                    ratingCard.setVisibility(View.VISIBLE);
+                    posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                        ratingText.setText(String.valueOf(v1));
+                        showPresenter.updateRating(show, v1);
+                    });
+                }
                 return true;
             });
         }

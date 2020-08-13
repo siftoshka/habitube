@@ -555,3 +555,7 @@
   name: cicerone
   copyrightHolder: Konstantin Tskhovrebov (@terrakok) and Vasili Chyrvon (@Jeevuz)
   license: MIT License
+- artifact: com.airbnb.lottie:lottie:+
+  name: lottie
+  copyrightHolder: Airbnb, Inc.
+  license: The Apache Software License, Version 2.0

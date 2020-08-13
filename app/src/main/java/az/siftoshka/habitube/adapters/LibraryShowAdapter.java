@@ -57,7 +57,7 @@ public class LibraryShowAdapter extends RecyclerView.Adapter<LibraryShowAdapter.
                 .load(new File(context.getFilesDir().getPath()) + show.getPosterPath())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(holder.posterImage);
-        holder.posterRate.setText(String.valueOf((int) show.getMyRating()));
+        holder.posterRate.setText(String.valueOf(show.getMyRating()));
         if (show.getMyRating() == 0.0) {
             holder.posterRate.setVisibility(View.GONE);
         }        holder.posterImage.setOnClickListener(v -> clickListener.onPostClicked(show.getId()));

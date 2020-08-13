@@ -23,7 +23,7 @@ import az.siftoshka.habitube.presentation.library.LibraryWatchedPresenter;
 import az.siftoshka.habitube.presentation.library.LibraryWatchedView;
 import az.siftoshka.habitube.ui.library.dialogs.OfflineCardDialog;
 import az.siftoshka.habitube.ui.library.dialogs.OptionMenuDialog;
-import az.siftoshka.habitube.utils.GridRecyclerView;
+import az.siftoshka.habitube.utils.ui.GridRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

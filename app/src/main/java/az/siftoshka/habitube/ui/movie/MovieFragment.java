@@ -84,52 +84,97 @@ import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
-    @InjectPresenter MoviePresenter moviePresenter;
+    @InjectPresenter
+    MoviePresenter moviePresenter;
 
-    @BindView(R.id.movie_toolbar) Toolbar toolbar;
-    @BindView(R.id.recycler_view_similar_movies) RecyclerView recyclerViewSimilarMovies;
-    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
-    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
-    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
-    @BindView(R.id.movie_genres) RecyclerView recyclerViewGenres;
-    @BindView(R.id.main_screen) RelativeLayout mainScreen;
-    @BindView(R.id.loading_screen) View loadingScreen;
-    @BindView(R.id.error_screen) View errorScreen;
-    @BindView(R.id.imdb_button) LinearLayout imdbButton;
-    @BindView(R.id.watched_button) LinearLayout watchedButton;
-    @BindView(R.id.watched_image) ImageView watchedImage;
-    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
-    @BindView(R.id.planning_button) LinearLayout planningButton;
-    @BindView(R.id.planned_image) ImageView plannedImage;
-    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
-    @BindView(R.id.poster_background) ImageView posterBackground;
-    @BindView(R.id.poster_movie_post) ImageView posterMain;
-    @BindView(R.id.poster_title) TextView posterTitle;
-    @BindView(R.id.poster_date) TextView posterDate;
-    @BindView(R.id.poster_rate) TextView posterRate;
-    @BindView(R.id.poster_views) TextView posterViews;
-    @BindView(R.id.poster_duration) TextView posterDuration;
-    @BindView(R.id.poster_budget) TextView posterBudget;
-    @BindView(R.id.poster_revenue) TextView posterRevenue;
-    @BindView(R.id.poster_desc) TextView posterDesc;
-    @BindView(R.id.watched_rating) TextView ratingText;
-    @BindView(R.id.rating) RatingBar posterRating;
-    @BindView(R.id.rating_layout) LinearLayout ratingCard;
-    @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
-    @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
-    @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
-    @BindView(R.id.tab_info) MaterialButton tabInfo;
-    @BindView(R.id.tab_credits) MaterialButton tabCredits;
-    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
-    @BindView(R.id.cast_button) MaterialButton castButton;
-    @BindView(R.id.crew_button) MaterialButton crewButton;
-    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
-    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
-    @BindView(R.id.cast_text) TextView castText;
-    @BindView(R.id.crew_text) TextView crewText;
-    @BindView(R.id.refresh) ImageView refreshButton;
-    @BindView(R.id.share_button) ImageView shareButton;
-    @BindView(R.id.back_button) ImageView backButton;
+    @BindView(R.id.movie_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_similar_movies)
+    RecyclerView recyclerViewSimilarMovies;
+    @BindView(R.id.recycler_view_videos)
+    RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew)
+    RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast)
+    RecyclerView recyclerViewCast;
+    @BindView(R.id.movie_genres)
+    RecyclerView recyclerViewGenres;
+    @BindView(R.id.main_screen)
+    RelativeLayout mainScreen;
+    @BindView(R.id.loading_screen)
+    View loadingScreen;
+    @BindView(R.id.error_screen)
+    View errorScreen;
+    @BindView(R.id.imdb_button)
+    LinearLayout imdbButton;
+    @BindView(R.id.watched_button)
+    LinearLayout watchedButton;
+    @BindView(R.id.watched_image)
+    ImageView watchedImage;
+    @BindView(R.id.watched_button_alt)
+    RelativeLayout watchedButtonAlt;
+    @BindView(R.id.planning_button)
+    LinearLayout planningButton;
+    @BindView(R.id.planned_image)
+    ImageView plannedImage;
+    @BindView(R.id.planning_button_alt)
+    LinearLayout planningButtonAlt;
+    @BindView(R.id.poster_background)
+    ImageView posterBackground;
+    @BindView(R.id.poster_movie_post)
+    ImageView posterMain;
+    @BindView(R.id.poster_title)
+    TextView posterTitle;
+    @BindView(R.id.poster_date)
+    TextView posterDate;
+    @BindView(R.id.poster_rate)
+    TextView posterRate;
+    @BindView(R.id.poster_views)
+    TextView posterViews;
+    @BindView(R.id.poster_duration)
+    TextView posterDuration;
+    @BindView(R.id.poster_budget)
+    TextView posterBudget;
+    @BindView(R.id.poster_revenue)
+    TextView posterRevenue;
+    @BindView(R.id.poster_desc)
+    TextView posterDesc;
+    @BindView(R.id.watched_rating)
+    TextView ratingText;
+    @BindView(R.id.rating)
+    RatingBar posterRating;
+    @BindView(R.id.rating_layout)
+    LinearLayout ratingCard;
+    @BindView(R.id.similar_movies_card_layout)
+    LinearLayout similarMoviesCard;
+    @BindView(R.id.videos_movies_card_layout)
+    LinearLayout videosCard;
+    @BindView(R.id.desc_movie_card_layout)
+    LinearLayout descMovieCard;
+    @BindView(R.id.tab_info)
+    MaterialButton tabInfo;
+    @BindView(R.id.tab_credits)
+    MaterialButton tabCredits;
+    @BindView(R.id.tab_similar)
+    MaterialButton tabSimilar;
+    @BindView(R.id.cast_button)
+    MaterialButton castButton;
+    @BindView(R.id.crew_button)
+    MaterialButton crewButton;
+    @BindView(R.id.tab_info_layout)
+    LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout)
+    LinearLayout tabCreditsCard;
+    @BindView(R.id.cast_text)
+    TextView castText;
+    @BindView(R.id.crew_text)
+    TextView crewText;
+    @BindView(R.id.refresh)
+    ImageView refreshButton;
+    @BindView(R.id.share_button)
+    ImageView shareButton;
+    @BindView(R.id.back_button)
+    ImageView backButton;
 
     private SimilarMovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;
@@ -229,36 +274,37 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     public void showMovie(Movie movie) {
         movieID = movie.getId();
         Glide.with(requireContext())
-                .load(IMAGE_URL + movie.getPosterPath())
-                .apply(new RequestOptions().override(200, 300))
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        if (watchedImage != null) {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                        }
-                        return false;
+            .load(IMAGE_URL + movie.getPosterPath())
+            .apply(new RequestOptions().override(200, 300))
+            .listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    if (watchedImage != null) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                     }
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        showProgress(false);
-                        if (watchedImage != null) {
-                            watchedImage.setImageResource(R.drawable.ic_favorite);
-                            plannedImage.setImageResource(R.drawable.ic_watch);
-                            watchedButton.setEnabled(true);
-                            planningButton.setEnabled(true);
-                        }
-                        return false;
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    showProgress(false);
+                    if (watchedImage != null) {
+                        watchedImage.setImageResource(R.drawable.ic_favorite);
+                        plannedImage.setImageResource(R.drawable.ic_watch);
+                        watchedButton.setEnabled(true);
+                        planningButton.setEnabled(true);
                     }
-                })
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(new ColorDrawable(Color.LTGRAY))
-                .error(R.drawable.ic_missing)
-                .transform(new CenterCrop(), new RoundedCorners(16))
-                .into(posterMain);
+                    return false;
+                }
+            })
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .placeholder(new ColorDrawable(Color.LTGRAY))
+            .error(R.drawable.ic_missing)
+            .transform(new CenterCrop(), new RoundedCorners(16))
+            .into(posterMain);
         ImageLoader.loadBackground(requireContext(), movie.getBackdropPath(), posterBackground);
         posterTitle.setText(movie.getTitle());
         posterDate.setText(dateChanger.changeDate(movie.getReleaseDate()));
@@ -288,8 +334,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
             moviePresenter.addMovieAsWatched(movie);
             ratingCard.setVisibility(View.VISIBLE);
             posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
-                ratingText.setText(String.valueOf((int) ratingBar.getRating()));
-                moviePresenter.updateRating(movie, ratingBar.getRating());
+                ratingText.setText(String.valueOf(v1));
+                moviePresenter.updateRating(movie, v1);
             });
         });
     }
@@ -310,10 +356,12 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         watchedButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
             alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
-                    .setMessage(getResources().getString(R.string.are_you_sure))
-                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {moviePresenter.deleteMovieFromWatched(movie);
-                                                                ratingCard.setVisibility(View.GONE);})
-                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+                .setMessage(getResources().getString(R.string.are_you_sure))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> {
+                    moviePresenter.deleteMovieFromWatched(movie);
+                    ratingCard.setVisibility(View.GONE);
+                })
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
@@ -321,9 +369,9 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
         planningButtonAlt.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext(), R.style.AppCompatAlertDialogStyle);
             alertDialogBuilder.setTitle(getResources().getString(R.string.delete_movie))
-                    .setMessage(getResources().getString(R.string.are_you_sure))
-                    .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie))
-                    .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+                .setMessage(getResources().getString(R.string.are_you_sure))
+                .setPositiveButton(getResources().getString(R.string.yes), (arg0, arg1) -> moviePresenter.deleteMovieFromPlanned(movie))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
         });
     }
 
@@ -342,6 +390,7 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     private void paginateSimilarMovies() {
         recyclerViewSimilarMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int page = 2;
+
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 try {
@@ -349,7 +398,8 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
                         moviePresenter.getMoreSimilarMovies(movieID, page);
                         page++;
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         });
     }
@@ -438,15 +488,17 @@ public class MovieFragment extends MvpAppCompatFragment implements MovieView {
     @Override
     public void showRating(Movie movie, float myRating) {
         if (watchedButtonAlt != null) {
-            ratingText.setText(String.valueOf((int) myRating));
+            ratingText.setText(String.valueOf(myRating));
             if (myRating == 0.0) ratingText.setText(null);
             watchedButtonAlt.setOnLongClickListener(view -> {
-                posterRating.setRating(myRating);
-                ratingCard.setVisibility(View.VISIBLE);
-                posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
-                    ratingText.setText(String.valueOf((int) ratingBar.getRating()));
-                    moviePresenter.updateRating(movie, ratingBar.getRating());
-                });
+                if (ratingCard.getVisibility() == View.GONE) {
+                    posterRating.setRating(myRating);
+                    ratingCard.setVisibility(View.VISIBLE);
+                    posterRating.setOnRatingBarChangeListener((ratingBar, v1, b) -> {
+                        ratingText.setText(String.valueOf(v1));
+                        moviePresenter.updateRating(movie, v1);
+                    });
+                }
                 return true;
             });
         }

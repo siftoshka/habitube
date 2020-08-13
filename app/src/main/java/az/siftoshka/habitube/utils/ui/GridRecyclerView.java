@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.utils;
+package az.siftoshka.habitube.utils.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <az.siftoshka.habitube.utils.GridRecyclerView
+    <az.siftoshka.habitube.utils.ui.GridRecyclerView
         android:id="@+id/recycler_view_watched"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

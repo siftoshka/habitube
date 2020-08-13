@@ -57,7 +57,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryH
                 .load(new File(context.getFilesDir().getPath()) + movie.getPosterPath())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(holder.posterImage);
-        holder.posterRate.setText(String.valueOf((int) movie.getMyRating()));
+        holder.posterRate.setText(String.valueOf(movie.getMyRating()));
         if (movie.getMyRating() == 0.0) {
             holder.posterRate.setVisibility(View.GONE);
         }
