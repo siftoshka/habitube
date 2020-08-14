@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.presentation.explore.dialog;
+package az.siftoshka.habitube.presentation.explore.dialog.genres;
 
 import javax.inject.Inject;
 

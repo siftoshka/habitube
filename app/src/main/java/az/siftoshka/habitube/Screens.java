@@ -4,8 +4,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import az.siftoshka.habitube.ui.explore.AppleFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
+import az.siftoshka.habitube.ui.explore.DisneyFragment;
 import az.siftoshka.habitube.ui.explore.ExploreFragment;
 import az.siftoshka.habitube.ui.explore.GenreFragment;
 import az.siftoshka.habitube.ui.library.LibraryFragment;
@@ -226,6 +228,44 @@ public final class Screens {
             if (index == 0) bundle.putInt("Discover-N", 0);
             if (index == 1) bundle.putInt("Discover-N", 1);
             if (index == 2) bundle.putInt("Discover-N", 2);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
+        }
+    }
+
+    public static final class AppleDiscoverScreen extends SupportAppScreen {
+        private int index;
+
+        public AppleDiscoverScreen(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final AppleFragment discoverFragment = new AppleFragment();
+            if (index == 0) bundle.putInt("Discover-A", 0);
+            if (index == 1) bundle.putInt("Discover-A", 1);
+            if (index == 2) bundle.putInt("Discover-A", 2);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
+        }
+    }
+
+    public static final class DisneyDiscoverScreen extends SupportAppScreen {
+        private int index;
+
+        public DisneyDiscoverScreen(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final DisneyFragment discoverFragment = new DisneyFragment();
+            if (index == 0) bundle.putInt("Discover-D", 0);
+            if (index == 1) bundle.putInt("Discover-D", 1);
+            if (index == 2) bundle.putInt("Discover-D", 2);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }

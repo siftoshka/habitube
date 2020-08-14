@@ -15,16 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.slider.RangeSlider;
 
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.presentation.explore.dialog.DiscoverDialogPresenter;
-import az.siftoshka.habitube.presentation.explore.dialog.DiscoverDialogView;
-import az.siftoshka.habitube.presentation.explore.dialog.GenresDialogPresenter;
-import az.siftoshka.habitube.presentation.explore.dialog.GenresDialogView;
+import az.siftoshka.habitube.presentation.explore.dialog.genres.GenresDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.dialog.genres.GenresDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;

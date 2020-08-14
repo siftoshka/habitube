@@ -32,6 +32,8 @@
     <color name="dark_900">#f1f1f1</color>
     <color name="dark_1000">#ffffff</color>
 
+    <color name="disney_plus">#FF101C50</color>
+
     <color name="telegramColor">#2CA5E0</color>
     <color name="githubColor">#181717</color>
     <color name="instagramColor">#E4405F</color>

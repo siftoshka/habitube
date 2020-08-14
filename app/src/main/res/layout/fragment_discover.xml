@@ -59,6 +59,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:clipToPadding="true"
+        android:overScrollMode="never"
         android:paddingBottom="24dp"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

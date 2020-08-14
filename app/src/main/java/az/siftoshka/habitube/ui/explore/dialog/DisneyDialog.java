@@ -9,14 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.android.material.button.MaterialButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
+import az.siftoshka.habitube.presentation.explore.dialog.disney.DisneyDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.dialog.disney.DisneyDialogView;
 import az.siftoshka.habitube.presentation.explore.dialog.netflix.NetflixDialogPresenter;
 import az.siftoshka.habitube.presentation.explore.dialog.netflix.NetflixDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
@@ -27,9 +28,9 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class NetflixDialog extends MvpBottomSheetDialogFragment implements NetflixDialogView {
+public class DisneyDialog extends MvpBottomSheetDialogFragment implements DisneyDialogView {
 
-    @InjectPresenter NetflixDialogPresenter discoverPresenter;
+    @InjectPresenter DisneyDialogPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @BindView(R.id.popular) MaterialButton popularButton;
@@ -40,8 +41,8 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     private MessageListener messageListener;
 
     @ProvidePresenter
-    NetflixDialogPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(NetflixDialogPresenter.class);
+    DisneyDialogPresenter discoverPresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DisneyDialogPresenter.class);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixPopular() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixPopular();
+            discoverPresenter.showDisneyPopular();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
@@ -85,7 +86,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixBest() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixBest();
+            discoverPresenter.showDisneyBest();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
@@ -93,7 +94,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixNew() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixNew();
+            discoverPresenter.showDisneyNew();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));

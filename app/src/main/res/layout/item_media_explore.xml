@@ -1,0 +1,36 @@
+<LinearLayout android:id="@+id/explore_media"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/round_button"
+    android:elevation="1dp"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/media_image"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_vertical"
+        tools:src="@drawable/ic_undraw_netflix" />
+
+    <TextView
+        android:id="@+id/media_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/regular"
+        android:gravity="end"
+        tools:text="@string/enjoy_netflix"
+        android:textColor="@color/dark_600"
+        android:textSize="20sp" />
+</LinearLayout>

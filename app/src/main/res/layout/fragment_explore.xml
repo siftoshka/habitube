@@ -266,39 +266,16 @@
                     tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/explore_netflix"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/round_button"
-                android:backgroundTint="@color/background"
-                android:elevation="1dp"
-                android:orientation="horizontal"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_undraw_netflix" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/regular"
-                    android:gravity="end"
-                    android:text="@string/enjoy_netflix"
-                    android:textColor="@color/dark_600"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                tools:ignore="RtlSymmetry" />
 
             <LinearLayout
                 android:id="@+id/trendind_tv_shows"

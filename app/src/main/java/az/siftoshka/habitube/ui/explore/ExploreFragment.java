@@ -10,26 +10,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.Fade;
-import androidx.transition.Transition;
-import androidx.transition.TransitionManager;
-
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.adapters.GenreButtonAdapter;
+import az.siftoshka.habitube.adapters.MediaAdapter;
 import az.siftoshka.habitube.adapters.MovieAdapter;
 import az.siftoshka.habitube.adapters.ShowAdapter;
 import az.siftoshka.habitube.entities.genres.Genres;
@@ -37,7 +39,9 @@ import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
+import az.siftoshka.habitube.ui.explore.dialog.AppleDialog;
 import az.siftoshka.habitube.ui.explore.dialog.DiscoverDialog;
+import az.siftoshka.habitube.ui.explore.dialog.DisneyDialog;
 import az.siftoshka.habitube.ui.explore.dialog.GenresDialog;
 import az.siftoshka.habitube.ui.explore.dialog.NetflixDialog;
 import butterknife.BindView;
@@ -70,7 +74,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.refresh) ImageView refreshButton;
     @BindView(R.id.explore_movies) MaterialButton discoverMovies;
     @BindView(R.id.explore_shows) MaterialButton discoverShows;
-    @BindView(R.id.explore_netflix) LinearLayout discoverNetflix;
+    @BindView(R.id.recycler_view_media) RecyclerView recyclerViewMedia;
     @BindView(R.id.recycler_view_genres) RecyclerView recyclerViewGenres;
     @BindView(R.id.genres_list) LinearLayout genresList;
     @BindView(R.id.genres_icon) ImageView genresButton;
@@ -81,6 +85,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     private ShowAdapter showAdapter, airTodayAdapter;
     private GenreButtonAdapter genreAdapter;
     private MessageListener messageListener;
+    private MediaAdapter mediaAdapter;
     private ArrayList<Genres> genres, genresShow;
     private Unbinder unbinder;
     private int index;
@@ -105,6 +110,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         showAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
         airTodayAdapter = new ShowAdapter(showId -> explorePresenter.goToDetailedShowScreen(showId), postName -> messageListener.showText(postName));
         genreAdapter = new GenreButtonAdapter(this::showGenresDialog, requireContext());
+        mediaAdapter = new MediaAdapter(requireContext(), this::showMediaDialog);
+        mediaAdapter.addAllMedia();
         initGenres();
         initShowGenres();
     }
@@ -123,7 +130,6 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         searchButton.setOnClickListener(view1 -> explorePresenter.goToSearchScreen());
         discoverMovies.setOnClickListener(view1 -> showDiscoverMovieDialog());
         discoverShows.setOnClickListener(view1 -> showDiscoverTVShowDialog());
-        discoverNetflix.setOnClickListener(view1 -> showNetflixDialog());
         LinearLayoutManager layoutManagerUpcoming = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUpcoming.setLayoutManager(layoutManagerUpcoming);
         recyclerViewUpcoming.setItemAnimator(new DefaultItemAnimator());
@@ -153,7 +159,13 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
         recyclerViewGenres.setHasFixedSize(true);
         recyclerViewGenres.setAdapter(genreAdapter);
-
+        LinearLayoutManager layoutManagerMedia = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        recyclerViewMedia.setLayoutManager(layoutManagerMedia);
+        snapHelper.attachToRecyclerView(recyclerViewMedia);
+        recyclerViewMedia.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewMedia.setHasFixedSize(true);
+        recyclerViewMedia.setAdapter(mediaAdapter);
         initSearchDefault();
         initGenresButtons();
     }
@@ -187,6 +199,16 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     private void showNetflixDialog() {
         NetflixDialog netflixDialog = new NetflixDialog();
         netflixDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void showDisneyDialog() {
+        DisneyDialog disneyDialog = new DisneyDialog();
+        disneyDialog.show(getChildFragmentManager(), null);
+    }
+
+    private void showAppleDialog() {
+        AppleDialog appleDialog = new AppleDialog();
+        appleDialog.show(getChildFragmentManager(), null);
     }
 
     private void toggle(View target) {
@@ -323,6 +345,14 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         SharedPreferences.Editor editor = requireContext().getSharedPreferences("Search-Settings", MODE_PRIVATE).edit();
         editor.putInt("Search", 100);
         editor.apply();
+    }
+
+    private void showMediaDialog(int id) {
+        switch (id) {
+            case 1: showNetflixDialog(); break;
+            case 2: showDisneyDialog(); break;
+            case 3: showAppleDialog(); break;
+        }
     }
 
     private void initGenres() {

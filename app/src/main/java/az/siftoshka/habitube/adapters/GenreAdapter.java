@@ -14,7 +14,7 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.movie.MovieGenre;
 
-public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenresHolder> {
+public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.MediaHolder> {
 
     public interface ItemClickListener {
         void onPostClicked(String id);
@@ -31,20 +31,20 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenresHolder
 
     @NonNull
     @Override
-    public GenresHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public MediaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_genres, viewGroup, false);
-        return new GenresHolder(view);
+        return new MediaHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GenresHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MediaHolder holder, final int position) {
         final MovieGenre movieGenre = this.genres.get(position);
         holder.posterTitle.setText(movieGenre.getName());
         holder.posterTitle.setOnClickListener(view -> clickListener.onPostClicked(String.valueOf(movieGenre.getId())));
     }
 
     @Override
-    public void onViewRecycled(@NonNull GenresHolder holder) {
+    public void onViewRecycled(@NonNull MediaHolder holder) {
         holder.posterTitle.setText(null);
     }
 
@@ -59,10 +59,10 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenresHolder
         notifyDataSetChanged();
     }
 
-    static class GenresHolder extends RecyclerView.ViewHolder {
+    static class MediaHolder extends RecyclerView.ViewHolder {
         TextView posterTitle;
 
-        GenresHolder(@NonNull View itemView) {
+        MediaHolder(@NonNull View itemView) {
             super(itemView);
             this.posterTitle = itemView.findViewById(R.id.poster_text);
         }

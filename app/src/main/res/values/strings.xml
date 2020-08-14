@@ -105,6 +105,8 @@
     <string name="delete_all_planning_movies">Delete all Planning Movies</string>
     <string name="clear_cache">Clear Cache</string>
     <string name="enjoy_netflix">Enjoy Popular TV Shows on Netflix!</string>
+    <string name="enjoy_disney">Find Your Favorite Movie on Disney Plus!</string>
+    <string name="enjoy_apple">Unique New TV Shows only on Apple TV +!</string>
     <string name="discover_movies">Discover Movies</string>
     <string name="vote_average">Vote Average</string>
     <string name="release_date">Release Date</string>

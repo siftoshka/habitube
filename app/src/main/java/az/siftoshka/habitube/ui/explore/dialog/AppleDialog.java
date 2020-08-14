@@ -9,16 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.android.material.button.MaterialButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.presentation.explore.dialog.netflix.NetflixDialogPresenter;
-import az.siftoshka.habitube.presentation.explore.dialog.netflix.NetflixDialogView;
+import az.siftoshka.habitube.presentation.explore.dialog.apple.AppleDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.dialog.apple.AppleDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +26,9 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class NetflixDialog extends MvpBottomSheetDialogFragment implements NetflixDialogView {
+public class AppleDialog extends MvpBottomSheetDialogFragment implements AppleDialogView {
 
-    @InjectPresenter NetflixDialogPresenter discoverPresenter;
+    @InjectPresenter AppleDialogPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @BindView(R.id.popular) MaterialButton popularButton;
@@ -40,8 +39,8 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
     private MessageListener messageListener;
 
     @ProvidePresenter
-    NetflixDialogPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(NetflixDialogPresenter.class);
+    AppleDialogPresenter discoverPresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(AppleDialogPresenter.class);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixPopular() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixPopular();
+            discoverPresenter.showApplePopular();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
@@ -85,7 +84,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixBest() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixBest();
+            discoverPresenter.showAppleBest();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
@@ -93,7 +92,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     private void showNetflixNew() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showNetflixNew();
+            discoverPresenter.showAppleNew();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));

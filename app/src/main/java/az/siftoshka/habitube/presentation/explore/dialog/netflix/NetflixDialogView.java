@@ -1,4 +1,4 @@
-package az.siftoshka.habitube.presentation.explore.dialog;
+package az.siftoshka.habitube.presentation.explore.dialog.netflix;
 
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;
