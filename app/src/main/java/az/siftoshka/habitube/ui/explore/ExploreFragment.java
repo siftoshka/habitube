@@ -39,6 +39,7 @@ import az.siftoshka.habitube.entities.movielite.MovieLite;
 import az.siftoshka.habitube.model.system.MessageListener;
 import az.siftoshka.habitube.presentation.explore.ExplorePresenter;
 import az.siftoshka.habitube.presentation.explore.ExploreView;
+import az.siftoshka.habitube.ui.explore.dialog.AmazonDialog;
 import az.siftoshka.habitube.ui.explore.dialog.AppleDialog;
 import az.siftoshka.habitube.ui.explore.dialog.DiscoverDialog;
 import az.siftoshka.habitube.ui.explore.dialog.DisneyDialog;
@@ -201,6 +202,11 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         netflixDialog.show(getChildFragmentManager(), null);
     }
 
+    private void showAmazonDialog() {
+        AmazonDialog amazonDialog = new AmazonDialog();
+        amazonDialog.show(getChildFragmentManager(), null);
+    }
+
     private void showDisneyDialog() {
         DisneyDialog disneyDialog = new DisneyDialog();
         disneyDialog.show(getChildFragmentManager(), null);
@@ -350,8 +356,9 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     private void showMediaDialog(int id) {
         switch (id) {
             case 1: showNetflixDialog(); break;
-            case 2: showDisneyDialog(); break;
-            case 3: showAppleDialog(); break;
+            case 2: showAmazonDialog(); break;
+            case 3: showDisneyDialog(); break;
+            case 4: showAppleDialog(); break;
         }
     }
 

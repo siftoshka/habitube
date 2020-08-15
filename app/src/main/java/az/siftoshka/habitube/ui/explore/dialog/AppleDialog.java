@@ -57,7 +57,7 @@ public class AppleDialog extends MvpBottomSheetDialogFragment implements AppleDi
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_netflix, container, false);
+        final View view = inflater.inflate(R.layout.dialog_media, container, false);
         unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
         return view;
@@ -69,12 +69,12 @@ public class AppleDialog extends MvpBottomSheetDialogFragment implements AppleDi
     }
 
     private void setDialog() {
-        popularButton.setOnClickListener(view -> showNetflixPopular());
-        bestButton.setOnClickListener(view -> showNetflixBest());
-        newButton.setOnClickListener(view -> showNetflixNew());
+        popularButton.setOnClickListener(view -> showApplePopular());
+        bestButton.setOnClickListener(view -> showAppleBest());
+        newButton.setOnClickListener(view -> showAppleNew());
     }
 
-    private void showNetflixPopular() {
+    private void showApplePopular() {
         if (haveNetworkConnection()) {
             discoverPresenter.showApplePopular();
             dismiss();
@@ -82,7 +82,7 @@ public class AppleDialog extends MvpBottomSheetDialogFragment implements AppleDi
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
-    private void showNetflixBest() {
+    private void showAppleBest() {
         if (haveNetworkConnection()) {
             discoverPresenter.showAppleBest();
             dismiss();
@@ -90,7 +90,7 @@ public class AppleDialog extends MvpBottomSheetDialogFragment implements AppleDi
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
-    private void showNetflixNew() {
+    private void showAppleNew() {
         if (haveNetworkConnection()) {
             discoverPresenter.showAppleNew();
             dismiss();

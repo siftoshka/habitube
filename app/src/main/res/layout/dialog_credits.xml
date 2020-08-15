@@ -3,6 +3,8 @@
     android:id="@+id/bottom_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:padding="10dp">
 

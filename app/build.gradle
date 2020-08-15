@@ -10,8 +10,8 @@ android {
         applicationId "az.siftoshka.habitube"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 20
-        versionName "1.2 Beta"
+        versionCode 21
+        versionName "1.2"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

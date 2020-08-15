@@ -58,7 +58,7 @@ public class NetflixDialog extends MvpBottomSheetDialogFragment implements Netfl
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_netflix, container, false);
+        final View view = inflater.inflate(R.layout.dialog_media, container, false);
         unbinder = ButterKnife.bind(this, view);
         linearLayout.setClipToOutline(true);
         return view;

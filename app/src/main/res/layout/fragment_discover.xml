@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="ui.explore.DiscoverFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -60,7 +62,6 @@
         android:layout_marginEnd="10dp"
         android:clipToPadding="true"
         android:overScrollMode="never"
-        android:paddingBottom="24dp"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

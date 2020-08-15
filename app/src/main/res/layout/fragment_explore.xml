@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="az.siftoshka.habitube.ui.explore.ExploreFragment">
 
     <com.google.android.material.appbar.AppBarLayout

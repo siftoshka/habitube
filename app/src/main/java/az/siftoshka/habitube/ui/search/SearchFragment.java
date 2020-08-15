@@ -76,7 +76,8 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchAdapter = new SearchAdapter((id, mediaType) -> searchPresenter.goToDetailedScreen(id, mediaType), postName -> messageListener.showText(postName));
+        searchAdapter = new SearchAdapter((id, mediaType) -> {searchPresenter.goToDetailedScreen(id, mediaType); keyboardBehavior.hideKeyboard();},
+            postName -> messageListener.showText(postName));
     }
 
     @Override

@@ -49,6 +49,7 @@ public class MediaAdapter  extends RecyclerView.Adapter<MediaAdapter.MediaHolder
         holder.mediaLayout.setBackgroundTintList(context.getResources().getColorStateList(media.getBackground()));
         holder.mediaImage.setImageResource(media.getImage());
         holder.mediaText.setText(media.getText());
+        holder.mediaText.setTextColor(context.getResources().getColorStateList(media.getTextColor()));
         holder.mediaLayout.setOnClickListener(view -> clickListener.onPostClicked(media.getId()));
     }
 
@@ -65,9 +66,10 @@ public class MediaAdapter  extends RecyclerView.Adapter<MediaAdapter.MediaHolder
     public void addAllMedia() {
         this.media.clear();
         List<Media> media = new ArrayList<>();
-        media.add(new Media(1, R.color.background, R.drawable.ic_undraw_netflix, R.string.enjoy_netflix));
-        media.add(new Media(2, R.color.disney_plus, R.drawable.ic_disney_plus, R.string.enjoy_disney));
-        media.add(new Media(3, R.color.hint_text, R.drawable.ic_appletv, R.string.enjoy_apple));
+        media.add(new Media(1, R.color.background, R.drawable.ic_undraw_netflix, R.string.enjoy_netflix, R.color.dark_600));
+        media.add(new Media(2, R.color.prime_video, R.drawable.ic_amazon_prime_video, R.string.enjoy_amazon, R.color.white_is_white));
+        media.add(new Media(3, R.color.disney_plus, R.drawable.ic_disney_plus, R.string.enjoy_disney, R.color.white_is_white));
+        media.add(new Media(4, R.color.hint_text, R.drawable.ic_appletv, R.string.enjoy_apple, R.color.white_is_white));
         this.media.addAll(media);
         notifyDataSetChanged();
     }

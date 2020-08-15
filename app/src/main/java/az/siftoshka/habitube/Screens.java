@@ -3,7 +3,7 @@ package az.siftoshka.habitube;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
+import az.siftoshka.habitube.ui.explore.AmazonFragment;
 import az.siftoshka.habitube.ui.explore.AppleFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverFragment;
 import az.siftoshka.habitube.ui.explore.DiscoverNetflixFragment;
@@ -266,6 +266,26 @@ public final class Screens {
             if (index == 0) bundle.putInt("Discover-D", 0);
             if (index == 1) bundle.putInt("Discover-D", 1);
             if (index == 2) bundle.putInt("Discover-D", 2);
+            discoverFragment.setArguments(bundle);
+            return discoverFragment;
+        }
+    }
+
+    public static final class AmazonDiscoverScreen extends SupportAppScreen {
+
+        private int index;
+
+        public AmazonDiscoverScreen(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            final Bundle bundle = new Bundle();
+            final AmazonFragment discoverFragment = new AmazonFragment();
+            if (index == 0) bundle.putInt("Discover-AP", 0);
+            if (index == 1) bundle.putInt("Discover-AP", 1);
+            if (index == 2) bundle.putInt("Discover-AP", 2);
             discoverFragment.setArguments(bundle);
             return discoverFragment;
         }

@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 import az.siftoshka.habitube.Constants;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.presentation.explore.dialog.disney.DisneyDialogPresenter;
-import az.siftoshka.habitube.presentation.explore.dialog.disney.DisneyDialogView;
+import az.siftoshka.habitube.presentation.explore.dialog.amazon.AmazonDialogPresenter;
+import az.siftoshka.habitube.presentation.explore.dialog.amazon.AmazonDialogView;
 import az.siftoshka.habitube.utils.moxy.MvpBottomSheetDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +26,10 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import toothpick.Toothpick;
 
-public class DisneyDialog extends MvpBottomSheetDialogFragment implements DisneyDialogView {
+public class AmazonDialog extends MvpBottomSheetDialogFragment implements AmazonDialogView {
 
-    @InjectPresenter DisneyDialogPresenter discoverPresenter;
+    @InjectPresenter
+    AmazonDialogPresenter discoverPresenter;
 
     @BindView(R.id.bottom_dialog_layout) LinearLayout linearLayout;
     @BindView(R.id.popular) MaterialButton popularButton;
@@ -39,8 +40,8 @@ public class DisneyDialog extends MvpBottomSheetDialogFragment implements Disney
     private MessageListener messageListener;
 
     @ProvidePresenter
-    DisneyDialogPresenter discoverPresenter() {
-        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(DisneyDialogPresenter.class);
+    AmazonDialogPresenter discoverPresenter() {
+        return Toothpick.openScope(Constants.DI.APP_SCOPE).getInstance(AmazonDialogPresenter.class);
     }
 
     @Override
@@ -69,30 +70,30 @@ public class DisneyDialog extends MvpBottomSheetDialogFragment implements Disney
     }
 
     private void setDialog() {
-        popularButton.setOnClickListener(view -> showDisneyPopular());
-        bestButton.setOnClickListener(view -> showDisneyBest());
-        newButton.setOnClickListener(view -> showDisneyNew());
+        popularButton.setOnClickListener(view -> showAmazonPopular());
+        bestButton.setOnClickListener(view -> showAmazonBest());
+        newButton.setOnClickListener(view -> showAmazonNew());
     }
 
-    private void showDisneyPopular() {
+    private void showAmazonPopular() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showDisneyPopular();
+            discoverPresenter.showAmazonPopular();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
-    private void showDisneyBest() {
+    private void showAmazonBest() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showDisneyBest();
+            discoverPresenter.showAmazonBest();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));
     }
 
-    private void showDisneyNew() {
+    private void showAmazonNew() {
         if (haveNetworkConnection()) {
-            discoverPresenter.showDisneyNew();
+            discoverPresenter.showAmazonNew();
             dismiss();
         }
         else messageListener.showInternetError(getResources().getString(R.string.error_text_body));

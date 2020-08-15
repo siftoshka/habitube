@@ -28,8 +28,7 @@ public class PlannedInteractor {
 
     public void addMovieFB(Movie movie) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null)
-            plannedRepository.addMovieToPlanning(movie, user);
+        if (user != null) plannedRepository.addMovieToPlanning(movie, user);
     }
 
     public void addShow(Show show) {
@@ -38,8 +37,7 @@ public class PlannedInteractor {
 
     public void addShowFB(Show show) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null)
-            plannedRepository.addShowToPlanning(show, user);
+        if (user != null) plannedRepository.addShowToPlanning(show, user);
     }
 
     public void updateMovie(Movie movie) {
@@ -77,32 +75,24 @@ public class PlannedInteractor {
     public void deleteMovie(Movie movie) {
         plannedRepository.deleteMovie(movie);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            plannedRepository.deleteMovieFromPlanning(movie, user);
-        }
+        if (user != null) plannedRepository.deleteMovieFromPlanning(movie, user);
     }
 
     public void deleteShow(Show show) {
         plannedRepository.deleteShow(show);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            plannedRepository.deleteShowFromPlanning(show, user);
-        }
+        if (user != null) plannedRepository.deleteShowFromPlanning(show, user);
     }
 
     public void deleteAllMovies() {
         plannedRepository.deleteAllMovies();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            plannedRepository.deleteAllMoviesFromPlanning(user);
-        }
+        if (user != null) plannedRepository.deleteAllMoviesFromPlanning(user);
     }
 
     public void deleteAllShows() {
         plannedRepository.deleteAllShows();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            plannedRepository.deleteAllShowsFromPlanning(user);
-        }
+        if (user != null) plannedRepository.deleteAllShowsFromPlanning(user);
     }
 }

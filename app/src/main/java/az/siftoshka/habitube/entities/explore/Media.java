@@ -6,12 +6,14 @@ public class Media {
     private int background;
     private int image;
     private int text;
+    private int textColor;
 
-    public Media(int id, int background, int image, int text) {
+    public Media(int id, int background, int image, int text, int textColor) {
         this.id = id;
         this.background = background;
         this.image = image;
         this.text = text;
+        this.textColor = textColor;
     }
 
     public int getId() {
@@ -44,5 +46,13 @@ public class Media {
 
     public void setText(int text) {
         this.text = text;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
     }
 }
