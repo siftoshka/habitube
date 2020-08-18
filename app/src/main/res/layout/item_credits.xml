@@ -28,12 +28,14 @@
             android:paddingEnd="5dp"
             android:paddingBottom="5dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/poster_image_search"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
                 android:src="@drawable/splash"
+                app:shapeAppearance="@style/ShapeAppearance.ImageView"
                 tools:contentDescription="Poster of the movie"
                 tools:ignore="ContentDescription" />
 
@@ -47,8 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:maxLines="1"
                     android:fontFamily="@font/regular"
+                    android:maxLines="1"
                     android:textColor="@color/dark_600"
                     android:textSize="23sp"
                     tools:text="Person Name" />

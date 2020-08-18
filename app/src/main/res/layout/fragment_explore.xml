@@ -26,56 +26,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="20dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
                 app:layout_scrollFlags="scroll|enterAlways">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round_button"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:orientation="horizontal"
-                        android:paddingStart="20dp">
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="45dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:orientation="horizontal"
+                            android:paddingStart="20dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="5dp"
+                                android:src="@mipmap/ic_launcher" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="?attr/actionBarSize"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/regular"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:text="@string/app_name"
+                                android:textColor="@color/white_is_white"
+                                android:textSize="20sp" />
+                        </LinearLayout>
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="5dp"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="?attr/actionBarSize"
-                            android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/regular"
-                            android:gravity="center_vertical"
-                            android:maxLines="1"
-                            android:text="@string/app_name"
-                            android:textColor="@color/white_is_white"
-                            android:textSize="20sp" />
+                            android:id="@+id/search"
+                            android:layout_width="?attr/actionBarSize"
+                            android:layout_height="45dp"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_search" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/search"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="45dp"
-                        android:background="@drawable/round_button"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_search" />
-                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -89,30 +92,34 @@
         android:padding="180dp"
         android:visibility="gone" />
 
-    <!--Error Screen-->
-    <include
-        android:id="@+id/error_screen"
-        layout="@layout/include_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/explore_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+        android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!--Error Screen-->
+            <include
+                android:id="@+id/error_screen"
+                layout="@layout/include_error"
+                android:layout_marginTop="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
             <LinearLayout
+                android:id="@+id/genres_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/expandBackground"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -277,6 +284,7 @@
                 android:overScrollMode="never"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
+                android:visibility="gone"
                 tools:ignore="RtlSymmetry" />
 
             <LinearLayout

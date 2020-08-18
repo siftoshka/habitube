@@ -15,12 +15,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
 import az.siftoshka.habitube.R;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 
@@ -86,7 +86,7 @@ public class ImageLoader {
         }
     }
 
-    public static void loadPersons(View view, String url, CircleImageView into) {
+    public static void loadPersons(View view, String url, ShapeableImageView into) {
         if (url != null) {
             Glide.with(view)
                     .load(IMAGE_URL + url)

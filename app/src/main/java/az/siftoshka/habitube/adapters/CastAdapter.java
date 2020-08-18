@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +17,6 @@ import java.util.List;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.credits.Cast;
 import az.siftoshka.habitube.utils.ImageLoader;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastHolder> {
 
@@ -69,15 +70,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastHolder> {
         notifyDataSetChanged();
     }
 
-    public void clean() {
-        this.castList.clear();
-        notifyDataSetChanged();
-    }
-
     static class CastHolder extends RecyclerView.ViewHolder {
 
         LinearLayout posterLayout;
-        CircleImageView posterImage;
+        ShapeableImageView posterImage;
         TextView posterTitle, posterDate;
 
         CastHolder(@NonNull View itemView) {

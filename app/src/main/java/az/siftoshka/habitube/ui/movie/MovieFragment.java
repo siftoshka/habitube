@@ -84,97 +84,52 @@ import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class MovieFragment extends MvpAppCompatFragment implements MovieView {
 
-    @InjectPresenter
-    MoviePresenter moviePresenter;
+    @InjectPresenter MoviePresenter moviePresenter;
 
-    @BindView(R.id.movie_toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recycler_view_similar_movies)
-    RecyclerView recyclerViewSimilarMovies;
-    @BindView(R.id.recycler_view_videos)
-    RecyclerView recyclerViewVideos;
-    @BindView(R.id.recycler_view_crew)
-    RecyclerView recyclerViewCrew;
-    @BindView(R.id.recycler_view_cast)
-    RecyclerView recyclerViewCast;
-    @BindView(R.id.movie_genres)
-    RecyclerView recyclerViewGenres;
-    @BindView(R.id.main_screen)
-    RelativeLayout mainScreen;
-    @BindView(R.id.loading_screen)
-    View loadingScreen;
-    @BindView(R.id.error_screen)
-    View errorScreen;
-    @BindView(R.id.imdb_button)
-    LinearLayout imdbButton;
-    @BindView(R.id.watched_button)
-    LinearLayout watchedButton;
-    @BindView(R.id.watched_image)
-    ImageView watchedImage;
-    @BindView(R.id.watched_button_alt)
-    RelativeLayout watchedButtonAlt;
-    @BindView(R.id.planning_button)
-    LinearLayout planningButton;
-    @BindView(R.id.planned_image)
-    ImageView plannedImage;
-    @BindView(R.id.planning_button_alt)
-    LinearLayout planningButtonAlt;
-    @BindView(R.id.poster_background)
-    ImageView posterBackground;
-    @BindView(R.id.poster_movie_post)
-    ImageView posterMain;
-    @BindView(R.id.poster_title)
-    TextView posterTitle;
-    @BindView(R.id.poster_date)
-    TextView posterDate;
-    @BindView(R.id.poster_rate)
-    TextView posterRate;
-    @BindView(R.id.poster_views)
-    TextView posterViews;
-    @BindView(R.id.poster_duration)
-    TextView posterDuration;
-    @BindView(R.id.poster_budget)
-    TextView posterBudget;
-    @BindView(R.id.poster_revenue)
-    TextView posterRevenue;
-    @BindView(R.id.poster_desc)
-    TextView posterDesc;
-    @BindView(R.id.watched_rating)
-    TextView ratingText;
-    @BindView(R.id.rating)
-    RatingBar posterRating;
-    @BindView(R.id.rating_layout)
-    LinearLayout ratingCard;
-    @BindView(R.id.similar_movies_card_layout)
-    LinearLayout similarMoviesCard;
-    @BindView(R.id.videos_movies_card_layout)
-    LinearLayout videosCard;
-    @BindView(R.id.desc_movie_card_layout)
-    LinearLayout descMovieCard;
-    @BindView(R.id.tab_info)
-    MaterialButton tabInfo;
-    @BindView(R.id.tab_credits)
-    MaterialButton tabCredits;
-    @BindView(R.id.tab_similar)
-    MaterialButton tabSimilar;
-    @BindView(R.id.cast_button)
-    MaterialButton castButton;
-    @BindView(R.id.crew_button)
-    MaterialButton crewButton;
-    @BindView(R.id.tab_info_layout)
-    LinearLayout tabInfoCard;
-    @BindView(R.id.tab_credits_layout)
-    LinearLayout tabCreditsCard;
-    @BindView(R.id.cast_text)
-    TextView castText;
-    @BindView(R.id.crew_text)
-    TextView crewText;
-    @BindView(R.id.refresh)
-    ImageView refreshButton;
-    @BindView(R.id.share_button)
-    ImageView shareButton;
-    @BindView(R.id.back_button)
-    ImageView backButton;
+    @BindView(R.id.movie_toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler_view_similar_movies) RecyclerView recyclerViewSimilarMovies;
+    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
+    @BindView(R.id.movie_genres) RecyclerView recyclerViewGenres;
+    @BindView(R.id.main_screen) RelativeLayout mainScreen;
+    @BindView(R.id.loading_screen) View loadingScreen;
+    @BindView(R.id.error_screen) View errorScreen;
+    @BindView(R.id.imdb_button) LinearLayout imdbButton;
+    @BindView(R.id.watched_button) LinearLayout watchedButton;
+    @BindView(R.id.watched_image) ImageView watchedImage;
+    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
+    @BindView(R.id.planning_button) LinearLayout planningButton;
+    @BindView(R.id.planned_image) ImageView plannedImage;
+    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
+    @BindView(R.id.poster_background) ImageView posterBackground;
+    @BindView(R.id.poster_movie_post) ImageView posterMain;
+    @BindView(R.id.poster_title) TextView posterTitle;
+    @BindView(R.id.poster_date) TextView posterDate;
+    @BindView(R.id.poster_rate) TextView posterRate;
+    @BindView(R.id.poster_views) TextView posterViews;
+    @BindView(R.id.poster_duration) TextView posterDuration;
+    @BindView(R.id.poster_budget) TextView posterBudget;
+    @BindView(R.id.poster_revenue) TextView posterRevenue;
+    @BindView(R.id.poster_desc) TextView posterDesc;
+    @BindView(R.id.watched_rating) TextView ratingText;
+    @BindView(R.id.rating) RatingBar posterRating;
+    @BindView(R.id.rating_layout) LinearLayout ratingCard;
+    @BindView(R.id.similar_movies_card_layout) LinearLayout similarMoviesCard;
+    @BindView(R.id.videos_movies_card_layout) LinearLayout videosCard;
+    @BindView(R.id.desc_movie_card_layout) LinearLayout descMovieCard;
+    @BindView(R.id.tab_info) MaterialButton tabInfo;
+    @BindView(R.id.tab_credits) MaterialButton tabCredits;
+    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
+    @BindView(R.id.cast_button) MaterialButton castButton;
+    @BindView(R.id.crew_button) MaterialButton crewButton;
+    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
+    @BindView(R.id.cast_text) TextView castText;
+    @BindView(R.id.crew_text) TextView crewText;
+    @BindView(R.id.refresh) ImageView refreshButton;
+    @BindView(R.id.share_button) ImageView shareButton;
+    @BindView(R.id.back_button) ImageView backButton;
 
     private SimilarMovieAdapter similarMoviesAdapter;
     private VideoAdapter videoAdapter;

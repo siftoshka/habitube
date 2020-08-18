@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -65,6 +66,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     @BindView(R.id.recycler_view_movies) RecyclerView recyclerViewMovies;
     @BindView(R.id.recycler_view_tv_shows) RecyclerView recyclerViewTVShows;
     @BindView(R.id.recycler_view_airtoday_tv_shows) RecyclerView recyclerViewAirToday;
+    @BindView(R.id.genres_layout) LinearLayout genresOptions;
     @BindView(R.id.upcoming_movies) LinearLayout upcomingMovieScreen;
     @BindView(R.id.trending_movies) LinearLayout trendingMovieScreen;
     @BindView(R.id.trendind_tv_shows) LinearLayout trendingShowScreen;
@@ -290,6 +292,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(upcomingMovieScreen);
+        showMediaCards();
         upcomingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -304,6 +307,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(trendingMovieScreen);
+        showMediaCards();
         trendingMovieScreen.setVisibility(View.VISIBLE);
     }
 
@@ -318,6 +322,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(trendingShowScreen);
+        showMediaCards();
         trendingShowScreen.setVisibility(View.VISIBLE);
     }
 
@@ -332,6 +337,7 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         progressBar.setVisibility(View.GONE);
         errorScreen.setVisibility(View.GONE);
         toggle(airTodayShowScreen);
+        showMediaCards();
         airTodayShowScreen.setVisibility(View.VISIBLE);
     }
 
@@ -344,6 +350,8 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
     public void unsuccessfulQueryError() {
         errorScreen.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+        genresOptions.setVisibility(View.GONE);
+        refreshButton.bringToFront();
         refreshButton.setOnClickListener(view -> explorePresenter.addContent());
     }
 
@@ -424,10 +432,16 @@ public class ExploreFragment extends MvpAppCompatFragment implements ExploreView
         if (direction == StickySwitch.Direction.LEFT) {
             genreAdapter.addGenres(genres);
             index = 0;
-        }
-        else {
+        } else {
             genreAdapter.addGenres(genresShow);
             index = 1;
+        }
+    }
+
+    private void showMediaCards() {
+        if (recyclerViewMedia.getVisibility() == View.GONE) {
+            recyclerViewMedia.setVisibility(View.VISIBLE);
+            genresOptions.setVisibility(View.VISIBLE);
         }
     }
 
