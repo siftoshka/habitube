@@ -86,8 +86,7 @@ public class LibraryWatchedFragment extends MvpAppCompatFragment implements Libr
             case 204: Collections.sort(movies, (o1, o2) -> o1.getReleaseDate().compareTo(o2.getReleaseDate()));break;
             case 205: Collections.sort(movies, (o1, o2) -> Double.compare(o2.getMyRating(), o1.getMyRating()));break;
         }
-        if (libraryAdapter.addAllMovies(movies))
-            watcher();
+        if (libraryAdapter.addAllMovies(movies)) watcher();
     }
 
     @Override

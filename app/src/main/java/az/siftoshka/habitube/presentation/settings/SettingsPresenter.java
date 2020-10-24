@@ -30,7 +30,6 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     private final LibraryWatchedPresenter watchedPresenter;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-
     @Inject
     public SettingsPresenter(Router router, Context context, PlannedInteractor plannedInteractor,
                              WatchedInteractor watchedInteractor,

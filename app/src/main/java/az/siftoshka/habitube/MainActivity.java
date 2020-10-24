@@ -16,20 +16,11 @@ import javax.inject.Inject;
 
 import az.siftoshka.habitube.model.system.KeyboardBehavior;
 import az.siftoshka.habitube.model.system.MessageListener;
-import az.siftoshka.habitube.ui.explore.DiscoverFragment;
-import az.siftoshka.habitube.ui.library.LibraryPlanningFragment;
-import az.siftoshka.habitube.ui.library.LibraryWatchedFragment;
-import az.siftoshka.habitube.ui.movie.MovieFragment;
-import az.siftoshka.habitube.ui.navbar.NavbarFragment;
-import az.siftoshka.habitube.ui.search.SearchFragment;
-import az.siftoshka.habitube.ui.show.ShowFragment;
-import az.siftoshka.habitube.ui.star.StarFragment;
 import az.siftoshka.habitube.utils.navigation.SupremeNavigator;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
-import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 import toothpick.Toothpick;
@@ -41,10 +32,9 @@ public class MainActivity extends MvpAppCompatActivity implements MessageListene
     @Inject NavigatorHolder navigatorHolder;
     @Inject Router router;
 
-    private Navigator navigator = new SupremeNavigator(this, R.id.fragment_container) {
+    private final Navigator navigator = new SupremeNavigator(this, R.id.fragment_container) {
         @Override
-        protected void setupFragmentTransaction(@NonNull Command command, Fragment currentFragment,
-                                                Fragment nextFragment, @NonNull FragmentTransaction fragmentTransaction) {
+        protected void setupFragmentTransaction(@NonNull Command command, Fragment currentFragment, Fragment nextFragment, @NonNull FragmentTransaction fragmentTransaction) {
             if (command instanceof Forward)
                 fragmentTransaction.setCustomAnimations(R.animator.slide_out_right, R.animator.slide_in_left);
         }

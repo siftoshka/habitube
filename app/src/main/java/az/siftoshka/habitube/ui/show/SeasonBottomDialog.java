@@ -16,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import az.siftoshka.habitube.R;
 import az.siftoshka.habitube.entities.show.Season;
 import az.siftoshka.habitube.utils.DateChanger;
-import az.siftoshka.habitube.utils.DateConverter;
 import az.siftoshka.habitube.utils.ImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;

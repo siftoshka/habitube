@@ -3,7 +3,6 @@ package az.siftoshka.habitube.ui.show;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -87,99 +86,53 @@ import static az.siftoshka.habitube.Constants.SYSTEM.YOUTUBE_URL;
 
 public class ShowFragment extends MvpAppCompatFragment implements ShowView {
 
-    @InjectPresenter
-    ShowPresenter showPresenter;
+    @InjectPresenter ShowPresenter showPresenter;
 
-    @BindView(R.id.show_toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recycler_view_similar_shows)
-    RecyclerView recyclerViewSimilarShows;
-    @BindView(R.id.recycler_view_seasons)
-    RecyclerView recyclerViewSeasons;
-    @BindView(R.id.recycler_view_videos)
-    RecyclerView recyclerViewVideos;
-    @BindView(R.id.recycler_view_crew)
-    RecyclerView recyclerViewCrew;
-    @BindView(R.id.recycler_view_cast)
-    RecyclerView recyclerViewCast;
-    @BindView(R.id.show_screen)
-    RelativeLayout showScreen;
-    @BindView(R.id.loading_screen)
-    View loadingScreen;
-    @BindView(R.id.error_screen)
-    View errorScreen;
-    @BindView(R.id.watched_button)
-    LinearLayout watchedButton;
-    @BindView(R.id.watched_image)
-    ImageView watchedImage;
-    @BindView(R.id.watched_button_alt)
-    RelativeLayout watchedButtonAlt;
-    @BindView(R.id.planning_button)
-    LinearLayout planningButton;
-    @BindView(R.id.planned_image)
-    ImageView plannedImage;
-    @BindView(R.id.planning_button_alt)
-    LinearLayout planningButtonAlt;
-    @BindView(R.id.poster_show_post)
-    ImageView posterShow;
-    @BindView(R.id.show_poster_background)
-    ImageView posterShowBackground;
-    @BindView(R.id.poster_show_title)
-    TextView posterShowTitle;
-    @BindView(R.id.poster_show_date)
-    TextView posterShowDate;
-    @BindView(R.id.poster_show_rate)
-    TextView posterShowRate;
-    @BindView(R.id.poster_show_views)
-    TextView posterShowViews;
-    @BindView(R.id.poster_show_duration)
-    TextView posterShowDuration;
-    @BindView(R.id.poster_show_desc)
-    TextView posterShowDesc;
-    @BindView(R.id.watched_rating)
-    TextView ratingText;
-    @BindView(R.id.rating)
-    RatingBar posterRating;
-    @BindView(R.id.rating_layout)
-    LinearLayout ratingCard;
-    @BindView(R.id.show_genres)
-    RecyclerView recyclerViewGenres;
-    @BindView(R.id.videos_shows_card_layout)
-    LinearLayout videosCard;
-    @BindView(R.id.seasons_card_layout)
-    LinearLayout seasonsCard;
-    @BindView(R.id.similar_shows_card_layout)
-    LinearLayout similarShowsCard;
-    @BindView(R.id.desc_show_card_layout)
-    LinearLayout descShowCard;
-    @BindView(R.id.tab_info)
-    MaterialButton tabInfo;
-    @BindView(R.id.tab_credits)
-    MaterialButton tabCredits;
-    @BindView(R.id.tab_seasons)
-    MaterialButton tabSeasons;
-    @BindView(R.id.tab_similar)
-    MaterialButton tabSimilar;
-    @BindView(R.id.cast_button)
-    MaterialButton castButton;
-    @BindView(R.id.crew_button)
-    MaterialButton crewButton;
-    @BindView(R.id.cast_text)
-    TextView castText;
-    @BindView(R.id.crew_text)
-    TextView crewText;
-    @BindView(R.id.tab_info_layout)
-    LinearLayout tabInfoCard;
-    @BindView(R.id.tab_credits_layout)
-    LinearLayout tabCreditsCard;
-    @BindView(R.id.refresh)
-    ImageView refreshButton;
-    @BindView(R.id.show_netflix)
-    MaterialButton showNetflix;
-    @BindView(R.id.share_button)
-    ImageView shareButton;
-    @BindView(R.id.back_button)
-    ImageView backButton;
+    @BindView(R.id.show_toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler_view_similar_shows) RecyclerView recyclerViewSimilarShows;
+    @BindView(R.id.recycler_view_seasons) RecyclerView recyclerViewSeasons;
+    @BindView(R.id.recycler_view_videos) RecyclerView recyclerViewVideos;
+    @BindView(R.id.recycler_view_crew) RecyclerView recyclerViewCrew;
+    @BindView(R.id.recycler_view_cast) RecyclerView recyclerViewCast;
+    @BindView(R.id.show_screen) RelativeLayout showScreen;
+    @BindView(R.id.loading_screen) View loadingScreen;
+    @BindView(R.id.error_screen) View errorScreen;
+    @BindView(R.id.watched_button) LinearLayout watchedButton;
+    @BindView(R.id.watched_image) ImageView watchedImage;
+    @BindView(R.id.watched_button_alt) RelativeLayout watchedButtonAlt;
+    @BindView(R.id.planning_button) LinearLayout planningButton;
+    @BindView(R.id.planned_image) ImageView plannedImage;
+    @BindView(R.id.planning_button_alt) LinearLayout planningButtonAlt;
+    @BindView(R.id.poster_show_post) ImageView posterShow;
+    @BindView(R.id.show_poster_background) ImageView posterShowBackground;
+    @BindView(R.id.poster_show_title) TextView posterShowTitle;
+    @BindView(R.id.poster_show_date) TextView posterShowDate;
+    @BindView(R.id.poster_show_rate) TextView posterShowRate;
+    @BindView(R.id.poster_show_views) TextView posterShowViews;
+    @BindView(R.id.poster_show_duration) TextView posterShowDuration;
+    @BindView(R.id.poster_show_desc) TextView posterShowDesc;
+    @BindView(R.id.watched_rating) TextView ratingText;
+    @BindView(R.id.rating) RatingBar posterRating;
+    @BindView(R.id.rating_layout) LinearLayout ratingCard;
+    @BindView(R.id.show_genres) RecyclerView recyclerViewGenres;
+    @BindView(R.id.videos_shows_card_layout) LinearLayout videosCard;
+    @BindView(R.id.seasons_card_layout) LinearLayout seasonsCard;
+    @BindView(R.id.similar_shows_card_layout) LinearLayout similarShowsCard;
+    @BindView(R.id.desc_show_card_layout) LinearLayout descShowCard;
+    @BindView(R.id.tab_info) MaterialButton tabInfo;
+    @BindView(R.id.tab_credits) MaterialButton tabCredits;
+    @BindView(R.id.tab_seasons) MaterialButton tabSeasons;
+    @BindView(R.id.tab_similar) MaterialButton tabSimilar;
+    @BindView(R.id.cast_button) MaterialButton castButton;
+    @BindView(R.id.crew_button) MaterialButton crewButton;
+    @BindView(R.id.cast_text) TextView castText;
+    @BindView(R.id.crew_text) TextView crewText;
+    @BindView(R.id.tab_info_layout) LinearLayout tabInfoCard;
+    @BindView(R.id.tab_credits_layout) LinearLayout tabCreditsCard;
+    @BindView(R.id.refresh) ImageView refreshButton;
+    @BindView(R.id.show_netflix) MaterialButton showNetflix;
+    @BindView(R.id.share_button) ImageView shareButton;
+    @BindView(R.id.back_button) ImageView backButton;
 
     private SimilarShowAdapter similarShowsAdapter;
     private VideoAdapter videoAdapter;

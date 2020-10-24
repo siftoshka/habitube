@@ -76,7 +76,6 @@ public class LibraryPlanningFragment extends MvpAppCompatFragment implements Lib
         recyclerViewPlanning.setAdapter(libraryAdapter);
         planningPresenter.getMovies();
         libraryAdapter.getItemCount();
-
     }
 
     @Override

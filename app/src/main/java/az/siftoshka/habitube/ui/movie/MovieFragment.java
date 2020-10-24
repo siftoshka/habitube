@@ -5,7 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -76,7 +75,6 @@ import moxy.presenter.ProvidePresenter;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
-import static android.content.Context.MODE_PRIVATE;
 import static az.siftoshka.habitube.Constants.SYSTEM.IMAGE_URL;
 import static az.siftoshka.habitube.Constants.SYSTEM.MOVIE_THEMOVIEDB;
 import static az.siftoshka.habitube.Constants.SYSTEM.VIMEO_URL;
